@@ -6,23 +6,23 @@ from module.dep_analysis import get_dep_info
 from module.parse import parse
 import os.path
 import sys
+import numpy as np
 
 # sys.setrecursionlimit(100000)
 
-# 获取依赖测试graph
-my_path = os.path.abspath(os.path.dirname(__file__))
-api_info_list = parse(os.path.join(my_path, "../openapi/openapi.yaml"), 1.0)
-matrix, weight_info_list = get_dep_info(api_info_list)
-graph = matrix.tolist()
-print(graph)
-print(len(graph))
-
+# # 获取依赖测试graph
+# my_path = os.path.abspath(os.path.dirname(__file__))
+# api_info_list = parse(1.0)
+# matrix, weight_info_list = get_dep_info(api_info_list)
+# graph = matrix.tolist()
+# print(graph)
+# print(len(graph))
+graph = []
+api_info_list = []
 # total = 0
 
 ######   创建visited，用来停止遍历，即一旦遇到visited，即刻退出递归 #0代表没被访问   #######
-visited = []
-for i in range(len(graph)):
-    visited.append(0)
+
 
 ##################      创建Stack用于代替递归操作，改用循环实现遍历    ##################
 
@@ -118,7 +118,7 @@ end = []
 
 
 # 直接测试函数,(x,y)为graph中对应api节点
-def test(x):
+def test(x,api_info_list):
     api_info = api_info_list[x]
     url = api_info.path
     method = api_info.http_method
@@ -307,7 +307,7 @@ def test(x):
 
 
 # fuzz处理graph（x）位置的api
-def fuzzgraph(x):
+def fuzzgraph(x, api_info_list):
     api_info = api_info_list[x]
     url = api_info.path
     method = api_info.http_method
@@ -316,57 +316,109 @@ def fuzzgraph(x):
     if method == 'post':
         for i in range(2):
             url = api_info.path
+            val = 0
+            headers = {}
+            data = []
             for field_info in api_info.req_param:
-                if field_info.require:
-                    flag = '0'
-                    location = field_info.location
-                    field_type = field_info.field_type
-                    value = fuzz(field_type)
-                    # 不同的in对应不同的数据   location：0-path,1-query,2-header,3-body
-                    if location == 0:
-                        url = url.replace('{' + field_info.field_name + '}', str(value))
-                    elif location == 1:
-                        # url追加key1=value1&key2=value2到url后,即查询字符串
-                        if flag == 0:
-                            flag = 1
-                            url = url + "?" + str(field_info.field_name) + "=" + str(value)
-                        else:
-                            url = url + "&" + str(field_info.field_name) + "=" + str(value)
-                    elif location == 2:
-                        # 操作
-                        pass
-                    elif location == 3:
-                        # 参数组成json字符串 ==> data
-                        data = [].append(value)
-                        pass
+                # if field_info.require:
+                flag = '0'
+                location = field_info.location
+                field_type = field_info.field_type
+                value_fuzz = fuzz(field_type)
+                enum = field_info.enum
+                if enum != None:
+                    value_enum = random.choice(enum)
+                    value = value_enum
+                else:
+                    value = value_fuzz
+                val = value
+                '''
+                不同的in对应不同的数据   location：0-path,1-query,2-header,3-body
+                path和query 用url直接请求
+                header和body用request.post(url, headers=headers)或requests.post(url, data)
+                '''
+                if location == 0:
+                    url = url.replace('{' + field_info.field_name + '}', str(value))
+                elif location == 1:
+                    # url追加key1=value1&key2=value2到url后,即查询字符串
+                    if flag == 0:
+                        flag = 1
+                        url = url + "?" + str(field_info.field_name) + "=" + str(value)
+                    else:
+                        url = url + "&" + str(field_info.field_name) + "=" + str(value)
+                elif location == 2:
+                    headers[str(field_info.field_name)] = str(value)
+                elif location == 3:
+                    # 参数组成json字符串 ==> data
+                    data.append(value)
+                    pass
+            '''Redis存储post过的api_id'''
             post.lpush('api_id_p', api_info.api_id)
-
+            '''配置token'''
             if '?' in url:
-                # 配置token
                 url = url + "&private_token=vE9ggmw9HjEwuisyH2eF"
             else:
                 url = url + "?private_token=vE9ggmw9HjEwuisyH2eF"
-            # 请求API
+            '''
+            请求API
+            根据header中Content-Tpye对应data类型：
+            常见的媒体格式类型：
+            text/html ： HTML格式
+            text/plain ：纯文本格式
+            text/xml ： XML格式
+            image/gif ：gif图片格式
+            image/jpeg ：jpg图片格式
+            image/png：png图片格式
+
+            application/xml： XML数据格式
+            application/json： JSON数据格式
+            application/octet-stream ： 二进制流数据（如常见的文件下载）
+            application/x-www-form-urlencoded ： <form encType=””>中默认的encType，form表单数据被编码为key/value格式发送到服务器（表单默认的提交数据的格式）
+            
+            multipart/form-data ： 需要在表单中进行文件上传时，就需要使用该格式
+            '''
             print("fuzz " + str(api_info.api_id) + " " + method + " " + url)
-            response = requests.post(url, data).text
+            if len(headers) != 0:
+                if headers.__contains__('Content-Type'):
+                    if headers['Content-Type'] == 'application/json':
+                        datas = json.dumps(data)
+                    elif headers['Content-Type'] == 'application/x-www-form-urlencoded':
+                        datas = data
+                    elif headers['Content-Type'] == 'multipart/form-data':
+                        '''
+                        files = {"file": open("C:/Users/Administrator/Desktop/test.txt", "rb")}
+                        r = requests.post("http://httpbin.org/post", files=files)
+                        '''
+                        pass
+                else:
+                    pass
+            response = requests.post(url, headers = headers, data = datas).text
             repon = str(response)
             if len(repon) > 0:
                 reponses = json.loads(repon)
                 json_txt(reponses)
                 if isinstance(reponses, dict):
                     # 如果fuzz成功，将fuzz内容保存到fuzz_success连接池中
-                    if reponses.keys() != 'error' and reponses.keys() != 'message' :
-                        fuzz_success.lpush(str(field_info.field_name),str(value))
+                    if reponses.keys() != 'error' and reponses.keys() != 'message':
+                        fuzz_success.lpush(str(field_info.field_name), str(val))
             else:
                 pass
             print(response)
     elif method == 'delete':
+        val = 0
         for field_info in api_info.req_param:
             if field_info.require:
                 flag = '0'
                 location = field_info.location
                 field_type = field_info.field_type
-                value = fuzz(field_type)
+                value_fuzz = fuzz(field_type)
+                enum = field_info.enum
+                if enum != None:
+                    value_enum = random.choice(enum)
+                    value = value_enum
+                else:
+                    value = value_fuzz
+                val = value
                 # 不同的in对应不同的数据   location：0-path,1-query,2-header,3-body
                 if location == 0:
                     url = url.replace('{' + field_info.field_name + '}', str(value))
@@ -401,7 +453,7 @@ def fuzzgraph(x):
             if isinstance(reponses, dict):
                 # 如果fuzz成功，将fuzz内容保存到fuzz_success连接池中
                 if reponses.keys() != 'error' and reponses.keys() != 'message':
-                    fuzz_success.lpush(str(field_info.field_name), str(value))
+                    fuzz_success.lpush(str(field_info.field_name), str(val))
         else:
             pass
         print(response)
@@ -413,7 +465,14 @@ def fuzzgraph(x):
                 flag = '0'
                 location = field_info.location
                 field_type = field_info.field_type
-                value = fuzz(field_type)
+                value_fuzz = fuzz(field_type)
+                enum = field_info.enum
+                if enum != None:
+                    value_enum = random.choice(enum)
+                    value = value_enum
+                else:
+                    value = value_fuzz
+
                 # 临时存储fuzz成功的dic
                 fuzz_dic = {}
                 fuzz_dic[field_info.field_name] = [value]
@@ -470,10 +529,10 @@ def fuzzgraph(x):
 
 
 
-def topology_visit(g, n):
+def topology_visit(g, n, api_info_list, visited):
     # 第一个开始节点api是没有依赖的，其中需要的参数可通过fuzz来获取（也可人工赋值）
     visited[n] = 1
-    fuzzgraph(n)
+    fuzzgraph(n,api_info_list)
     while visited[n] == 1:
         # 创建遍历的存储队列
         queue = []
@@ -492,7 +551,7 @@ def topology_visit(g, n):
                 #     g[z][n] = -1
                 for a in queue:
                     g[a][n] = -1                 # 表示queue里所有api对n节点api的依赖全部实现，故改为-1，表示对此无依赖
-                test(j)
+                test(j,api_info_list)
                 queue.clear()
                 visited[j] = 1
                 n = j
@@ -503,26 +562,32 @@ def topology_visit(g, n):
                 g[a][n] = -1
             queue.clear()
             if visited[k] == 0:
-                fuzzgraph(k)
+                fuzzgraph(k,api_info_list)
                 visited[k] = 1
                 g[k] = end
             n = k
 
 
-def traversal(graph):
+def traversal(grap, api_info_lis):
+    graph = grap
+    api_info_list = api_info_lis
+    end = []
+    # 创建visited，用来停止遍历，即一旦遇到visited，即刻退出递归 #0代表没被访问
+    visited = np.zeros(len(graph)).astype(dtype=int).tolist()
+    print(visited)
     for i in range(len(graph)):
         end.append(-1)
     # 收集出度为0的点的集合,即无依赖节点的集合
     for j in range(len(graph)):
         if graph[j] == end:
             out_degree_zero.append(j)
-    print(out_degree_zero)
+    # print(out_degree_zero)
 
     for m in range(len(out_degree_zero)):
         k = random.choice(out_degree_zero)
         out_degree_zero.remove(k)
         print(k)
-        topology_visit(graph, k)
+        topology_visit(graph, k, api_info_list, visited)
 
     # for i in range(len(graph)):
     #     if g_list[i] == -1:

@@ -187,8 +187,8 @@ def get_dep_info(api_info_list):
     index = 0
 
     adj_matrix(update_api_info_list)
-    print(matrix)
-    print(weight_info_list)
+    # print(matrix)
+    # print(weight_info_list)
     return matrix, weight_info_list
 
 
