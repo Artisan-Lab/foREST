@@ -2,7 +2,7 @@ import random
 import requests
 import redis
 from rest_framework.utils import json
-from module.dep_analysis import get_dep_info
+from module.graph2 import get_dep_info
 from module.parse import parse
 import os.path
 import sys
@@ -11,7 +11,7 @@ import sys
 
 # 获取依赖测试graph
 my_path = os.path.abspath(os.path.dirname(__file__))
-api_info_list = parse(os.path.join(my_path, "../openapi/openapi.yaml"), 1.0)
+api_info_list = parse(os.path.join(my_path, "../openapi/sdms3.yaml"), 1.0)
 matrix, weight_info_list = get_dep_info(api_info_list)
 graph = matrix.tolist()
 print(graph)

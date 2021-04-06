@@ -1,7 +1,9 @@
-from module.Fuzz_value import traversal,fuzzgraph
-from module.dep_analysis import get_dep_info
+from module.Fuzz_value1 import traversal,fuzzgraph
+from module.graph2 import get_dep_info
 from module.parse import parse
 import os.path
+import threading
+import time
 
 
 # 获取依赖测试graph
@@ -17,8 +19,8 @@ import os.path
 
 def run():
     while(1 == 1):
-        my_path = os.path.abspath(os.path.dirname(__file__))
-        api_info_list = parse(1.0)
+        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/sdms3.yaml")
+        api_info_list = parse(path,1.0)
         matrix, weight_info_list = get_dep_info(api_info_list)
         print(matrix)
         graph = matrix.tolist()
@@ -43,3 +45,12 @@ def run():
                 fuzzgraph(i, api)
 
 run()
+
+# '''
+# 多线程
+# '''
+# if __name__ == '__main__':
+#     for i in range(10):
+#         thread_num = i
+#         t = threading.Thread(target=run, args=(str(thread_num),))
+#         t.start()
