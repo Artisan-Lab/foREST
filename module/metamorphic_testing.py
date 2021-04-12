@@ -3,7 +3,9 @@ import os.path
 from prance import ResolvingParser
 import json
 import random
+from random import randrange
 import parse
+from datetime import timedelta, datetime
 
 
 def add_token(url):
@@ -14,75 +16,113 @@ def add_token(url):
     return url
 
 
-def fuzz(field_info):
-    if field_info.default:
-        return field_info.field_name + '=' + field_info.default
-    elif field_info.enum:
-        return field_info.field_name + '=' + random.choice(field_info.enum)
+def random_str(slen=10):
+    seed = "1234567890abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()_+=-"
+    sa = []
+    for i in range(slen):
+      sa.append(random.choice(seed))
+    return ''.join(sa)
+
+
+def random_date(start, end):
+    delta = end - start
+    int_delta = (delta.days * 24 * 60 * 60) + delta.seconds
+    random_second = randrange(int_delta)
+    return start + timedelta(seconds=random_second)
+
+
+def fuzz_paramerter(field_info):
+    if field_info.enum:
+        return field_info.field_name + '=' + str(random.choice(field_info.enum))
+    elif field_info.format:
+        if field_info.format == 'ISO 8601 YYYY-MM-DDTHH:MM:SSZ':
+            return field_info.field_name + '=' + \
+                   str(random_date(datetime(2019,1,1,0,0,0).astimezone().replace(microsecond=0),
+                    datetime(2021,12,31,23,59,59).astimezone().replace(microsecond=0)).isoformat())
     else:
         if field_info.field_type == 'boolean':
             return field_info.field_name + '=' + random.choice(['true', 'false'])
         elif field_info.field_type == 'string':
-            return field_info.field_name + '=' + random.choice(['sample', '', ' ', 'fsdapo324,;,fl;sa'])
+            return field_info.field_name + '=' + random_str(random.randint(0,10))
         elif field_info.field_type == 'integer':
-            return field_info.field_name + '=' + random.choice(['0', '1', '-1'])
+            return field_info.field_name + '=' + str(random.randint(0,50))
     pass
 
 
-def MR_judge(test1_url, test2_url):
-    request_respones = requests.get(test1_url)
-    request_respones2 = requests.get(test2_url)
-    respones_status2 = request_respones2.status_code
-    respones_text = json.loads(request_respones.text)
-    respones_text2 = json.loads(request_respones2.text)
-    if 300 > respones_status2 >= 200:
-        status = 'success'
-    elif 500 > respones_status2 >=300:
-        status = 'error'
-        return 'format error'
-    elif 500 == respones_status2:
-        status = 'internal error'
-        return 'find bug'
-    MR = 'None'
-    if all([respones_text2[i] in respones_text for i in range(0,len(respones_text2))]):
+def created_url(url, req_paramerter):
+    fuzz_parameter = fuzz_paramerter(req_paramerter)
+    url1 = url + '&' + fuzz_parameter
+    return url1
+
+
+def get_responses(url, req_paramerter, responses_list, default_count):
+    url1 = created_url(url, req_paramerter)
+    request_respones = requests.get(url1)
+    respones_status = request_respones.status_code
+    if 300 > respones_status >= 200:
+        if json.loads(request_respones.text) == []:
+            responses_list = get_responses(url, req_paramerter, responses_list, default_count + 1)
+        else:
+            responses_list.append(json.loads(requests.get(url1).text))
+    elif 500 > respones_status >= 300 and default_count < 10:
+        responses_list = get_responses(url, req_paramerter, responses_list, default_count + 1)
+    elif 500 == respones_status:
+        print('find bug in %s' % url1)
+    return responses_list
+
+
+def MR_texting(responses_list, MR_matric):
+    #subset  equality equivalence disjoint complete diffirence
+    response_text = responses_list[0]
+    response_random = random.sample(responses_list[1:10],2)
+    response_text1 = response_random[0]
+    response_text2 = response_random[1]
+    if (all([response_text[i] in response_text1 for i in range(0,len(response_text))]) or \
+            all([response_text1[i] in response_text for i in range(0, len(response_text1))])) and \
+            response_text1 != response_text:
         # judge subset
-        MR = 'Subset'
-    if respones_text2 == respones_text:
-        MR = 'Equality'
-    if (all([respones_text2[i] in respones_text for i in range(0,len(respones_text2))]) and
-            all([respones_text[i] in respones_text2 for i in range(0,len(respones_text))])):
-        MR = 'Equivalence'
-    if (all([respones_text2[i] not in respones_text for i in range(0,len(respones_text2))]) and
-            all([respones_text2[i] not in respones_text for i in range(0,len(respones_text2))])):
-        MR = 'Disjoint'
-    return MR
-    pass
+        MR_matric[0] = MR_matric[0] + 1
+    if response_text == response_text1:
+        MR_matric[1] = MR_matric[1] + 1
+    if (all([response_text[i] in response_text1 for i in range(0,len(response_text))]) and
+            all([response_text1[i] in response_text for i in range(0,len(response_text1))])) and \
+            response_text1 != response_text:
+        MR_matric[2] = MR_matric[2] + 1
+    if (all([response_text[i] not in response_text1 for i in range(0,len(response_text))]) and
+            all([response_text1[i] not in response_text for i in range(0,len(response_text1))])):
+        MR_matric[3] = MR_matric[3] + 1
+    return MR_matric
 
 
 def metamorphic(api_info):
-    url = api_info.path
+    url = add_token(api_info.path)
     if api_info.req_field_names:
         for req_paramerter in api_info.req_param:
             if req_paramerter.field_name in api_info.req_field_names:
-                fuzz_parameter = fuzz(req_paramerter)
-                if '?' in url:
-                    url = url + '?' + fuzz_parameter
-                else:
-                    url = url + '&' + fuzz_parameter
+                fuzz_parameter = fuzz_paramerter(req_paramerter)
+                url = url + '&' + fuzz_parameter
     for req_paramerter in api_info.req_param:
         # 测API的每个参数
+        MR_matric = [0, 0, 0, 0, 0, 0]
         if req_paramerter.field_name in api_info.req_field_names:
             continue
-        url1 = add_token(url)
-        fuzz_parameter = fuzz(req_paramerter)
-        if '?' in url:
-            url2 = add_token(url + '&' + fuzz_parameter)
-        else:
-            url2 = add_token(url + '?' + fuzz_parameter)
-
-        MR = MR_judge(url1,url2)
-        print(MR)
-
+        responses = [json.loads(requests.get(url).text)]
+        for i in range(1,11):
+            responses = get_responses(url, req_paramerter, responses, 0)
+        if len(responses) < 10:
+            print('no enough %s' % req_paramerter.field_name)
+        for i in range(1,11):
+            MR_matric = MR_texting(responses, MR_matric)
+        MR = MR_matric.index(max(MR_matric))
+        if MR == 0:
+            MRs = 'subset'
+        if MR == 1:
+            MRs = 'equality'
+        if MR == 2:
+            MRs = 'equivalence'
+        if MR == 3:
+            MRs = 'disjoint'
+        print(req_paramerter.field_name + '   ' +MRs)
 
 
 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/projects-api.yaml")
