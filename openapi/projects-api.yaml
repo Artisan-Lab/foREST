@@ -52,6 +52,14 @@ paths:
         - name: min_access_level
           schema:
             type: integer
+            enum:
+              - 0
+              - 5
+              - 10
+              - 20
+              - 30
+              - 40
+              - 50
           required: false
           in: query
           description: Limit by current user minimal access level.
