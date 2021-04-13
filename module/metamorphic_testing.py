@@ -59,7 +59,7 @@ def get_responses(url, req_paramerter, responses_list, default_count):
     url1 = created_url(url, req_paramerter)
     request_respones = requests.get(url1)
     respones_status = request_respones.status_code
-    if 300 > respones_status >= 200:
+    if 300 > respones_status >= 200 and default_count < 10:
         if json.loads(request_respones.text) == []:
             responses_list = get_responses(url, req_paramerter, responses_list, default_count + 1)
         else:
@@ -78,8 +78,7 @@ def MR_texting(responses_list, MR_matric):
     response_text1 = response_random[0]
     response_text2 = response_random[1]
     if (all([response_text[i] in response_text1 for i in range(0,len(response_text))]) or \
-            all([response_text1[i] in response_text for i in range(0, len(response_text1))])) and \
-            response_text1 != response_text:
+            all([response_text1[i] in response_text for i in range(0, len(response_text1))])):
         # judge subset
         MR_matric[0] = MR_matric[0] + 1
     if response_text == response_text1:
@@ -103,7 +102,7 @@ def metamorphic(api_info):
                 url = url + '&' + fuzz_parameter
     for req_paramerter in api_info.req_param:
         # 测API的每个参数
-        MR_matric = [0, 0, 0, 0, 0, 0]
+        MR_matric = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
         if req_paramerter.field_name in api_info.req_field_names:
             continue
         responses = [json.loads(requests.get(url).text)]
@@ -111,17 +110,15 @@ def metamorphic(api_info):
             responses = get_responses(url, req_paramerter, responses, 0)
         if len(responses) < 10:
             print('no enough %s' % req_paramerter.field_name)
+            continue
         for i in range(1,11):
             MR_matric = MR_texting(responses, MR_matric)
-        MR = MR_matric.index(max(MR_matric))
-        if MR == 0:
+        if MR_matric[0] == max(MR_matric) and MR_matric[1] + MR_matric[2] <MR_matric[0]:
             MRs = 'subset'
-        if MR == 1:
-            MRs = 'equality'
-        if MR == 2:
+        if MR_matric[1] == max(MR_matric):
+            MRs = 'equality or test case not use'
+        if MR_matric[1] + MR_matric[2] == MR_matric[0] and MR_matric[1] != 0 and MR_matric[2] !=0:
             MRs = 'equivalence'
-        if MR == 3:
-            MRs = 'disjoint'
         print(req_paramerter.field_name + '   ' +MRs)
 
 
