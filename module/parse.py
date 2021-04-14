@@ -43,7 +43,7 @@ def properties_handle(properties,required_list,properties_list):
         properties_list = []
     for property in properties:
         if property in required_list:
-            request_required = true
+            request_required = True
         else:
             request_required = False
         if 'default' in properties[property]:
@@ -79,8 +79,12 @@ def properties_handle(properties,required_list,properties_list):
             min = properties[property]['minLength']
         else:
             min = None
+        if 'format' in properties[property]:
+            format = properties[property]['format']
+        else:
+            format = None
         request_property = field_info(property, request_type, request_required, request_default,
-                                      None, 3, request_description, request_enum,object_list,array_type,max,min)
+                                      None, 3,  request_description,request_enum,object_list,array_type,max,min,format)
         properties_list.append(request_property)
     return properties_list
 
@@ -105,6 +109,10 @@ def parameter_handle(parameter_list, req_param_list):
             max = parameter['schema']['maxLength']
         else:
             max = None
+        if 'format' in parameter['schema']:
+            format = parameter['schema']['format']
+        else:
+            format = None
         if 'minLength' in parameter['schema']:
             min = parameter['schema']['minLength']
         else:
@@ -117,6 +125,8 @@ def parameter_handle(parameter_list, req_param_list):
             parameter_location = 2
         elif parameter['in'] == 'body':
             parameter_location = 3
+        else:
+            parameter_location = 5
         if 'required' in parameter:
             parameter_required = parameter['required']
         else:
@@ -126,7 +136,7 @@ def parameter_handle(parameter_list, req_param_list):
         else:
             array_type = None
         req_param = field_info(parameter_name, parameter_type, parameter_required, parameter_default,
-                               "No", parameter_location, parameter_description, parameter_enum,None,array_type,max,min)
+                               "No", parameter_location,  parameter_description,parameter_enum,None,array_type,max,min,format)
         req_param_list.append(req_param)
     return req_param_list
 
@@ -186,9 +196,13 @@ def parameter_swagger_handle(parameter_list,req_param_list):
             min = parameter['minLength']
         else:
             min = None
+        if 'format' in parameter:
+            format = parameter['format']
+        else:
+            format = None
         req_param = field_info(parameter_name, parameter_type, parameter_required, parameter_default,
-                               "No", parameter_location, parameter_description, parameter_enum, object_type, array_type, max,
-                               min)
+                               "No", parameter_location, parameter_description,parameter_enum,  object_type, array_type, max,
+                               min,format)
         req_param_list.append(req_param)
     return req_param_list
 
@@ -212,7 +226,10 @@ def response_handle(responses):
         if 'content' in responses[response]:
             for key in responses[response]['content']:
                 properties_alls = key
-            properties = responses[response]['content'][properties_alls]['schema']['properties']
+            if 'object' in responses[response]['content'][properties_alls]['schema']['type']:
+                properties = responses[response]['content'][properties_alls]['schema']['properties']
+            elif 'array' == responses[response]['content'][properties_alls]['schema']['type']:
+                properties = responses[response]['content'][properties_alls]['schema']['items']
         else:
             return resp_params_list
         resp_params_list = properties_handle(properties,None,None)
@@ -250,7 +267,7 @@ def paths_handle(spec):
     if 'swagger' in spec:
         url = swagger_handle(spec)
     else:
-        url = swagger_handle(spec)
+        url = open_api_handle(spec)
     api_id = 0
     api_list = []
     paths = spec.get('paths')
@@ -277,16 +294,16 @@ def paths_handle(spec):
             api_list.append(api)
     return  api_list
 
-def parse(version,path):
 
+def get_api_info(version, path):
     parser = ResolvingParser(path)
     spec = parser.specification
     api_list = paths_handle(spec)
     return api_list
     pass
 
-path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/sdms.yaml")
-parse(1,path)
+path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/wordpress.yaml")
+get_api_info(1,path)
 
 
 #
