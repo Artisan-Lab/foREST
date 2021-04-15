@@ -10,9 +10,10 @@ from datetime import timedelta, datetime
 
 def add_token(url):
     if '?' in url:
-        url = url + '&private_token=zKZFJN3EymWm5GMCaCwx'
+        url = url + '&private_token=n19y6WJgSgjyDuFSHMx9'
+        # ehWyDYxYMRcFLKCRryeK root token
     else:
-        url = url + '?private_token=zKZFJN3EymWm5GMCaCwx'
+        url = url + '?private_token=n19y6WJgSgjyDuFSHMx9'
     return url
 
 
@@ -49,14 +50,9 @@ def fuzz_paramerter(field_info):
     pass
 
 
-def created_url(url, req_paramerter):
+def get_responses(url, req_paramerter, responses_list, default_count):
     fuzz_parameter = fuzz_paramerter(req_paramerter)
     url1 = url + '&' + fuzz_parameter
-    return url1
-
-
-def get_responses(url, req_paramerter, responses_list, default_count):
-    url1 = created_url(url, req_paramerter)
     request_respones = requests.get(url1)
     respones_status = request_respones.status_code
     if 300 > respones_status >= 200 and default_count < 10:
@@ -74,9 +70,12 @@ def get_responses(url, req_paramerter, responses_list, default_count):
 def MR_texting(responses_list, MR_matric):
     #subset  equality equivalence disjoint complete diffirence
     response_text = responses_list[0]
-    response_random = random.sample(responses_list[1:10],2)
-    response_text1 = response_random[0]
-    response_text2 = response_random[1]
+    response_text1 = random.choice(responses_list[1:11])
+    response_text2 = random.choice(responses_list[1:11])
+    for i in range(10):
+        if response_text1 == response_text2:
+            response_text2 = random.choice(responses_list[1:11])
+    response_text3 = response_text1 + response_text2
     if (all([response_text[i] in response_text1 for i in range(0,len(response_text))]) or \
             all([response_text1[i] in response_text for i in range(0, len(response_text1))])):
         # judge subset
@@ -87,45 +86,64 @@ def MR_texting(responses_list, MR_matric):
             all([response_text1[i] in response_text for i in range(0,len(response_text1))])) and \
             response_text1 != response_text:
         MR_matric[2] = MR_matric[2] + 1
-    if (all([response_text[i] not in response_text1 for i in range(0,len(response_text))]) and
-            all([response_text1[i] not in response_text for i in range(0,len(response_text1))])):
+    if (all([response_text2[i] not in response_text1 for i in range(0,len(response_text2))]) and
+            all([response_text1[i] not in response_text2 for i in range(0,len(response_text1))])):
         MR_matric[3] = MR_matric[3] + 1
+    if (all([response_text[i] in response_text3 for i in range(0,len(response_text))]) and
+            all([response_text3[i] in response_text for i in range(0,len(response_text3))])):
+        MR_matric[4] = MR_matric[4] + 1
     return MR_matric
 
 
-def metamorphic(api_info):
-    url = add_token(api_info.path)
-    if api_info.req_field_names:
+def metamorphic(api_info,parameter_list):
+    if api_info.http_method == 'get':
+        url = add_token(api_info.path)
+        if api_info.req_field_names:
+            for req_paramerter in api_info.req_param:
+                if req_paramerter.field_name in api_info.req_field_names:
+                    parameter = str(parameter_list[req_paramerter.field_name])
+                    if req_paramerter.location == 0:
+                        url = url.replace('{'+req_paramerter.field_name+'}',parameter)
+                    else:
+                        url = url + '&' + parameter
+        source_response = requests.get(url)
+        if source_response.status_code > 300:
+            print(url+'dependency default')
+            return
         for req_paramerter in api_info.req_param:
+            # 测API的每个参数
+            MR_matric_count = [0, 0, 0, 0, 0, 0]
+            # 前三个为源输出与加参数输出之间的关系 subset equality equivalence
+            # 不同参数输出之间的关系 disjoint
+            # 不同参数输出与源输出之间的关系 complete
+            # 多次相同请求之间的关系difference
+            MR_matric = [0, 0, 0, 0, 0, 0]
+            # 记录测得的MR
             if req_paramerter.field_name in api_info.req_field_names:
-                fuzz_parameter = fuzz_paramerter(req_paramerter)
-                url = url + '&' + fuzz_parameter
-    for req_paramerter in api_info.req_param:
-        # 测API的每个参数
-        MR_matric = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-        if req_paramerter.field_name in api_info.req_field_names:
-            continue
-        responses = [json.loads(requests.get(url).text)]
-        for i in range(1,11):
-            responses = get_responses(url, req_paramerter, responses, 0)
-        if len(responses) < 10:
-            print('no enough %s' % req_paramerter.field_name)
-            continue
-        for i in range(1,11):
-            MR_matric = MR_texting(responses, MR_matric)
-        if MR_matric[0] == max(MR_matric) and MR_matric[1] + MR_matric[2] <MR_matric[0]:
-            MRs = 'subset'
-        if MR_matric[1] == max(MR_matric):
-            MRs = 'equality or test case not use'
-        if MR_matric[1] + MR_matric[2] == MR_matric[0] and MR_matric[1] != 0 and MR_matric[2] !=0:
-            MRs = 'equivalence'
-        print(req_paramerter.field_name + '   ' +MRs)
+                continue
+            responses = [json.loads(requests.get(url).text)]
+            for i in range(1,11):
+                responses = get_responses(url, req_paramerter, responses, 0)
+            if len(responses) < 10:
+                print('no enough %s' % req_paramerter.field_name)
+                continue
+            for i in range(1, 11):
+                MR_matric_count = MR_texting(responses, MR_matric_count)
+            if MR_matric_count[0] == max(MR_matric_count): #and MR_matric_count[1] + MR_matric_count[2] <MR_matric_count[0]:
+                MR_matric[0] = 1
+            if MR_matric_count[1] == max(MR_matric_count):
+                MR_matric[1] = 1
+            if MR_matric_count[1] + MR_matric_count[2] == MR_matric_count[0] and MR_matric_count[1] != 0 and MR_matric_count[2] !=0:
+                MR_matric[2] = 1
+            if MR_matric_count[3] == max(MR_matric_count):
+                MR_matric[3] = 1
+            print(req_paramerter.field_name + '   ' + str(MR_matric))
 
 
 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/projects-api.yaml")
 api_list = parse.get_api_info(1, path)
 for api_info in api_list:
-    metamorphic(api_info)
+    metamorphic(api_info,{'user_id': 34})
 
 
 
