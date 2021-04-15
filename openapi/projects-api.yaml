@@ -566,17 +566,17 @@ paths:
         - name: order_by
           schema:
             type: string
+            enum:
+              - id
+              - name
+              - path
+              - created_at
+              - updated_at
           required: false
           in: query
           description: >-
             Return projects ordered by id, name, path, created_at, updated_at,
             or last_activity_at fields. Default is created_at.
-          enum:
-          - id
-          - name
-          - path
-          - created_at
-          - updated_at
         - name: owned
           schema:
             type: boolean
@@ -600,13 +600,13 @@ paths:
         - name: sort
           schema:
             type: string
+            enum:
+              - desc
+              - asc
+            default: desc
           required: false
           in: query
           description: Return projects sorted in asc or desc order. Default is desc.
-          enum:
-          - desc
-          - asc
-          default: desc
         - name: starred
           schema:
             type: boolean
@@ -628,13 +628,13 @@ paths:
         - name: visibility
           schema:
             type: string
+            enum:
+              - public
+              - internal
+              - private
           required: false
           in: query
           description: 'Limit by visibility public, internal, or private.'
-          enum:
-          - public
-          - internal
-          - private
         - name: with_custom_attributes
           schema:
             type: boolean
