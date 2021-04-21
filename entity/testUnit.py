@@ -22,14 +22,14 @@ def random_str(slen=10):
 
 
 class FuzzAndJudgeUnit:
+    parameter = None
+    responses_status = None
+    request_response = None
 
     def __init__(self, field_info, base_url, req_field_names):
         self.field_info = field_info
         self.base_url = base_url
         self.req_field_names = req_field_names
-        self.parameter = None
-        self.responses_status = None
-        self.request_response = None
 
     def fuzz_parameter(self):
         if self.field_info.enum:
