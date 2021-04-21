@@ -1,11 +1,5 @@
 import requests
-import os.path
-from prance import ResolvingParser
-import json
-import parse
 import random
-from datetime import timedelta, datetime
-from random import randrange
 
 
 def random_date(start, end):
@@ -25,50 +19,64 @@ def random_str(slen=10):
     return ''.join(sa)
 
 
-def fuzz_parameter(field_info):
-    if field_info.enum:
-        return field_info.field_name + '=' + str(random.choice(field_info.enum))
-    elif field_info.format:
-        if field_info.format == 'ISO 8601 YYYY-MM-DDTHH:MM:SSZ':
-            return field_info.field_name + '=' + \
-                   str(random_date(
-                       datetime(2021, 12, 31, 23, 59, 59).astimezone().replace(microsecond=0)).isoformat())
-    else:
-        if field_info.field_type == 'boolean':
-            return field_info.field_name + '=' + random.choice(['true', 'false'])
-        elif field_info.field_type == 'string':
-            return field_info.field_name + '=' + random_str()
-        elif field_info.field_type == 'integer':
-            return field_info.field_name + '=' + str(random.randint(0, 50))
-    pass
+class FuzzAndJudgeUnit:
 
+    def __init__(self, field_info, base_url, req_field_names):
+        self.field_info = field_info
+        self.base_url = base_url
+        self.req_field_names = req_field_names
+        self.parameter = None
+        self.responses_status = None
 
-def add_token(url):
-    # 加上token 因为暂时不考虑token的问题 所以在第一步就加上token
-    # if '?' in url:
-    #     url = url + '&private_token=n19y6WJgSgjyDuFSHMx9'
-    #     # ehWyDYxYMRcFLKCRryeK root token
-    # else:
-    url = url + '?private_token=n19y6WJgSgjyDuFSHMx9'
-    return url
-
-
-def get_responses(url, req_parameter, responses_list, default_count):
-    # 获取一个响应列表 其中 列表第一项为源输出（不加参数的输出）
-    parameter = fuzz_parameter(req_parameter)
-    url1 = url + '&' + parameter
-    request_response = requests.get(url1)
-    response_status = request_response.status_code
-    if 300 > response_status >= 200 and default_count < 10:
-        if not json.loads(request_response.text):
-            responses_list = get_responses(url, req_parameter, responses_list, default_count + 1)
+    def fuzz_parameter(self):
+        if self.field_info.enum:
+            self.parameter = self.field_info.field_name + '=' + str(random.choice(self.field_info.enum))
+        elif self.field_info.format:
+            if field_info.format == 'ISO 8601 YYYY-MM-DDTHH:MM:SSZ':
+                self.parameter = self.field_info.field_name + '=' + \
+                       str(random_date(
+                           datetime(2021, 12, 31, 23, 59, 59).astimezone().replace(microsecond=0)).isoformat())
         else:
-            responses_list.append(json.loads(requests.get(url1).text))
-    elif 500 > response_status >= 300 and default_count < 10:
-        responses_list = get_responses(url, req_parameter, responses_list, default_count + 1)
-    elif 500 == response_status:
-        print('find bug in %s' % url1)
-    return responses_list
+            if self.field_info.field_type == 'boolean':
+                self.parameter = self.field_info.field_name + '=' + random.choice(['true', 'false'])
+            elif self.field_info.field_type == 'string':
+                self.parameter = self.field_info.field_name + '=' + random_str()
+            elif self.field_info.field_type == 'integer':
+                self.parameter = self.field_info.field_name + '=' + str(random.randint(0, 50))
+        pass
+
+    def add_parameter(self):
+        if self.field_info.location == 0:
+            self.base_url = self.base_url.replace('{' + self.field_info.field_name + '}', self.parameter)
+        else:
+            self.base_url = self.base_url + '&' + self.parameter
+
+    def judge_effective(self):
+        request_response = requests.get(self.base_url)
+        response_status = request_response.status_code
+        if 300 > response_status >= 200:
+            if not json.loads(request_response.text):
+                self.responses_status = 0
+            else:
+                self.responses_status = 1
+                return request_response
+        elif 500 > response_status >= 300:
+            self.responses_status = 0
+        elif 500 == response_status:
+            print('find bug in %s' % url1)
+
+    def add_token(self):
+        # 加上token 因为暂时不考虑token的问题 所以在第一步就加上token
+        # if '?' in url:
+        #     url = url + '&private_token=n19y6WJgSgjyDuFSHMx9'
+        #     # ehWyDYxYMRcFLKCRryeK root token
+        # else:
+        self.base_url = self.base_url + '?private_token=n19y6WJgSgjyDuFSHMx9'
+
+    def exec_test(self):
+        FuzzAndJudge.fuzz_parameter()
+        FuzzAndJudge.add_parameter()
+        FuzzAndJudge.judge_effective()
 
 
 def MR_texting(response_text, response_text1, response_text2, MR_matric):
@@ -108,7 +116,7 @@ def metamorphic(api_info,parameter_list):
                         url = url + '&' + parameter
         source_response = requests.get(url)
         if source_response.status_code > 300:
-            print(url+'dependency default')
+            print(url + 'dependency default')
             return
         for req_paramerter in api_info.req_param:
             # 测API的每个参数
@@ -123,7 +131,7 @@ def metamorphic(api_info,parameter_list):
                 continue
             responses = [json.loads(requests.get(url).text)]
             for i in range(1,11):
-                a = FuzzAndJudgeUnit(url,api_info.req_parameter)
+                a = FuzzAndJudgeUnit(api_info.req_parameter)
                 responses = get_responses(url, req_paramerter, responses, 0)
             if len(responses) < 10:
                 print('lack %s' % req_paramerter.field_name)
@@ -150,12 +158,12 @@ def metamorphic(api_info,parameter_list):
         print(str(MR_dic))
 
 
+
 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/projects-api.yaml")
 api_list = parse.get_api_info(1, path)
 for api_info in api_list:
-    metamorphic(api_info,{'user_id': 34})
+    metamorphic(api_info, {'user_id': 34})
 
 
 
 
-# def mr_test_get(specification,url,method,token):
