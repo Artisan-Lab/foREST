@@ -31,8 +31,8 @@ def fuzz_parameter(field_info):
     elif field_info.format:
         if field_info.format == 'ISO 8601 YYYY-MM-DDTHH:MM:SSZ':
             return field_info.field_name + '=' + \
-                   str(random_date(
-                       datetime(2021, 12, 31, 23, 59, 59).astimezone().replace(microsecond=0)).isoformat())
+                str(random_date(datetime(2019, 1, 1, 0, 0, 0).astimezone().replace(microsecond=0),
+                                datetime(2021, 12, 31, 23, 59, 59).astimezone().replace(microsecond=0)).isoformat())
     else:
         if field_info.field_type == 'boolean':
             return field_info.field_name + '=' + random.choice(['true', 'false'])

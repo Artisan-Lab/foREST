@@ -1,6 +1,6 @@
 import requests
-from MR_testing import fuzz_parameter
 
+from module.MR_testing import fuzz_parameter
 
 
 class MetamorphicJudge:
@@ -15,8 +15,7 @@ class MetamorphicJudge:
         parameter_2 = fuzz_parameter(parameter_2)
         url_1 = self.base_url + '&' + parameter_1
         url_1_response = requests.get(url_1)
-        url_test = self.base_url + '&' + parameter_1 + '&' +
-        responses_1 =
+        url_test = self.base_url + '&' + parameter_1 + '&'
 
     def metamorphic_testing(self):
         for parameter_1 in self.mr_dic:
