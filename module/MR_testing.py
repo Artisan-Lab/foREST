@@ -39,11 +39,11 @@ class MRTesting:
         self.responses = [json.loads(requests.get(self.url).text)]
         for i in range(1, 11):
             for j in range(1, 10):
-                test_unit = FuzzAndJudgeUnit(self.field_info, self.url, self.api_info.req_field_names)
-                test_unit.fuzz_parameter()
-                test_unit.add_parameter()
+                test_unit = FuzzAndJudgeUnit(self.field_info, self.url)
+                test_unit.req_field_names = self.api_info.req_field_names
+                test_unit.fuzz_and_add_parameter()
                 if test_unit.judge_effective() == 1:
-                    response = test_unit.get_response()
+                    response = test_unit.request_response
                     self.responses.append(json.loads(response.text))
                     break
 
@@ -107,7 +107,7 @@ class MRTesting:
                     if MR_matrix_count[4] == 10 and MR_matrix_count[2] != 1:
                         MR_matrix[4] = 1
                     MR_dic[str(self.field_info.field_name)] = MR_matrix
-                    print(self.field_info.field_name + '     ' + str(MR_matrix_count))
+                    # print(self.field_info.field_name + '     ' + str(MR_matrix_count))
                 for key, value in MR_dic.items():
                     print(key + ": " + str(value))
 
