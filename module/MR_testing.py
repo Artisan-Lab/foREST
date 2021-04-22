@@ -4,7 +4,8 @@ import requests
 import random
 from module import parse
 from entity.testUnit import FuzzAndJudgeUnit
-
+from module.metamorphic_compare import MetamorphicCompare
+from module.matemorphic_testing import MetamorphicTesting
 
 class MRTesting:
     url = None
@@ -42,7 +43,7 @@ class MRTesting:
                 test_unit = FuzzAndJudgeUnit(self.field_info, self.url)
                 test_unit.req_field_names = self.api_info.req_field_names
                 test_unit.fuzz_and_add_parameter()
-                if test_unit.judge_effective() == 1:
+                if test_unit.judge_effective():
                     response = test_unit.request_response
                     self.responses.append(json.loads(response.text))
                     break
@@ -58,7 +59,7 @@ class MRTesting:
                 if response_text1 == response_text2:
                     response_text2 = random.choice(self.responses[1:11])
             response_text3 = response_text1 + response_text2
-            if (all([response_text[i] in response_text1 for i in range(0, len(response_text))]) or \
+            if (all([response_text[i] in response_text1 for i in range(0, len(response_text))]) or
                     all([response_text1[i] in response_text for i in range(0, len(response_text1))])):
                 # judge subset
                 MR_matrix_count[0] = MR_matrix_count[0] + 1
@@ -94,10 +95,9 @@ class MRTesting:
                     MR_matrix = [0, 0, 0, 0, 0, 0]
                     # 记录测得的MR
                     MR_matrix_count = self.MR_testing()
-                    if MR_matrix_count[0] == max(
-                            MR_matrix_count):  # and MR_matrix_count[1] + MR_matrix_count[2] <MR_matrix_count[0]:
+                    if MR_matrix_count[0] == 10:  # and MR_matrix_count[1] + MR_matrix_count[2] <MR_matrix_count[0]:
                         MR_matrix[0] = 1
-                    if MR_matrix_count[1] == max(MR_matrix_count):
+                    if MR_matrix_count[1] == 10:
                         MR_matrix[1] = 1
                     if MR_matrix_count[1] + MR_matrix_count[2] == MR_matrix_count[0] and MR_matrix_count[1] != 0 and \
                             MR_matrix_count[2] != 0:
@@ -107,9 +107,11 @@ class MRTesting:
                     if MR_matrix_count[4] == 10 and MR_matrix_count[2] != 1:
                         MR_matrix[4] = 1
                     MR_dic[str(self.field_info.field_name)] = MR_matrix
-                    # print(self.field_info.field_name + '     ' + str(MR_matrix_count))
+                    print(self.field_info.field_name + '     ' + str(MR_matrix_count))
                 for key, value in MR_dic.items():
                     print(key + ": " + str(value))
+                b = MetamorphicTesting(self.url, self.api_info, MR_dic)
+                b.metamorphic_testing()
 
 
 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/projects-api.yaml")
@@ -117,3 +119,4 @@ api_list = parse.get_api_info(1, path)
 for api_info in api_list:
     a = MRTesting( {'user_id': 34},api_info)
     a.exec()
+
