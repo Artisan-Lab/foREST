@@ -25,13 +25,13 @@ class FuzzAndJudgeUnit:
     parameter = None
     responses_status = None
     request_response = None
+    req_field_names = None
 
-    def __init__(self, field_info, base_url, req_field_names):
+    def __init__(self, field_info, base_url):
         self.field_info = field_info
         self.base_url = base_url
-        self.req_field_names = req_field_names
 
-    def fuzz_parameter(self):
+    def fuzz_and_add_parameter(self):
         if self.field_info.enum:
             self.parameter = self.field_info.field_name + '=' + str(random.choice(self.field_info.enum))
         elif self.field_info.format:
@@ -46,13 +46,12 @@ class FuzzAndJudgeUnit:
                 self.parameter = self.field_info.field_name + '=' + random_str()
             elif self.field_info.field_type == 'integer':
                 self.parameter = self.field_info.field_name + '=' + str(random.randint(0, 50))
-        pass
-
-    def add_parameter(self):
         if self.field_info.location == 0:
             self.base_url = self.base_url.replace('{' + self.field_info.field_name + '}', self.parameter)
         else:
             self.base_url = self.base_url + '&' + self.parameter
+        pass
+
 
     def judge_effective(self):
         self.request_response = requests.get(self.base_url)
@@ -68,9 +67,7 @@ class FuzzAndJudgeUnit:
             print('find bug in %s' % self.base_url)
             self.responses_status = 0
         return self.responses_status
-
-    def get_response(self):
-        return self.request_response
+        pass
 
     def add_token(self):
         # 加上token 因为暂时不考虑token的问题 所以在第一步就加上token
@@ -79,3 +76,9 @@ class FuzzAndJudgeUnit:
         #     # ehWyDYxYMRcFLKCRryeK root token
         # else:
         self.base_url = self.base_url + '?private_token=n19y6WJgSgjyDuFSHMx9'
+
+    def exec(self):
+        for i in range(1,10):
+            self.fuzz_and_add_parameter()
+            if self.judge_effective():
+                break
