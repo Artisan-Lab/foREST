@@ -26,6 +26,7 @@ class FuzzAndJudgeUnit:
     responses_status = None
     request_response = None
     req_field_names = None
+    new_url = None
 
     def __init__(self, field_info, base_url):
         self.field_info = field_info
@@ -47,14 +48,13 @@ class FuzzAndJudgeUnit:
             elif self.field_info.field_type == 'integer':
                 self.parameter = self.field_info.field_name + '=' + str(random.randint(0, 50))
         if self.field_info.location == 0:
-            self.base_url = self.base_url.replace('{' + self.field_info.field_name + '}', self.parameter)
+            self.new_url = self.base_url.replace('{' + self.field_info.field_name + '}', self.parameter)
         else:
-            self.base_url = self.base_url + '&' + self.parameter
+            self.new_url = self.base_url + '&' + self.parameter
         pass
 
-
     def judge_effective(self):
-        self.request_response = requests.get(self.base_url)
+        self.request_response = requests.get(self.new_url)
         response_status = self.request_response.status_code
         if 300 > response_status >= 200:
             if not json.loads(self.request_response.text):
