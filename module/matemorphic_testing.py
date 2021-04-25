@@ -6,7 +6,6 @@ from module.metamorphic_compare import MetamorphicCompare
 
 class MetamorphicTesting:
 
-    sorce_response = None
     problem_url = None
 
     def __init__(self, base_url, api_info, mr_dic):
@@ -22,38 +21,75 @@ class MetamorphicTesting:
 
     def sub_sub_test(self, parameter_1, parameter_2):
         fuzz_unit_1 = FuzzAndJudgeUnit(self.find_field_info(parameter_1), self.base_url)
-        for i in range(1, 10):
-            fuzz_unit_1.fuzz_and_add_parameter()
-            if fuzz_unit_1.judge_effective():
-                response_1 = json.loads(requests.get(fuzz_unit_1.new_url).text)
-                break
-        if not fuzz_unit_1.judge_effective():
-            print(fuzz_unit_1.base_url + '  ' + fuzz_unit_1.field_info.field_name + 'may has problem')
-            return 0
-        compare_unit_1 = MetamorphicCompare(self.source_response, response_1)
+        fuzz_unit_1.exec()
+        if fuzz_unit_1.responses_status == 0:
+            return
+        compare_unit_1 = MetamorphicCompare(self.source_response, fuzz_unit_1.request_response)
         compare_unit_1.subset_compare()
         if not compare_unit_1.compare_result:
-            print(fuzz_unit_1.new_url + '\n' + self.source_response)
-            return 0
-        fuzz_unit_2 = FuzzAndJudgeUnit(self.find_field_info(parameter_2), fuzz_unit_1.new_url)
-        for i in range(1, 10):
-            fuzz_unit_2.fuzz_and_add_parameter()
-            if fuzz_unit_2.judge_effective():
-                response_2 = json.loads(requests.get(fuzz_unit_2.new_url).text)
-                break
-        if not fuzz_unit_2.judge_effective():
-            print(fuzz_unit_2.base_url + '  ' + fuzz_unit_1.field_info.field_name +
-                  fuzz_unit_2.field_info.field_name + 'may has problem')
-            return 0
-        compare_unit_2 = MetamorphicCompare(self.source_response, response_2)
+            print(fuzz_unit_1.new_url + 'Does not satisfy subset with source response')
+            return
+        fuzz_unit_2 = FuzzAndJudgeUnit(self.find_field_info(parameter_2), self.base_url)
+        fuzz_unit_2.exec()
+        if fuzz_unit_1.responses_status == 0:
+            return
+        compare_unit_2 = MetamorphicCompare(self.source_response, fuzz_unit_1.request_response)
         compare_unit_2.subset_compare()
         if not compare_unit_2.compare_result:
-            print(fuzz_unit_2.new_url + '\n' + fuzz_unit_1.new_url)
-            return 0
-        return 1
+            print(fuzz_unit_2.new_url + 'Does not satisfy subset with source response')
+            return
+        fuzz_unit_3 = FuzzAndJudgeUnit(self.find_field_info(parameter_2), fuzz_unit_1.new_url)
+        fuzz_unit_3.new_url = fuzz_unit_1.new_url + '&' + fuzz_unit_2.parameter
+        fuzz_unit_3.judge_effective()
+        if fuzz_unit_3.responses_status == 0:
+            return
+        compare_unit_3 = MetamorphicCompare(self.source_response, fuzz_unit_3.request_response)
+        compare_unit_3.subset_compare()
+        if not compare_unit_3.compare_result:
+            print(fuzz_unit_3.new_url + '\n' + fuzz_unit_1.new_url)
+            return
+        return
 
     def sub_sort_test(self, parameter_1, parameter_2):
+        fuzz_unit_1 = FuzzAndJudgeUnit(self.find_field_info(parameter_1), self.base_url)
+        fuzz_unit_1.exec()
+        if fuzz_unit_1.responses_status == 0:
+            return
+        compare_unit_1 = MetamorphicCompare(self.source_response, fuzz_unit_1.request_response)
+        compare_unit_1.subset_compare()
+        if not compare_unit_1.compare_result:
+            print(fuzz_unit_1.new_url + 'Does not satisfy subset with source response')
+            return
+        fuzz_unit_2 = FuzzAndJudgeUnit(self.find_field_info(parameter_2), self.base_url)
+        fuzz_unit_2.exec()
+        if fuzz_unit_1.responses_status == 0:
+            return
+        compare_unit_2 = MetamorphicCompare(self.source_response, fuzz_unit_1.request_response)
+        compare_unit_2.equivalence_compare()
+        if not compare_unit_2.compare_result:
+            print(fuzz_unit_2.new_url + 'Does not satisfy subset with source response')
+            return
+        fuzz_unit_3 = FuzzAndJudgeUnit(self.find_field_info(parameter_2), fuzz_unit_1.new_url)
+        fuzz_unit_3.new_url = fuzz_unit_1.new_url + '&' + fuzz_unit_2.parameter
+        fuzz_unit_3.judge_effective()
+        if fuzz_unit_3.responses_status == 0:
+            return
+        compare_unit_3 = MetamorphicCompare(fuzz_unit_1.request_response, fuzz_unit_3.request_response)
+        compare_unit_3.equivalence_compare()
+        if not compare_unit_3.compare_result:
+            print(fuzz_unit_3.new_url + fuzz_unit_1.new_url + 'equivalence')
+            return
+        compare_unit_3 = MetamorphicCompare(self.source_response, fuzz_unit_3)
+        compare_unit_3.subset_compare()
+        if not compare_unit_3.compare_result:
+            print(self.base_url + fuzz_unit_3.new_url + 'subset')
+            return
+        compare_unit_3 = MetamorphicCompare(fuzz_unit_2.request_response, fuzz_unit_3.request_response)
+        compare_unit_3.subset_compare()
+        if not compare_unit_3.compare_result:
+            print(fuzz_unit_2.new_url + fuzz_unit_3 + 'subset')
 
+        return
 
     def metamorphic_testing(self):
         for parameter_1 in self.mr_dic:

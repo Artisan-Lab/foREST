@@ -78,7 +78,12 @@ class FuzzAndJudgeUnit:
         self.base_url = self.base_url + '?private_token=n19y6WJgSgjyDuFSHMx9'
 
     def exec(self):
-        for i in range(1,10):
+        for i in range(1, 10):
             self.fuzz_and_add_parameter()
             if self.judge_effective():
+                self.request_response = json.loads(requests.get(self.new_url).text)
+                self.responses_status = 1
                 break
+        if not self.judge_effective():
+            print(self.base_url + '  ' + self.field_info.field_name + 'may has problem')
+            self.responses_status = 0
