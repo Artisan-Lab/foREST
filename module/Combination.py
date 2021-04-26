@@ -1,5 +1,9 @@
 from itertools import combinations
 
+'''
+组合所有optional参数
+为防止组合爆炸，可设定优先级，并采用BFS等方式选取组合
+'''
 class Combination:
     def combine(temp_list, n):
         '''根据n获得列表中的所有可能组合（n个元素为一组）'''
