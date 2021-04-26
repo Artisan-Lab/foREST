@@ -54,10 +54,11 @@ class FuzzAndJudgeUnit:
         pass
 
     def judge_effective(self):
-        self.request_response = requests.get(self.new_url)
-        response_status = self.request_response.status_code
+        a = requests.get(self.new_url).text
+        self.request_response = json.loads(a)
+        response_status = requests.get(self.new_url).status_code
         if 300 > response_status >= 200:
-            if not json.loads(self.request_response.text):
+            if not self.request_response:
                 self.responses_status = 0
             else:
                 self.responses_status = 1
