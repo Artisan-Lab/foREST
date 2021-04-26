@@ -5,7 +5,7 @@ import random
 from module import parse
 from entity.testUnit import FuzzAndJudgeUnit
 from module.metamorphic_compare import MetamorphicCompare
-from module.matemorphic_testing import MetamorphicTesting
+from module.metamorphic_testing import MetamorphicTesting
 
 class MRTesting:
     url = None
@@ -117,6 +117,6 @@ class MRTesting:
 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/projects-api.yaml")
 api_list = parse.get_api_info(1, path)
 for api_info in api_list:
-    a = MRTesting( {'user_id': 34},api_info)
+    a = MRTesting({'user_id': 34}, api_info)
     a.exec()
 

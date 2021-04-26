@@ -11,8 +11,9 @@ class api_info:
         self.http_method = http_method
         self.req_field_names = []
         for i in list(self.req_param):
-            name = i.field_name
-            self.req_field_names.append(name)
+            if i.require:
+                name = i.field_name
+                self.req_field_names.append(name)
 
     # 判断是否存在依赖关系，从消费者角度
     def has_dep(self,api_info):

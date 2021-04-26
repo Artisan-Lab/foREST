@@ -52,6 +52,13 @@ paths:
         - name: min_access_level
           schema:
             type: integer
+            enum:
+              - 5
+              - 10
+              - 20
+              - 30
+              - 40
+              - 50
           required: false
           in: query
           description: Limit by current user minimal access level.
@@ -528,298 +535,298 @@ paths:
       responses:
         '200':
           description: success
-  '/users/{user_id}/projects':
-    get:
-      tags:
-        - projects-api
-      parameters:
-        - name: archived
-          schema:
-            type: boolean
-          required: false
-          in: query
-          description: Limit by archived status.
-        - name: id_after
-          schema:
-            type: integer
-          required: false
-          in: query
-          description: Limit results to projects with IDs greater than the specified ID.
-        - name: id_before
-          schema:
-            type: integer
-          required: false
-          in: query
-          description: Limit results to projects with IDs less than the specified ID.
-        - name: membership
-          schema:
-            type: boolean
-          required: false
-          in: query
-          description: Limit by projects that the current user is a member of.
-        - name: min_access_level
-          schema:
-            type: integer
-          required: false
-          in: query
-          description: Limit by current user minimal access level.
-        - name: order_by
-          schema:
-            type: string
-          required: false
-          in: query
-          description: >-
-            Return projects ordered by id, name, path, created_at, updated_at,
-            or last_activity_at fields. Default is created_at.
-          enum:
-          - id
-          - name
-          - path
-          - created_at
-          - updated_at
-        - name: owned
-          schema:
-            type: boolean
-          required: false
-          in: query
-          description: Limit by projects explicitly owned by the current user.
-        - name: search
-          schema:
-            type: string
-          required: false
-          in: query
-          description: Return list of projects matching the search criteria.
-        - name: simple
-          schema:
-            type: boolean
-          required: false
-          in: query
-          description: >-
-            Return only limited fields for each project. This is a no-op without
-            authentication as then only simple fields are returned.
-        - name: sort
-          schema:
-            type: string
-          required: false
-          in: query
-          description: Return projects sorted in asc or desc order. Default is desc.
-          enum:
-          - desc
-          - asc
-          default: desc
-        - name: starred
-          schema:
-            type: boolean
-          required: false
-          in: query
-          description: Limit by projects starred by the current user.
-        - name: statistics
-          schema:
-            type: boolean
-          required: false
-          in: query
-          description: Include project statistics.
-        - name: user_id
-          schema:
-            type: string
-          required: true
-          in: path
-          description: The ID or username of the user.
-        - name: visibility
-          schema:
-            type: string
-          required: false
-          in: query
-          description: 'Limit by visibility public, internal, or private.'
-          enum:
-          - public
-          - internal
-          - private
-        - name: with_custom_attributes
-          schema:
-            type: boolean
-          required: false
-          in: query
-          description: Include custom attributes in response. (admins only)
-        - name: with_issues_enabled
-          schema:
-            type: boolean
-          required: false
-          in: query
-          description: Limit by enabled issues feature.
-        - name: with_merge_requests_enabled
-          schema:
-            type: boolean
-          required: false
-          in: query
-          description: Limit by enabled merge requests feature.
-        - name: with_programming_language
-          schema:
-            type: string
-          required: false
-          in: query
-          description: Limit by projects which use the given programming language.
-      responses:
-        '200':
-          description: success
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    description:
-                      type: string
-                    default_branch:
-                      type: string
-                    visibility:
-                      type: string
-                    ssh_url_to_repo:
-                      type: string
-                    http_url_to_repo:
-                      type: string
-                    web_url:
-                      type: string
-                    readme_url:
-                      type: string
-                    tag_list:
-                      type: array
-                      items:
-                        type: string
-                    owner:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        created_at:
-                          type: string
-                    name:
-                      type: string
-                    name_with_namespace:
-                      type: string
-                    path:
-                      type: string
-                    path_with_namespace:
-                      type: string
-                    issues_enabled:
-                      type: boolean
-                    open_issues_count:
-                      type: integer
-                    merge_requests_enabled:
-                      type: boolean
-                    jobs_enabled:
-                      type: boolean
-                    wiki_enabled:
-                      type: boolean
-                    snippets_enabled:
-                      type: boolean
-                    can_create_merge_request_in:
-                      type: boolean
-                    resolve_outdated_diff_discussions:
-                      type: boolean
-                    container_registry_enabled:
-                      type: boolean
-                    created_at:
-                      type: string
-                    last_activity_at:
-                      type: string
-                    creator_id:
-                      type: integer
-                    namespace:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        path:
-                          type: string
-                        kind:
-                          type: string
-                        full_path:
-                          type: string
-                    import_status:
-                      type: string
-                    archived:
-                      type: boolean
-                    avatar_url:
-                      type: string
-                    shared_runners_enabled:
-                      type: boolean
-                    forks_count:
-                      type: integer
-                    star_count:
-                      type: integer
-                    runners_token:
-                      type: string
-                    ci_default_git_depth:
-                      type: integer
-                    ci_forward_deployment_enabled:
-                      type: boolean
-                    public_jobs:
-                      type: boolean
-                    shared_with_groups:
-                      type: array
-                      items:
-                        type: object
-                    only_allow_merge_if_pipeline_succeeds:
-                      type: boolean
-                    allow_merge_on_skipped_pipeline:
-                      type: boolean
-                    only_allow_merge_if_all_discussions_are_resolved:
-                      type: boolean
-                    remove_source_branch_after_merge:
-                      type: boolean
-                    request_access_enabled:
-                      type: boolean
-                    merge_method:
-                      type: string
-                    autoclose_referenced_issues:
-                      type: boolean
-                    suggestion_commit_message:
-                      type: string
-                    marked_for_deletion_at:
-                      type: string
-                    marked_for_deletion_on:
-                      type: string
-                    statistics:
-                      type: object
-                      properties:
-                        commit_count:
-                          type: integer
-                        storage_size:
-                          type: integer
-                        repository_size:
-                          type: integer
-                        wiki_size:
-                          type: integer
-                        lfs_objects_size:
-                          type: integer
-                        job_artifacts_size:
-                          type: integer
-                        packages_size:
-                          type: integer
-                        snippets_size:
-                          type: integer
-                    _links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                        issues:
-                          type: string
-                        merge_requests:
-                          type: string
-                        repo_branches:
-                          type: string
-                        labels:
-                          type: string
-                        events:
-                          type: string
-                        members:
-                          type: string
+#  '/users/{user_id}/projects':
+#    get:
+#      tags:
+#        - projects-api
+#      parameters:
+#        - name: archived
+#          schema:
+#            type: boolean
+#          required: false
+#          in: query
+#          description: Limit by archived status.
+#        - name: id_after
+#          schema:
+#            type: integer
+#          required: false
+#          in: query
+#          description: Limit results to projects with IDs greater than the specified ID.
+#        - name: id_before
+#          schema:
+#            type: integer
+#          required: false
+#          in: query
+#          description: Limit results to projects with IDs less than the specified ID.
+#        - name: membership
+#          schema:
+#            type: boolean
+#          required: false
+#          in: query
+#          description: Limit by projects that the current user is a member of.
+#        - name: min_access_level
+#          schema:
+#            type: integer
+#          required: false
+#          in: query
+#          description: Limit by current user minimal access level.
+#        - name: order_by
+#          schema:
+#            type: string
+#            enum:
+#              - id
+#              - name
+#              - path
+#              - created_at
+#              - updated_at
+#          required: false
+#          in: query
+#          description: >-
+#            Return projects ordered by id, name, path, created_at, updated_at,
+#            or last_activity_at fields. Default is created_at.
+#        - name: owned
+#          schema:
+#            type: boolean
+#          required: false
+#          in: query
+#          description: Limit by projects explicitly owned by the current user.
+#        - name: search
+#          schema:
+#            type: string
+#          required: false
+#          in: query
+#          description: Return list of projects matching the search criteria.
+#        - name: simple
+#          schema:
+#            type: boolean
+#          required: false
+#          in: query
+#          description: >-
+#            Return only limited fields for each project. This is a no-op without
+#            authentication as then only simple fields are returned.
+#        - name: sort
+#          schema:
+#            type: string
+#            enum:
+#              - desc
+#              - asc
+#            default: desc
+#          required: false
+#          in: query
+#          description: Return projects sorted in asc or desc order. Default is desc.
+#        - name: starred
+#          schema:
+#            type: boolean
+#          required: false
+#          in: query
+#          description: Limit by projects starred by the current user.
+#        - name: statistics
+#          schema:
+#            type: boolean
+#          required: false
+#          in: query
+#          description: Include project statistics.
+#        - name: user_id
+#          schema:
+#            type: string
+#          required: true
+#          in: path
+#          description: The ID or username of the user.
+#        - name: visibility
+#          schema:
+#            type: string
+#            enum:
+#              - public
+#              - internal
+#              - private
+#          required: false
+#          in: query
+#          description: 'Limit by visibility public, internal, or private.'
+#        - name: with_custom_attributes
+#          schema:
+#            type: boolean
+#          required: false
+#          in: query
+#          description: Include custom attributes in response. (admins only)
+#        - name: with_issues_enabled
+#          schema:
+#            type: boolean
+#          required: false
+#          in: query
+#          description: Limit by enabled issues feature.
+#        - name: with_merge_requests_enabled
+#          schema:
+#            type: boolean
+#          required: false
+#          in: query
+#          description: Limit by enabled merge requests feature.
+#        - name: with_programming_language
+#          schema:
+#            type: string
+#          required: false
+#          in: query
+#          description: Limit by projects which use the given programming language.
+#      responses:
+#        '200':
+#          description: success
+#          content:
+#            application/json:
+#              schema:
+#                type: array
+#                items:
+#                  type: object
+#                  properties:
+#                    id:
+#                      type: integer
+#                    description:
+#                      type: string
+#                    default_branch:
+#                      type: string
+#                    visibility:
+#                      type: string
+#                    ssh_url_to_repo:
+#                      type: string
+#                    http_url_to_repo:
+#                      type: string
+#                    web_url:
+#                      type: string
+#                    readme_url:
+#                      type: string
+#                    tag_list:
+#                      type: array
+#                      items:
+#                        type: string
+#                    owner:
+#                      type: object
+#                      properties:
+#                        id:
+#                          type: integer
+#                        name:
+#                          type: string
+#                        created_at:
+#                          type: string
+#                    name:
+#                      type: string
+#                    name_with_namespace:
+#                      type: string
+#                    path:
+#                      type: string
+#                    path_with_namespace:
+#                      type: string
+#                    issues_enabled:
+#                      type: boolean
+#                    open_issues_count:
+#                      type: integer
+#                    merge_requests_enabled:
+#                      type: boolean
+#                    jobs_enabled:
+#                      type: boolean
+#                    wiki_enabled:
+#                      type: boolean
+#                    snippets_enabled:
+#                      type: boolean
+#                    can_create_merge_request_in:
+#                      type: boolean
+#                    resolve_outdated_diff_discussions:
+#                      type: boolean
+#                    container_registry_enabled:
+#                      type: boolean
+#                    created_at:
+#                      type: string
+#                    last_activity_at:
+#                      type: string
+#                    creator_id:
+#                      type: integer
+#                    namespace:
+#                      type: object
+#                      properties:
+#                        id:
+#                          type: integer
+#                        name:
+#                          type: string
+#                        path:
+#                          type: string
+#                        kind:
+#                          type: string
+#                        full_path:
+#                          type: string
+#                    import_status:
+#                      type: string
+#                    archived:
+#                      type: boolean
+#                    avatar_url:
+#                      type: string
+#                    shared_runners_enabled:
+#                      type: boolean
+#                    forks_count:
+#                      type: integer
+#                    star_count:
+#                      type: integer
+#                    runners_token:
+#                      type: string
+#                    ci_default_git_depth:
+#                      type: integer
+#                    ci_forward_deployment_enabled:
+#                      type: boolean
+#                    public_jobs:
+#                      type: boolean
+#                    shared_with_groups:
+#                      type: array
+#                      items:
+#                        type: object
+#                    only_allow_merge_if_pipeline_succeeds:
+#                      type: boolean
+#                    allow_merge_on_skipped_pipeline:
+#                      type: boolean
+#                    only_allow_merge_if_all_discussions_are_resolved:
+#                      type: boolean
+#                    remove_source_branch_after_merge:
+#                      type: boolean
+#                    request_access_enabled:
+#                      type: boolean
+#                    merge_method:
+#                      type: string
+#                    autoclose_referenced_issues:
+#                      type: boolean
+#                    suggestion_commit_message:
+#                      type: string
+#                    marked_for_deletion_at:
+#                      type: string
+#                    marked_for_deletion_on:
+#                      type: string
+#                    statistics:
+#                      type: object
+#                      properties:
+#                        commit_count:
+#                          type: integer
+#                        storage_size:
+#                          type: integer
+#                        repository_size:
+#                          type: integer
+#                        wiki_size:
+#                          type: integer
+#                        lfs_objects_size:
+#                          type: integer
+#                        job_artifacts_size:
+#                          type: integer
+#                        packages_size:
+#                          type: integer
+#                        snippets_size:
+#                          type: integer
+#                    _links:
+#                      type: object
+#                      properties:
+#                        self:
+#                          type: string
+#                        issues:
+#                          type: string
+#                        merge_requests:
+#                          type: string
+#                        repo_branches:
+#                          type: string
+#                        labels:
+#                          type: string
+#                        events:
+#                          type: string
+#                        members:
+#                          type: string
