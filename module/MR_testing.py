@@ -45,7 +45,7 @@ class MRTesting:
                 test_unit.fuzz_and_add_parameter()
                 if test_unit.judge_effective():
                     response = test_unit.request_response
-                    self.responses.append(json.loads(response.text))
+                    self.responses.append(response)
                     break
 
     def MR_testing(self):
