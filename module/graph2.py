@@ -1,4 +1,4 @@
-from module.parse import parse
+from module.parse import get_api_info
 import os
 from prance import ResolvingParser
 from operator import length_hint
@@ -78,7 +78,7 @@ def adj(api_info_list):
     # base on request
     for req_api_list in api_info_list:
         if req_api_list.req_param != []:
-            i = req_api_list.api_id
+            i = req_api_list.api_id - 1
             for req_field_info in req_api_list.req_param:
                 # 依赖字段必须
                 if req_field_info.require == True:
@@ -96,7 +96,7 @@ def adj(api_info_list):
                         object_dic.clear()
                         for resp_api_list in api_info_list:
                             if resp_api_list.resp_param != []:
-                                j = resp_api_list.api_id
+                                j = resp_api_list.api_id - 1
                                 for resp_field_info in resp_api_list.resp_param:
                                     if resp_field_info.field_type == 'object':
                                         option_object(resp_field_info.object)
@@ -127,7 +127,7 @@ def adj(api_info_list):
                             array_dic.clear()
                             for resp_api_list in api_info_list:
                                 if resp_api_list.resp_param != []:
-                                    j = resp_api_list.api_id
+                                    j = resp_api_list.api_id - 1
                                     for resp_field_info in resp_api_list.resp_param:
                                         if resp_field_info.field_type == 'object':
                                             option_object(resp_field_info.object)
@@ -158,7 +158,7 @@ def adj(api_info_list):
                         else:    # field_name,array
                             for resp_api_list in api_info_list:
                                 if resp_api_list.resp_param != []:
-                                    j = resp_api_list.api_id
+                                    j = resp_api_list.api_id - 1
                                     for resp_field_info in resp_api_list.resp_param:
                                         if resp_field_info.field_type == 'object':
                                             option_object(resp_field_info.object)
@@ -191,7 +191,7 @@ def adj(api_info_list):
                     else:
                         for resp_api_list in api_info_list:
                             if resp_api_list.resp_param != []:
-                                j = resp_api_list.api_id
+                                j = resp_api_list.api_id - 1
                                 for resp_field_info in resp_api_list.resp_param:
                                     if resp_field_info.field_type == 'object':
                                         option_object(resp_field_info.object)
@@ -292,8 +292,8 @@ dir1,2分别为特殊的api存储，表示字段相同含义不同，字段不�
 def get_dep_info(api_info_list):
     update_api_info_list = update_api_list(dictionary,api_info_list)
     global num
-    num = length_hint(api_info_list)
-    num = num + 1
+    # num = length_hint(api_info_list)
+    num = len(api_info_list)
     # 定义邻接矩阵matri
     global  matrix
     matrix = np.zeros([num, num], dtype=int)

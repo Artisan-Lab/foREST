@@ -1,6 +1,6 @@
-from module.Fuzz_value1 import traversal,fuzzgraph
+from module.Fuzz_value2 import traversal,fuzzgraph
 from module.graph2 import get_dep_info
-from module.parse import parse
+from module.parse import get_api_info
 import os.path
 import threading
 import time
@@ -19,8 +19,8 @@ import time
 
 def run():
     while(1 == 1):
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/sdms3.yaml")
-        api_info_list = parse(path,1.0)
+        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/wordpress.yaml")
+        api_info_list = get_api_info(1.0, path)
         matrix, weight_info_list = get_dep_info(api_info_list)
         print(matrix)
         graph = matrix.tolist()
