@@ -288,7 +288,8 @@ def test(x, api_info_list):
 
 
 # fuzz处理graph（x）位置的api
-def fuzzgraph(x, api_info_list):
+def fuzzgraph(x, api_info_list, coverage_url):
+    # before_test = GetCoverage.getCoverage_rate_executed_code(coverage_url)
     api_info = api_info_list[x-1]
     url = api_info.path
     method = api_info.http_method
@@ -513,6 +514,11 @@ def fuzzgraph(x, api_info_list):
         else:
             pass
         print(response)
+
+    # '''对比代码覆盖率，若增长，则查看具体API'''
+    # after_test = GetCoverage.getCoverage_rate_executed_code(coverage_url)
+    # if after_test > before_test:
+
 
 
 def topology_visit(g, n, api_info_list, visited):

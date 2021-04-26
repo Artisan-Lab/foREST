@@ -3,7 +3,7 @@ import requests
 import redis
 from rest_framework.utils import json
 from module.graph2 import get_dep_info
-from module.parse import parse
+from module.parse import get_api_info
 import os.path
 import sys
 import numpy as np
@@ -392,7 +392,7 @@ def fuzzgraph(x, api_info_list):
                         pass
                 else:
                     pass
-            response = requests.post(url, headers = headers, data = datas).text
+            response = requests.post(url, headers = headers, params = datas).text
             repon = str(response)
             if len(repon) > 0:
                 reponses = json.loads(repon)

@@ -2,7 +2,7 @@ from operator import length_hint
 import numpy as np
 from entity.api_info import api_info
 from entity.field_info import field_info
-from module.parse import parse
+
 import os
 
 # api_info_list = parse("C://Users//李天宇//Desktop//openapi1.yaml", 1.0)
