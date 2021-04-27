@@ -25,7 +25,6 @@ class FuzzAndJudgeUnit:
     parameter = None
     responses_status = None
     request_response = None
-    req_field_names = None
     new_url = None
 
     def __init__(self, field_info, base_url):
@@ -85,5 +84,5 @@ class FuzzAndJudgeUnit:
                 self.responses_status = 1
                 break
         if not self.judge_effective():
-            print(self.base_url + '  ' + self.field_info.field_name + 'may has problem')
+            print('fuzz %s %s fail' % (self.base_url, self.field_info.field_name))
             self.responses_status = 0
