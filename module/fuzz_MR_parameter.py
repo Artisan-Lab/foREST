@@ -14,17 +14,11 @@ class FuzzMRParameter:
         self.source_response = source_response
         self.fuzz_unit = FuzzAndJudgeUnit(self.parameter_field, self.base_url)
 
-    def get_effective_fuzz(self):
-        self.fuzz_unit.exec()
-        if self.fuzz_unit.responses_status == 0:
-            print('fuzz %s %s fail' % self.fuzz_unit.base_url
-                  % self.fuzz_unit.field_info.field_name)
-            self.fuzz_state = 0
 
     def get_sub_unit(self):
         for i in range(1, 11):
-            self.get_effective_fuzz()
-            if self.fuzz_state == 0:
+            self.fuzz_unit.exec()
+            if self.fuzz_unit.responses_status == 0:
                 break
             compare_unit = MetamorphicCompare(self.source_response, self.fuzz_unit.request_response)
             compare_unit.subset_compare()
@@ -37,8 +31,8 @@ class FuzzMRParameter:
 
     def get_equivalence_unit(self):
         for i in range(1, 11):
-            self.get_effective_fuzz()
-            if self.fuzz_state == 0:
+            self.fuzz_unit.exec()
+            if self.fuzz_unit.responses_status == 0:
                 break
             compare_unit = MetamorphicCompare(self.source_response, self.fuzz_unit.request_response)
             compare_unit.equivalence_compare()
@@ -49,4 +43,11 @@ class FuzzMRParameter:
                 self.fuzz_state = 0
         return self.fuzz_unit
 
-
+    def get_disjoint_unit(self):
+        fuzz_unit2 = FuzzAndJudgeUnit(self.parameter_field, self.base_url)
+        for i in range(1,11):
+            self.fuzz_unit.exec()
+            fuzz_unit2.exec()
+            if self.fuzz_unit.responses_status == 0 or fuzz_unit2.responses_status == 0:
+                break
+            if
