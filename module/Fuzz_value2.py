@@ -52,7 +52,9 @@ def fuzz(type):
                        '127.0.0.1', 'hello@flightjs.com']
 
         return random.choice(list_string)
-
+    elif 'boolean' == type:
+        list_boolean = ['False', 'True']
+        return random.choice(list_boolean)
 
 ########################   遍历json文件所有的key以及对应的value  #######################
 
