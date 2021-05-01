@@ -231,7 +231,7 @@ type(object) = List  type(array) = List
 object_info(self,name,type)   array(self,type)
 应该返回整合好的依赖字段
 example: object(int,sting,array) => chenyang(26,'chenyang',[88,'str',68])
-         object_list = {23:int,litianyu:string,888:int,str:string,68:int}
+         object_dic = {23:int,litianyu:string,888:int,str:string,68:int}
 '''
 object_dic = {}
 def option_object(objects):

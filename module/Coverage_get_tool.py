@@ -21,6 +21,7 @@ class GetCoverage:
             list1 = name.split('>')
             list2 = list1[1].split('<')
             api_name = list2[0]
+            # print(type(api_name))
             apis.append(api_name)
 
         coverages = []
@@ -29,10 +30,11 @@ class GetCoverage:
             list1 = cov.split('>')
             list2 = list1[1].split('<')
             cover = list2[0]
+            # print(type(cover))
             coverages.append(cover)
 
         '''
-        dic存储{key：value}对应{api_name:api_coverage}
+        dic存储{key：value}对应{api_name:api_coverage}  都是string类型
         '''
         dic_api_coverages = dict(zip(apis, coverages))
         return dic_api_coverages

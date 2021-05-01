@@ -1,3 +1,4 @@
+from multiprocessing import Queue
 from module.Coverage_get_tool import GetCoverage
 import pymysql
 
@@ -13,7 +14,7 @@ class Fuzz_monitor:
         before_covrate：本次监测之前的代码覆盖率
         api_coverages：本次监测之前的所有api以及其对应的覆盖率 以字典形式存储
     '''
-    def monitor(self,url):
+    def monitor(self,url,queue):
         before_covrate = 0
         api_coverages = {}
         while True:
@@ -30,13 +31,15 @@ class Fuzz_monitor:
                         1.先得到现在所有api的coverage  以字典存储  {api_name:api_coverage}
                         2.查找导致覆盖率发生改变的api
                         3.更新之前的字典
-                        4.得到该api的测试用例
+                        4.将导致覆盖率发生改变的api放入消息队列中
                     '''
                     dic_api_coverages = GetCoverage.getCoverages(url)
                     apis = Fuzz_monitor.comparedic(api_coverages, dic_api_coverages)
                     api_coverages = dic_api_coverages
-                    testcases = Fuzz_monitor.getTestCases(apis)
-                    return testcases
+                    for api in apis:
+                        queue.put(api)            # api在这里表示{api_name:api_coverage}中的api_name
+                    # testcases = Fuzz_monitor.getTestCases(apis)
+                    # return testcases
 
     def comparedic(dic1, dic2):
         apis = []
@@ -46,16 +49,16 @@ class Fuzz_monitor:
                 apis.append(key)
         return apis
 
-    def getTestCases(apis):
-        ''' 打开数据库 '''
-        conn = pymysql.connect(host='localhost', port=3306, database='restfulapitest',
-                               user='root', passwd='123456', charset='utf8')
-        cs1 = conn.cursor()
-        cases = []
-        for api_id in apis:
-            case = cs1.execute('select body,url from restfulapitest where id = \'%s\'' % api_id)
-            cases.append(case)
-        return cases
+    # def getTestCases(apis):
+    #     ''' 连接数据库 '''
+    #     conn = pymysql.connect(host='localhost', port=3306, database='restfulapitest',
+    #                            user='root', passwd='123456', charset='utf8')
+    #     cs1 = conn.cursor()
+    #     cases = []
+    #     for api_id in apis:
+    #         case = cs1.execute('select body,url from restfulapitest where id = \'%s\'' % api_id)
+    #         cases.append(case)
+    #     return cases
 
 
 
