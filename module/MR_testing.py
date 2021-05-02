@@ -3,9 +3,10 @@ import os
 import requests
 import random
 from module import parse
-from entity.testUnit import FuzzAndJudgeUnit
+from entity.fuzz_and_judge import FuzzAndJudgeUnit
 from module.metamorphic_compare import MetamorphicCompare
-from module.matemorphic_testing import MetamorphicTesting
+from module.metamorphic_testing import MetamorphicTesting
+
 
 class MRTesting:
     url = None
@@ -47,6 +48,17 @@ class MRTesting:
                     response = test_unit.request_response
                     self.responses.append(response)
                     break
+        if self.field_info.default:
+            test_unit = FuzzAndJudgeUnit(self.field_info,self.url)
+            test_unit.parameter = self.field_info.default
+            if test_unit.field_info.location == 0:
+                test_unit.new_url = test_unit.base_url.replace('{' + test_unit.field_info.field_name + '}', test_unit.parameter)
+            else:
+                test_unit.new_url = test_unit.base_url + '&' + test_unit.parameter
+            if test_unit.judge_effective():
+                self.responses.append(test_unit.request_response)
+            else:
+                print('%s can\'t get response' % test_unit.new_url)
 
     def MR_testing(self):
         # MR_matrix_count 的 含义分别为 subset  equality equivalence disjoint complete diffirence
@@ -86,7 +98,7 @@ class MRTesting:
                 for self.field_info in self.api_info.req_param:
                     self.get_responses()
                     if len(self.responses) < 10:
-                        print('lack %s' % self.field_info.field_name)
+                        print('fuzz %s fail' % self.field_info.field_name)
                         continue
                     # 前三个为源输出与加参数输出之间的关系 subset equality equivalence
                     # 不同参数输出之间的关系 disjoint
@@ -117,6 +129,5 @@ class MRTesting:
 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/projects-api.yaml")
 api_list = parse.get_api_info(1, path)
 for api_info in api_list:
-    a = MRTesting( {'user_id': 34},api_info)
+    a = MRTesting({'user_id': 34}, api_info)
     a.exec()
-

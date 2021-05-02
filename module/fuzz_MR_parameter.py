@@ -43,11 +43,11 @@ class FuzzMRParameter:
                 self.fuzz_state = 0
         return self.fuzz_unit
 
-    def get_disjoint_unit(self):
-        fuzz_unit2 = FuzzAndJudgeUnit(self.parameter_field, self.base_url)
-        for i in range(1,11):
-            self.fuzz_unit.exec()
-            fuzz_unit2.exec()
-            if self.fuzz_unit.responses_status == 0 or fuzz_unit2.responses_status == 0:
-                break
-            if
+    # def get_disjoint_unit(self):
+    #     fuzz_unit2 = FuzzAndJudgeUnit(self.parameter_field, self.base_url)
+    #     for i in range(1,11):
+    #         self.fuzz_unit.exec()
+    #         fuzz_unit2.exec()
+    #         if self.fuzz_unit.responses_status == 0 or fuzz_unit2.responses_status == 0:
+    #             break
+    #         if
