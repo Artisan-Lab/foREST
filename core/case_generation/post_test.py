@@ -120,6 +120,8 @@ def one_fuzz_k_times(fuzz_success_data, k, parameter,url , api_id, cov_url, ini_
                 # 如果fuzz成功(即覆盖率发生改变)，将测试用例保存到redis中
                 time.sleep(2)
                 now_coverage_rate_executed_code = GetCoverage.getCoverage_rate_executed_code(cov_url)
+                if not now_coverage_rate_executed_code:
+                    pass
                 '''fuzz_success_data[str(field_info.field_name)] = str(val) + str(location)'''
                 if now_coverage_rate_executed_code != ini_coverage_rate_executed_code:
                     # 先将字典json.dumps()序列化存储到redis，然后再json.loads()反序列化为字典
@@ -162,6 +164,8 @@ def mult_fuzz_k_times(fuzz_success_data, k, d, url, headers, data, api_id, cov_u
             # 如果fuzz成功(即覆盖率发生改变)，将测试用例保存到MySQL数据库中
             time.sleep(2)
             now_coverage_rate_executed_code = GetCoverage.getCoverage_rate_executed_code(cov_url)
+            if now_coverage_rate_executed_code:
+                pass
             '''fuzz_success_data[str(field_info.field_name)] = str(val) + str(location)'''
             if now_coverage_rate_executed_code != ini_coverage_rate_executed_code:
                 # 先将字典json.dumps()序列化存储到redis，然后再json.loads()反序列化为字典
@@ -186,6 +190,8 @@ def post_fuzz_test(k, api_info, cov_url):
     print(api_info.api_id)
     print(api_info.path)
     ini_coverage_rate_executed_code = GetCoverage.getCoverage_rate_executed_code(cov_url)
+    if not ini_coverage_rate_executed_code:
+        pass
     global url
     url = api_info.path
     api_id = api_info.api_id
@@ -236,6 +242,8 @@ def post_fuzz_test_optional(k, api_info, cov_url):
     print("可选参数")
     lll = 1
     ini_coverage_rate_executed_code = GetCoverage.getCoverage_rate_executed_code(cov_url)
+    if not ini_coverage_rate_executed_code:
+        pass
     api_id = api_info.api_id
     global url
     url = api_info.path

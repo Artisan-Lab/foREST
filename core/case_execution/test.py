@@ -139,24 +139,20 @@ def get_optional_param(api_info):
 def fuzzgraph(x, api_info_list, cov_url):
     api_info = api_info_list[x]
     method = api_info.http_method
+    k = 5
     if method == 'post':
-        k = 5
         post_fuzz_test(k,api_info,cov_url)
         post_fuzz_test_optional(k, api_info, cov_url)
     elif method == 'delete':
-        k = 5
         delete_fuzz_test(k, api_info, cov_url)
         delete_fuzz_test_optional(k, api_info, cov_url)
     elif method == 'get':
-        k = 5
         get_fuzz_test(k, api_info, cov_url)
         get_fuzz_test_optional(k, api_info, cov_url)
     elif method == 'put':
-        k = 5
         put_fuzz_test(k, api_info, cov_url)
         put_fuzz_test_optional(k, api_info, cov_url)
     else:
-        k = 5
         patch_fuzz_test(k, api_info, cov_url)
         patch_fuzz_test_optional(k, api_info, cov_url)
     print(str(api_info.api_id) + '全部参数所有fuzz完成')

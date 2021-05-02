@@ -5,9 +5,13 @@ class GetCoverage:
     '''
     代码覆盖率测试工具 url = 'http://10.177.74.168:8000/'
     '''
+    strhtml = None
 
     def getCoverages(url):
-        strhtml = requests.get(url)
+        try:
+            strhtml = requests.get(url)
+        except ConnectionError:
+            return None
         soup = BeautifulSoup(strhtml.text, 'lxml')
         api_names = soup.select('#navgation > div > ul > li > a > label')
         api_coverages = soup.select('#navgation > div > ul > li > a > span')
@@ -50,32 +54,47 @@ class GetCoverage:
     '''
 
     def getFile_total_num(url):
-        strhtml = requests.get(url)
+        try:
+            strhtml = requests.get(url)
+        except ConnectionError:
+            return None
         soup = BeautifulSoup(strhtml.text, 'lxml')
         file_total_num = str(soup.select('body > div.sum > span:nth-child(2)')).split('>')[1].split('<')[0]
         return file_total_num
 
     def getCode_total_num(url):
-        strhtml = requests.get(url)
+        try:
+            strhtml = requests.get(url)
+        except ConnectionError:
+            return None
         soup = BeautifulSoup(strhtml.text, 'lxml')
         code_total_num = str(soup.select('body > div.sum > span:nth-child(4)')).split('>')[1].split('<')[0]
         return code_total_num
 
     def getExecute_code_total_num(url):
-        strhtml = requests.get(url)
+        try:
+            strhtml = requests.get(url)
+        except ConnectionError:
+            return None
         soup = BeautifulSoup(strhtml.text, 'lxml')
         execute_code_total_num = str(soup.select('body > div.sum > span:nth-child(6)')).split('>')[1].split('<')[0]
         return execute_code_total_num
 
     def getCoverage_executed_code_total_num(url):
-        strhtml = requests.get(url)
+        try:
+            strhtml = requests.get(url)
+        except ConnectionError:
+            return None
         soup = BeautifulSoup(strhtml.text, 'lxml')
         coverage_executed_code_total_num = \
         str(soup.select('body > div.sum > span:nth-child(8)')).split('>')[1].split('<')[0]
         return coverage_executed_code_total_num
 
     def getCoverage_rate_executed_code(url):
-        strhtml = requests.get(url)
+        try:
+            strhtml = requests.get(url)
+        except ConnectionError:
+            return None
         soup = BeautifulSoup(strhtml.text, 'lxml')
         coverage_rate_executed_code = str(soup.select('body > div.sum > span:nth-child(10)')).split('>')[1].split('<')[0]
         return coverage_rate_executed_code
