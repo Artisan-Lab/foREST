@@ -1,7 +1,5 @@
-from entity.fuzz_and_judge import FuzzAndJudgeUnit
-from module.metamorphic_compare import MetamorphicCompare
-import json
-import requests
+from module.metamorphic.fuzz_and_judge import FuzzAndJudgeUnit
+from module.metamorphic.metamorphic_compare import MetamorphicCompare
 
 
 class FuzzMRParameter:
