@@ -2,9 +2,9 @@ import json
 import os
 import requests
 import random
-from module import parse
-from module.metamorphic.fuzz_and_judge import FuzzAndJudgeUnit
-from module.metamorphic.metamorphic_testing import MetamorphicTesting
+from parse import parse
+from metamorphic.fuzz_and_judge import FuzzAndJudgeUnit
+from metamorphic.metamorphic_testing import MetamorphicTesting
 
 
 class MRTesting:
@@ -125,7 +125,7 @@ class MRTesting:
                 b.metamorphic_testing()
 
 
-path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../../openapi/projects-api.yaml")
+path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/projects-api.yaml")
 api_list = parse.get_api_info(1, path)
 for api_info in api_list:
     a = MRTesting({'user_id': 34}, api_info)
