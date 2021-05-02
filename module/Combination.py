@@ -16,5 +16,5 @@ class Combination:
         end_list = []
         for i in range(len(optional_list)):
             end_list.extend(Combination.combine(optional_list, i))
-        return (end_list)
+        return end_list
 

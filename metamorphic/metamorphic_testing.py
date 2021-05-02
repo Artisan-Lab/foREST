@@ -1,8 +1,8 @@
 import requests
-from module.metamorphic.fuzz_and_judge import FuzzAndJudgeUnit
+from metamorphic.fuzz_and_judge import FuzzAndJudgeUnit
 import json
-from module.metamorphic.metamorphic_compare import MetamorphicCompare
-from module.metamorphic.fuzz_MR_parameter import FuzzMRParameter
+from metamorphic.metamorphic_compare import MetamorphicCompare
+from metamorphic.fuzz_MR_parameter import FuzzMRParameter
 
 class MetamorphicTesting:
 

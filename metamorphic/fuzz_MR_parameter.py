@@ -1,5 +1,5 @@
-from module.metamorphic.fuzz_and_judge import FuzzAndJudgeUnit
-from module.metamorphic.metamorphic_compare import MetamorphicCompare
+from metamorphic.fuzz_and_judge import FuzzAndJudgeUnit
+from metamorphic.metamorphic_compare import MetamorphicCompare
 
 
 class FuzzMRParameter:

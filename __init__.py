@@ -1,8 +1,6 @@
-import os
-
-from module.dep_analysis import get_dep_info
-from module.display import dep_info_display
-from module.parse import parse
+from dependec_matrix.dep_analysis import get_dep_info
+from display.display import dep_info_display
+from parse.parse import parse
 
 if __name__ == '__main__':
     #规范解析
