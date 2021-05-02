@@ -4,124 +4,69 @@
 
 #  
 
-# 《面向云服务的模糊测试系统》
-
-# 概要设计
+# Restful-api-testing
 
 
 
- 
+Restful-api-testing 是一款基于OpenAPI文档的有状态的REST API模糊测试工具，用于通过REST API自动测试云服务并查找这些服务中的安全性和可靠性错误。Restf-api-testing会分析OpenAPI文档，然后生成并执行测试用例，从而对该云服务进行测试。
 
-# 一、   版本控制
+Restful-api-testing会依据OpenAPI文档，自动地推断出云服务API之间的生产者-消费者关系，构建依赖矩阵，并依据依赖矩阵生成满足依赖关系的测试用例，这种方式使得Restful-api-testing能够智能地生成测试用例，提高测试用例的生成效率，并发现更多的错误。
 
-| 版本 | 日期       | 修改人 | 说明 |
-| ---- | ---------- | ------ | ---- |
-| 1.1  | 2020-10-16 | 陈阳   | 初稿 |
-| 1.1  |            |        |      |
-| 1.1  |            |        |      |
-| 1.2  |            |        |      |
-| 1.2  |            |        |      |
-|      |            |        |      |
-|      |            |        |      |
-|      |            |        |      |
-|      |            |        |      |
+在模糊模块，Restful-api-testing引入了metamorphic testing，metamorphic testing将自动的分析云服务API之间的metamorphic relationship（MR），并依据MR生成更多的、高效的测试用例。更重要的是，该方法拓展了更多的bug类型，能够更全面地检测云服务地安全性和可靠性！
 
  
 
+# 一、代码结构
+
+.
+├── common                                           #公共类
+|     └── common_utils.py                      #工具
+├── core                                                    #核心代码
+|     └── case_execution                          #执行测试用例
+|            ├── runalways.py                       #整体测试流程
+|            └── test.py                                   #测试能不能一直跑
+|     └── case_generation                         #生成测试用例
+|            ├── delete_test.py                      #生成delete测试用例
+|            ├── get_test.py                            #生成get测试用例
+|            ├── patch_test.py                        #生成patch测试用例
+|            ├── post_test.py                          #生成post测试用例
+|            └── put_test.py                            #生成put测试用例
+├── dependec_matrix                               #依赖矩阵模块
+|     ├── dep_analysis.py                           #依赖分析
+|     └── graph2.py                                     #绘制依赖矩阵
+├── display                                                  #展示模块
+|     └── display.py                                      #展示API间依赖关系
+├── entity                                                     #定义特定的数据结构
+|     ├── api_info.py                                    #定义API信息存储的数据结构
+|     ├── field_info.py                                  #定义API参数的数据结构
+|     ├── graph.py                                        #定义图结构
+|     ├── link.py                                            #定义节点之间的线段和方向
+|     ├── node.py                                         #定义节点
+|     └── object_info.py                               #定义结构体数据结构
+├── metamorphic                                       #metamorphic testing 模块
+|     ├── fuzz_and_judge.py                       #生成有效的参数
+|     ├── fuzz_MR_parameter.py               #生成满足MR关系的参数
+|     ├── metamorphic_compare.py         #比较响应是否满足MR关系
+|     ├── metamorphic_testing.py             #metamorphic testing 
+|     └── MR_testing.yml                             #判断响应应该满足哪些MR关系
+├── module                                                  #模块
+|     ├── Combination.py                            #组合所有optional参数
+|     ├── Coverage_get_tool.py                  #获取覆盖率
+|     ├── Fuzz_monitor.py                           #检测代码覆盖率
+|     └── kill_thread.py                                #结束长期未响应进程
+├── openapi                                                 #openapi文档
+|     ├── openapi.yaml                                #gitlab-openapi
+|     ├── projects-api.yaml	                      #gitlab-projects-openapi
+|     └── wordpress.yaml                            #wordpress-openapi
+├── parse                                                      #openapi文档解析模块
+|     └── parse.py
+├── tools                                                        #工具
+|     ├── common.js
+|     ├── display.html
+|     └── graph.js
+└── README.md
 
 
- 
-
- 
-
-# 二、   总体规划
-
-![1](images/1.jpg)
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
- 
-
-
-
-
-
-
-# 三、   规范解析模块(parse.py)
-
-## 1. 功能
-
-该模块负责解析swagger文档，暴露接口供依赖矩阵模块使用
-
-## 2. 特点
-
-*  能够同时兼容swagger2.0和openAPI3.0
-
-* 能够使用多种解析工具
-
-* 未来可新增自定义规范解析，处理特殊需求
-
-## 3. 接口
-
-| 调用方法                                            |             |               |                |                |                             |
-| --------------------------------------------------- | ----------- | ------------- | -------------- | -------------- | --------------------------- |
-| **list<api_info>  get_api_info_list(path,version)** |             |               |                |                |                             |
-| 入参                                                |             |               |                |                |                             |
-| 序号                                                | 数据元名称  | 数据元标识    | 数据元格式     | 数据元取值示例 | 备注                        |
-| 1                                                   | 解析版本    | version       | string         | 1.0            | 现在默认1.0，使用prance解析 |
-| 2                                                   | 规范路径    | file_path     | string         |                |                             |
-| 出参                                                |             |               |                |                |                             |
-| 1                                                   | api信息列表 | api_info_list | list<api_info> |                |                             |
-
- 
-
- 
-
-| 接口信息   | api_info         |             |                  |                            |                              |
-| ---------- | ---------------- | ----------- | ---------------- | -------------------------- | ---------------------------- |
-| 序号       | 数据元名称       | 数据元标识  | 数据元格式       | 数据元取值示例             | 备注                         |
-| 1          | 接口id           | api_id      | integer          | 123                        | api的唯一标识                |
-| 2          | 请求路径         | path        | string           | http://127.0.0.1/v3/person | 服务器ip+path                |
-| 3          | 请求参数         | req_param   | list<field_info> |                            | 请求参数                     |
-| 4          | 返回参数         | resp_param  | list<field_info> |                            | 应答参数                     |
-| 5          | 请求方法         | http_method | string           | GET                        |                              |
-| field_info |                  |             |                  |                            |                              |
-| 序号       | 数据元名称       | 数据元标识  | 数据元格式       | 数据元取值示例             | 备注                         |
-| 1          | 字段名称         | field_name  | string           | project_id                 |                              |
-| 2          | 是否必填         | require     | boolean          | True                       |                              |
-| 3          | 默认值           | default     | string/Integer   |                            |                              |
-| 4          | 是否需要模糊处理 | fuzz        | boolean          | True                       | 从模糊字典中随机取值         |
-| 5          | 位置             | location    | integer          | 1                          | 0-in 1-query 2-header 3-body |
 
  
 
@@ -129,103 +74,7 @@
 
  
 
-# 四、     依赖矩阵模块(dep_analysis.py)
-
-## 1. 功能
-
-该模块负责分析api之间的依赖关系，生成依赖矩阵
-
-## 2. 特点
-
-* 判断API之间的生产者-消费者关系，使用List<api_info>的索引值作为依赖矩阵的索引，例如api_info_list[0]和api_info_list[1]具有依赖关系，填写dep_matrix\[0\]\[1\]
-
-*  填写关联信息表weight_info\[index]
-
-| 调用方法                              |            |                  |                |                |      |
-| ------------------------------------- | ---------- | ---------------- | -------------- | -------------- | ---- |
-| **dict** get_dep_info(List<api_info>) |            |                  |                |                |      |
-| 入参                                  |            |                  |                |                |      |
-| 序号                                  | 数据元名称 | 数据元标识       | 数据元格式     | 数据元取值示例 | 备注 |
-| 1                                     | api信息表  | api_info_list    | list<api_info> |                |      |
-| 出参                                  |            |                  |                |                |      |
-| 1                                     | 依赖矩阵   | dep_matrix       | int[][]        |                |      |
-| 2                                     | 权重信息   | weight_info_list | list<weight>   |                |      |
-
- 
-
-| 权重信息 | weight_info_list |                  |              |                            |                                                              |
-| -------- | ---------------- | ---------------- | ------------ | -------------------------- | ------------------------------------------------------------ |
-| 序号     | 数据元名称       | 数据元标识       | 数据元格式   | 数据元取值示例             | 备注                                                         |
-| 1        | 字段名称         | weight_info_list | list<weight> |                            | weight是一个字典   weight_info[0]["dependency_field"] =value |
-|          |                  |                  |              |                            |                                                              |
-| weight   |                  |                  |              |                            |                                                              |
-| 序号     | 数据元名称       | 数据元标识       | 数据元格式   | 数据元取值示例             | 备注                                                         |
-| 1        | 依赖字段         | dependency_field | list<string> | [['name'],['id']]|                                                                |
-
- 
-
 
 
  
-
-# 五、     可视化模块(display.py)
-
-## 1. 功能
-
-* 通过依赖关系矩阵和权重表，可视化展示数据关系。
-
-* 可视化展示代码覆盖率等测试指标（TODO）
-
-* 可视化展示测试结果，BUG信息（TODO）
-
-* 可视化展示测试用例池相关信息（TODO）
-
-## 2. 特点
-
-使用pyD3.js画出响应式依赖图。
-
-## 3. 接口
-
-| 调用方法                                                     |            |                  |                |                |      |
-| ------------------------------------------------------------ | ---------- | ---------------- | -------------- | -------------- | ---- |
-| `void dep_info_display(api_info_list,dep_matrix,weight_info_list)` |            |                  |                |                |      |
-| 入参                                                         |            |                  |                |                |      |
-| 序号                                                         | 数据元名称 | 数据元标识       | 数据元格式     | 数据元取值示例 | 备注 |
-| 1                                                            | Api信息表  | api_info_list    | list<api_info> |                |      |
-| 2                                                            | 依赖矩阵   | dep_matrix       | Int[][]        |                |      |
-| 3                                                            | 权重信息   | weight_info_list | List<weight>   |                |      |
-
-
-
- 
-
-# 六、     模糊模块
-
-待补充
-
-
-
- 
-
-# 七、     执行模块
-
-待补充
-
-# 八、     监控与反馈模块
-
-待补充
-
-
-
-# 九、     附录
-
-
-
- ## 9.1 字典
-
-| 不同字段名，相同含义字典 |          |            |              |           |
- ------------------ |----------- | ------------ | ------------- | --------- 
-| id            | key            |  real_key   | in           |示例       
-| api_id        | id             |  group_id       | parameters or response   |{"0":{"id + group_id + parameters"}}代表api0中的parameters中的id的真实含义为group_id |
-
 
