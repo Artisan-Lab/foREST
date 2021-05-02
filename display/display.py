@@ -7,7 +7,7 @@ from entity.graph import g
 from entity.api_info import api_info
 
 def write_graph_js(json_content):
-    filename = os.getcwd() + '/resource/graph.js'
+    filename = os.getcwd() + '/tools/graph.js'
     file = open(filename, "w")
     file.write("function load_data(){return ")
     file.write(json_content)
@@ -50,6 +50,6 @@ def dep_info_display(api_info_list,dep_matrix,weight_info_list):
 
     graph = g(nodes,links)
     write_graph_js(comutil.toJson(graph))
-    file_path = os.getcwd() + '/resource/display.html';
+    file_path = os.getcwd() + '/tools/display.html';
     webbrowser.open(file_path)
 

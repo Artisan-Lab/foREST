@@ -227,3 +227,5 @@
  ------------------ |----------- | ------------ | ------------- | --------- 
 | id            | key            |  real_key   | in           |示例       
 | api_id        | id             |  group_id       | parameters or response   |{"0":{"id + group_id + parameters"}}代表api0中的parameters中的id的真实含义为group_id |
+
+

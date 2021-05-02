@@ -5725,7 +5725,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
       responses:
         '200':
           description: success
@@ -5750,7 +5750,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
       responses:
         '200':
           description: success
@@ -5775,7 +5775,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
       responses:
         '200':
           description: success
@@ -5800,7 +5800,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
         - name: key
           schema:
             type: string
@@ -5828,7 +5828,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
         - name: key
           schema:
             type: string
@@ -5862,7 +5862,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
         - name: key
           schema:
             type: string
@@ -5882,7 +5882,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
         - name: key
           schema:
             type: string
@@ -5910,7 +5910,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
         - name: key
           schema:
             type: string
@@ -5929,7 +5929,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
         - name: key
           schema:
             type: string
@@ -5964,7 +5964,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
         - name: key
           schema:
             type: string
@@ -5992,7 +5992,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
         - name: key
           schema:
             type: string
@@ -6026,7 +6026,7 @@ paths:
             type: integer
           required: true
           in: path
-          description: The ID of a resource
+          description: The ID of a tools
         - name: key
           schema:
             type: string
@@ -14724,7 +14724,7 @@ paths:
   '/projects/{id}/issues/{issue_iid}/resource_weight_events':
     get:
       tags:
-        - resource-weight-events-api
+        - tools-weight-events-api
       parameters:
         - name: id
           schema:
@@ -14776,7 +14776,7 @@ paths:
   '/projects/{id}/issues/{issue_iid}/resource_weight_events/{resource_weight_event_id}':
     get:
       tags:
-        - resource-weight-events-api
+        - tools-weight-events-api
       parameters:
         - name: id
           schema:
@@ -14826,7 +14826,7 @@ paths:
   '/projects/{id}/issues/{issue_iid}/esource_state_events':
     get:
       tags:
-        - resource-state-events-api
+        - tools-state-events-api
       parameters:
         - name: id
           schema:
@@ -14880,7 +14880,7 @@ paths:
   '/projects/{id}/issues/{issue_iid}/resource_state_events/{resource_state_event_id}':
     get:
       tags:
-        - resource-state-events-api
+        - tools-state-events-api
       parameters:
         - name: id
           schema:
@@ -14930,7 +14930,7 @@ paths:
   '/projects/{id}/merge_requests/{merge_request_iid}/resource_state_events':
     get:
       tags:
-        - resource-state-events-api
+        - tools-state-events-api
       parameters:
         - name: id
           schema:
@@ -14984,7 +14984,7 @@ paths:
   '/projects/{id}/merge_requests/{merge_request_iid}/resource_state_events/{resource_state_event_id}':
     get:
       tags:
-        - resource-state-events-api
+        - tools-state-events-api
       parameters:
         - name: id
           schema:
@@ -15034,7 +15034,7 @@ paths:
   '/projects/{id}/issues/{issue_iid}/resource_milestone_events':
     get:
       tags:
-        - resource-milestone-events-api
+        - tools-milestone-events-api
       parameters:
         - name: id
           schema:
@@ -15113,7 +15113,7 @@ paths:
   '/projects/{id}/issues/{issue_iid}/resource_milestone_events/{resource_milestone_event_id}':
     get:
       tags:
-        - resource-milestone-events-api
+        - tools-milestone-events-api
       parameters:
         - name: id
           schema:
@@ -15141,7 +15141,7 @@ paths:
   '/projects/{id}/merge_requests/{merge_request_iid}/resource_milestone_events':
     get:
       tags:
-        - resource-milestone-events-api
+        - tools-milestone-events-api
       parameters:
         - name: id
           schema:
@@ -15220,7 +15220,7 @@ paths:
   '/projects/{id}/merge_requests/{merge_request_iid}/resource_milestone_events/{resource_milestone_event_id}':
     get:
       tags:
-        - resource-milestone-events-api
+        - tools-milestone-events-api
       parameters:
         - name: id
           schema:
@@ -15248,7 +15248,7 @@ paths:
   '/projects/{id}/issues/{issue_iid}/resource_label_events':
     get:
       tags:
-        - resource-label-events-api
+        - tools-label-events-api
       parameters:
         - name: id
           schema:
@@ -15313,7 +15313,7 @@ paths:
   '/projects/{id}/issues/{issue_iid}/resource_label_events/{resource_label_event_id}':
     get:
       tags:
-        - resource-label-events-api
+        - tools-label-events-api
       parameters:
         - name: id
           schema:
@@ -15341,7 +15341,7 @@ paths:
   '/groups/{id}/epics/{epic_id}/resource_label_events':
     get:
       tags:
-        - resource-label-events-api
+        - tools-label-events-api
       parameters:
         - name: id
           schema:
@@ -15406,7 +15406,7 @@ paths:
   '/groups/{id}/epics/{epic_id}/resource_label_events/{resource_label_event_id}':
     get:
       tags:
-        - resource-label-events-api
+        - tools-label-events-api
       parameters:
         - name: id
           schema:
@@ -15434,7 +15434,7 @@ paths:
   '/projects/{id}/merge_requests/{merge_request_iid}/resource_label_events':
     get:
       tags:
-        - resource-label-events-api
+        - tools-label-events-api
       parameters:
         - name: id
           schema:
@@ -15499,7 +15499,7 @@ paths:
   '/projects/{id}/merge_requests/{merge_request_iid}/resource_label_events/{resource_label_event_id}':
     get:
       tags:
-        - resource-label-events-api
+        - tools-label-events-api
       parameters:
         - name: id
           schema:
@@ -15527,7 +15527,7 @@ paths:
   '/projects/{id}/issues/{issue_iid}/resource_iteration_events':
     get:
       tags:
-        - resource-iteration-events-api
+        - tools-iteration-events-api
       parameters:
         - name: id
           schema:
@@ -15604,7 +15604,7 @@ paths:
   '/projects/{id}/issues/{issue_iid}/resource_iteration_events/{resource_iteration_event_id}':
     get:
       tags:
-        - resource-iteration-events-api
+        - tools-iteration-events-api
       parameters:
         - name: id
           schema:
