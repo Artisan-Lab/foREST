@@ -19,95 +19,95 @@ Restful-api-testing会依据OpenAPI文档，自动地推断出云服务API之间
 # 一、代码结构
 
 
-├── common                                           #公共类
+├── common　　　　　　　　　　　　　　#公共类
 
-|     └── common_utils.py                      #工具
+|　　└── common_utils.py 　　　　　　　#工具类
 
-├── core                                                    #核心代码
+├── core　　　　　　　　　　　　　　　　#核心代码
 
-|     └── case_execution                          #执行测试用例
+|　　└── case_execution　　　　　　　　#执行测试用例
 
-|            ├── runalways.py                       #整体测试流程
+|　　　　　├── runalways.py　　　　　　#整体测试流程
 
- |           └── test.py                                   #测试能不能一直跑
+|　　　　　└── test.py　　　　　　　　　#测试能不能一直跑
 
-|      └── case_generation                         #生成测试用例
+|　└── case_generation　　　　　　　　　 #生成测试用例
 
-|            ├── delete_test.py                      #生成delete测试用例
+|　　　　├── delete_test.py　　　　　　　#生成delete测试用例
 
-|            ├── get_test.py                            #生成get测试用例
+|　　　　├── get_test.py　　　　　　　　　#生成get测试用例
 
-|            ├── patch_test.py                        #生成patch测试用例
+|　　　　├── patch_test.py　　　　　　　#生成patch测试用例
 
-|            ├── post_test.py                          #生成post测试用例
+|　　　　├── post_test.py　　　　　　　　#生成post测试用例
 
-|            └── put_test.py                            #生成put测试用例
+|　　　　└── put_test.py　　　　　　　　#生成put测试用例
 
-├── dependec_matrix                               #依赖矩阵模块
+├── dependec_matrix　　　　　　　　　　#依赖矩阵模块
 
-|     ├── dep_analysis.py                           #依赖分析
+|　　├── dep_analysis.py　　　　　　　　#依赖分析
 
-|     └── graph2.py                                     #绘制依赖矩阵
+|　　└── graph2.py　　　　　　　　　　　#绘制依赖矩阵
 
-├── display                                                  #展示模块
+├── display　　　　　　　　　　　　　　　#展示模块
 
-|     └── display.py                                      #展示API间依赖关系
+|　　└── display.py　　　　　　　　　　　#展示API间依赖关系
 
-├── entity                                                     #定义特定的数据结构
+├── entity　　　　　　　　　　　　　　　　#定义特定的数据结构
 
-|     ├── api_info.py                                    #定义API信息存储的数据结构
+|　　├── api_info.py　　　　　　　　　　　#定义API信息存储的数据结构
 
-|     ├── field_info.py                                  #定义API参数的数据结构
+|　　├── field_info.py　　　　　　　　　　#定义API参数的数据结构
 
-|     ├── graph.py                                        #定义图结构
+|　　├── graph.py　　　　　　　　　　　#定义图结构
 
-|     ├── link.py                                            #定义节点之间的线段和方向
+|　　├── link.py　　　　　　　　　　　　　#定义节点之间的线段和方向
 
-|     ├── node.py                                         #定义节点
+|　　├── node.py　　　　　　　　　　　　#定义节点
 
-|     └── object_info.py                               #定义结构体数据结构
+|　　└── object_info.py　　　　　　　　　#定义结构体数据结构
 
-├── metamorphic                                       #metamorphic testing 模块
+├── metamorphic　　　　　　　　　　　　#metamorphic testing 模块
 
-|     ├── fuzz_and_judge.py                       #生成有效的参数
+|　　├── fuzz_and_judge.py　　　　　　　#生成有效的参数
 
-|     ├── fuzz_MR_parameter.py               #生成满足MR关系的参数
+|　　├── fuzz_MR_parameter.py　　　　　#生成满足MR关系的参数
 
-|     ├── metamorphic_compare.py         #比较响应是否满足MR关系
+|　　├── metamorphic_compare.py　　　　#比较响应是否满足MR关系
 
-|     ├── metamorphic_testing.py             #metamorphic testing 
+|　　├── metamorphic_testing.py　　　　　#metamorphic testing 
 
-|     └── MR_testing.yml                             #判断响应应该满足哪些MR关系
+|　　└── MR_testing.yml　　　　　　　　　#判断响应应该满足哪些MR关系
 
-├── module                                                  #模块
+├── module　　　　　　　　　　　　　　　#模块
 
-|     ├── Combination.py                            #组合所有optional参数
+|　　├── Combination.py　　　　　　　　#组合所有optional参数
 
-|     ├── Coverage_get_tool.py                  #获取覆盖率
+|　　├── Coverage_get_tool.py　　　　　　#获取覆盖率
 
-|     ├── Fuzz_monitor.py                           #检测代码覆盖率
+|　　├── Fuzz_monitor.py　　　　　　　　#检测代码覆盖率
 
-|     └── kill_thread.py                                #结束长期未响应进程
+|　　└── kill_thread.py　　　　　　　　　#结束长期未响应进程
 
-├── openapi                                                 #openapi文档
+├── openapi　　　　　　　　　　　　　　 #openapi文档
 
-|     ├── openapi.yaml                                #gitlab-openapi
+|　　├── openapi.yaml　　　　　　　　　#gitlab-openapi
 
-|     ├── projects-api.yaml	                      #gitlab-projects-openapi
+|　　├── projects-api.yaml　　　　　　　#gitlab-projects-openapi
 
-|     └── wordpress.yaml                            #wordpress-openapi
+|　　└── wordpress.yaml　　　　　　　　 #wordpress-openapi
 
-├── parse                                                      #openapi文档解析模块
+├── parse　　　　　　　　　　　　　　　#openapi文档解析模块
 
-|     └── parse.py
+|　　└── parse.py
 
-├── tools                                                        #工具
+├── tools 　　　　　　　　　　　　　　　#工具
 
-|     ├── common.js
+|　　├── common.js
 
-|     ├── display.html
+|　　├── display.html
 
-|     └── graph.js
+|　　└── graph.js
 
 └── README.md
 
