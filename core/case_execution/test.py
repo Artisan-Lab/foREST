@@ -136,32 +136,32 @@ def get_optional_param(api_info):
     return optional
 
 # fuzz处理graph（x）位置的api
-def fuzzgraph(x, api_info_list, cov_url):
+def fuzzgraph(x, api_info_list, cov_url,i):
     api_info = api_info_list[x]
     method = api_info.http_method
     k = 5
     if method == 'post':
         post_fuzz_test(k,api_info,cov_url)
-        post_fuzz_test_optional(k, api_info, cov_url)
+        post_fuzz_test_optional(k, api_info, cov_url, i)
     elif method == 'delete':
         delete_fuzz_test(k, api_info, cov_url)
-        delete_fuzz_test_optional(k, api_info, cov_url)
+        delete_fuzz_test_optional(k, api_info, cov_url, i)
     elif method == 'get':
         get_fuzz_test(k, api_info, cov_url)
-        get_fuzz_test_optional(k, api_info, cov_url)
+        get_fuzz_test_optional(k, api_info, cov_url,i)
     elif method == 'put':
         put_fuzz_test(k, api_info, cov_url)
-        put_fuzz_test_optional(k, api_info, cov_url)
+        put_fuzz_test_optional(k, api_info, cov_url, i)
     else:
         patch_fuzz_test(k, api_info, cov_url)
-        patch_fuzz_test_optional(k, api_info, cov_url)
+        patch_fuzz_test_optional(k, api_info, cov_url, i)
     print(str(api_info.api_id) + '全部参数所有fuzz完成')
 
 
-def topology_visit(g, n, api_info_list, visited, end, cov_url):
+def topology_visit(g, n, api_info_list, visited, end, cov_url,conf_k):
     # 第一个开始节点api是没有依赖的，其中需要的参数可通过fuzz来获取（也可人工赋值）
     visited[n] = 1
-    fuzzgraph(n, api_info_list, cov_url)
+    fuzzgraph(n, api_info_list, cov_url,conf_k)
     while visited[n] == 1:
         # 创建遍历的存储队列
         dep_list = []
@@ -177,13 +177,13 @@ def topology_visit(g, n, api_info_list, visited, end, cov_url):
                 for a in dep_list:
                     g[a][n] = -1
                 dep_list.clear()
-                fuzzgraph(k, api_info_list,cov_url)
+                fuzzgraph(k, api_info_list,cov_url,conf_k)
                 visited[k] = 1
                 g[k] = end
                 n = k
 
 
-def traversal(grap, api_info_lis, cov_url):
+def traversal(grap, api_info_lis, cov_url,conf_k):
     graph = grap
     api_info_list = api_info_lis
     # 创建visited，用来停止遍历，即一旦遇到visited，即刻退出递归 #0代表没被访问
@@ -207,8 +207,7 @@ def traversal(grap, api_info_lis, cov_url):
         k = random.choice(out_degree_zero)
         out_degree_zero.remove(k)
         print(k)
-        print(end)
-        topology_visit(graph, k, api_info_list, visited, end, cov_url)
+        topology_visit(graph, k, api_info_list, visited, end, cov_url,conf_k)
 
     return visited
 

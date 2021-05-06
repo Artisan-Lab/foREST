@@ -9,6 +9,16 @@ from rest_framework.utils import json
 from module.Coverage_get_tool import GetCoverage
 from module.Combination import Combination
 
+def notify():
+    PUSH_KEY = 'SCT27848T2MtRBqnA5m3mQm8TuJa6Y2ko'
+    _d = {
+        "desp": '1'
+    }
+    _d["text"] = "coverage-tool  挂了呀~阳哥赶紧的呀~"
+
+    resp = requests.post(f"https://sctapi.ftqq.com/{PUSH_KEY}.send", data=_d)
+    print(resp.text)
+
 ###########################      连接redis-pool      ##############################
 
 pool = redis.ConnectionPool(host='127.0.0.1', port=6379)
@@ -121,7 +131,11 @@ def one_fuzz_k_times(fuzz_success_data, k, parameter,url , api_id, cov_url, ini_
                 time.sleep(2)
                 now_coverage_rate_executed_code = GetCoverage.getCoverage_rate_executed_code(cov_url)
                 if not now_coverage_rate_executed_code:
-                    pass
+                    chongqi = requests.get('http://10.177.74.168:5000/restart')
+                    if 'The coverage tool is not running The coverage tool is running ,PID is' in chongqi:
+                        print('重启成功~~~~')
+                    else:
+                        notify()
                 '''fuzz_success_data[str(field_info.field_name)] = str(val) + str(location)'''
                 if now_coverage_rate_executed_code != ini_coverage_rate_executed_code:
                     # 先将字典json.dumps()序列化存储到redis，然后再json.loads()反序列化为字典
@@ -131,7 +145,7 @@ def one_fuzz_k_times(fuzz_success_data, k, parameter,url , api_id, cov_url, ini_
                     elif lll == 1:
                         save_post_fuzz_optional_success(fuzz_success_json_data)
                     fuzz_success_data.clear()
-                    one_fuzz_k_times(fuzz_success_data, k, parameter, api_id, cov_url, ini_coverage_rate_executed_code)
+                    one_fuzz_k_times(fuzz_success_data, k, parameter,url, api_id, cov_url, now_coverage_rate_executed_code,lll)
             else:
                 pass
             print(response.json())
@@ -164,8 +178,12 @@ def mult_fuzz_k_times(fuzz_success_data, k, d, url, headers, data, api_id, cov_u
             # 如果fuzz成功(即覆盖率发生改变)，将测试用例保存到MySQL数据库中
             time.sleep(2)
             now_coverage_rate_executed_code = GetCoverage.getCoverage_rate_executed_code(cov_url)
-            if now_coverage_rate_executed_code:
-                pass
+            if not now_coverage_rate_executed_code:
+                chongqi = requests.get('http://10.177.74.168:5000/restart')
+                if 'The coverage tool is not running The coverage tool is running ,PID is' in chongqi:
+                    print('重启成功~~~~')
+                else:
+                    notify()
             '''fuzz_success_data[str(field_info.field_name)] = str(val) + str(location)'''
             if now_coverage_rate_executed_code != ini_coverage_rate_executed_code:
                 # 先将字典json.dumps()序列化存储到redis，然后再json.loads()反序列化为字典
@@ -175,7 +193,7 @@ def mult_fuzz_k_times(fuzz_success_data, k, d, url, headers, data, api_id, cov_u
                 elif lll == 1:
                     save_post_fuzz_optional_success(fuzz_success_json_data)
                 fuzz_success_data.clear()
-                mult_fuzz_k_times(fuzz_success_data, k, d, url, h, da, api_id, cov_url, ini_coverage_rate_executed_code,lll)
+                mult_fuzz_k_times(fuzz_success_data, k, d, url, h, da, api_id, cov_url, now_coverage_rate_executed_code,lll)
             else:
                 pass
         else:
@@ -190,8 +208,13 @@ def post_fuzz_test(k, api_info, cov_url):
     print(api_info.api_id)
     print(api_info.path)
     ini_coverage_rate_executed_code = GetCoverage.getCoverage_rate_executed_code(cov_url)
+    print(ini_coverage_rate_executed_code)
     if not ini_coverage_rate_executed_code:
-        pass
+        chongqi = requests.get('http://10.177.74.168:5000/restart')
+        if 'The coverage tool is not running The coverage tool is running ,PID is' in chongqi:
+            print('重启成功~~~~')
+        else:
+            notify()
     global url
     url = api_info.path
     api_id = api_info.api_id
@@ -203,8 +226,9 @@ def post_fuzz_test(k, api_info, cov_url):
     for field_info in api_info.req_param:
         if field_info.require:
             parameter[str(field_info.field_name)] = str(field_info.field_type) + str(field_info.location)
-            parameters.append(parameter)
-    length = len(parameter)
+            print(parameter)
+    parameters.append(parameter)
+    length = len(parameters)
     print(parameters)
     if length == 0:
         response = requests.post(url)
@@ -212,7 +236,7 @@ def post_fuzz_test(k, api_info, cov_url):
     elif length == 1:
         one_fuzz_k_times(fuzz_success_data, k, parameter, url, api_id, cov_url, ini_coverage_rate_executed_code,lll)
     else:
-        a = Combination.get_combine(Combination, parameter)
+        a = Combination.get_combine(Combination, parameters, length)
         j = {}
         for i in parameters:
             j.update(i)
@@ -238,12 +262,17 @@ def post_fuzz_test(k, api_info, cov_url):
             mult_fuzz_k_times(fuzz_success_data, k, d, urll, headers, data, api_id, cov_url,
                               ini_coverage_rate_executed_code,lll)
 
-def post_fuzz_test_optional(k, api_info, cov_url):
+def post_fuzz_test_optional(k, api_info, cov_url, conf_k):
     print("可选参数")
     lll = 1
     ini_coverage_rate_executed_code = GetCoverage.getCoverage_rate_executed_code(cov_url)
+    print(ini_coverage_rate_executed_code)
     if not ini_coverage_rate_executed_code:
-        pass
+        chongqi = requests.get('http://10.177.74.168:5000/restart')
+        if 'The coverage tool is not running The coverage tool is running ,PID is' in chongqi:
+            print('重启成功~~~~')
+        else:
+            notify()
     api_id = api_info.api_id
     global url
     url = api_info.path
@@ -259,11 +288,15 @@ def post_fuzz_test_optional(k, api_info, cov_url):
         fuzz_success_dat = json.loads(fuzz_success_json_data)
         if fuzz_success_dat['id'] == api_id:
             require_param = fuzz_success_dat.keys()
-            for i in range(len(require_param)):
+            require_location = []
+            require_val = []
+            for i in range(len(require_param)-1):
                 i = i + 1  # 因为第一个参数存储了id
-                require_location = fuzz_success_dat[require_param[i]][-1]
-                require_val = fuzz_success_dat[require_param[i]][:-1]
-                url, headers, data = make(url,require_location,require_param[i],require_val,{},{})
+                print(list(require_param)[i])
+                print(list(fuzz_success_dat[list(require_param)[i]]))
+                require_location.append(int(float(list(fuzz_success_dat[list(require_param)[i]])[-2])))
+                require_val.append(''.join(list(fuzz_success_dat[list(require_param)[i]])[:-1]))
+            url, headers, data = make(url,require_location,list(require_param)[i],require_val,{},{})
     else:
         for field_info in api_info.req_param:
             if field_info.require:
@@ -296,7 +329,13 @@ def post_fuzz_test_optional(k, api_info, cov_url):
             print(field_info.field_name)
             optional_parameter[str(field_info.field_name)] = str(field_info.field_type) + str(field_info.location)
             optional_parameters.append(optional_parameter)
-    end_list = Combination.get_combine(Combination, optional_parameters)    #  可选参数的组合
+    optional_len = len(optional_parameters)
+    print(conf_k)
+    print(str(conf_k) + 'dsgfdhhhhfg')
+    if conf_k <= optional_len:
+        end_list = Combination.get_combine(Combination, optional_parameters, conf_k)  # 可选参数的组合
+    else:
+        end_list = Combination.get_combine(Combination, optional_parameters, optional_len)
     j = {}
     for optional_param in end_list:                  #  对可选参数 j 里面进行部分改变部分不变处理
         optional_param = list(optional_param)
@@ -310,7 +349,7 @@ def post_fuzz_test_optional(k, api_info, cov_url):
                 one_fuzz_k_times(fuzz_success_data, k, j, url, api_id, cov_url, ini_coverage_rate_executed_code,lll)
                 print('success')
             else:
-                a = Combination.get_combine(Combination, optional_param)     # 获取 可选参数 j 里面是否多次变化list 的组合
+                a = Combination.get_combine(Combination, optional_param, len(optional_param))     # 获取 可选参数 j 里面是否多次变化list 的组合
                 w = {}
                 for b in a:
                     b = list(b)

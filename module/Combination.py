@@ -12,9 +12,9 @@ class Combination:
             temp_list2.append(c)
         return temp_list2
 
-    def get_combine(self, optional_list):
+    def get_combine(self, optional_list, times):
         end_list = []
-        for i in range(len(optional_list)):
+        for i in range(times):
             end_list.extend(Combination.combine(optional_list, i))
         return end_list
 
