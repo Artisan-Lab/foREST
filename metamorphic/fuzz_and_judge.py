@@ -86,3 +86,14 @@ class FuzzAndJudgeUnit:
         if not self.judge_effective():
             print('fuzz %s %s fail' % (self.base_url, self.field_info.field_name))
             self.responses_status = 0
+
+    def fuzz_default(self):
+        self.parameter = self.field_info.field_name + '=' + self.field_info.default
+        if self.field_info.location == 0:
+            self.new_url = self.base_url.replace('{' + self.field_info.field_name + '}', self.parameter)
+        else:
+            self.new_url = self.base_url + '&' + self.parameter
+        if self.judge_effective():
+            self.request_response = self.request_response
+        else:
+            print('%s %s don\'t satisfy default')
