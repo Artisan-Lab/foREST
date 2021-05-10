@@ -1,8 +1,10 @@
+
+
  
 
 #  
 
-#  
+# 
 
 # Restful-api-testing
 
@@ -16,7 +18,45 @@ Restful-api-testing会依据OpenAPI文档，自动地推断出云服务API之间
 
  
 
-# 一、代码结构
+#  1、使用方法
+
+
+
+1、install docker
+
+```
+apt-get install docker
+```
+
+
+
+2、Start docker service
+
+```
+service docker start
+```
+
+
+
+3、pull docker from dockerhub
+
+```
+docker pull restfulapitesting/restfulapitesting:1.0
+```
+
+
+
+4、run runalways.py
+
+```
+python ../Restful-api-testint/core/case_execution/runalways.py
+```
+
+
+
+
+
+# 2、代码结构
 
 
 ├── common　　　　　　　　　　　　　　#公共类
@@ -31,17 +71,17 @@ Restful-api-testing会依据OpenAPI文档，自动地推断出云服务API之间
 
 |　　　　　└── test.py　　　　　　　　　#测试能不能一直跑
 
-|　└── case_generation　　　　　　　　　 #生成测试用例
+|　　└── case_generation　　　　　　　　　 #生成测试用例
 
-|　　　　├── delete_test.py　　　　　　　#生成delete测试用例
+|　　　　　├── delete_test.py　　　　　　　#生成delete测试用例
 
-|　　　　├── get_test.py　　　　　　　　　#生成get测试用例
+|　　　　　├── get_test.py　　　　　　　　　#生成get测试用例
 
-|　　　　├── patch_test.py　　　　　　　#生成patch测试用例
+|　　　　　├── patch_test.py　　　　　　　#生成patch测试用例
 
-|　　　　├── post_test.py　　　　　　　　#生成post测试用例
+|　　　　　├── post_test.py　　　　　　　　#生成post测试用例
 
-|　　　　└── put_test.py　　　　　　　　#生成put测试用例
+|　　　　　└── put_test.py　　　　　　　　#生成put测试用例
 
 ├── dependec_matrix　　　　　　　　　　#依赖矩阵模块
 
@@ -111,15 +151,4 @@ Restful-api-testing会依据OpenAPI文档，自动地推断出云服务API之间
 
 └── README.md
 
-
-
- 
-
-
-
- 
-
-
-
- 
 
