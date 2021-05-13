@@ -48,7 +48,7 @@ class MetamorphicTesting:
             compare_unit_3 = MetamorphicCompare(self.source_response, fuzz_unit_3.request_response)
             compare_unit_3.subset_compare()
             if not compare_unit_3.compare_result:
-                print(fuzz_unit_3.new_url + '\n' + fuzz_unit_1.new_url + '   not satisfy subset')
+                print(fuzz_unit_3.new_url + '\n' + fuzz_unit_1.new_url + '   not satisfy sub_subset')
                 return
         print('%s  %s  %s  satisfy sub_sub'
               % (self.base_url, self.parameter_1_field.field_name, self.parameter_2_field.field_name))
@@ -77,7 +77,7 @@ class MetamorphicTesting:
             compare_unit_3 = MetamorphicCompare(fuzz_unit_1.request_response, fuzz_unit_3.request_response)
             compare_unit_3.equality_compare()
             if not compare_unit_3.compare_result:
-                print(fuzz_unit_1.new_url + '\n' + fuzz_unit_2.new_url + '    not satisfy equality')
+                print(fuzz_unit_1.new_url + '\n' + fuzz_unit_2.new_url + '    not satisfy sub_equality')
         print('%s  %s  %s  satisfy sub_equality'
               % (self.base_url, self.parameter_1_field.field_name, self.parameter_2_field.field_name))
 
@@ -106,21 +106,21 @@ class MetamorphicTesting:
             compare_unit_3 = MetamorphicCompare(fuzz_unit_1.request_response, fuzz_unit_3.request_response)
             compare_unit_3.equivalence_compare()
             if not compare_unit_3.compare_result:
-                print(fuzz_unit_3.new_url + '\n' + fuzz_unit_1.new_url + '    not satisfy equivalence')
+                print(fuzz_unit_3.new_url + '\n' + fuzz_unit_1.new_url + '    not satisfy sub_equivalence')
                 return
             # 比较该相应与源响应是否满足subset
             compare_unit_3 = MetamorphicCompare(self.source_response, fuzz_unit_3.request_response)
             compare_unit_3.subset_compare()
             if not compare_unit_3.compare_result:
-                print(self.base_url + '\n' + fuzz_unit_3.new_url + '    not satisfy subset')
+                print(self.base_url + '\n' + fuzz_unit_3.new_url + '    not satisfy subset_equivalence')
                 return
             # 比较该响应与第二个响应是否满足subset
             compare_unit_3 = MetamorphicCompare(fuzz_unit_2.request_response, fuzz_unit_3.request_response)
             compare_unit_3.subset_compare()
             if not compare_unit_3.compare_result:
-                print(fuzz_unit_2.new_url + '\n' + fuzz_unit_3 + '    not satisfy subset')
+                print(fuzz_unit_2.new_url + '\n' + fuzz_unit_3 + '    not satisfy subset_equivalence')
                 return
-        print('%s  %s  %s  satisfy sub_sort'
+        print('%s  %s  %s  satisfy sub_equivalence'
               % (self.base_url, self.parameter_1_field.field_name, self.parameter_2_field.field_name))
         return
 
@@ -155,9 +155,9 @@ class MetamorphicTesting:
             compare_unit_2 = MetamorphicCompare(fuzz_unit_3.request_response, fuzz_unit_5.request_response)
             compare_unit_2.subset_compare()
             if not compare_unit_1.compare_result or compare_unit_2.compare_result:
-                print(fuzz_unit_4.new_url + '\n' + fuzz_unit_5.new_url + ' not satisfy disjoint')
+                print(fuzz_unit_4.new_url + '\n' + fuzz_unit_5.new_url + ' not satisfy sub_disjoint')
                 return
-        print('%s  %s  %s  satisfy disjoint'
+        print('%s  %s  %s  satisfy sub_disjoint'
               % (self.base_url, self.parameter_1_field.field_name, self.parameter_2_field.field_name))
         return
 
@@ -183,9 +183,9 @@ class MetamorphicTesting:
             compare_unit_3 = MetamorphicCompare(fuzz_unit_1.request_response, fuzz_unit_3.request_response)
             compare_unit_3.equality_compare()
             if not compare_unit_3.compare_result:
-                print(fuzz_unit_3.new_url + '\n' + fuzz_unit_1.new_url + '    not satisfy equality')
+                print(fuzz_unit_3.new_url + '\n' + fuzz_unit_1.new_url + '    not satisfy equality_equality')
                 return
-        print('%s  %s  %s  satisfy equality'
+        print('%s  %s  %s  satisfy equality_equality'
               % (self.base_url, self.parameter_1_field.field_name, self.parameter_2_field.field_name))
         return
 
@@ -211,9 +211,9 @@ class MetamorphicTesting:
             compare_unit_3 = MetamorphicCompare(fuzz_unit_1.request_response, fuzz_unit_3.request_response)
             compare_unit_3.equivalence_compare()
             if not compare_unit_3.compare_result:
-                print(fuzz_unit_3.new_url + '\n' + fuzz_unit_1.new_url + '    not satisfy equivalence')
+                print(fuzz_unit_3.new_url + '\n' + fuzz_unit_1.new_url + '    not satisfy equality_equivalence')
                 return
-        print('%s  %s  %s  satisfy equivalence'
+        print('%s  %s  %s  satisfy equality_equivalence'
               % (self.base_url, self.parameter_1_field.field_name, self.parameter_2_field.field_name))
         return
 
@@ -224,13 +224,100 @@ class MetamorphicTesting:
             fuzz_unit_1 = fuzz.get_equality_unit()
             if fuzz.fuzz_state == 0:
                 return
-            # 得到两个满足equality 的参数
+            # 得到两个满足disjoint 的参数
             fuzz = FuzzMRParameter(self.parameter_2_field, self.base_url, self.source_response)
             fuzz_unit_2 = fuzz.get_disjoint_unit()
             fuzz_unit_3 = fuzz.fuzz_unit
             if not fuzz.fuzz_state:
                 return
             # 将这两个参数得到两个新的url
+            fuzz_unit_4 = FuzzAndJudgeUnit(self.parameter_2_field, fuzz_unit_1.new_url)
+            fuzz_unit_4.new_url = fuzz_unit_1.new_url + '&' + fuzz_unit_2.parameter
+            fuzz_unit_4.judge_effective()
+            if fuzz_unit_4.responses_status == 0:
+                print(fuzz_unit_4.new_url + ' is invalid')
+                return
+            fuzz_unit_5 = FuzzAndJudgeUnit(self.parameter_2_field, fuzz_unit_1.new_url)
+            fuzz_unit_5.new_url = fuzz_unit_1.new_url + '&' + fuzz_unit_3.parameter
+            fuzz_unit_5.judge_effective()
+            if fuzz_unit_5.responses_status == 0:
+                print(fuzz_unit_5.new_url + ' is invalid')
+                return
+            compare_unit_1 = MetamorphicCompare(fuzz_unit_2.request_response, fuzz_unit_4.request_response)
+            compare_unit_1.equality_compare()
+            compare_unit_2 = MetamorphicCompare(fuzz_unit_3.request_response, fuzz_unit_5.request_response)
+            compare_unit_2.equality_compare()
+            if not compare_unit_1.compare_result or compare_unit_2.compare_result:
+                print(fuzz_unit_4.new_url + '\n' + fuzz_unit_5.new_url + ' not satisfy equality_disjoint')
+                return
+        print('%s  %s  %s  satisfy equality_disjoint'
+              % (self.base_url, self.parameter_1_field.field_name, self.parameter_2_field.field_name))
+        return
+
+    def equivalence_equivalence_test(self):
+        for i in range(10):
+            # 得到一个满足equivalence的参数
+            fuzz = FuzzMRParameter(self.parameter_1_field, self.base_url, self.source_response)
+            fuzz_unit_1 = fuzz.get_equivalence_unit()
+            if fuzz.fuzz_state == 0:
+                return
+            # 得到一个满足equivalence的参数
+            fuzz = FuzzMRParameter(self.parameter_2_field, self.base_url, self.source_response)
+            fuzz_unit_2 = fuzz.get_equivalence_unit()
+            if fuzz.fuzz_state == 0:
+                return
+            # 组合成一个新的url
+            fuzz_unit_3 = FuzzAndJudgeUnit(self.parameter_2_field, fuzz_unit_1.new_url)
+            fuzz_unit_3.new_url = fuzz_unit_1.new_url + '&' + fuzz_unit_2.parameter
+            fuzz_unit_3.judge_effective()
+            if fuzz_unit_3.responses_status == 0:
+                print(fuzz_unit_3.new_url + ' is invalid')
+                return
+            compare_unit_3 = MetamorphicCompare(fuzz_unit_1.request_response, fuzz_unit_3.request_response)
+            compare_unit_3.equivalence_compare()
+            if not compare_unit_3.compare_result:
+                print(fuzz_unit_3.new_url + '\n' + fuzz_unit_1.new_url + '    not satisfy equivalenc_equivalence')
+                return
+        print('%s  %s  %s  satisfy equivalence_equivalence'
+              % (self.base_url, self.parameter_1_field.field_name, self.parameter_2_field.field_name))
+        return
+
+    def equivalence_disjoint_test(self):
+        for i in range(10):
+            # 得到一个满足equivalence的参数
+            fuzz = FuzzMRParameter(self.parameter_1_field, self.base_url, self.source_response)
+            fuzz_unit_1 = fuzz.get_equivalence_unit()
+            if fuzz.fuzz_state == 0:
+                return
+            # 得到两个满足disjoint 的参数
+            fuzz = FuzzMRParameter(self.parameter_2_field, self.base_url, self.source_response)
+            fuzz_unit_2 = fuzz.get_disjoint_unit()
+            fuzz_unit_3 = fuzz.fuzz_unit
+            if not fuzz.fuzz_state:
+                return
+            # 将这两个参数得到两个新的url
+            fuzz_unit_4 = FuzzAndJudgeUnit(self.parameter_2_field, fuzz_unit_1.new_url)
+            fuzz_unit_4.new_url = fuzz_unit_1.new_url + '&' + fuzz_unit_2.parameter
+            fuzz_unit_4.judge_effective()
+            if fuzz_unit_4.responses_status == 0:
+                print(fuzz_unit_4.new_url + ' is invalid')
+                return
+            fuzz_unit_5 = FuzzAndJudgeUnit(self.parameter_2_field, fuzz_unit_1.new_url)
+            fuzz_unit_5.new_url = fuzz_unit_1.new_url + '&' + fuzz_unit_3.parameter
+            fuzz_unit_5.judge_effective()
+            if fuzz_unit_5.responses_status == 0:
+                print(fuzz_unit_5.new_url + ' is invalid')
+                return
+            compare_unit_1 = MetamorphicCompare(fuzz_unit_2.request_response, fuzz_unit_4.request_response)
+            compare_unit_1.equivalence_compare()
+            compare_unit_2 = MetamorphicCompare(fuzz_unit_3.request_response, fuzz_unit_5.request_response)
+            compare_unit_2.equivalence_compare()
+            if not compare_unit_1.compare_result or compare_unit_2.compare_result:
+                print(fuzz_unit_4.new_url + '\n' + fuzz_unit_5.new_url + ' not satisfy equivalence_disjoint')
+                return
+        print('%s  %s  %s  satisfy equivalence_disjoint'
+              % (self.base_url, self.parameter_1_field.field_name, self.parameter_2_field.field_name))
+        return
 
     def metamorphic_testing(self):
         for parameter_1 in self.mr_dic:
@@ -250,6 +337,16 @@ class MetamorphicTesting:
                         self.equality_equality_test()
                     if self.mr_dic[parameter_2][2] == 1:
                         self.equality_equivalence_test()
+                    if self.mr_dic[parameter_2][3] == 1:
+                        self.equality_disjoint_test()
+                if self.mr_dic[parameter_1][2] == 1:
+                    if self.mr_dic[parameter_2][2] == 1:
+                        self.equivalence_equivalence_test()
+                    if self.mr_dic[parameter_2][3] == 1:
+                        self.equivalence_disjoint_test()
+
+
+
 
 
 
