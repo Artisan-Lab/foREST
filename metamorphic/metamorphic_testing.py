@@ -319,6 +319,66 @@ class MetamorphicTesting:
               % (self.base_url, self.parameter_1_field.field_name, self.parameter_2_field.field_name))
         return
 
+    def disjoint_disjoint_test(self):
+        for i in range(10):
+            # 得到两个满足disjoint 的参数
+            fuzz = FuzzMRParameter(self.parameter_1_field, self.base_url, self.source_response)
+            fuzz_unit_1 = fuzz.get_disjoint_unit()
+            fuzz_unit_2 = fuzz.fuzz_unit
+            if not fuzz.fuzz_state:
+                return
+            # 得到另外两个满足disjoint 的参数
+            fuzz = FuzzMRParameter(self.parameter_2_field, self.base_url, self.source_response)
+            fuzz_unit_3 = fuzz.get_disjoint_unit()
+            fuzz_unit_4 = fuzz.fuzz_unit
+            if not fuzz.fuzz_state:
+                return
+            fuzz_unit_5 = FuzzAndJudgeUnit(self.parameter_2_field, fuzz_unit_1.new_url)
+            fuzz_unit_5.new_url = fuzz_unit_1.new_url + '&' + fuzz_unit_3.parameter
+            fuzz_unit_5.judge_effective()
+            if fuzz_unit_5.responses_status == 0:
+                print(fuzz_unit_5.new_url + ' is invalid')
+                return
+            fuzz_unit_6 = FuzzAndJudgeUnit(self.parameter_2_field, fuzz_unit_1.new_url)
+            fuzz_unit_6.new_url = fuzz_unit_1.new_url + '&' + fuzz_unit_4.parameter
+            fuzz_unit_6.judge_effective()
+            if fuzz_unit_6.responses_status == 0:
+                print(fuzz_unit_6.new_url + ' is invalid')
+                return
+            fuzz_unit_7 = FuzzAndJudgeUnit(self.parameter_2_field, fuzz_unit_1.new_url)
+            fuzz_unit_7.new_url = fuzz_unit_2.new_url + '&' + fuzz_unit_3.parameter
+            fuzz_unit_7.judge_effective()
+            if fuzz_unit_7.responses_status == 0:
+                print(fuzz_unit_7.new_url + ' is invalid')
+                return
+            fuzz_unit_8 = FuzzAndJudgeUnit(self.parameter_2_field, fuzz_unit_1.new_url)
+            fuzz_unit_8.new_url = fuzz_unit_2.new_url + '&' + fuzz_unit_4.parameter
+            fuzz_unit_8.judge_effective()
+            if fuzz_unit_8.responses_status == 0:
+                print(fuzz_unit_8.new_url + ' is invalid')
+                return
+            compare_unit_1 = MetamorphicCompare(fuzz_unit_5.request_response, fuzz_unit_6.request_response)
+            compare_unit_1.disjoint_compare()
+            compare_unit_2 = MetamorphicCompare(fuzz_unit_7.request_response, fuzz_unit_8.request_response)
+            compare_unit_2.disjoint_compare()
+            compare_unit_3 = MetamorphicCompare(fuzz_unit_5.request_response, fuzz_unit_7.request_response)
+            compare_unit_3.disjoint_compare()
+            compare_unit_4 = MetamorphicCompare(fuzz_unit_6.request_response, fuzz_unit_8.request_response)
+            compare_unit_4.disjoint_compare()
+            if not compare_unit_1.compare_result:
+                print(fuzz_unit_5.new_url + '\n' + fuzz_unit_6.new_url + ' not satisfy disjoint_disjoint')
+                return
+            if not compare_unit_2.compare_result:
+                print(fuzz_unit_7.new_url + '\n' + fuzz_unit_8.new_url + ' not satisfy disjoint_disjoint')
+                return
+            if not compare_unit_3.compare_result:
+                print(fuzz_unit_5.new_url + '\n' + fuzz_unit_7.new_url + ' not satisfy disjoint_disjoint')
+                return
+            if not compare_unit_4.compare_result:
+                print(fuzz_unit_6.new_url + '\n' + fuzz_unit_8.new_url + ' not satisfy disjoint_disjoint')
+                return
+
+
     def metamorphic_testing(self):
         for parameter_1 in self.mr_dic:
             for parameter_2 in self.mr_dic:
@@ -344,17 +404,6 @@ class MetamorphicTesting:
                         self.equivalence_equivalence_test()
                     if self.mr_dic[parameter_2][3] == 1:
                         self.equivalence_disjoint_test()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                if self.mr_dic[parameter_1][3] == 1:
+                    if self.mr_dic[parameter_2][3] == 1:
+                        self.disjoint_disjoint_test()
