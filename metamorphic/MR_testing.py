@@ -73,20 +73,20 @@ class MRTesting:
             if (all([response_text[i] in response_text1 for i in range(0, len(response_text))]) or
                     all([response_text1[i] in response_text for i in range(0, len(response_text1))])):
                 # judge subset
-                MR_matrix_count[0] += 1
-            if response_text1 == response_text:
-                MR_matrix_count[1] += 1
+                MR_matrix_count[0] = MR_matrix_count[0] + 1
+            if response_text == response_text1:
+                MR_matrix_count[1] = MR_matrix_count[1] + 1
             if (all([response_text[i] in response_text1 for i in range(0, len(response_text))]) and
                 all([response_text1[i] in response_text for i in range(0, len(response_text1))])) and \
                     response_text1 != response_text:
-                MR_matrix_count[2] += 1
+                MR_matrix_count[2] = MR_matrix_count[2] + 1
             if (all([response_text2[i] not in response_text1 for i in range(0, len(response_text2))]) and
                     all([response_text1[i] not in response_text2 for i in range(0, len(response_text1))])):
-                MR_matrix_count[3] += 1
+                MR_matrix_count[3] = MR_matrix_count[3] + 1
             if (all([response_text[i] in response_text3 for i in range(0, len(response_text))]) and
                 all([response_text3[i] in response_text for i in range(0, len(response_text3))])) and \
                     response_text1 != response_text2:
-                MR_matrix_count[4] += 1
+                MR_matrix_count[4] = MR_matrix_count[4] + 1
         return MR_matrix_count
 
     def exec(self):
@@ -108,7 +108,7 @@ class MRTesting:
                     MR_matrix_count = self.MR_testing()
                     if MR_matrix_count[0] == 10:  # and MR_matrix_count[1] + MR_matrix_count[2] <MR_matrix_count[0]:
                         MR_matrix[0] = 1
-                    if self.field_info.default:
+                    if MR_matrix_count[1] == 10:
                         MR_matrix[1] = 1
                     if MR_matrix_count[1] + MR_matrix_count[2] == MR_matrix_count[0] and MR_matrix_count[1] != 0 and \
                             MR_matrix_count[2] != 0:

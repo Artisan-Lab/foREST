@@ -7,7 +7,7 @@ class GetCoverage:
     '''
     strhtml = None
 
-    def getCoverages(url):
+    def getCoverages(self, url):
         try:
             strhtml = requests.get(url)
         except ConnectionError:
@@ -53,7 +53,7 @@ class GetCoverage:
     前两项没啥用
     '''
 
-    def getFile_total_num(url):
+    def getFile_total_num(self, url):
         try:
             strhtml = requests.get(url)
         except ConnectionError:
@@ -62,7 +62,7 @@ class GetCoverage:
         file_total_num = str(soup.select('body > div.sum > span:nth-child(2)')).split('>')[1].split('<')[0]
         return file_total_num
 
-    def getCode_total_num(url):
+    def getCode_total_num(self, url):
         try:
             strhtml = requests.get(url)
         except ConnectionError:
@@ -71,7 +71,7 @@ class GetCoverage:
         code_total_num = str(soup.select('body > div.sum > span:nth-child(4)')).split('>')[1].split('<')[0]
         return code_total_num
 
-    def getExecute_code_total_num(url):
+    def getExecute_code_total_num(self, url):
         try:
             strhtml = requests.get(url)
         except ConnectionError:
@@ -80,7 +80,7 @@ class GetCoverage:
         execute_code_total_num = str(soup.select('body > div.sum > span:nth-child(6)')).split('>')[1].split('<')[0]
         return execute_code_total_num
 
-    def getCoverage_executed_code_total_num(url):
+    def getCoverage_executed_code_total_num(self, url):
         try:
             strhtml = requests.get(url)
         except ConnectionError:
@@ -90,11 +90,16 @@ class GetCoverage:
         str(soup.select('body > div.sum > span:nth-child(8)')).split('>')[1].split('<')[0]
         return coverage_executed_code_total_num
 
-    def getCoverage_rate_executed_code(url):
+    def getCoverage_rate_executed_code(self, url):
         try:
             strhtml = requests.get(url)
         except ConnectionError:
             return None
         soup = BeautifulSoup(strhtml.text, 'lxml')
-        coverage_rate_executed_code = str(soup.select('body > div.sum > span:nth-child(10)')).split('>')[1].split('<')[0]
+        try:
+            coverage_rate_executed_code = \
+                str(soup.select('body > div.sum > span:nth-child(10)')).split('>')[1].split('<')[0]
+        except:
+            coverage_rate_executed_code = '0.00%'
+
         return coverage_rate_executed_code
