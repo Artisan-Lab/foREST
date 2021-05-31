@@ -3,8 +3,32 @@ import os
 import requests
 import random
 from parse import parse
-from metamorphic.fuzz_and_judge import FuzzAndJudgeUnit
+from metamorphic.fuzz_and_judge import FuzzAndJudgeUnit,Fuzz
 from metamorphic.metamorphic_testing import MetamorphicTesting
+
+
+class MRTesting2:
+
+    def __init__(self, parameter_list, api_info):
+        self.parameter_list = parameter_list
+        self.api_info = api_info
+        self.api_method = api_info.http_method
+
+    def precondition(self):
+        if self.api_method == 'get':
+            self.url = self.api_info.path + '?private_token=n19y6WJgSgjyDuFSHMx9'
+            if self.api_info.req_field_names:
+                for req_parameter in self.api_info.req_param:
+                    if req_parameter.field_name in self.api_info.req_field_names:
+                        parameter = str(self.parameter_list[req_parameter.field_name])
+                        if req_parameter.location == 0:
+                            self.url = self.url.replace('{' + req_parameter.field_name + '}', parameter)
+                        else:
+                            self.url = self.url + '&' + parameter
+            source_response = requests.get(self.url)
+            if source_response.status_code > 300:
+                print(self.url + 'dependency default')
+                self.url_status = 0
 
 
 class MRTesting:
