@@ -4,20 +4,26 @@ from core.case_execution.case_test import fuzz
 
 #####################      fuzz处理graph（x）位置的api      #######################
 #  fuzzgraph(matr, tag, i, api_info_list, cov_url, Authorization)
-def fuzzgraph(matr, tag, x, api_info_list, cov_url, Authorization, fuzz_test_times, operation_mode):
+def fuzzgraph(param_pool, success_pool, fuzz_pool, username, password, matr, tag, x, api_info_list, cov_url, Authorization, operation_mode,
+              restart, length):
     api_info = api_info_list[x]
-    optional = 0
-    fuzz(optional, matr, tag, api_info, fuzz_test_times, cov_url, Authorization, operation_mode)
-    optional = 1
-    fuzz(optional, matr, tag, api_info, fuzz_test_times, cov_url, Authorization, operation_mode)
+    if length == 0:
+        optional = 0
+        fuzz(param_pool, success_pool, fuzz_pool, username, password, optional, matr, tag, api_info, cov_url,
+             Authorization, operation_mode, restart, length)
+    else:
+        optional = 1
+        fuzz(param_pool, success_pool, fuzz_pool, username, password, optional, matr, tag, api_info, cov_url,
+             Authorization, operation_mode, restart, length)
 
-def topology_visit(matr, tag, rn_matrix, rn_end, rn_visited, n,
-                   api_info_list, cov_url, Authorization, fuzz_test_times, operation_mode):
+def topology_visit(param_pool, success_pool, fuzz_pool, username, password, matr, tag, rn_matrix, rn_end, rn_visited, n,
+                   api_info_list, cov_url, Authorization, operation_mode, restart, length):
     # 第一个开始节点api是没有依赖的，其中需要的参数可通过fuzz来获取（也可人工赋值）
     g = eval(matr.lindex(str(rn_matrix),1))
     visited = eval(matr.lindex(str(rn_visited), 0))
     visited[n] = 1
-    fuzzgraph(matr, tag, n, api_info_list, cov_url, Authorization, fuzz_test_times, operation_mode)
+    fuzzgraph(param_pool, success_pool, fuzz_pool, username, password, matr, tag, n, api_info_list, cov_url, Authorization, operation_mode,
+              restart, length)
     matr.lpush(str(rn_visited), str(visited))
     matr.lpush(str(rn_matrix), str(g))
     matr.lpush(str(rn_matrix), n)
@@ -37,7 +43,7 @@ def topology_visit(matr, tag, rn_matrix, rn_end, rn_visited, n,
                 for a in dep_list:
                     g[a][n] = -1
                 dep_list.clear()
-                fuzzgraph(matr, tag, k, api_info_list, cov_url, Authorization, fuzz_test_times, operation_mode)
+                fuzzgraph(param_pool, success_pool, fuzz_pool, username, password, matr, tag, k, api_info_list, cov_url, Authorization, operation_mode, restart, length)
                 visited = eval(matr.lindex(str(rn_visited), 0))
                 visited[k] = 1
                 g[k] = eval(matr.lindex(str(rn_end), 0))
@@ -46,7 +52,7 @@ def topology_visit(matr, tag, rn_matrix, rn_end, rn_visited, n,
                 matr.lpush(str(rn_matrix), k)
                 matr.lpush(str(rn_visited), str(visited))
 
-def traversal(matr, tag, rn_matrix, api_info_lis, cov_url, Authorization, fuzz_test_times, operation_mode):
+def traversal(param_pool, success_pool, fuzz_pool, username, password, matr, tag, rn_matrix, api_info_lis, cov_url, Authorization, operation_mode, restart, length):
 
     graph = eval(str(matr.lindex(str(rn_matrix), 1)))
     api_info_list = api_info_lis
@@ -83,8 +89,8 @@ def traversal(matr, tag, rn_matrix, api_info_lis, cov_url, Authorization, fuzz_t
         out_degree_zero.remove(k)
         matr.lpush(str(rn_out_degree_zero), str(out_degree_zero))
         print(k)
-        topology_visit(matr, tag, rn_matrix, rn_end, rn_visited, k, api_info_list,
-                       cov_url, Authorization, fuzz_test_times, operation_mode)
+        topology_visit(param_pool, success_pool, fuzz_pool, username, password, matr, tag, rn_matrix, rn_end, rn_visited, k, api_info_list,
+                       cov_url, Authorization, operation_mode, restart, length)
 
 
 

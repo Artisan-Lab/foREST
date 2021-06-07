@@ -21,87 +21,6 @@ def random_str(slen=10):
     return ''.join(sa)
 
 
-class Fuzz:
-    fuzz_value = None
-    request_response = None
-
-    def __init__(self, field_info, base_url):
-        self.field_info = field_info
-        self.default = field_info.default
-        self.format = field_info.format
-        self.type = field_info.field_type
-        self.enum = field_info.enum
-        self.parameter_name = field_info.field_name
-        self.base_url = base_url
-        self.new_url = base_url
-        self.location = field_info.location
-        self.responses_status = 0
-
-    def get_enum(self):
-        return self.enum
-
-    def get_default(self):
-        return str(self.default)
-
-    def get_format(self):
-        return str(self.format)
-
-    def get_type(self):
-        return str(self.type)
-
-    def get_key(self):
-        return str(self.parameter_name)
-
-    def fuzz_by_format(self):
-        parameter_format = self.get_format()
-        if parameter_format == 'ISO 8601 YYYY-MM-DDTHH:MM:SSZ':
-            self.fuzz_value = str(random_date(datetime(2019, 1, 1, 0, 0, 0).astimezone().replace(microsecond=0),
-                                              datetime(2021, 12, 31, 23, 59, 59).astimezone().replace(
-                                                  microsecond=0)).isoformat())
-
-    def fuzz_by_enum(self):
-        self.fuzz_value = str(random.choice(self.enum))
-
-    def fuzz_by_string(self):
-        self.fuzz_value = random_str()
-
-    def fuzz_by_boolean(self):
-        self.fuzz_value = random.choice(['True', 'false'])
-
-    def fuzz_by_integer(self):
-        self.fuzz_value = str(random.randint(0, 50))
-
-    def get_fuzz_value(self):
-        return self.fuzz_value
-
-    def compose_url(self):
-        if self.location == 0:
-            self.new_url = self.base_url.replace('{' + self.parameter_name+ '}', self.fuzz_value)
-        elif self.location == 1:
-            self.new_url = self.base_url + '&' + self.parameter_name + '=' + self.fuzz_value
-
-    def get_new_url(self):
-        return self.new_url
-
-    def is_effect(self):
-        response_status = requests.get(self.new_url).status_code
-        if 300 > response_status >= 200:
-            self.request_response = json.loads(requests.get(self.new_url).text)
-            if not self.request_response:
-                self.responses_status = 0
-            else:
-                self.responses_status = 1
-        elif 500 > response_status >= 300:
-            self.responses_status = 0
-        elif 500 == response_status:
-            print('\033[31m find bug in %s' % self.new_url)
-            self.responses_status = 0
-
-    def get_response_status(self):
-        return self.responses_status
-
-
-
 class FuzzAndJudgeUnit:
     parameter = None
     responses_status = None
@@ -118,9 +37,8 @@ class FuzzAndJudgeUnit:
         elif self.field_info.format:
             if self.field_info.format == 'ISO 8601 YYYY-MM-DDTHH:MM:SSZ':
                 self.parameter = self.field_info.field_name + '=' + \
-                                 str(random_date(datetime(2019, 1, 1, 0, 0, 0).astimezone().replace(microsecond=0),
-                                                 datetime(2021, 12, 31, 23, 59, 59).astimezone().replace(
-                                                     microsecond=0)).isoformat())
+                     str(random_date(datetime(2019, 1, 1, 0, 0, 0).astimezone().replace(microsecond=0),
+                                     datetime(2021, 12, 31, 23, 59, 59).astimezone().replace(microsecond=0)).isoformat())
         else:
             if self.field_info.field_type == 'boolean':
                 self.parameter = self.field_info.field_name + '=' + random.choice(['true', 'false'])
@@ -130,7 +48,7 @@ class FuzzAndJudgeUnit:
                 self.parameter = self.field_info.field_name + '=' + str(random.randint(0, 50))
         if self.field_info.location == 0:
             self.new_url = self.base_url.replace('{' + self.field_info.field_name + '}', self.parameter)
-        elif self.field_info.location == 1:
+        else:
             self.new_url = self.base_url + '&' + self.parameter
         pass
 
