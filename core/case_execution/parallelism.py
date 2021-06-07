@@ -1,3 +1,5 @@
+import time
+
 import numpy as np
 
 from core.case_execution.topology_test import traversal,fuzzgraph
@@ -7,21 +9,25 @@ from parse.parse import get_api_info
 import os.path
 import redis
 
-def parallelism(i, cov_url, optional_params_nums, test_yaml, Authorization, fuzz_test_times, operation_mode):
+def parallelism(username, password, i, cov_url, optional_params_nums, test_yaml, Authorization, fuzz_test_times, operation_mode,
+                restart, db_p, db_c, db_f_p, db_o, db_param, db_success, redis_host, redis_port):
 
-    fuzz_pool = redis.StrictRedis(host='127.0.0.1', port=6379, db=7, decode_responses=True)
+    param_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_param, decode_responses=True)
+    success_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_success, decode_responses=True)
+    fuzz_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_f_p, decode_responses=True)
+
     '''flag作用:保证一个进程只生成一遍模糊用例，即重启仅是重启测试，不会影响测试用例生成'''
-    flag = redis.StrictRedis(host='127.0.0.1', port=6379, db=0, decode_responses=True)
+    flag = redis.StrictRedis(host=redis_host, port=redis_port, db=db_o, decode_responses=True)
     if not flag.scard('over'):
         flag.sadd('over', 0)
     if operation_mode == 0:
         print("现在是串行测试！")
-        db_select = 5
+        db_select = db_p
     else:
         print("现在是并行测试！")
-        db_select = 9
+        db_select = db_c
     tag = str(i)
-    matr = redis.StrictRedis(host='127.0.0.1', port=6379, db=db_select, decode_responses=True)
+    matr = redis.StrictRedis(host=redis_host, port=redis_port, db=db_select, decode_responses=True)
 
     while True:
         path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../../openapi/%s" %test_yaml)
@@ -32,7 +38,6 @@ def parallelism(i, cov_url, optional_params_nums, test_yaml, Authorization, fuzz
         # rn_matrix: 唯一标识当前进程单独在redis中存储对应的内容，保证多进程时，每个进程有自己独立的redis存储对应中间信息
         rn_matrix = "matrix" + tag
         if matr.lindex(str(rn_matrix), 1) == None:
-            print(1)
             matr.lpush(str(rn_matrix), str(graph))
             matr.lpush(str(rn_matrix), "*")
 
@@ -57,16 +62,22 @@ def parallelism(i, cov_url, optional_params_nums, test_yaml, Authorization, fuzz
         flag.sadd('over', 1)
 
         '''开始测试'''
-        traversal(matr, tag, rn_matrix, api_info_list, cov_url, Authorization, fuzz_test_times, operation_mode)
+        for length in range(optional_params_nums + 1):
+            traversal(param_pool, success_pool, fuzz_pool, username, password, matr, tag, rn_matrix, api_info_list, cov_url, Authorization,
+                      operation_mode, restart, length)
 
-        # 未测试的单独fuzz
-        rn_visited = "visited" + tag
-        visited = eval(matr.lindex(str(rn_visited), 0))
-        print(visited)
-        for i, v in enumerate(visited):
-            if v == 0:
-                print(i)
-                fuzzgraph(matr, tag, i, api_info_list, cov_url, Authorization, fuzz_test_times, operation_mode)
+            # 未测试的单独fuzz
+            rn_visited = "visited" + tag
+            visited = eval(matr.lindex(str(rn_visited), 0))
+            print(visited)
+            for i, v in enumerate(visited):
+                if v == 0:
+                    print(i)
+                    fuzzgraph(param_pool, success_pool, fuzz_pool, username, password, matr, tag, i, api_info_list, cov_url, Authorization,
+                              operation_mode, restart, length)
 
+        fuzz_pool.flushdb()
+        matr.flushdb()
+        flag.flushdb()
 
-
+        time.sleep(60)

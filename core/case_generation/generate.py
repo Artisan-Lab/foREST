@@ -5,7 +5,7 @@ from module.type_fuzz import fuzz
 
 class case_generation():
 
-    def fuzz_generation(self,api_info,fuzz_pool):
+    def fuzz_generation(self, api_info, fuzz_pool):
         id = api_info.api_id
         parameter = {}
         for field_info in api_info.req_param:
@@ -14,7 +14,7 @@ class case_generation():
                         or field_info.field_type == 'boolean':
                     value = fuzz(field_info.field_type)
                     parameter[str(field_info.field_name)] = str(value) + str(field_info.location)
-        fuzz_pool.sadd(str(id),str(parameter))
+        fuzz_pool.sadd(str(id), str(parameter))
 
     def fuzz_optional_generation(self, api_info, fuzz_pool, nums):
         id = api_info.api_id
@@ -39,5 +39,3 @@ class case_generation():
                         value = fuzz(field_info.field_type)
                         parameter[str(field_info.field_name)] = str(value) + str(field_info.location)
                         fuzz_pool.sadd(str(id) + 'optional', str(parameter))
-
-
