@@ -22,8 +22,8 @@ def topology_visit(param_pool, success_pool, fuzz_pool, username, password, matr
     g = eval(matr.lindex(str(rn_matrix),1))
     visited = eval(matr.lindex(str(rn_visited), 0))
     visited[n] = 1
-    fuzzgraph(param_pool, success_pool, fuzz_pool, username, password, matr, tag, n, api_info_list, cov_url, Authorization, operation_mode,
-              restart, length)
+    fuzzgraph(param_pool, success_pool, fuzz_pool, username, password, matr, tag, n, api_info_list, cov_url,
+              Authorization, operation_mode, restart, length)
     matr.lpush(str(rn_visited), str(visited))
     matr.lpush(str(rn_matrix), str(g))
     matr.lpush(str(rn_matrix), n)
@@ -43,7 +43,8 @@ def topology_visit(param_pool, success_pool, fuzz_pool, username, password, matr
                 for a in dep_list:
                     g[a][n] = -1
                 dep_list.clear()
-                fuzzgraph(param_pool, success_pool, fuzz_pool, username, password, matr, tag, k, api_info_list, cov_url, Authorization, operation_mode, restart, length)
+                fuzzgraph(param_pool, success_pool, fuzz_pool, username, password, matr, tag, k, api_info_list, cov_url,
+                          Authorization, operation_mode, restart, length)
                 visited = eval(matr.lindex(str(rn_visited), 0))
                 visited[k] = 1
                 g[k] = eval(matr.lindex(str(rn_end), 0))
@@ -83,14 +84,14 @@ def traversal(param_pool, success_pool, fuzz_pool, username, password, matr, tag
                 out_degree_zero.append(j)
         matr.lpush(str(rn_out_degree_zero), str(out_degree_zero))
 
-    out_degree_zero = eval(matr.lindex(str(rn_out_degree_zero),0))
+    out_degree_zero = eval(matr.lindex(str(rn_out_degree_zero), 0))
     for m in range(len(out_degree_zero)):
         k = random.choice(out_degree_zero)
         out_degree_zero.remove(k)
         matr.lpush(str(rn_out_degree_zero), str(out_degree_zero))
         print(k)
-        topology_visit(param_pool, success_pool, fuzz_pool, username, password, matr, tag, rn_matrix, rn_end, rn_visited, k, api_info_list,
-                       cov_url, Authorization, operation_mode, restart, length)
+        topology_visit(param_pool, success_pool, fuzz_pool, username, password, matr, tag, rn_matrix, rn_end,
+                       rn_visited, k, api_info_list, cov_url, Authorization, operation_mode, restart, length)
 
 
 

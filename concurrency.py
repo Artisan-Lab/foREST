@@ -18,7 +18,7 @@ def concurrency():
     Authorization = config.get('Authorization', 'Authorization')
     username = config.get('Authorization', 'username')
     password = config.get('Authorization', 'password')
-    fuzz_test_num = int(config.get('test_config', 'fuzz_test_times'))
+    fuzz_test_times = int(config.get('test_config', 'fuzz_test_times'))
     operation_mode = int(config.get('operation_mode', 'operation_mode'))
     experiment = int(config.get('experiment', 'experiment'))
     run_time = eval(config.get('run_time', 'run_time'))
@@ -34,7 +34,7 @@ def concurrency():
 
     for i in range(process_num):
         p = Process(target=parallelism, args=(username, password, i, cov_url,optional_params_execute_nums,test_yaml,Authorization,
-                                              fuzz_test_num,operation_mode, restart, db_p, db_c, db_f_p, db_o,
+                                              fuzz_test_times,operation_mode, restart, db_p, db_c, db_f_p, db_o,
                                               db_param, db_success, redis_host, redis_port, ))
         p.daemon = True
         p.start()
