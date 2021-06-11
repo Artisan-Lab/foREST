@@ -4,7 +4,7 @@ info:
   version: v4
   description: An OpenAPI definition for the wordpress.
 servers:
-  - url: 'http://10.176.65.39:81/wp?rest_route=/wp/v2'
+  - url: 'http://10.176.65.88:81/wp?rest_route=/wp/v2'
 paths:
   /posts:
     get:

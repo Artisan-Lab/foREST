@@ -14,7 +14,10 @@ def fuzz(type):
         list_string = ['3171261@qq.com',
                        'https://gitlab.example.com/api/v4/templates/gitignores/Ruby',
                        '!@@#$$%%%^^^',
-                       '127.0.0.1']
+                       '127.0.0.1',
+                       "%u52AA%u529B%u5DE5%u4F",
+                       "%u597D%u597D%u5B66%u4",
+                       "%u597D%u59"]
 
         return random.choice(list_string)
     elif 'boolean' == type:
