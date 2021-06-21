@@ -15,11 +15,10 @@ def fuzz(type):
                        'https://gitlab.example.com/api/v4/templates/gitignores/Ruby',
                        '!@@#$$%%%^^^',
                        '127.0.0.1',
-                       "%u52AA%u529B%u5DE5%u4F",
-                       "%u597D%u597D%u5B66%u4",
-                       "%u597D%u59"]
-        strr = random.choice(list_string)
-        a = strr.encode('utf-8')
+                       "中国华为",
+                       "复旦大学",
+                       "智能可靠性测试"]
+        strr = str(random.choice(list_string).encode('utf-8')).replace("\\x", "%").replace("b'", "").replace("'", "")[0:-3]
         return strr
     elif 'boolean' == type:
         list_boolean = ['False', 'True']

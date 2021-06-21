@@ -234,21 +234,18 @@
 #             no_optional_fuzz_cases[str(field_info.field_name)] = str(value) + str(field_info.location)
 import random
 
-list_string = ['3171261@qq.com',
-               'https://gitlab.example.com/api/v4/templates/gitignores/Ruby',
-               '!@@#$$%%%^^^',
-               '127.0.0.1',
-               "%u52AA%u529B%u5DE5%u4F",
-               "%u597D%u597D%u5B66%u4",
-               "%u597D%u59",
-               "中国",
-               "复旦"]
-strr = random.choice(list_string)
-a = strr.encode('utf-8')
-print(a)
+# list_string = ["中国", "复旦"]
+# strr = random.choice(list_string)
+# print(strr)
+# print(type(strr))
+# a = strr.encode('utf-8')
+# c = str(a).replace("\\x", "%").replace("b'", "").replace("'", "")[0:-3]
+# print(c)
+# print(type(c))
 
-
-
+list_string = ["中国", "dfss", "胜利", "135@qq.com"]
+strr = str(random.choice(list_string).encode('utf-8')).replace("\\x", "%").replace("b'", "").replace("'", "")[0:-3]
+print(strr)
 
 
 
