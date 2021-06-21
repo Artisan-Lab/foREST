@@ -41,6 +41,7 @@ if __name__ == '__main__':
     params_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_params, decode_responses=True)
     success_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_success, decode_responses=True)
     fuzz_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_fuzz_pool, decode_responses=True)
+
     '''flag作用:保证一个进程只生成一遍模糊用例，即重启仅是重启测试，不会影响测试用例生成'''
     flag = redis.StrictRedis(host=redis_host, port=redis_port, db=db_o, decode_responses=True)
     if not flag.scard('over'):
@@ -54,229 +55,250 @@ if __name__ == '__main__':
     matr = redis.StrictRedis(host=redis_host, port=redis_port, db=db_select, decode_responses=True)
 
     ''' 主进程负责生成测试用例，根据可选参数个数，逐渐从k+0，k+1，k+2...进行用例生成和测试 '''
-    for nums in range(optional_params_execute_nums):
-        path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../../openapi/%s" % test_yaml)
-        api_info_list = get_api_info(1.0, path)
-        matrix, weight_info_list = get_dep_info(api_info_list)
-        print(matrix)
-        graph = matrix.tolist()
-
-        if matr.lindex("matrix", 1) == None:
-            matr.lpush("matrix", str(graph))
-            matr.lpush("matrix", "*")
-
-        num = len(api_info_list)
-        ma = np.zeros([num, num], dtype=int)
-        m = np.ones([num, num], dtype=int)
-        ma -= m
-        maa = ma.tolist()
-
-        # 此时是程序crash掉了
-        if matr.lindex("matrix", 0) and eval(matr.lindex("matrix", 1)) != maa \
-                and eval(matr.lindex("matrix", 1)) != graph:
-            print("测试程序重启！")
-
-        if matr.lindex("end", 0) == None:
-            end = []
-            for i in range(len(graph)):
-                end.append(-1)
-            matr.lpush("end", str(end))
-
-        if matr.lindex("visited", 0) == None:
-            visited = np.zeros(len(graph)).astype(dtype=int).tolist()
-            matr.lpush("visited", str(visited))
-
-
-        while 0 in eval(matr.lindex("visited", 0)):
-            next_apis = get_next_apis(matr)
-            # next_api当前测试api的id
-            next_api = random.choice(next_apis)
-            print(next_api)
-            api_info = api_info_list[next_api]
-            '''生成测试用例'''
-            if flag.sismember('over', 0):
-                if nums == 0:
-                    ''' 因为必选参数较少，生成测试用例可以尽可能多的包含fuzz的字典，不需太担心组合爆炸，故*5 '''
-                    for time in range(fuzz_test_times * 10):
-                        case_generation().fuzz_generation(api_info_list[next_api], fuzz_pool, params_pool)
-                else:
-                    for time in range(fuzz_test_times):
-                        case_generation().fuzz_optional_generation(api_info_list[next_api], fuzz_pool, nums, params_pool)
-            flag.srem('over', 0)
-            flag.sadd('over', 1)
-            print(f"第{next_api}个api的测试用例生成完成，可选参数有{nums}个")
-
-            ''' 分别将测试用例划分给不同的进程 '''
-            if nums == 0:
-                fuzz_cases = fuzz_pool.sscan(str(next_api + 1))[1]
+    while True:
+        if matr.lindex("nums", 0) != None:
+            numss = eval(matr.lindex("nums", 0))
+        else:
+            matr.lpush("nums", 0)
+            numss = eval(matr.lindex("nums", 0))
+        for numsss in range(optional_params_execute_nums):
+            nums = numss + numsss
+            if nums >= optional_params_execute_nums:
+                matr.lset("nums", 0, 0)
+                break
             else:
-                fuzz_cases = fuzz_pool.sscan(str(next_api + 1) + 'optional')[1]
+                path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../../openapi/%s" % test_yaml)
+                api_info_list = get_api_info(1.0, path)
+                matrix, weight_info_list = get_dep_info(api_info_list)
+                print(matrix)
+                graph = matrix.tolist()
 
-            print(f"fuzz_cases的总长度是{int(len(fuzz_cases))},fuzz_cases是{fuzz_cases}")
-            each_process_exc_case_num = int(len(fuzz_cases) / (process_num - 1))
-            print(f"每一个进程测试的case个数为{each_process_exc_case_num}")
+                if matr.lindex("matrix", 1) == None:
+                    matr.lpush("matrix", str(graph))
+                    matr.lpush("matrix", "*")
 
-            all_cases = []
-            cases = []
-            if fuzz_cases == ['{}']:
-                pass
-            else:
-                if each_process_exc_case_num == 0:
-                    if nums == 0:
-                        print(list(fuzz_pool.smembers(str(next_api + 1))))
-                        for j in list(fuzz_pool.smembers(str(next_api + 1))):
-                            cases.append(j)
-                            fuzz_pool.srem(str(next_api + 1), j)
-                            c = str(cases)
-                            all_cases.append(c)
-                            cases.clear()
-                    else:
-                        for j in list(fuzz_pool.smembers(str(next_api + 1) + 'optional')):
-                            cases.append(j)
-                            fuzz_pool.srem(str(next_api + 1) + 'optional', j)
-                            c = str(cases)
-                            all_cases.append(c)
-                            cases.clear()
-                elif each_process_exc_case_num == 1 and (process_num - 1) == int(len(fuzz_cases)):
-                    if nums == 0:
-                        print(list(fuzz_pool.smembers(str(next_api + 1))))
-                        for j in list(fuzz_pool.smembers(str(next_api + 1))):
-                            cases.append(j)
-                            fuzz_pool.srem(str(next_api + 1), j)
-                            c = str(cases)
-                            all_cases.append(c)
-                            cases.clear()
-                    else:
-                        for j in list(fuzz_pool.smembers(str(next_api + 1) + 'optional')):
-                            cases.append(j)
-                            fuzz_pool.srem(str(next_api + 1) + 'optional', j)
-                            c = str(cases)
-                            all_cases.append(c)
-                            cases.clear()
-                else:
-                    for c in range(process_num):
+                num = len(api_info_list)
+                ma = np.zeros([num, num], dtype=int)
+                m = np.ones([num, num], dtype=int)
+                ma -= m
+                maa = ma.tolist()
+
+                # 此时是程序crash掉了
+                if matr.lindex("matrix", 0) and eval(matr.lindex("matrix", 1)) != maa \
+                        and eval(matr.lindex("matrix", 1)) != graph:
+                    print("测试程序重启！")
+
+                if matr.lindex("end", 0) == None:
+                    end = []
+                    for i in range(len(graph)):
+                        end.append(-1)
+                    matr.lpush("end", str(end))
+                    matr.lset("nums", 0, nums)
+
+                if matr.lindex("visited", 0) == None:
+                    visited = np.zeros(len(graph)).astype(dtype=int).tolist()
+                    matr.lpush("visited", str(visited))
+
+                if eval(matr.lindex("visited", 0)) == np.ones(len(graph)).astype(dtype=int).tolist():
+                    visited = np.zeros(len(graph)).astype(dtype=int).tolist()
+                    matr.lpush("visited", str(visited))
+
+                while 0 in eval(matr.lindex("visited", 0)):
+                    next_apis = get_next_apis(matr)
+                    # next_api当前测试api的id
+                    next_api = random.choice(next_apis)
+                    print(next_api)
+                    api_info = api_info_list[next_api]
+                    '''生成测试用例'''
+                    if flag.sismember('over', 0):
                         if nums == 0:
-                            if c != (process_num-1):
-                                for i in range(each_process_exc_case_num):
-                                    if fuzz_pool.scard(str(next_api + 1)) < each_process_exc_case_num and fuzz_pool.scard(str(next_api + 1)) != 0:
-                                        for j in list(fuzz_pool.smembers(str(next_api + 1))):
-                                            print(f"每个测试的用例有{j}")
-                                            cases.append(j)
-                                            fuzz_pool.srem(str(next_api + 1), j)
-                                        cc = str(cases)
-                                        all_cases.append(cases)
-                                        cases.clear()
-                                    elif fuzz_pool.scard(str(next_api + 1)) != 0:
-                                        print(f"每个测试的用例有{fuzz_pool.sscan(str(next_api + 1))[1][0]}")
-                                        cases.append(fuzz_pool.sscan(str(next_api + 1))[1][0])
-                                        fuzz_pool.srem(str(next_api + 1), fuzz_pool.sscan(str(next_api + 1))[1][0])
-
-                                c = str(cases)
-                                all_cases.append(c)
-                                cases.clear()
-                                if fuzz_pool.scard(str(next_api + 1)) == 0:
-                                    break
-                            else:
-                                for m in list(fuzz_pool.smembers(str(next_api + 1))):
-                                    print(f"每个测试的用例有{m}")
-                                    cases.append(m)
-                                    fuzz_pool.srem(str(next_api + 1), m)
-                                ccc = str(cases)
-                                all_cases.append(ccc)
-                                cases.clear()
-
+                            ''' 因为必选参数较少，生成测试用例可以尽可能多的包含fuzz的字典，不需太担心组合爆炸，故*5 '''
+                            for time in range(fuzz_test_times * 10):
+                                case_generation().fuzz_generation(api_info_list[next_api], fuzz_pool, params_pool)
                         else:
-                            if c != (process_num - 1):
-                                for i in range(each_process_exc_case_num):
-                                    if fuzz_pool.scard(str(next_api + 1) + 'optional') < each_process_exc_case_num and fuzz_pool.scard(
-                                            str(next_api + 1) + 'optional') != 0:
-                                        for j in list(fuzz_pool.smembers(str(next_api + 1) + 'optional')):
-                                            print(f"每个测试的用例有{j}")
-                                            cases.append(j)
-                                            fuzz_pool.srem(str(next_api + 1) + 'optional', j)
-                                        cc = str(cases)
-                                        all_cases.append(cases)
-                                        cases.clear()
-                                    elif fuzz_pool.scard(str(next_api + 1) + 'optional') != 0:
-                                        print(f"每个测试的用例有{fuzz_pool.sscan(str(next_api + 1) + 'optional')[1][0]}")
-                                        cases.append(fuzz_pool.sscan(str(next_api + 1) + 'optional')[1][0])
-                                        fuzz_pool.srem(str(next_api + 1) + 'optional', fuzz_pool.sscan(str(next_api + 1) + 'optional')[1][0])
-                                c = str(cases)
-                                all_cases.append(c)
-                                cases.clear()
-                                if fuzz_pool.scard(str(next_api + 1) + 'optional') == 0:
-                                    break
+                            for time in range(fuzz_test_times):
+                                case_generation().fuzz_optional_generation(api_info_list[next_api], fuzz_pool, nums, params_pool)
+                    flag.srem('over', 0)
+                    flag.sadd('over', 1)
+                    print(f"第{next_api}个api的测试用例生成完成，可选参数有{nums}个")
+
+                    ''' 分别将测试用例划分给不同的进程 '''
+                    if nums == 0:
+                        fuzz_cases = fuzz_pool.smembers(str(next_api + 1))
+                    else:
+                        fuzz_cases = fuzz_pool.smembers(str(next_api + 1) + 'optional')
+
+                    print(f"fuzz_cases的总长度是{int(len(fuzz_cases))}")
+                    each_process_exc_case_num = int(len(fuzz_cases) / (process_num - 1))
+                    print(f"每一个进程测试的case个数为{each_process_exc_case_num}")
+
+                    all_cases = []
+                    cases = []
+                    if fuzz_cases == ['{}']:
+                        pass
+                    else:
+                        if each_process_exc_case_num == 0:
+                            print(11111111111111111111111111111111)
+                            if nums == 0:
+                                for j in list(fuzz_pool.smembers(str(next_api + 1))):
+                                    cases.append(j)
+                                    c = str(cases)
+                                    all_cases.append(c)
+                                    cases.clear()
                             else:
-                                for m in list(fuzz_pool.smembers(str(next_api + 1) + 'optional')):
-                                    print(f"每个测试的用例有{m}")
-                                    cases.append(m)
-                                    fuzz_pool.srem(str(next_api + 1) + 'optional', m)
-                                ccc = str(cases)
-                                all_cases.append(ccc)
-                                cases.clear()
+                                for j in list(fuzz_pool.smembers(str(next_api + 1) + 'optional')):
+                                    cases.append(j)
+                                    c = str(cases)
+                                    all_cases.append(c)
+                                    cases.clear()
+                        elif each_process_exc_case_num != 0 and (process_num - 1)*each_process_exc_case_num == int(len(fuzz_cases)):
+                            print(2222222222222222222222222222222)
+                            if nums == 0:
+                                for j in list(fuzz_pool.smembers(str(next_api + 1))):
+                                    cases.append(j)
+                                    c = str(cases)
+                                    all_cases.append(c)
+                                    cases.clear()
+                            else:
+                                for j in list(fuzz_pool.smembers(str(next_api + 1) + 'optional')):
+                                    cases.append(j)
+                                    c = str(cases)
+                                    all_cases.append(c)
+                                    cases.clear()
+                        else:
+                            for c in range(process_num):
+                                print(33333333333333333333333333333333333333)
+                                if nums == 0:
+                                    if c != (process_num - 1):
+                                        a = list(fuzz_pool.sscan(str(next_api + 1), cursor=0, count=each_process_exc_case_num)[1])
+                                        for aa in a:
+                                            fuzz_pool.srem(str(next_api + 1), aa)
+                                        print(f"每个测试的用例有{a}")
+                                        ss = str(a)
+                                        all_cases.append(ss)
+                                        a.clear()
+                                    else:
+                                        b = list(fuzz_pool.sscan(str(next_api + 1), cursor=0, count=fuzz_pool.scard(str(next_api + 1)))[1])
+                                        print(f"每个测试的用例有{b}")
+                                        sss = str(b)
+                                        all_cases.append(sss)
+                                        b.clear()
 
-            all_casess = []
-            for a in all_cases:
-                b = eval(a)
-                all_casess.append(b)
+                                else:
+                                    # if c != (process_num - 1):
+                                    #     for i in range(each_process_exc_case_num):
+                                    #         if fuzz_pool.scard(str(next_api + 1) + 'optional') < each_process_exc_case_num and fuzz_pool.scard(
+                                    #                 str(next_api + 1) + 'optional') != 0:
+                                    #             for j in list(fuzz_pool.smembers(str(next_api + 1) + 'optional')):
+                                    #                 print(f"每个测试的用例有{j}")
+                                    #                 cases.append(j)
+                                    #             cc = str(cases)
+                                    #             all_cases.append(cases)
+                                    #             cases.clear()
+                                    #         elif fuzz_pool.scard(str(next_api + 1) + 'optional') != 0:
+                                    #             print(f"每个测试的用例有{fuzz_pool.sscan(str(next_api + 1) + 'optional')[1][0]}")
+                                    #             cases = fuzz_pool.sscan(str(next_api + 1) + 'optional', count=each_process_exc_case_num)[1]
+                                    #     c = str(cases)
+                                    #     all_cases.append(c)
+                                    #     cases.clear()
+                                    #     if fuzz_pool.scard(str(next_api + 1) + 'optional') == 0:
+                                    #         break
+                                    # else:
+                                    #     for m in list(fuzz_pool.smembers(str(next_api + 1) + 'optional')):
+                                    #         print(f"每个测试的用例有{m}")
+                                    #         cases.append(m)
+                                    #     ccc = str(cases)
+                                    #     all_cases.append(ccc)
+                                    #     cases.clear()
+                                    if c != (process_num - 1):
+                                        a = list(fuzz_pool.sscan(str(next_api + 1) + 'optional', cursor=0, count=each_process_exc_case_num)[1])
+                                        for aa in a:
+                                            fuzz_pool.srem(str(next_api + 1) + 'optional', aa)
+                                        print(f"每个测试的用例有{a}")
+                                        ss = str(a)
+                                        all_cases.append(ss)
+                                        a.clear()
+                                    else:
+                                        b = list(fuzz_pool.sscan(str(next_api + 1) + 'optional', cursor=0, count=fuzz_pool.scard(str(next_api + 1) + 'optional'))[1])
+                                        print(f"每个测试的用例有{b}")
+                                        sss = str(b)
+                                        all_cases.append(sss)
+                                        b.clear()
 
-            print(f"所有测试用例{all_casess}")
 
-            if each_process_exc_case_num == 0 and int(len(fuzz_cases)) == 1:
-                print(1)
-                process = []
-                for i in range(process_num):
-                    all_casess.append([])
-                    p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
-                                                   api_info, Authorization, username, password, all_casess[i], ))
-                    p.start()
-                    process.append(p)
 
-                for i in range(process_num):
-                    process[i].join()
+                    all_casess = []
+                    for a in all_cases:
+                        if isinstance(a, str):
+                            b = eval(a)
+                            all_casess.append(b)
 
-            elif each_process_exc_case_num == 0:
-                print(2)
-                process = []
-                for i in range(int(len(fuzz_cases))):
-                    p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
-                                                   api_info, Authorization, username, password, all_casess[i], ))
-                    p.start()
-                    process.append(p)
 
-                for i in range(int(len(fuzz_cases))):
-                    process[i].join()
-            elif each_process_exc_case_num == 1 and (process_num - 1) == int(len(fuzz_cases)):
-                process = []
-                for i in range(int(len(fuzz_cases))):
-                    p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
-                                                   api_info, Authorization, username, password, all_casess[i], ))
-                    p.start()
-                    process.append(p)
+                    # print(f"所有测试用例ss{all_casess}")
 
-                for i in range(int(len(fuzz_cases))):
-                    process[i].join()
+                    if each_process_exc_case_num == 0 and int(len(fuzz_cases)) == 1:
+                        print(1)
+                        process = []
+                        for i in range(process_num):
+                            all_casess.append([])
+                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
+                                                           api_info, Authorization, username, password, all_casess[i], ))
+                            p.start()
+                            process.append(p)
 
-            else:
-                print(3)
-                process = []
-                for i in range(process_num):
-                    p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
-                                                   api_info, Authorization, username, password, all_casess[i], ))
-                    p.start()
-                    process.append(p)
+                        for i in range(process_num):
+                            print(11)
+                            process[i].join()
 
-                for i in range(process_num):
-                    process[i].join()
+                    elif each_process_exc_case_num == 0:
+                        print(2)
+                        process = []
+                        for i in range(int(len(fuzz_cases))):
+                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
+                                                           api_info, Authorization, username, password, all_casess[i], ))
+                            p.start()
+                            process.append(p)
 
-            g = eval(matr.lindex("matrix", 1))
-            visited = eval(matr.lindex("visited", 0))
-            visited[next_api] = 1
-            matr.lpush("visited", str(visited))
-            matr.lpush("matrix", str(g))
-            matr.lpush("matrix", next_api)
+                        for i in range(int(len(fuzz_cases))):
+                            print(22)
+                            process[i].join()
 
-            print(f"测完第{next_api}个api,并发进程数是{process_num},当前可选参数个数为{nums}个")
-            flag.srem('over', 1)
-            flag.sadd('over', 0)
-        fuzz_pool.flushdb()
+                    elif each_process_exc_case_num != 0 and (process_num - 1)*each_process_exc_case_num == int(len(fuzz_cases)):
+                        print(3)
+                        process = []
+                        for i in range(process_num - 1):
+                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
+                                                           api_info, Authorization, username, password, all_casess[i], ))
+                            p.start()
+                            process.append(p)
+
+                        for i in range(process_num - 1):
+                            print(33)
+                            process[i].join()
+
+                    else:
+                        print(4)
+                        process = []
+                        for i in range(process_num):
+                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
+                                                           api_info, Authorization, username, password, all_casess[i], ))
+                            p.start()
+                            process.append(p)
+
+                        for i in range(process_num):
+                            print(44)
+                            process[i].join()
+
+                    g = eval(matr.lindex("matrix", 1))
+                    visited = eval(matr.lindex("visited", 0))
+                    visited[next_api] = 1
+                    matr.lpush("visited", str(visited))
+                    matr.lpush("matrix", str(g))
+                    matr.lpush("matrix", next_api)
+
+                    print(f"测完第{next_api}个api,并发进程数是{process_num},当前可选参数个数为{nums}个")
+                    flag.srem('over', 1)
+                    flag.sadd('over', 0)
+
+                params_pool.flushdb()
+                flag.flushdb()

@@ -18,8 +18,9 @@ def fuzz(type):
                        "%u52AA%u529B%u5DE5%u4F",
                        "%u597D%u597D%u5B66%u4",
                        "%u597D%u59"]
-
-        return random.choice(list_string)
+        strr = random.choice(list_string)
+        a = strr.encode('utf-8')
+        return strr
     elif 'boolean' == type:
         list_boolean = ['False', 'True']
         return random.choice(list_boolean)
