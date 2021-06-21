@@ -302,9 +302,10 @@ def get_api_info(version, path):
     return api_list
     pass
 
-# path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/wordpress.yaml")
-# get_api_info(1,path)
+path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/elastic.yaml")
+api_info = get_api_info(1,path)
 
+print(api_info)
 
 #
 # dictionary = {
