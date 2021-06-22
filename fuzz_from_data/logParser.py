@@ -1,2 +1,2 @@
-class logParser:
+class LogParser:
     pass
