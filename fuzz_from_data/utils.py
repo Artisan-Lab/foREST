@@ -2,7 +2,6 @@ import constants
 
 
 class Utils:
-
     @staticmethod
     def json_type(obj):
         if obj is None:
