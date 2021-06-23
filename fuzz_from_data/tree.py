@@ -1,7 +1,11 @@
-from node import Node
-from constants import *
-from anytree import RenderTree
 import json
+
+from anytree import PreOrderIter
+from anytree import RenderTree
+from anytree.exporter import DotExporter
+
+from constants import *
+from node import Node
 from utils import *
 
 
@@ -30,6 +34,12 @@ class Tree:
         else:
             Node(key, data, Utils.json_type(data), parent=parent)
 
+    def get_node_num(self):
+        num = 0
+        for _ in PreOrderIter(self.root):
+            num = num + 1
+        return num
+
     def dump(self) -> str:
         if len(self.root.children) <= 0:
             print("dump error: the tree is empty!")
@@ -56,43 +66,8 @@ class Tree:
             tree_str = u"%s%s" % (pre, node.key)
             print(tree_str.ljust(8), node.value, node.type)
 
+    def export_img(self, img_name):
+        DotExporter(self.root).to_picture(img_name)
 
-json_str = '''
-[
-  {
-    "id": "ed899a2f4b50b4370feeea94676502b42383c746",
-    "short_id": "ed899a2f4b5",
-    "title": "Replace sanitize with escape once",
-    "author_name": "Example User",
-    "author_email": "user@example.com",
-    "authored_date": "2012-09-20T11:50:22+03:00",
-    "committer_name": "Administrator",
-    "committer_email": "admin@example.com",
-    "committed_date": "2012-09-20T11:50:22+03:00",
-    "created_at": "2012-09-20T11:50:22+03:00",
-    "message": "Replace sanitize with escape once",
-    "parent_ids": [
-      "6104942438c14ec7bd21c6cd5bd995272b3faff6"
-    ],
-    "web_url": "https://gitlab.example.com/thedude/gitlab-foss/-/commit/ed899a2f4b50b4370feeea94676502b42383c746"
-  },
-  {
-    "id": "6104942438c14ec7bd21c6cd5bd995272b3faff6",
-    "short_id": "6104942438c",
-    "title": "Sanitize for network graph",
-    "author_name": "randx",
-    "author_email": "user@example.com",
-    "committer_name": "ExampleName",
-    "committer_email": "user@example.com",
-    "created_at": "2012-09-20T09:06:12+03:00",
-    "message": "Sanitize for network graph",
-    "parent_ids": [
-      "ae1d9fb46aa2b07ee9836d49862ec4e2c46fbbba"
-    ],
-    "web_url": "https://gitlab.example.com/thedude/gitlab-foss/-/commit/ed899a2f4b50b4370feeea94676502b42383c746"
-  }
-]
-    '''
-tree = Tree(json_str)
-tree.print()
-print(tree.dump())
+    def copy(self):
+        return Tree(self.dump())
