@@ -3912,7 +3912,7 @@ securityDefinitions:
     type: apiKey
     name: Authorization
     in: header
-host: api.elastic-cloud.com
+host: 10.176.65.94:9200
 definitions:
   AppSearchPayload:
     required:
