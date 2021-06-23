@@ -92,7 +92,10 @@ def properties_handle(properties,required_list,properties_list):
 def parameter_handle(parameter_list, req_param_list):
     for parameter in parameter_list:
         parameter_name = parameter['name']
-        parameter_type = parameter['schema']['type']
+        if 'type' in parameter['schema']:
+            parameter_type = parameter['schema']['type']
+        elif 'oneOf' in parameter['schema']:
+            parameter_type = 'string'
         if 'description' in parameter:
             parameter_description = parameter['description']
         else:
@@ -179,7 +182,7 @@ def parameter_swagger_handle(parameter_list,req_param_list):
             parameter_required = False
         if parameter_type == 'array':
             if 'items' in parameter:
-                array_type = array_handle(parameter['schema']['items'])
+                array_type = array_handle(parameter['items'])
             else:
                 array_type = None
         else:
@@ -228,11 +231,10 @@ def response_handle(responses):
                 properties_alls = key
             if 'object' in responses[response]['content'][properties_alls]['schema']['type']:
                 properties = responses[response]['content'][properties_alls]['schema']['properties']
+                resp_params_list = properties_handle(properties, None, None)
             elif 'array' == responses[response]['content'][properties_alls]['schema']['type']:
                 properties = responses[response]['content'][properties_alls]['schema']['items']
-        else:
-            return resp_params_list
-        resp_params_list = properties_handle(properties,None,None)
+                resp_params_list = properties_handle(properties, None, None)
         return resp_params_list
 
 
@@ -292,21 +294,22 @@ def paths_handle(spec):
                 resp_param_list = response_handle(methods.get(method).get("responses"))
             api = api_info(api_id, complete_api_path, req_param_list, resp_param_list, method)
             api_list.append(api)
-    return  api_list
+    return api_list
 
+def main():
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/elastic.yaml")
+    a = get_api_info(1,path)
+    print(1)
 
 def get_api_info(version, path):
     parser = ResolvingParser(path)
     spec = parser.specification
     api_list = paths_handle(spec)
     return api_list
-    pass
 
-path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/elastic.yaml")
-api_info = get_api_info(1,path)
 
-print(api_info)
-
+if __name__  == '__main__':
+    main()
 #
 # dictionary = {
 #     79: {"id + sha +responses", "short_id + sha + responses"},
