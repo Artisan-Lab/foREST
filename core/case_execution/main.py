@@ -5,7 +5,7 @@ import numpy as np
 from core.case_execution.process_test import test
 from module.get_next_apis import get_next_apis
 from core.case_generation.generate import case_generation
-from dependec_matrix.graph2 import get_dep_info
+from dependec_matrix.graph_test import CreateTree
 from parse.parse import get_api_info
 import os.path
 
@@ -69,7 +69,9 @@ if __name__ == '__main__':
             else:
                 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../../openapi/%s" % test_yaml)
                 api_info_list = get_api_info(1.0, path)
-                matrix, weight_info_list = get_dep_info(api_info_list)
+                tree = CreateTree(api_info_list)
+                tree.create_tree()
+                matrix = tree.find_dependency()
                 print(matrix)
                 graph = matrix.tolist()
 

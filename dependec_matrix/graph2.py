@@ -7,7 +7,7 @@ import numpy as np
 #     servers = spec.get("servers")
 #     url = servers.get('url')
 #     return url
-
+from module.type_fuzz import fuzz
 
 '''
 静态分析：根据路径，匹配路径上相似程度，认为相似程度越高，依赖程度越高
@@ -229,33 +229,31 @@ object_info(self,name,type)   array(self,type)
 example: object(int,sting,array) => chenyang(26,'chenyang',[88,'str',68])
          object_dic = {23:int,litianyu:string,888:int,str:string,68:int}
 '''
-object_dic = {}
-def option_object(objects):
-    if objects:
-        for obj in objects:
-            if obj.type == 'array':
-                if isinstance(obj, list):
-                    option_array(obj.object)
-                else:
-                    pass
-            elif obj.type == 'object':
-                option_object(obj.object)
-            else:
-                object_dic[obj.name] = obj.type
 
-array_dic = {}
-def option_array(array):
-    if array:
-        for arr in array:
-            if arr.type == 'array':
-                if isinstance(arr, list):
-                    option_array(arr.object)
-                else:
-                    pass
-            elif arr.type == 'object':
-                option_object(arr.object)
-            else:
-                array_dic[arr.name] = arr.type
+def array_handle(array):
+    array_list = []
+    value = None
+    if isinstance(array, str):
+        if array == 'integer' or array == 'boolean' or array == 'string':
+            value = fuzz(array)
+    elif isinstance(array, list):
+        value = object_handle(array)
+    array_list.append(value)
+    return array_list
+
+
+def object_handle(objects):
+    object_list = {}
+    for object_ in objects:
+        value = None
+        if object_.type == 'object':
+            value = object_handle(object_.object)
+        elif object_.type == 'string' or object_.type == 'boolean' or object_.type == 'integer':
+            value = fuzz(object_.type)
+        elif object_.type == 'array':
+            value = array_handle(object_.object)
+        object_list[object_.name] = value
+    return object_list
 
 
 '''
