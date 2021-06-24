@@ -21,3 +21,6 @@ cat error.log | cut -f8- -d':' | egrep -v ' [0-9]+ bytes$' | grep -v '^$' | cut 
 ```
 
 ## mutate the captured requests
+```bash
+python main.py
+```
