@@ -3,10 +3,11 @@
 ```bash
   cd /etc/apache2/sites-available/
   vim 000-default.conf
+  
   # add follow lines to <virtualHost>...</virtualHost>
   LogLevel dumpio:trace7
-	DumpIOInput On
-	DumpIOOutput On
+  DumpIOInput On
+  DumpIOOutput On
 ```
 
 ## You can see some detail logs
