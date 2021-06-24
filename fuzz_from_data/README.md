@@ -1,5 +1,5 @@
 # Fuzz from data
-## configure apache server(version:2.4)
+## Configure apache server(version:2.4)
 ```bash
   cd /etc/apache2/sites-available/
   vim 000-default.conf
@@ -15,12 +15,12 @@
   tail -f error.log
 ```
 
-## parse http logs from the error.log
+## Parse http logs from the error.log
 ```bash
 cat error.log | cut -f8- -d':' | egrep -v ' [0-9]+ bytes$' | grep -v '^$' | cut -c2- | sed 's/\\r\\n//'
 ```
 
-## mutate the captured requests
+## Mutate the captured requests
 ```bash
 python main.py
 ```
