@@ -113,6 +113,21 @@ Restful-api-testing会依据OpenAPI文档，自动地推断出云服务API之间
 
 
 
+# 使用说明
+
+
+
+1.将待测服务的yaml文档存放在openapi文件夹下
+
+2.在配置文件[test_config]中配置test_yaml文件
+
+3.依据配置文件内容，选择测试模式
+
+启动命令
+
+python3 main.py
+
+
  
 
 
