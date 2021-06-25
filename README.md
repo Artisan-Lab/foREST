@@ -124,9 +124,9 @@ Restful-api-testing会依据OpenAPI文档，自动地推断出云服务API之间
 3.依据配置文件内容，选择测试模式
 
 启动命令
-
+```bash
 python3 main.py
-
+```
 
  
 
