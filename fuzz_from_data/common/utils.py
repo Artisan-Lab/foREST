@@ -1,9 +1,18 @@
-import constants
+import json
+
+from common import constants
 
 
 class Utils:
+    """
+    some common methods
+    """
+
     @staticmethod
     def json_type(obj):
+        """
+        given an obj,return its type defined in json
+        """
         if obj is None:
             return constants.NULL
         elif isinstance(obj, dict):
@@ -19,12 +28,32 @@ class Utils:
 
     @staticmethod
     def is_complex_type(obj):
+        """
+        return true if obj's type is object or array,otherwise return false
+        """
         return True if Utils.json_type(obj) in [constants.OBJECT, constants.ARRAY] else False
 
     @staticmethod
     def is_primitive_type(obj):
+        """
+         return true if obj's type is bool/int/str,otherwise return false
+        """
         return not Utils.is_complex_type(obj)
 
     @staticmethod
     def in_primitive_type(obj_type):
+        """
+        return true if obj_type is one of primitive types,otherwise return false
+        """
         return True if obj_type in [constants.STRING, constants.NUMBER, constants.BOOLEAN] else False
+
+    @staticmethod
+    def is_json(s):
+        """
+        conclude whether a string is json format
+        """
+        try:
+            json.loads(s)
+        except:
+            return False
+        return True

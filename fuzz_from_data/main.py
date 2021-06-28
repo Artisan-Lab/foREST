@@ -1,51 +1,54 @@
+from model.requestEntity import RequestEntity
 from mutation import Mutation
+from parser.apacheLogParser import ApacheLogParser
 from tree import *
 
 
+def get_mutated_requests_from_log(log_src):
+    """
+    API for other module
+    """
+    log_parser = ApacheLogParser(log_src)
+    log_parser.read_logs()
+    requests = log_parser.parse()
+    for request in requests:  # type: RequestEntity
+        if Utils.is_json(request.body):
+            tree = Tree(request.body)
+            tree.print()
+            Mutation.drop(tree)
+            tree.print()
+            Mutation.select(tree)
+            tree.print()
+            Mutation.two_nodes_manipulated_using_random(tree)
+            Mutation.duplicate(tree)
+            request.body = tree.dump()
+    return requests
+
+
 def main():
-    json_str = '''
-    {
-  "firstName": "John",
-  "lastName": "Smith",
-  "isAlive": true,
-  "age": 27,
-  "address": {
-    "streetAddress": "21 2nd Street",
-    "city": "New York",
-    "state": "NY",
-    "postalCode": "10021-3100"
-  },
-  "phoneNumbers": [
-    {
-      "type": "home",
-      "number": "212 555-1234"
-    },
-    {
-      "type": "office",
-      "number": "646 555-4567"
-    }
-  ],
-  "children": [
-    "Kangkang",
-    "Linkon",
-    "Jany"
-  ],
-  "spouse": null
-}
-        '''
-    tree = Tree(json_str)
-    tree.export_img("original_tree.png")
-    tree.print()
-    Mutation.drop(tree)
-    tree.export_img("dropped_tree.png")
-    tree.print()
-    Mutation.select(tree)
-    tree.export_img("selected_tree.png")
-    tree.print()
-    Mutation.two_nodes_manipulated_using_random(tree)
-    Mutation.duplicate(tree)
-    tree.export_img("duplicated_tree.png")
-    print(tree.dump())
+    """
+    main function
+    """
+    log_parser = ApacheLogParser("/home/yang/error.log")
+    log_parser.read_logs()
+    requests = log_parser.parse()
+    for request in requests:  # type: RequestEntity
+        if Utils.is_json(request.body):
+            tree = Tree(request.body)
+            tree.export_img("output/original_tree.png")
+            tree.print()
+            Mutation.drop(tree)
+            tree.export_img("output/dropped_tree.png")
+            tree.print()
+            Mutation.select(tree)
+            tree.export_img("output/selected_tree.png")
+            tree.print()
+            Mutation.two_nodes_manipulated_using_random(tree)
+            Mutation.duplicate(tree)
+            tree.export_img("output/duplicated_tree.png")
+            request.body = tree.dump()
+
+    print(requests)
 
 
 if __name__ == "__main__":
