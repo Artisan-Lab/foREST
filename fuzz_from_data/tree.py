@@ -4,12 +4,16 @@ from anytree import PreOrderIter
 from anytree import RenderTree
 from anytree.exporter import DotExporter
 
-from constants import *
+from common import constants
+from common.utils import Utils
 from node import Node
-from utils import *
 
 
 class Tree:
+    """
+    tree implementation
+    """
+
     def __init__(self, data: str):
         self.root = Node(None, None, None)
         self.data = json.loads(data)
@@ -17,13 +21,15 @@ class Tree:
         self.dump_data = {} if Utils.json_type(data) == constants.OBJECT else []
 
     def create(self, key, data, parent):
-
+        """
+        create a tree by a recursive way
+        """
         # complex type(object or array)
         if Utils.is_complex_type(data):
             json_type = Utils.json_type(data)
             node = Node(key, None, json_type, parent=parent)
             # array
-            if json_type == ARRAY:
+            if json_type == constants.ARRAY:
                 for item in data:
                     self.create(None, item, node)
             # object
@@ -35,12 +41,18 @@ class Tree:
             Node(key, data, Utils.json_type(data), parent=parent)
 
     def get_node_num(self):
+        """
+        get number of nodes
+        """
         num = 0
         for _ in PreOrderIter(self.root):
-            num = num + 1
+            num += 1
         return num
 
     def dump(self) -> str:
+        """
+        convert a tree to formatted json str
+        """
         if len(self.root.children) <= 0:
             print("dump error: the tree is empty!")
         return json.dumps(self._dump(self.root.children[0]))
@@ -62,12 +74,21 @@ class Tree:
             return ret
 
     def print(self):
+        """
+        pretty print for debug
+        """
         for pre, fill, node in RenderTree(self.root):
             tree_str = u"%s%s" % (pre, node.key)
             print(tree_str.ljust(8), node.value, node.type)
 
     def export_img(self, img_name):
+        """
+        export current tree structure to an image
+        """
         DotExporter(self.root).to_picture(img_name)
 
     def copy(self):
+        """
+        duplicate a new tree from current tree
+        """
         return Tree(self.dump())
