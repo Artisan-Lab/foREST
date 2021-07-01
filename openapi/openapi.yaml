@@ -4,7 +4,7 @@ info:
   version: v4
   description: An OpenAPI definition for the GitLab REST API.
 servers:
-  - url: 'http://10.177.74.168/api/v4'
+  - url: 'http://10.176.65.32:80/api/v4'
 paths:
   /templates/gitignores:
     get:

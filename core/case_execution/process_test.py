@@ -16,6 +16,7 @@ from module.object_handle import fuzz_object
 from module.response_parse import response_parse
 from module.save_success_case import save_success_case
 from module.type_fuzz import fuzz
+from log.get_logging import Logger
 
 config = ConfigParser()
 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../../restfultest_config.ini")
@@ -29,6 +30,7 @@ db_serial = int(config.get('redis', 'db_serial'))
 db_o = int(config.get('redis', 'db_o'))
 redis_host = config.get('redis', 'host')
 redis_port = config.get('redis', 'port')
+need_coverage = int(config.get('operation_mode', 'need_coverage'))
 
 params_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_params, decode_responses=True)
 success_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_success, decode_responses=True)
@@ -37,15 +39,17 @@ flag = redis.StrictRedis(host=redis_host, port=redis_port, db=db_o, decode_respo
 
 def test(operation_mode, cov_url, restart, nums, api_info, Authorization, username, password, cases):
     ini_coverage_rate_executed_code = 1000
+    request_log = Logger('request.log', level='debug')
     if operation_mode == 0:
-        ini_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
-        print(ini_coverage_rate_executed_code)
-        if not ini_coverage_rate_executed_code:
-            chongqi = requests.get(restart)
-            if 'The coverage tool is not running The coverage tool is running ,PID is' in chongqi:
-                print('重启成功~~~~')
-            else:
-                notify()
+        if need_coverage == 1:
+            ini_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
+            print(ini_coverage_rate_executed_code)
+            if not ini_coverage_rate_executed_code:
+                chongqi = requests.get(restart)
+                if 'The coverage tool is not running The coverage tool is running ,PID is' in chongqi:
+                    print('重启成功~~~~')
+                else:
+                    notify()
     headers = {}
     data = {}
     pa_locations = []
@@ -55,7 +59,6 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
     url = api_info.path
     method = api_info.http_method
 
-    print(cases)
 
     if nums != 0:
         # 从必选参数fuzz成功的case中取case加入到optional的fuzz case中
@@ -105,14 +108,10 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                 pa_names.append(q)
                 pa_locations.append(int(list(no_optional_fuzz_cases[q])[-1]))
                 value = ''.join(list(no_optional_fuzz_cases[q])[:-1])
-                print(value)
-                print(type(value))
                 try:
                     value = eval(value)
                 except:
                     print("str")
-                print(value)
-                print(type(value))
                 if not isinstance(value, int) and not isinstance(value, bool)and value != None:
                     print(1)
                     try:
@@ -135,14 +134,10 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                     pa_names.append(q)
                     pa_locations.append(int(list(fuzz_case[q])[-1]))
                     value = ''.join(list(fuzz_case[q])[:-1])
-                    print(value)
-                    print(type(value))
                     try:
                         value = eval(value)
                     except:
                         print("str")
-                    print(value)
-                    print(type(value))
                     if not isinstance(value, int) and not isinstance(value, bool)and value != None:
                         try:
                             value = json.loads(value)
@@ -156,17 +151,23 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                 else:
                     pass
                 urll, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
+                request_log.logger.debug(f"\nurl : {urll}\nid : {id}\nmethod : {method}\nheader : {headers}\ndata : {data}\n")
                 if method == 'post':
                     response = requests.post(url=urll, headers=headers, data=data)
                 if method == 'put':
                     response = requests.put(url=urll, headers=headers, data=data)
                 if method == 'patch':
+
                     response = requests.patch(url=urll, headers=headers, data=data)
                 if method == 'get':
                     response = requests.get(url=urll, headers=headers, data=data)
                 if method == 'delete':
                     response = requests.delete(url=urll, headers=headers, data=data)
-                if response != None:
+                try:
+                    request_log.logger.debug(f'\n状态码 : {response.status_code}')
+                except:
+                    request_log.logger.debug(f'\n无状态码')
+                if response is not None:
                     try:
                         response_json = response.json()
                         response_parse().json_txt(params_pool, response_json)
@@ -193,7 +194,7 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                 else:
                     pass
                 try:
-                    print(response.json())
+                    request_log.logger.debug(f'\nresponse : {response.json()}')
                 except ValueError:
                     print("NOT JSON")
         else:
@@ -204,6 +205,7 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
             else:
                 pass
             urll, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
+            request_log.logger.debug(f"\nurl : {urll}\nid : {id}\nmethod : {method}\nheader : {headers}\ndata : {data}\n")
             if method == 'post':
                 response = requests.post(url=urll, headers=headers, data=data)
             if method == 'put':
@@ -214,6 +216,10 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                 response = requests.get(url=urll, headers=headers, data=data)
             if method == 'delete':
                 response = requests.delete(url=urll, headers=headers, data=data)
+            try:
+                request_log.logger.debug(f'\n状态码 : {response.status_code}')
+            except:
+                request_log.logger.debug(f'\n无状态码')
             if response != None:
                 try:
                     response_json = response.json()
@@ -235,7 +241,7 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
             else:
                 pass
             try:
-                print(response.json())
+                request_log.logger.debug('\n'+response.json())
             except ValueError:
                 print("NOT JSON")
 
@@ -245,21 +251,16 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
             for fuzz_case in cases:
                 if len(eval(fuzz_case)) == nums:
                     fuzz__cases.append(fuzz_case)
-            print(f"params//aaa////{cases}//aaa////{fuzz__cases}")
             for fuzz_case in fuzz__cases:
                 fuzz_case = eval(fuzz_case)
                 for q in fuzz_case.keys():
                     pa_names.append(q)
                     pa_locations.append(int(list(fuzz_case[q])[-1]))
                     value = ''.join(list(fuzz_case[q])[:-1])
-                    print(value)
-                    print(type(value))
                     try:
                         value = eval(value)
                     except:
                         print("str")
-                    print(value)
-                    print(type(value))
                     if not isinstance(value, int) and not isinstance(value, bool) and value != None:
                         print(1)
                         try:
@@ -273,10 +274,10 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                     headers.update({'password': password})
                 else:
                     pass
-                print(f"url//0/{url}/// pa_locations///1//{pa_locations}///"
-                      f"////pa_names/////{pa_names}//// value_fuzzs//////{value_fuzzs}///headers///4//{headers}//data//{data}")
                 urll, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
                 print(f"url是{urll}////id///{id}method/////{method}////header///{headers}/////data////{data}")
+                request_log.logger.debug(
+                    f"\nurl : {urll}\nid : {id}\nmethod : {method}\nheader : {headers}\ndata : {data}\n")
                 if method == 'post':
                     response = requests.post(url=urll, headers=headers, data=data)
                 if method == 'put':
@@ -287,7 +288,10 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                     response = requests.get(url=urll, headers=headers, data=data)
                 if method == 'delete':
                     response = requests.delete(url=urll, headers=headers, data=data)
-
+                try:
+                    request_log.logger.debug(f'\n状态码 : {response.status_code}')
+                except:
+                    request_log.logger.debug(f'\n无状态码')
                 if response != None:
                     try:
                         response_json = response.json()
@@ -316,7 +320,7 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                 else:
                     pass
                 try:
-                    print(response.json())
+                    request_log.logger.debug('\n'+response.json())
                 except ValueError:
                     print("NOT JSON")
             fuzz__cases.clear()
@@ -329,7 +333,7 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
             else:
                 pass
             urll, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-            print(f"url是{urll}id///{id}method/////{method}")
+            request_log.logger.debug(f"url : {urll}\nid : {id}\nmethod : {method}\nheader : {headers}\ndata : {data}\n")
             if method == 'post':
                 response = requests.post(url=urll, headers=headers, data=data)
             if method == 'put':
@@ -340,6 +344,10 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                 response = requests.get(url=urll, headers=headers, data=data)
             if method == 'delete':
                 response = requests.delete(url=urll, headers=headers, data=data)
+            try:
+                request_log.logger.debug(f'\n状态码 : {response.status_code}')
+            except:
+                request_log.logger.debug(f'\n无状态码')
             if response != None:
                 try:
                     response_json = response.json()
@@ -361,7 +369,7 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
             else:
                 pass
             try:
-                print(response.json())
+                request_log.logger.debug('\n'+response.json())
             except ValueError:
                 print("NOT JSON")
 

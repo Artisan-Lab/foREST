@@ -83,7 +83,6 @@ def traversal(param_pool, success_pool, fuzz_pool, username, password, matr, tag
             if graph[j] == eval(matr.lindex(str(rn_end), 0)):
                 out_degree_zero.append(j)
         matr.lpush(str(rn_out_degree_zero), str(out_degree_zero))
-
     out_degree_zero = eval(matr.lindex(str(rn_out_degree_zero), 0))
     for m in range(len(out_degree_zero)):
         k = random.choice(out_degree_zero)

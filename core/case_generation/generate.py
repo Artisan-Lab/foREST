@@ -22,7 +22,7 @@ class case_generation():
                     else:
                         value = fuzz(field_info.field_type)
                     parameter[str(field_info.field_name)] = str(value) + str(field_info.location)
-                elif field_info.field_type == 'object' and field_info.object != None:
+                elif field_info.field_type == 'object' and field_info.object is not None:
                     if params_pool.llen(str(field_info.field_name)) != 0:
                         length = params_pool.llen(str(field_info.field_name))
                         index = random.randint(0, length)

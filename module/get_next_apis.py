@@ -16,10 +16,8 @@ def get_next_apis(matr):
                 next_apis[i] = count
 
     m = min(next_apis.values())
-    print(f"最小值是{m}")
     for key in next_apis.keys():
         if next_apis[key] == m:
             apis.append(key)
-    print(f"当前入度最小的api集合为{apis},入度为{m}")
     return apis
 
