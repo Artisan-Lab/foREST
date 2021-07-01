@@ -266,3 +266,5 @@ zope.event==4.5.0
 zope.interface @ file:///C:/ci/zope.interface_1602002494740/work
 
 anytree~=2.8.0
+redis~=3.5.3
+requests~=2.25.1

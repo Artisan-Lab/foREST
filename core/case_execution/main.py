@@ -27,7 +27,7 @@ if __name__ == '__main__':
     fuzz_test_times = int(config.get('test_config', 'fuzz_test_times'))
     operation_mode = int(config.get('operation_mode', 'operation_mode'))
     run_time = eval(config.get('run_time', 'run_time'))
-    restart = config.get('restart', 'restart')
+    restart_url = config.get('restart_url', 'restart_url')
 
     db_success = int(config.get('redis', 'db_success'))
     db_params = int(config.get('redis', 'db_params'))
@@ -243,7 +243,7 @@ if __name__ == '__main__':
                         process = []
                         for i in range(process_num):
                             all_casess.append([])
-                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
+                            p = Process(target=test, args=(operation_mode, cov_url, restart_url, nums,
                                                            api_info, Authorization, username, password, all_casess[i], ))
                             p.start()
                             process.append(p)
@@ -256,7 +256,7 @@ if __name__ == '__main__':
                         print(2)
                         process = []
                         for i in range(int(len(fuzz_cases))):
-                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
+                            p = Process(target=test, args=(operation_mode, cov_url, restart_url, nums,
                                                            api_info, Authorization, username, password, all_casess[i], ))
                             p.start()
                             process.append(p)
@@ -269,7 +269,7 @@ if __name__ == '__main__':
                         print(3)
                         process = []
                         for i in range(process_num - 1):
-                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
+                            p = Process(target=test, args=(operation_mode, cov_url, restart_url, nums,
                                                            api_info, Authorization, username, password, all_casess[i], ))
                             p.start()
                             process.append(p)
@@ -282,7 +282,7 @@ if __name__ == '__main__':
                         print(4)
                         process = []
                         for i in range(process_num):
-                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
+                            p = Process(target=test, args=(operation_mode, cov_url, restart_url, nums,
                                                            api_info, Authorization, username, password, all_casess[i], ))
                             p.start()
                             process.append(p)
