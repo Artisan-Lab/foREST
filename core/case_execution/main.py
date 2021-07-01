@@ -15,6 +15,7 @@ import os.path
 import redis
 from multiprocessing import Process
 
+
 if __name__ == '__main__':
     config = ConfigParser()
     path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../../restfultest_config.ini")
@@ -29,7 +30,7 @@ if __name__ == '__main__':
     fuzz_test_times = int(config.get('test_config', 'fuzz_test_times'))
     operation_mode = int(config.get('operation_mode', 'operation_mode'))
     run_time = eval(config.get('run_time', 'run_time'))
-    restart = config.get('restart', 'restart')
+    restart_url = config.get('restart_url', 'restart_url')
 
     db_success = int(config.get('redis', 'db_success'))
     db_params = int(config.get('redis', 'db_params'))
@@ -72,6 +73,7 @@ if __name__ == '__main__':
                 tree = CreateTree(api_info_list)
                 tree.create_tree()
                 matrix = tree.find_dependency()
+                print(matrix)
                 graph = matrix.tolist()
 
                 if optional_params_num.lindex("matrix", 1) is None:
@@ -243,8 +245,10 @@ if __name__ == '__main__':
                         process = []
                         for i in range(process_num):
                             all_casess.append([])
-                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
-                                                           api_info, Authorization, username, password, all_casess[i]))
+
+                            p = Process(target=test, args=(operation_mode, cov_url, restart_url, nums,
+                                                           api_info, Authorization, username, password, all_casess[i], ))
+
                             p.start()
                             process.append(p)
 
@@ -256,8 +260,10 @@ if __name__ == '__main__':
                         print(2)
                         process = []
                         for i in range(int(len(fuzz_cases))):
-                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
-                                                           api_info, Authorization, username, password, all_casess[i]))
+
+                            p = Process(target=test, args=(operation_mode, cov_url, restart_url, nums,
+                                                           api_info, Authorization, username, password, all_casess[i], ))
+
                             p.start()
                             process.append(p)
 
@@ -265,13 +271,14 @@ if __name__ == '__main__':
                             print(22)
                             process[i].join()
 
-                    elif each_process_exc_case_num != 0 and (process_num - 1) * each_process_exc_case_num == int(
-                            len(fuzz_cases)):
+                    elif each_process_exc_case_num != 0 and (process_num - 1)*each_process_exc_case_num == int(len(fuzz_cases)):
                         print(3)
                         process = []
                         for i in range(process_num - 1):
-                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
-                                                           api_info, Authorization, username, password, all_casess[i]))
+
+                            p = Process(target=test, args=(operation_mode, cov_url, restart_url, nums,
+                                                           api_info, Authorization, username, password, all_casess[i], ))
+
                             p.start()
                             process.append(p)
 
@@ -283,8 +290,10 @@ if __name__ == '__main__':
                         print(4)
                         process = []
                         for i in range(process_num):
-                            p = Process(target=test, args=(operation_mode, cov_url, restart, nums,
-                                                           api_info, Authorization, username, password, all_casess[i]))
+
+                            p = Process(target=test, args=(operation_mode, cov_url, restart_url, nums,
+                                                           api_info, Authorization, username, password, all_casess[i], ))
+
                             p.start()
                             process.append(p)
 

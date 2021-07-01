@@ -2,7 +2,7 @@ import random
 import requests
 import redis
 from rest_framework.utils import json
-from dependec_matrix.graph2 import get_dep_info
+from dependec_matrix.graph import get_dep_info
 from parse.parse import parse
 import os.path
 import sys
