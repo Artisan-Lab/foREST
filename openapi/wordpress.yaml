@@ -4,7 +4,7 @@ info:
   version: v4
   description: An OpenAPI definition for the wordpress.
 servers:
-  - url: 'http://10.176.65.88:81/wp?rest_route=/wp/v2'
+  - url: 'http://10.176.65.32:81/wp?rest_route=/wp/v2'
 paths:
   /posts:
     get:
@@ -1451,9 +1451,7 @@ paths:
           required: true
           description: Limit result set to items with particular parent IDs.
           schema:
-            type: array
-            items:
-              type: integer
+            type: integer
         - name: context
           description: >-
             Scope under which the request is made; determines fields present in
@@ -1541,9 +1539,7 @@ paths:
           required: true
           description: Limit result set to items with particular parent IDs.
           schema:
-            type: array
-            items:
-              type: integer
+            type: integer
         - name: id
           in: path
           required: true
@@ -1574,9 +1570,7 @@ paths:
           required: true
           description: Limit result set to items with particular parent IDs.
           schema:
-            type: array
-            items:
-              type: integer
+            type: integer
         - name: id
           in: path
           required: true
@@ -1595,9 +1589,7 @@ paths:
           in: query
           description: Limit result set to items with particular parent IDs.
           schema:
-            type: array
-            items:
-              type: integer
+            type: integer
         - name: id
           in: path
           required: true
@@ -1713,9 +1705,7 @@ paths:
           required: true
           description: Limit result set to items with particular parent IDs.
           schema:
-            type: array
-            items:
-              type: integer
+            type: integer
         - name: id
           in: path
           required: true
@@ -1839,9 +1829,7 @@ paths:
           in: query
           description: Limit result set to items with particular parent IDs.
           schema:
-            type: array
-            items:
-              type: integer
+            type: integer
         - name: parent_exclude
           in: query
           description: >-
@@ -2208,9 +2196,7 @@ paths:
           in: query
           description: Limit result set to items with particular parent IDs.
           schema:
-            type: array
-            items:
-              type: integer
+            type: integer
         - name: parent_exclude
           in: query
           description: >-
