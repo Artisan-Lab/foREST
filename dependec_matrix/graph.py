@@ -73,11 +73,11 @@ def adj(api_info_list):
     index = 0
     # base on request
     for req_api_list in api_info_list:
-        if req_api_list.req_param != []:
+        if req_api_list.req_param:
             i = req_api_list.api_id - 1
             for req_field_info in req_api_list.req_param:
                 # 依赖字段必须
-                if req_field_info.require == True:
+                if req_field_info.require:
                     '''
                     判断是否为object或者array这种复杂类型
                     分别用dependency_object2object
@@ -91,7 +91,7 @@ def adj(api_info_list):
                         req_object_dic = object_dic
                         object_dic.clear()
                         for resp_api_list in api_info_list:
-                            if resp_api_list.resp_param != []:
+                            if resp_api_list.resp_param:
                                 j = resp_api_list.api_id - 1
                                 for resp_field_info in resp_api_list.resp_param:
                                     if resp_field_info.field_type == 'object':
@@ -122,7 +122,7 @@ def adj(api_info_list):
                             req_array_dic = array_dic
                             array_dic.clear()
                             for resp_api_list in api_info_list:
-                                if resp_api_list.resp_param != []:
+                                if resp_api_list.resp_param:
                                     j = resp_api_list.api_id - 1
                                     for resp_field_info in resp_api_list.resp_param:
                                         if resp_field_info.field_type == 'object':
@@ -289,7 +289,7 @@ def get_dep_info(api_info_list):
     # num = length_hint(api_info_list)
     num = len(api_info_list)
     # 定义邻接矩阵matri
-    global  matrix
+    global matrix
     matrix = np.zeros([num, num], dtype=int)
     m = np.ones([num, num], dtype=int)
     matrix -= m
@@ -303,3 +303,5 @@ def get_dep_info(api_info_list):
     # print(matrix)
     # print(weight_info_list)
     return matrix, weight_info_list
+
+

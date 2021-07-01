@@ -30,7 +30,7 @@ class CreateTree:
             api_method = api_info.http_method
             api_id = api_info.api_id
             self.find_node(api_path_nodes, api_method, api_id)
-        self.path_tree.show(idhidden=False, data_property='method')
+        # self.path_tree.show(idhidden=False, data_property='method')
 
     def find_node(self, api_path_nodes, api_method, api_id):
         current_node = self.path_tree.get_node('/'.join(api_path_nodes))
