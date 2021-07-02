@@ -8,4 +8,9 @@ class RequestEntity:
         self.url = url
         self.headers = headers
         self.body = body
-    
+
+    def clone(self):
+        """
+        clone a new request entity
+        """
+        return RequestEntity(self.method, self.url, self.headers, self.body)
