@@ -30,7 +30,7 @@ class CreateTree:
             api_method = api_info.http_method
             api_id = api_info.api_id
             self.find_node(api_path_nodes, api_method, api_id)
-        # self.path_tree.show(idhidden=False, data_property='method')
+        self.path_tree.show(idhidden=False, data_property='method')
 
     def find_node(self, api_path_nodes, api_method, api_id):
         current_node = self.path_tree.get_node('/'.join(api_path_nodes))
@@ -48,19 +48,24 @@ class CreateTree:
 
     def find_dependency(self):
         node_number = len(self.api_list)
-        matrix = np.zeros([node_number+1, node_number+1], dtype=int)
+        matrix_zero =  np.zeros([node_number+1, node_number+1], dtype=int)
+        matrix_one = np.ones([node_number+1, node_number+1], dtype=int)
+        matrix = matrix_zero-matrix_one
         all_nodes = self.path_tree.all_nodes()
         for node in all_nodes:
             post_id = self.find_last_post(node)
             if post_id:
                 if 'post' in node.data.method:
-                    pass
+                    if self.path_tree.parent(node.identifier):
+                        last_post = self.find_last_post(self.path_tree.parent(node.identifier))
+                        if last_post:
+                            matrix[node.data.method['post']][last_post] = 1
                 if 'get' in node.data.method:
-                    matrix[post_id][node.data.method['get']] = 1
+                    matrix[node.data.method['get']][post_id] = 1
                 if 'delete' in node.data.method:
-                    matrix[post_id][node.data.method['delete']] = 1
+                    matrix[node.data.method['delete']][post_id] = 1
                 if 'put' in node.data.method:
-                    matrix[post_id][node.data.method['put']] = 1
+                    matrix[node.data.method['put']][post_id] = 1
         return matrix
 
     def find_last_post(self, node):

@@ -308,8 +308,8 @@ def get_api_info(version, path):
     return api_list
 
 
-# if __name__  == '__main__':
-#     main()
+if __name__  == '__main__':
+    main()
 #
 # dictionary = {
 #     79: {"id + sha +responses", "short_id + sha + responses"},
