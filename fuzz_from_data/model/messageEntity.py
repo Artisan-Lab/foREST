@@ -1,5 +1,5 @@
-from requestEntity import RequestEntity
-from responseEntity import ResponseEntity
+from model.requestEntity import RequestEntity
+from model.responseEntity import ResponseEntity
 
 
 class MessageEntity:

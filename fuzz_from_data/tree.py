@@ -1,11 +1,12 @@
 import json
+import random
 
 from anytree import PreOrderIter
 from anytree import RenderTree
 from anytree.exporter import DotExporter
 
-from common import constants
-from common.utils import Utils
+from commons import constants
+from commons.utils import Utils
 from node import Node
 
 
@@ -54,7 +55,7 @@ class Tree:
         convert a tree to formatted json str
         """
         if len(self.root.children) <= 0:
-            print("dump error: the tree is empty!")
+            return random.choice(['[]', '{}'])
         return json.dumps(self._dump(self.root.children[0]))
 
     def _dump(self, node):
@@ -92,3 +93,12 @@ class Tree:
         duplicate a new tree from current tree
         """
         return Tree(self.dump())
+
+    def get_node_ids(self):
+        """
+        return ids of all nodes
+        """
+        node_ids = []
+        for _ in PreOrderIter(self.root):  # type:Node
+            node_ids.append(_.id)
+        return node_ids
