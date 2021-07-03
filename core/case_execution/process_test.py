@@ -6,7 +6,7 @@ from configparser import ConfigParser
 
 import redis
 import requests
-from config import TestingConfig
+from core.case_execution.config import TestingConfig
 from module.Coverage_get_tool import GetCoverage
 from module.get_success_case import get_success_case
 from module.make_url import make_url
@@ -132,7 +132,6 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                     else:
                         notify()
     headers = {}
-    print(1)
     data = {}
     pa_locations = []
     pa_names = []
@@ -214,7 +213,6 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
         if len(cases) != 0:
             for fuzz_case in cases:
                 url = api_info.path
-                print(1)
                 fuzz_case = eval(fuzz_case)
                 print(fuzz_case)
                 for q in fuzz_case.keys():
@@ -236,7 +234,9 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                     # headers.update({'username': username})
                     # headers.update({'password': password})
                 url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-                print(url)
+                pa_locations.clear()
+                pa_names.clear()
+                value_fuzzs.clear()
                 request_log.print_info(
                     f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
                 if method == 'post':
@@ -276,7 +276,6 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                     request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
 
         else:
-            print(2)
             if Authorization is not None:
                 headers.update({"Authorization": Authorization})
                 # headers.update({'username': username})
@@ -333,7 +332,6 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                     except:
                         print("str")
                     if not isinstance(value, int) and not isinstance(value, bool) and value != None:
-                        print(1)
                         try:
                             value = json.loads(value)
                         except:

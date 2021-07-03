@@ -17,7 +17,7 @@ from multiprocessing import Process
 
 if __name__ == '__main__':
     config = ConfigParser()
-    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../../restfultest_config.ini")
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "./restfultest_config.ini")
     config.read(path, encoding='UTF-8')
     process_num = int(config.get("process_num", "process_num"))
     test_yaml = config.get('test_config', 'test_yaml')
@@ -67,7 +67,7 @@ if __name__ == '__main__':
                 optional_params_num.lset("nums", 0, 0)
                 break
             else:
-                path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../../openapi/%s" % test_yaml)
+                path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "./openapi/%s" % test_yaml)
                 api_info_list = get_api_info(1.0, path)
                 tree = CreateTree(api_info_list)
                 tree.create_tree()
