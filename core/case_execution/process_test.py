@@ -16,13 +16,13 @@ from module.response_parse import response_parse
 from module.save_success_case import save_success_case
 from module.type_fuzz import fuzz
 from log.get_logging import Logger
-from log.get_logging import Logger
 
 testingConfig = TestingConfig()
 
 config = ConfigParser()
 path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../../restfultest_config.ini")
 config.read(path, encoding='UTF-8')
+
 
 def restart_coverage_tool(now_coverage_rate_executed_code, restart_url):
     """
@@ -89,7 +89,6 @@ def set_auth(authorization, headers, username, password):
         headers.update({'password': password})
 
 
-<<<<<<< HEAD
 def do_request(url, pa_locations, pa_names, value_fuzzs, headers, data, method):
     """
     request by different parameters
@@ -97,7 +96,8 @@ def do_request(url, pa_locations, pa_names, value_fuzzs, headers, data, method):
     url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
     response = request_by_different_methods(method, url, headers, data)
     return response
-=======
+
+
 db_params = int(config.get('redis', 'db_params'))
 db_success = int(config.get('redis', 'db_success'))
 db_parallelism = int(config.get('redis', 'db_parallelism'))
@@ -113,23 +113,26 @@ success_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_success
 fuzz_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_fuzz_pool, decode_responses=True)
 flag = redis.StrictRedis(host=redis_host, port=redis_port, db=db_o, decode_responses=True)
 
-def test(operation_mode, cov_url, restart, nums, api_info, Authorization, username, password, cases):
+
+def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, username, password, cases):
     ini_coverage_rate_executed_code = 1000
     request_log = Logger('request.log', level='debug')
     if operation_mode == 0:
-        ini_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
-        print(ini_coverage_rate_executed_code)
-        restart_coverage_tool(ini_coverage_rate_executed_code,restart_url)
         if need_coverage == 1:
             ini_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
             print(ini_coverage_rate_executed_code)
-            if not ini_coverage_rate_executed_code:
-                chongqi = requests.get(restart)
-                if 'The coverage tool is not running The coverage tool is running ,PID is' in chongqi:
-                    print('重启成功~~~~')
-                else:
-                    notify()
+            restart_coverage_tool(ini_coverage_rate_executed_code, restart_url)
+            if need_coverage == 1:
+                ini_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
+                print(ini_coverage_rate_executed_code)
+                if not ini_coverage_rate_executed_code:
+                    chongqi = requests.get(restart_url)
+                    if 'The coverage tool is not running The coverage tool is running ,PID is' in chongqi:
+                        print('重启成功~~~~')
+                    else:
+                        notify()
     headers = {}
+    print(1)
     data = {}
     pa_locations = []
     pa_names = []
@@ -137,7 +140,6 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
     id = api_info.api_id
     url = api_info.path
     method = api_info.http_method
-
 
     if nums != 0:
         # 从必选参数fuzz成功的case中取case加入到optional的fuzz case中
@@ -194,13 +196,12 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                 try:
                     value = eval(value)
                 except:
-                    print("str")
-                if not isinstance(value, int) and not isinstance(value, bool)and value != None:
-                    print(1)
+                    pass
+                if not isinstance(value, int) and not isinstance(value, bool) and value != None:
                     try:
                         value = json.loads(value)
                     except:
-                        print("obj")
+                        pass
                 value_fuzzs.append(value)
             url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
             pa_locations.clear()
@@ -212,7 +213,10 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
     if nums == 0:
         if len(cases) != 0:
             for fuzz_case in cases:
+                url = api_info.path
+                print(1)
                 fuzz_case = eval(fuzz_case)
+                print(fuzz_case)
                 for q in fuzz_case.keys():
                     pa_names.append(q)
                     pa_locations.append(int(list(fuzz_case[q])[-1]))
@@ -220,34 +224,31 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                     try:
                         value = eval(value)
                     except:
-                        print("str")
-                    if not isinstance(value, int) and not isinstance(value, bool)and value != None:
+                        pass
+                    if not isinstance(value, int) and not isinstance(value, bool) and value != None:
                         try:
                             value = json.loads(value)
                         except:
-                            print("obj")
+                            pass
                     value_fuzzs.append(value)
-                if Authorization != None:
+                if Authorization is not None:
                     headers.update({"Authorization": Authorization})
-                    headers.update({'username': username})
-                    headers.update({'password': password})
-                else:
-                    pass
-                urll, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
+                    # headers.update({'username': username})
+                    # headers.update({'password': password})
+                url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
+                print(url)
+                request_log.print_info(
+                    f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
                 if method == 'post':
-                    response = requests.post(url=urll, headers=headers, data=data)
+                    response = requests.post(url=url, headers=headers, data=data)
                 if method == 'put':
-                    response = requests.put(url=urll, headers=headers, data=data)
+                    response = requests.put(url=url, headers=headers, data=data)
                 if method == 'patch':
-                    response = requests.patch(url=urll, headers=headers, data=data)
+                    response = requests.patch(url=url, headers=headers, data=data)
                 if method == 'get':
-                    response = requests.get(url=urll, headers=headers, data=data)
+                    response = requests.get(url=url, headers=headers, data=data)
                 if method == 'delete':
-                    response = requests.delete(url=urll, headers=headers, data=data)
-                try:
-                    request_log.logger.debug(f'\n状态码 : {response.status_code}')
-                except:
-                    request_log.logger.debug(f'\n无状态码')
+                    response = requests.delete(url=url, headers=headers, data=data)
                 if response is not None:
                     try:
                         response_json = response.json()
@@ -257,74 +258,62 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                             pass
                         else:
                             time.sleep(2)
-                            now_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
-                            restart_coverage_tool(now_coverage_rate_executed_code,restart_url)
-                            '''fuzz_success_data[str(field_info.field_name)] = str(val) + str(location)'''
-                            if now_coverage_rate_executed_code != ini_coverage_rate_executed_code:
-                                # 先将字典json.dumps()序列化存储到redis，然后再json.loads()反序列化为字典
-                                fuzz_case.update({'api_id': str(id)})
-                                fuzz_success_json_data = json.dumps(fuzz_case)
-                                save_success_case().save_fuzz_success(TestingConfig.success_pool,
-                                                                      fuzz_success_json_data, method)
+                            if need_coverage == 1:
+                                now_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
+                                restart_coverage_tool(now_coverage_rate_executed_code, restart_url)
+                                '''fuzz_success_data[str(field_info.field_name)] = str(val) + str(location)'''
+                                if now_coverage_rate_executed_code != ini_coverage_rate_executed_code:
+                                    # 先将字典json.dumps()序列化存储到redis，然后再json.loads()反序列化为字典
+                                    fuzz_case.update({'api_id': str(id)})
+                                    fuzz_success_json_data = json.dumps(fuzz_case)
+                                    save_success_case().save_fuzz_success(testingConfig.success_pool,
+                                                                          fuzz_success_json_data, method)
                     except ValueError:
                         print("NOT JSON")
-                else:
-                    pass
                 try:
-                    request_log.logger.debug(f'\nresponse : {response.json()}')
-                except ValueError:
-                    print("NOT JSON")
+                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+                except:
+                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
+
         else:
-            if Authorization != None:
+            print(2)
+            if Authorization is not None:
                 headers.update({"Authorization": Authorization})
-                headers.update({'username': username})
-                headers.update({'password': password})
-            else:
-                pass
-            urll, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-            request_log.logger.debug(f"\nurl : {urll}\nid : {id}\nmethod : {method}\nheader : {headers}\ndata : {data}\n")
+                # headers.update({'username': username})
+                # headers.update({'password': password})
+            url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
+            request_log.print_info(
+                f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
             if method == 'post':
-                response = requests.post(url=urll, headers=headers, data=data)
+                response = requests.post(url=url, headers=headers, data=data)
             if method == 'put':
-                response = requests.put(url=urll, headers=headers, data=data)
+                response = requests.put(url=url, headers=headers, data=data)
             if method == 'patch':
-                response = requests.patch(url=urll, headers=headers, data=data)
+                response = requests.patch(url=url, headers=headers, data=data)
             if method == 'get':
-                response = requests.get(url=urll, headers=headers, data=data)
+                response = requests.get(url=url, headers=headers, data=data)
             if method == 'delete':
-                response = requests.delete(url=urll, headers=headers, data=data)
-            try:
-                request_log.logger.debug(f'\n状态码 : {response.status_code}')
-            except:
-                request_log.logger.debug(f'\n无状态码')
-            if response != None:
+                response = requests.delete(url=url, headers=headers, data=data)
+            if response is not None:
                 try:
                     response_json = response.json()
-                    response_parse().json_txt(TestingConfig.params_pool, response_json)
+                    response_parse().json_txt(testingConfig.params_pool, response_json)
                     # 如果fuzz成功(即覆盖率发生改变)，将测试用例保存到redis中
                     if ini_coverage_rate_executed_code == 1000:
                         pass
                     else:
                         time.sleep(2)
-                        now_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
-                        restart_coverage_tool(now_coverage_rate_executed_code,restart_url)
-                    '''fuzz_success_data[str(field_info.field_name)] = str(val) + str(location)'''
-                    if now_coverage_rate_executed_code != ini_coverage_rate_executed_code:
-                        # 先将字典json.dumps()序列化存储到redis，然后再json.loads()反序列化为字典
-                        TestingConfig.fuzz_case.update({'api_id': str(id)})
-
-                        fuzz_success_json_data = json.dumps(TestingConfig.fuzz_case)
-                        save_success_case().save_fuzz_optional_success(TestingConfig.success_pool,
-                                                                       fuzz_success_json_data,
-                                                                       method)
+                        if need_coverage == 1:
+                            now_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
+                            restart_coverage_tool(now_coverage_rate_executed_code, restart_url)
                 except ValueError:
                     print("NOT JSON")
             else:
                 pass
             try:
-                request_log.logger.debug('\n'+response.json())
-            except ValueError:
-                print("NOT JSON")
+                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+            except:
+                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
 
     else:
         if len(cases) != 0:
@@ -334,6 +323,7 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                     fuzz__cases.append(fuzz_case)
             for fuzz_case in fuzz__cases:
                 fuzz_case = eval(fuzz_case)
+                url = api_info.path
                 for q in fuzz_case.keys():
                     pa_names.append(q)
                     pa_locations.append(int(list(fuzz_case[q])[-1]))
@@ -349,30 +339,24 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                         except:
                             print("obj")
                     value_fuzzs.append(value)
-                if Authorization != None:
+                if Authorization is not None:
                     headers.update({"Authorization": Authorization})
-                    headers.update({'username': username})
-                    headers.update({'password': password})
-                else:
-                    pass
-                urll, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-                request_log.logger.debug(
-                    f"\nurl : {urll}\nid : {id}\nmethod : {method}\nheader : {headers}\ndata : {data}\n")
+                    # headers.update({'username': username})
+                    # headers.update({'password': password})
+                url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
+                request_log.print_info(
+                    f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
                 if method == 'post':
-                    response = requests.post(url=urll, headers=headers, data=data)
+                    response = requests.post(url=url, headers=headers, data=data)
                 if method == 'put':
-                    response = requests.put(url=urll, headers=headers, data=data)
+                    response = requests.put(url=url, headers=headers, data=data)
                 if method == 'patch':
-                    response = requests.patch(url=urll, headers=headers, data=data)
+                    response = requests.patch(url=url, headers=headers, data=data)
                 if method == 'get':
-                    response = requests.get(url=urll, headers=headers, data=data)
+                    response = requests.get(url=url, headers=headers, data=data)
                 if method == 'delete':
-                    response = requests.delete(url=urll, headers=headers, data=data)
-                try:
-                    request_log.logger.debug(f'\n状态码 : {response.status_code}')
-                except:
-                    request_log.logger.debug(f'\n无状态码')
-                if response != None:
+                    response = requests.delete(url=url, headers=headers, data=data)
+                if response is not None:
                     try:
                         response_json = response.json()
                         response_parse().json_txt(params_pool, response_json)
@@ -381,66 +365,61 @@ def test(operation_mode, cov_url, restart, nums, api_info, Authorization, userna
                             pass
                         else:
                             time.sleep(2)
-                            now_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
-                            restart_coverage_tool(now_coverage_rate_executed_code,restart_url)
-                            '''fuzz_success_data[str(field_info.field_name)] = str(val) + str(location)'''
-                            if now_coverage_rate_executed_code != ini_coverage_rate_executed_code:
-                                # 先将字典json.dumps()序列化存储到redis，然后再json.loads()反序列化为字典
-                                fuzz_case.update({'api_id': str(id)})
+                            if need_coverage == 1:
+                                now_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
+                                restart_coverage_tool(now_coverage_rate_executed_code, restart_url)
+                                '''fuzz_success_data[str(field_info.field_name)] = str(val) + str(location)'''
+                                if now_coverage_rate_executed_code != ini_coverage_rate_executed_code:
+                                    # 先将字典json.dumps()序列化存储到redis，然后再json.loads()反序列化为字典
+                                    fuzz_case.update({'api_id': str(id)})
 
-                                fuzz_success_json_data = json.dumps(fuzz_case)
-                                save_success_case().save_fuzz_optional_success(TestingConfig.success_pool,
-                                                                               fuzz_success_json_data,
-                                                                               method)
+                                    fuzz_success_json_data = json.dumps(fuzz_case)
+                                    save_success_case().save_fuzz_optional_success(testingConfig.success_pool,
+                                                                                   fuzz_success_json_data,
+                                                                                   method)
                     except ValueError:
                         print("NOT JSON")
-                else:
-                    pass
                 try:
-                    request_log.logger.debug('\n'+response.json())
-                except ValueError:
-                    print("NOT JSON")
+                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+                except:
+                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
             fuzz__cases.clear()
         else:
             print("无参数！！！！！！！！！！！！！！")
-            if Authorization != None:
+            if Authorization is not None:
                 headers.update({"Authorization": Authorization})
-                headers.update({'username': username})
-                headers.update({'password': password})
+                # headers.update({'username': username})
+                # headers.update({'password': password})
             else:
                 pass
-            urll, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-            request_log.logger.debug(f"url : {urll}\nid : {id}\nmethod : {method}\nheader : {headers}\ndata : {data}\n")
+            url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
+            request_log.print_info(
+                f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
             if method == 'post':
-                response = requests.post(url=urll, headers=headers, data=data)
+                response = requests.post(url=url, headers=headers, data=data)
             if method == 'put':
-                response = requests.put(url=urll, headers=headers, data=data)
+                response = requests.put(url=url, headers=headers, data=data)
             if method == 'patch':
-                response = requests.patch(url=urll, headers=headers, data=data)
+                response = requests.patch(url=url, headers=headers, data=data)
             if method == 'get':
-                response = requests.get(url=urll, headers=headers, data=data)
+                response = requests.get(url=url, headers=headers, data=data)
             if method == 'delete':
-                response = requests.delete(url=urll, headers=headers, data=data)
-            try:
-                request_log.logger.debug(f'\n状态码 : {response.status_code}')
-            except:
-                request_log.logger.debug(f'\n无状态码')
-            if response != None:
+                response = requests.delete(url=url, headers=headers, data=data)
+            if response is not None:
                 try:
                     response_json = response.json()
-                    response_parse().json_txt(TestingConfig.params_pool, response_json)
+                    response_parse().json_txt(testingConfig.params_pool, response_json)
                     # 如果fuzz成功(即覆盖率发生改变)，将测试用例保存到redis中
                     if ini_coverage_rate_executed_code == 1000:
                         pass
                     else:
                         time.sleep(2)
-                        now_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
-                        restart_coverage_tool(now_coverage_rate_executed_code,restart_url)
+                        if need_coverage == 1:
+                            now_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
+                            restart_coverage_tool(now_coverage_rate_executed_code, restart_url)
                 except ValueError:
                     print("NOT JSON")
-            else:
-                pass
             try:
-                request_log.logger.debug('\n'+response.json())
-            except ValueError:
-                print("NOT JSON")
+                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+            except:
+                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')

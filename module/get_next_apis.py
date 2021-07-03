@@ -19,5 +19,6 @@ def get_next_apis(matr):
     for key in next_apis.keys():
         if next_apis[key] == m:
             apis.append(key)
+    print(f'入度为{m}')
     return apis
 
