@@ -13,7 +13,7 @@ with open("./request.log") as file:
         sending = line.split(" ")
         if "Sending:" in sending:
             time = sending[0] + " " + sending[1]
-            time = ''.join(list(time)[0:19])
+            time = ''.join(list(time)[0:23])
             print(time)
             api_ = sending[3] + sending[4]
             api_ = ''.join(list(api_)[1:])
