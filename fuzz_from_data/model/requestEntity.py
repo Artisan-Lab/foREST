@@ -14,3 +14,6 @@ class RequestEntity:
         clone a new request entity
         """
         return RequestEntity(self.method, self.url, self.headers, self.body)
+
+    def __str__(self) -> str:
+        return f'{self.method} {self.url}\n{self.headers}\n{self.body}'

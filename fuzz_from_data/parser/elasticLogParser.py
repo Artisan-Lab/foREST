@@ -1,4 +1,4 @@
-from logParser import LogParser
+from parser.logParser import LogParser
 
 
 class ElasticLogParser(LogParser):
