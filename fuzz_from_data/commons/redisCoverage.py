@@ -1,0 +1,47 @@
+# import the Redis client
+import time  # 引入time模块
+
+import redis
+
+
+class RedisCoverage:
+    """
+    coverage from redis
+    """
+
+    def __init__(self):
+        # Create a redis client
+
+        self.redis_client = redis.StrictRedis(host='10.177.75.243', charset="utf-8", decode_responses=True)
+        self.SUM_FILES = ''
+        self.SUM_LINES = ''
+        self.SUM_EXCUTABLE = ''
+        self.SUM_COVERED = ''
+        self.SUM_COVERRATE = ''
+
+    def get_coverage(self):
+        """
+        get_coverage
+        """
+        self.php_coverage_data = self.redis_client.hgetall('php_coverage_data')  # type dict
+        self.SUM_FILES = self.php_coverage_data['SUM_FILES']
+        self.SUM_LINES = self.php_coverage_data['SUM_LINES']
+        self.SUM_EXCUTABLE = self.php_coverage_data['SUM_EXCUTABLE']
+        self.SUM_COVERED = self.php_coverage_data['SUM_COVERED']
+        self.SUM_COVERRATE = self.php_coverage_data['SUM_COVERRATE']
+
+    def write_time_and_coverage_to_file(self):
+        """
+        write time and coverage
+        """
+        f = open("coverage.txt", "a")
+        self.get_coverage()
+        f.write(str(time.time()) + " " + str(self.SUM_COVERRATE) + "\n");
+        f.close()
+
+
+if __name__ == '__main__':
+
+    while True:
+        RedisCoverage().write_time_and_coverage_to_file()
+        time.sleep(0.05)

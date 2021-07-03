@@ -1,1 +1,13 @@
 /venv/
+/.idea/.gitignore
+/fuzz_from_data/dropped_tree.png
+/fuzz_from_data/duplicated_tree.png
+/.idea/misc.xml
+/.idea/modules.xml
+/fuzz_from_data/original_tree.png
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/Restful-api-testing.iml
+/.idea/saveactions_settings.xml
+/fuzz_from_data/selected_tree.png
+/fuzz_from_data/tree_copied.png
+/.idea/vcs.xml
