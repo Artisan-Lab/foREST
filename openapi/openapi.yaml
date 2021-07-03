@@ -16016,7 +16016,7 @@ paths:
               type: string
           required: true
           in: query
-          description: 'The refs to find the common ancestor of, multiple refs can be passed'
+          description: 'The refs to find the commons ancestor of, multiple refs can be passed'
       responses:
         '200':
           description: success
