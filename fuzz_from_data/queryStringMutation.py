@@ -1,5 +1,8 @@
 import random
+import string
 from urllib.parse import urlencode
+
+import commons
 
 
 class QueryStringMutation:
@@ -10,6 +13,23 @@ class QueryStringMutation:
     def __init__(self, query_string):
         self.queryString = query_string
         self.parsed_data = {x[0]: x[1] for x in [x.split("=") for x in query_string.split("&")]}
+
+    def mutate_value(self):
+        """
+        random drop a k-v pair
+        """
+
+        random_index = random.randint(0, len(self.parsed_data) - 1)
+        need_mutate_key = ''
+        for key, value in self.parsed_data.items():
+            if random_index == 0:
+                print(f'{key}:{value} will be mutate_value!')
+                if random.randint(0, 1) == 0:
+                    self.parsed_data[key] = random.choice(commons.mutateConstants.INTEGERS_FOR_MUTATED)
+                else:
+                    self.parsed_data[key] = ''.join(
+                        [random.choice(string.ascii_letters + string.digits) for n in range(32)])
+            random_index -= 1
 
     def drop(self):
         """

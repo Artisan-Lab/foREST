@@ -1,4 +1,5 @@
 import random
+import re
 
 import requests as http_requests
 
@@ -11,13 +12,18 @@ from parser.apacheLogParser import ApacheLogParser
 from queryStringMutation import QueryStringMutation
 from tree import Tree
 
+QUERY_STRING_PATTERN = r'[^(=|&)]+=[^(=|&)]&[^(=|&)]+=[^(=|&)]'
+
 
 def get_mutated_requests(requests):
     """
     mutate these requests from log
     """
     ret = []
+    iteration_num = 1
     for request in requests:  # type: RequestEntity
+        print(
+            f"================================mutation phrase,process {iteration_num}/{len(requests)}========================================")
         if Utils.is_json(request.body):
             request_to_be_mutated = request.clone()
             print(
@@ -33,7 +39,7 @@ def get_mutated_requests(requests):
             print(f'mutated body:{request_to_be_mutated.body}')
             sequence.Sequence.seq_num = 0
             ret.append(request_to_be_mutated)
-        if "&" in request.body:
+        elif re.match(QUERY_STRING_PATTERN, request.body):
             request_to_be_mutated = request.clone()
             print(
                 f'{request_to_be_mutated.method} {request_to_be_mutated.url} mutating {request_to_be_mutated.body}....')
@@ -45,7 +51,7 @@ def get_mutated_requests(requests):
             request_to_be_mutated.body = query_string_mutation.dump()
             print(f'mutated body:{request_to_be_mutated.body}')
             ret.append(request_to_be_mutated)
-
+        iteration_num += 1
     return ret
 
 
@@ -110,9 +116,39 @@ def main():
                     print(e)
                     pass
             print("execution phrase finished. next iteration start...")
+
+            # debug
+            total_requests = mutated_requests
+            for i in range(len(total_requests)):
+                try:
+                    print(
+                        "===================================================exec mutation=======================================")
+                    print(f"executing {i + 1}/{len(total_requests)}/{iteration_num}")
+                    request = total_requests[i]  # type: RequestEntity
+                    if len(FUZZ_FROM_DATA_CONFIG.cookie) > 0:
+                        print(f"using cookie {FUZZ_FROM_DATA_CONFIG.cookie}")
+                        request.headers['Cookie'] = FUZZ_FROM_DATA_CONFIG.cookie
+                    print(request)
+                    response = http_requests.request(method=request.method,
+                                                     url=FUZZ_FROM_DATA_CONFIG.base_url + request.url,
+                                                     data=request.body,
+                                                     headers=request.headers)
+                    print(response)
+                    if response.status_code == 503:
+                        print("Server error,please check the log!")
+                    print('\n\n\n')
+                except Exception as e:
+                    print(e)
+                    pass
+            print("execution phrase finished. next iteration start...")
+
+
+
         except Exception as e:
             print(e)
             pass
+        finally:
+            iteration_num += 1
 
 
 if __name__ == "__main__":

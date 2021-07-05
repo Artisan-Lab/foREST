@@ -11,3 +11,5 @@
 /fuzz_from_data/selected_tree.png
 /fuzz_from_data/tree_copied.png
 /.idea/vcs.xml
+/fuzz_from_data/log
+/fuzz_from_data/commons/coverage.txt
