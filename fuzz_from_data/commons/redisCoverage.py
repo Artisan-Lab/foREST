@@ -13,22 +13,23 @@ class RedisCoverage:
         # Create a redis client
 
         self.redis_client = redis.StrictRedis(host='10.177.75.243', charset="utf-8", decode_responses=True)
-        self.SUM_FILES = ''
-        self.SUM_LINES = ''
-        self.SUM_EXCUTABLE = ''
-        self.SUM_COVERED = ''
-        self.SUM_COVERRATE = ''
+        self.SUM_FILES = '0'
+        self.SUM_LINES = '0'
+        self.SUM_EXCUTABLE = '0'
+        self.SUM_COVERED = '0'
+        self.SUM_COVERRATE = '0%'
 
     def get_coverage(self):
         """
         get_coverage
         """
         self.php_coverage_data = self.redis_client.hgetall('php_coverage_data')  # type dict
-        self.SUM_FILES = self.php_coverage_data['SUM_FILES']
-        self.SUM_LINES = self.php_coverage_data['SUM_LINES']
-        self.SUM_EXCUTABLE = self.php_coverage_data['SUM_EXCUTABLE']
-        self.SUM_COVERED = self.php_coverage_data['SUM_COVERED']
-        self.SUM_COVERRATE = self.php_coverage_data['SUM_COVERRATE']
+        if self.php_coverage_data is not None and len(self.php_coverage_data) > 0:
+            self.SUM_FILES = self.php_coverage_data['SUM_FILES']
+            self.SUM_LINES = self.php_coverage_data['SUM_LINES']
+            self.SUM_EXCUTABLE = self.php_coverage_data['SUM_EXCUTABLE']
+            self.SUM_COVERED = self.php_coverage_data['SUM_COVERED']
+            self.SUM_COVERRATE = self.php_coverage_data['SUM_COVERRATE']
 
     def write_time_and_coverage_to_file(self):
         """
@@ -36,7 +37,7 @@ class RedisCoverage:
         """
         f = open("coverage.txt", "a")
         self.get_coverage()
-        f.write(str(time.time()) + " " + str(self.SUM_COVERRATE) + "\n");
+        f.write(str(time.time()) + " " + str(self.SUM_COVERED) + " " + str(self.SUM_COVERRATE) + "\n");
         f.close()
 
 

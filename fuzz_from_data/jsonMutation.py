@@ -1,3 +1,6 @@
+import string
+
+import commons.mutateConstants
 from tree import *
 
 
@@ -29,13 +32,25 @@ class JsonMutation:
                     return node
 
     @staticmethod
+    def random_select_one_leaf_node(tree: Tree) -> Node:
+        ids = tree.get_leaf_node_ids()
+        if len(ids) <= 0:
+            print("There is no child in the tree.")
+            return None
+        else:
+            the_selected_id = random.choice(ids)
+            for node in PreOrderIter(tree.root):
+                if node.id == the_selected_id:
+                    return node
+
+    @staticmethod
     def random_select_two_nodes(tree: Tree) -> list:
         """
         select two nodes by random strategy,[copied_tree_node,source_tree_node]
 
         """
         tree_copied = tree.copy()
-        tree_copied.export_img("output/tree_copied.png")
+        # tree_copied.export_img("output/tree_copied.png")
 
         return [JsonMutation.random_select_one_node(tree_copied), JsonMutation.random_select_one_node(tree)]
 
@@ -101,6 +116,23 @@ class JsonMutation:
             e.g. number <-> string
         """
 
+        pass
+
+    @staticmethod
+    def mutate_value(tree: Tree):
+        """
+        mutate primitive values
+        """
+        selected_node = JsonMutation.random_select_one_leaf_node(tree)
+        if random.randint(0, 1) == 0:
+            if selected_node.type == constants.STRING:
+                selected_node.value = random.choice(commons.mutateConstants.STRINGS_FOR_MUTATED)
+            elif selected_node.type == constants.NUMBER:
+                selected_node.value = random.choice(commons.mutateConstants.INTEGERS_FOR_MUTATED)
+            elif selected_node.type == constants.BOOLEAN:
+                selected_node.value = (bool(selected_node.value) != True)
+        else:
+            selected_node.value = ''.join([random.choice(string.ascii_letters + string.digits) for n in range(32)])
         pass
 
     def single(self):

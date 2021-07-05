@@ -8,6 +8,7 @@ class RequestEntity:
         self.url = url
         self.headers = headers
         self.body = body
+        self.files = None
 
     def clone(self):
         """

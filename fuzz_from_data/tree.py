@@ -102,3 +102,13 @@ class Tree:
         for _ in PreOrderIter(self.root):  # type:Node
             node_ids.append(_.id)
         return node_ids
+
+    def get_leaf_node_ids(self):
+        """
+        return ids of leaf nodes
+        """
+        node_ids = []
+        for _ in PreOrderIter(self.root):  # type:Node
+            if _.is_leaf:
+                node_ids.append(_.id)
+        return node_ids

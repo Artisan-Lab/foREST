@@ -1,3 +1,18 @@
-s = 'comment=this+is+a+comment&author=chenyang&email=990776253%40qq.com&url=fudan&submit=Post+Comment&comment_post_ID=5&comment_parent=0'
-output = {x[0]: x[1] for x in [x.split("=") for x in s.split("&")]}
-print(output)
+from jsonMutation import JsonMutation
+from tree import Tree
+
+tree = Tree(
+    '{"id": 244, "excerpt": "04o0zplIvuOGRBL7Eqy6K1lG9WgHdZTd", "status": "publish", "content": "restfulAPITesting"}')
+tree.export_img("original.png")
+tree.print()
+print('muating value!')
+JsonMutation.mutate_value(tree)
+tree.print()
+JsonMutation.drop(tree)
+tree.print()
+# JsonMutation.select(tree)
+tree.print()
+JsonMutation.duplicate(tree)
+tree.print()
+tree.export_img("mutated.png")
+print(tree.dump())
