@@ -132,16 +132,17 @@ python3 main.py
 # Bug
 | Date | Project | Link | Finder | Status | Description |
 |---------|---------|---------|---------|---------|---------|
-| 2021-7-4 | GitLab |  |  | submitted | POST /hooks |
-| 2021-7-4 | GitLab |  |  | submitted | POST /admin/clusters/add |
-| 2021-7-4 | GitLab |  |  | submitted | POST /clusters/{id}/metrics_dashboard/annotations/ |
-| 2021-7-4 | GitLab |  |  | submitted | DELETE/PUT/GET /users/{id}/custom_attributes/{key} |
-| 2021-7-4 | GitLab |  |  | submitted | POST /hooks |
-| 2021-7-4 | GitLab |  |  | submitted | POST /hooks |
-| 2021-7-4 | GitLab |  |  | submitted | POST /hooks |
-| 2021-7-4 | GitLab |  |  | submitted | POST /hooks |
-| 2021-7-4 | GitLab |  |  | submitted | POST /hooks | 
-| 2021-7-4 | GitLab |  |  | submitted | POST /hooks |
-| 2021-7-4 | GitLab |  |  | submitted | POST /hooks |
-| 2021-7-4 | GitLab |  |  | submitted | POST /hooks |
-| 2021-7-4 | GitLab |  |  | submitted | POST /hooks |
+| 2021-7-4 | GitLab |  |  | submitted | POST  /hooks |
+| 2021-7-4 | GitLab |  |  | submitted | POST  /admin/clusters/add |
+| 2021-7-4 | GitLab |  |  | submitted | POST  /clusters/{id}/metrics_dashboard/annotations/ |
+| 2021-7-4 | GitLab |  |  | submitted | DELETE/PUT/GET  /users/{id}/custom_attributes/{key} |
+| 2021-7-4 | GitLab |  |  | submitted | GET  /users/{id}/custom_attributes |
+| 2021-7-4 | GitLab |  |  | submitted | POST  /projects/{id}/clusters/user |
+| 2021-7-4 | GitLab |  |  | submitted | POST  /projects/{id}/metrics/user_starred_dashboards |
+| 2021-7-4 | GitLab |  |  | submitted | DELETE/POST  /projects/{id}/custom_attributes/{key} |
+| 2021-7-4 | GitLab |  |  | submitted | POST  /projects/{id}/export | 
+| 2021-7-4 | GitLab |  |  | submitted | GET  /projects/{id}/custom_attributes |
+| 2021-7-4 | GitLab |  |  | submitted | POST  /groups/{id}/clusters/user |
+| 2021-7-4 | GitLab |  |  | submitted | GET /groups/{id}/custom_attributes |
+| 2021-7-4 | GitLab |  |  | submitted | DELETE/PUT/GET  /groups/{id}/custom_attributes/{key} |
+| 2021-7-4 | WordPress |  |  | submitted | POST  /categories |
