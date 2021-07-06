@@ -146,7 +146,3 @@ python3 main.py
 | 2021-7-4 | GitLab |  |  | submitted | GET /groups/{id}/custom_attributes |
 | 2021-7-4 | GitLab |  |  | submitted | DELETE/PUT/GET  /groups/{id}/custom_attributes/{key} |
 | 2021-7-4 | WordPress |  |  | submitted | POST  /categories |
-
-```bash
-可以通过发送replay-bugs文件夹下的请求，复现bug
-```
