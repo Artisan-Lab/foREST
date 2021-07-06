@@ -129,6 +129,10 @@ python3 main.py
 ```
 4.可以使用log_parse模块进行日志分析
  
+# Bug
+| Date | Project | Link | Finder | Status | Description |
+|---------|---------|---------|---------|---------|---------|
+| 2021-7-4 | GitLab |  |  | submitted | POST /hooks |
 
 
 
