@@ -127,7 +127,7 @@ Restful-api-testing会依据OpenAPI文档，自动地推断出云服务API之间
 ```bash
 python3 main.py
 ```
-
+4.可以使用log_parse模块进行日志分析
  
 
 
