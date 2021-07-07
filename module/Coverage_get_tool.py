@@ -103,3 +103,7 @@ class GetCoverage:
             coverage_rate_executed_code = '0.00%'
 
         return coverage_rate_executed_code
+
+if __name__ == '__main__':
+    get_coverage = GetCoverage()
+    print(get_coverage.getCoverage_rate_executed_code('http://10.177.75.243:8000/'))

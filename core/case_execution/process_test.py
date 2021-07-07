@@ -15,7 +15,7 @@ from module.object_handle import fuzz_object
 from module.response_parse import response_parse
 from module.save_success_case import save_success_case
 from module.type_fuzz import fuzz
-from log.get_logging import Logger
+from log.get_logging import Log
 
 testingConfig = TestingConfig()
 
@@ -116,19 +116,19 @@ flag = redis.StrictRedis(host=redis_host, port=redis_port, db=db_o, decode_respo
 
 def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, username, password, cases):
     ini_coverage_rate_executed_code = 1000
-    request_log = Logger('request.log', level='debug')
+    request_log = Log(log_name='request')
     if operation_mode == 0:
         if need_coverage == 1:
             ini_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
-            print(ini_coverage_rate_executed_code)
+            request_log.debug(ini_coverage_rate_executed_code)
             restart_coverage_tool(ini_coverage_rate_executed_code, restart_url)
             if need_coverage == 1:
                 ini_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
-                print(ini_coverage_rate_executed_code)
+                request_log.debug(ini_coverage_rate_executed_code)
                 if not ini_coverage_rate_executed_code:
                     chongqi = requests.get(restart_url)
                     if 'The coverage tool is not running The coverage tool is running ,PID is' in chongqi:
-                        print('重启成功~~~~')
+                        request_log.debug('重启成功~~~~')
                     else:
                         notify()
     headers = {}
@@ -206,7 +206,7 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
             pa_locations.clear()
             pa_names.clear()
             value_fuzzs.clear()
-        print("组装完成！！！！！！！！！！！！！！！！！！")
+        request_log.debug("组装完成！！！！！！！！！！！！！！！！！！")
     fuzz__cases = []
 
     if nums == 0:
@@ -214,7 +214,7 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
             for fuzz_case in cases:
                 url = api_info.path
                 fuzz_case = eval(fuzz_case)
-                print(fuzz_case)
+                request_log.debug(fuzz_case)
                 for q in fuzz_case.keys():
                     pa_names.append(q)
                     pa_locations.append(int(list(fuzz_case[q])[-1]))
@@ -237,7 +237,7 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                 pa_locations.clear()
                 pa_names.clear()
                 value_fuzzs.clear()
-                request_log.print_info(
+                request_log.info(
                     f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
                 if method == 'post':
                     response = requests.post(url=url, headers=headers, data=data)
@@ -269,11 +269,17 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                                     save_success_case().save_fuzz_success(testingConfig.success_pool,
                                                                           fuzz_success_json_data, method)
                     except ValueError:
-                        print("NOT JSON")
+                        request_log.debug('no json')
                 try:
-                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+                    if response.status_code == 500:
+                        request_log.error(
+                            f'Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \nReceived: \'HTTP/1.1 {response.status_code} response : {response.json()}')
                 except:
-                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
+                    pass
+                try:
+                    request_log.info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+                except:
+                    request_log.info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
 
         else:
             if Authorization is not None:
@@ -281,7 +287,7 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                 # headers.update({'username': username})
                 # headers.update({'password': password})
             url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-            request_log.print_info(
+            request_log.info(
                 f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
             if method == 'post':
                 response = requests.post(url=url, headers=headers, data=data)
@@ -306,17 +312,22 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                             now_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
                             restart_coverage_tool(now_coverage_rate_executed_code, restart_url)
                 except ValueError:
-                    print("NOT JSON")
+                    request_log.debug('no json')
             else:
                 pass
             try:
-                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+                if response.status_code==500:
+                    request_log.error(f'Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \nReceived: \'HTTP/1.1 {response.status_code} response : {response.json()}')
             except:
-                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
+                pass
+            try:
+                request_log.info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+            except:
+                request_log.info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
 
     else:
         if len(cases) != 0:
-            print("有参数")
+
             for fuzz_case in cases:
                 if len(eval(fuzz_case)) == nums:
                     fuzz__cases.append(fuzz_case)
@@ -330,19 +341,19 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                     try:
                         value = eval(value)
                     except:
-                        print("str")
+                        pass
                     if not isinstance(value, int) and not isinstance(value, bool) and value != None:
                         try:
                             value = json.loads(value)
                         except:
-                            print("obj")
+                            pass
                     value_fuzzs.append(value)
                 if Authorization is not None:
                     headers.update({"Authorization": Authorization})
                     # headers.update({'username': username})
                     # headers.update({'password': password})
                 url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-                request_log.print_info(
+                request_log.info(
                     f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
                 if method == 'post':
                     response = requests.post(url=url, headers=headers, data=data)
@@ -376,14 +387,20 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                                                                                    fuzz_success_json_data,
                                                                                    method)
                     except ValueError:
-                        print("NOT JSON")
+                        request_log.debug("NO json")
                 try:
-                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+                    if response.status_code == 500:
+                        request_log.error(
+                            f'Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \nReceived: \'HTTP/1.1 {response.status_code} response : {response.json()}')
                 except:
-                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
+                    pass
+                try:
+                    request_log.info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+                except:
+                    request_log.info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
             fuzz__cases.clear()
         else:
-            print("无参数！！！！！！！！！！！！！！")
+            request_log.debug("无参数")
             if Authorization is not None:
                 headers.update({"Authorization": Authorization})
                 # headers.update({'username': username})
@@ -391,7 +408,7 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
             else:
                 pass
             url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-            request_log.print_info(
+            request_log.info(
                 f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
             if method == 'post':
                 response = requests.post(url=url, headers=headers, data=data)
@@ -418,6 +435,11 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                 except ValueError:
                     print("NOT JSON")
             try:
-                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+                if response.status_code==500:
+                    request_log.error(f'Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \nReceived: \'HTTP/1.1 {response.status_code} response : {response.json()}')
             except:
-                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
+                pass
+            try:
+                request_log.info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
+            except:
+                request_log.info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')

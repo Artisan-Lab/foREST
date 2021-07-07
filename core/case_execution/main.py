@@ -3,12 +3,13 @@ from configparser import ConfigParser
 
 import numpy as np
 from core.case_execution.process_test import test
+from dependec_matrix.dep_analysis import get_dep_info
 from module.get_next_apis import get_next_apis
 from core.case_generation.generate import case_generation
 from dependec_matrix.graph_test import CreateTree
 from parse.parse import get_api_info
 from log.summary import pre_summary
-from log.get_logging import Logger
+
 import os.path
 
 import redis
@@ -72,6 +73,7 @@ if __name__ == '__main__':
                 tree = CreateTree(api_info_list)
                 tree.create_tree()
                 matrix = tree.find_dependency()
+                matrix, weight = get_dep_info(api_info_list)
                 print(matrix)
                 graph = matrix.tolist()
 
