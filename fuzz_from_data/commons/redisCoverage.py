@@ -2,7 +2,8 @@
 import time  # 引入time模块
 
 import redis
-
+from log.get_logging import Log
+coverage_log = Log(log_name='restler_coverage.log')
 
 class RedisCoverage:
     """
@@ -12,7 +13,7 @@ class RedisCoverage:
     def __init__(self):
         # Create a redis client
 
-        self.redis_client = redis.StrictRedis(host='10.177.75.243', charset="utf-8", decode_responses=True)
+        self.redis_client = redis.StrictRedis(host='10.177.75.243', charset="utf-8", decode_responses=True, db='db1')
         self.SUM_FILES = '0'
         self.SUM_LINES = '0'
         self.SUM_EXCUTABLE = '0'
@@ -35,14 +36,13 @@ class RedisCoverage:
         """
         write time and coverage
         """
-        f = open("coverage.txt", "a")
+        f = open("restler_coverage.log", "a")
         self.get_coverage()
         f.write(str(time.time()) + " " + str(self.SUM_COVERED) + " " + str(self.SUM_COVERRATE) + "\n");
         f.close()
 
 
 if __name__ == '__main__':
-
     while True:
         RedisCoverage().write_time_and_coverage_to_file()
         time.sleep(0.05)
