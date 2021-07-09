@@ -1,5 +1,4 @@
-# import the Redis client
-import time  # 引入time模块
+import time
 
 import redis
 
@@ -23,19 +22,19 @@ class RedisCoverage:
         """
         get_coverage
         """
-        self.php_coverage_data = self.redis_client.hgetall('php_coverage_data')  # type dict
-        if self.php_coverage_data is not None and len(self.php_coverage_data) > 0:
-            self.SUM_FILES = self.php_coverage_data['SUM_FILES']
-            self.SUM_LINES = self.php_coverage_data['SUM_LINES']
-            self.SUM_EXCUTABLE = self.php_coverage_data['SUM_EXCUTABLE']
-            self.SUM_COVERED = self.php_coverage_data['SUM_COVERED']
-            self.SUM_COVERRATE = self.php_coverage_data['SUM_COVERRATE']
+        php_coverage_data = self.redis_client.hgetall('php_coverage_data')  # type dict
+        if php_coverage_data is not None and len(php_coverage_data) > 0:
+            self.SUM_FILES = php_coverage_data['SUM_FILES']
+            self.SUM_LINES = php_coverage_data['SUM_LINES']
+            self.SUM_EXCUTABLE = php_coverage_data['SUM_EXCUTABLE']
+            self.SUM_COVERED = php_coverage_data['SUM_COVERED']
+            self.SUM_COVERRATE = php_coverage_data['SUM_COVERRATE']
 
     def write_time_and_coverage_to_file(self):
         """
         write time and coverage
         """
-        f = open("coverage.txt", "a")
+        f = open("../coverageData/coverage.txt", "a")
         self.get_coverage()
         f.write(str(time.time()) + " " + str(self.SUM_COVERED) + " " + str(self.SUM_COVERRATE) + "\n");
         f.close()
