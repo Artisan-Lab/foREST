@@ -269,5 +269,3 @@ anytree~=2.8.0
 redis~=3.5.3
 requests~=2.25.1
 mitmproxy~=6.0.2
-numpy~=1.21.0
-matplotlib~=3.4.2

@@ -1,10 +1,11 @@
 #!/usr/bin/env python
+import json
 import os
-
 import numpy as np
-from treelib import Tree
-
+import requests
+import random
 from parse import parse
+from treelib import Node, Tree
 
 
 class Method:
@@ -15,7 +16,6 @@ class Method:
 
     def __setitem__(self, key, value):
         self.method[key] = value
-
 
 class CreateTree:
 
@@ -48,9 +48,9 @@ class CreateTree:
 
     def find_dependency(self):
         node_number = len(self.api_list)
-        matrix_zero = np.zeros([node_number + 1, node_number + 1], dtype=int)
-        matrix_one = np.ones([node_number + 1, node_number + 1], dtype=int)
-        matrix = matrix_zero - matrix_one
+        matrix_zero =  np.zeros([node_number+1, node_number+1], dtype=int)
+        matrix_one = np.ones([node_number+1, node_number+1], dtype=int)
+        matrix = matrix_zero-matrix_one
         all_nodes = self.path_tree.all_nodes()
         for node in all_nodes:
             post_id = self.find_last_post(node)
@@ -75,6 +75,11 @@ class CreateTree:
             return self.find_last_post(self.path_tree.parent(node.identifier))
         else:
             return None
+
+
+
+
+
 
 
 # class Node:
@@ -182,13 +187,14 @@ class CreateTree:
 #     api_list = parse.get_api_info(1, path)
 #     num = len(api_list)
 #     matrix = np.zeros([num,num],dtype=int)
-#     jsonTree = PathTree(api_list)
-#     path_tree = jsonTree.creat_tree()
+#     tree = PathTree(api_list)
+#     path_tree = tree.creat_tree()
 #     dependence = FindDependency(path_tree, matrix)
 #     dependence.exec()
 #     print()
 #
 #
+
 
 
 def main():

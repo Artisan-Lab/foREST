@@ -17,9 +17,11 @@ class LogParser:
         """
         read a single file or many files
         """
-        logs = self.log_path.split(',')
-        for log in logs:
-            self.content += open(log, 'r').readlines()
+        if isinstance(self.log_path, str):
+            self.content = open(self.log_path, 'r').readlines()
+        elif isinstance(self.log_path, list):
+            for item in self.log_path:
+                self.content += open(item, 'r').readlines()
 
     def export(self):
         """

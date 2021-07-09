@@ -1,6 +1,6 @@
 from anytree import NodeMixin
 
-from commons.sequence import Sequence
+from sequence import Sequence
 
 
 class Node(NodeMixin):  # Add Node feature
