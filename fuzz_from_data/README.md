@@ -27,6 +27,17 @@ cat error.log | cut -f8- -d':' | egrep -v ' [0-9]+ bytes$' | grep -v '^$' | cut 
 
 ## Mutate the captured requests
 
+## Usage
+
+* recording & replay
+
+```bash
+python recordingAndReplay.py
+```
+
+* mutation testing
+
 ```bash
 python mutationTesting.py
 ```
+
