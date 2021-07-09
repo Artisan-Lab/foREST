@@ -25,8 +25,6 @@
 cat error.log | cut -f8- -d':' | egrep -v ' [0-9]+ bytes$' | grep -v '^$' | cut -c2- | sed 's/\\r\\n//'
 ```
 
-## Mutate the captured requests
-
 ## Usage
 
 * recording & replay
