@@ -33,6 +33,18 @@ class FuzzFromDataConfig:
         self.cookie = str(config.get('fuzz_from_data', 'cookie'))
         self.log_path = str(config.get('fuzz_from_data', 'log_path'))
         self.base_url = str(config.get('fuzz_from_data', 'base_url'))
+        self.json_drop_mutation_probability = float(
+            config.get('fuzz_from_data', 'json_drop_mutation_probability'))
+        self.json_selection_mutation_probability = float(
+            config.get('fuzz_from_data', 'json_selection_mutation_probability'))
+        self.json_value_mutation_probability = float(
+            config.get('fuzz_from_data', 'json_value_mutation_probability'))
+        self.query_string_drop_mutation_probability = float(
+            config.get('fuzz_from_data', 'query_string_drop_mutation_probability'))
+        self.query_string_selection_mutation_probability = float(
+            config.get('fuzz_from_data', 'query_string_selection_mutation_probability'))
+        self.query_string_value_mutation_probability = float(
+            config.get('fuzz_from_data', 'query_string_value_mutation_probability'))
 
 
 FUZZ_FROM_DATA_CONFIG = FuzzFromDataConfig()  # type: FuzzFromDataConfig
