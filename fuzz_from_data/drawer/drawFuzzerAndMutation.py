@@ -11,22 +11,26 @@ y2 = []
 tmp = 0
 flag = False
 
-for line in open("/home/yang/PycharmProjects/Restful-api-testing/fuzz_from_data/commons/coverage.txt"):
+for line in open(
+        "/home/yang/PycharmProjects/Restful-api-testing/fuzz_from_data/coverageData/coverage.fuzzer-mutate.txt"):
     arr = line.split()
-    if tmp != int(arr[1]):
-        tmp = int(arr[1])
-        x1.append(float(arr[0]))
-        y1.append(int(arr[1]))
+    # if tmp != int(arr[1]):
+    #     tmp = int(arr[1])
+    x1.append(float(arr[0]))
+    y1.append(float(arr[1]))
 
-for line in open("/home/yang/PycharmProjects/Restful-api-testing/fuzz_from_data/commons/coverage.txt"):
+for line in open(
+        "/home/yang/PycharmProjects/Restful-api-testing/fuzz_from_data/coverageData/coverage.fuzzer-mutate.txt"):
     arr = line.split()
     x2.append(float(arr[0]))
-    if 41638 == int(arr[1]):
+    # 16852
+    # 41638
+    if 16852.00001 == float(arr[1]):
         flag = True
     if flag:
-        y2.append(41638)
+        y2.append(16852.00001)
     else:
-        y2.append(int(arr[1]))
+        y2.append(float(arr[1]))
 
 # # x1 = [20, 33, 51, 79, 101, 121, 132, 145, 162, 182, 203, 219, 232, 243, 256, 270, 287, 310, 325]
 # # y1 = [49, 48, 48, 48, 48, 87, 106, 123, 155, 191, 233, 261, 278, 284, 297, 307, 341, 319, 341]
@@ -51,14 +55,14 @@ secs2 = mdate.epoch2num(x2)
 fig, ax = plt.subplots()
 
 # Plot the date using plot_date rather than plot
-ax.plot_date(secs1, y1, 'r-', label='RR mutation', linewidth=1)
-ax.plot_date(secs2, y2, 'g--', label='RR', linewidth=1)
+ax.plot_date(secs1, y1, 'r-', label='with mutation', linewidth=1)
+ax.plot_date(secs2, y2, 'g--', label='no mutation', linewidth=1)
 
 plt.ylabel('covered code lines')
 plt.xlabel('time')
 
 # Choose your xtick format string
-date_fmt = '%m-%d %H:%M:%S'
+date_fmt = '%m-%d %H:%M'
 
 # Use a DateFormatter to set the data to the correct format.
 date_formatter = mdate.DateFormatter(date_fmt)
@@ -66,7 +70,8 @@ ax.xaxis.set_major_formatter(date_formatter)
 
 # Sets the tick labels diagonal so they fit easier.
 fig.autofmt_xdate()
-plt.ylim((40000, 43000))
-plt.title('R&R vs mutation')
-plt.legend(bbox_to_anchor=(1, 1), loc='upper right', borderaxespad=0, fontsize=8)
+# plt.ylim((0, 30000))
+plt.title('fuzzer vs mutation')
+plt.legend(bbox_to_anchor=(1, 0.11), loc='upper right', borderaxespad=0, fontsize=8)
+fig.savefig('fuzzer-mutation.svg', format='svg', dpi=1200)
 plt.show()

@@ -1,4 +1,5 @@
 import json
+import random
 
 from commons import constants
 
@@ -57,3 +58,10 @@ class Utils:
         except:
             return False
         return True
+
+    @staticmethod
+    def decision(probability):
+        """
+        return True/False according to probability settings
+        """
+        return random.random() < probability

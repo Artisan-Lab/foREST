@@ -7,12 +7,12 @@ from anytree.exporter import DotExporter
 
 from commons import constants
 from commons.utils import Utils
-from node import Node
+from mutation.jsonTree.node import Node
 
 
 class Tree:
     """
-    tree implementation
+    jsonTree implementation
     """
 
     def __init__(self, data: str):
@@ -23,7 +23,7 @@ class Tree:
 
     def create(self, key, data, parent):
         """
-        create a tree by a recursive way
+        create a jsonTree by a recursive way
         """
         # complex type(object or array)
         if Utils.is_complex_type(data):
@@ -52,7 +52,7 @@ class Tree:
 
     def dump(self) -> str:
         """
-        convert a tree to formatted json str
+        convert a jsonTree to formatted json str
         """
         if len(self.root.children) <= 0:
             return random.choice(['[]', '{}'])
@@ -84,13 +84,13 @@ class Tree:
 
     def export_img(self, img_name):
         """
-        export current tree structure to an image
+        export current jsonTree structure to an image
         """
         DotExporter(self.root).to_picture(img_name)
 
     def copy(self):
         """
-        duplicate a new tree from current tree
+        duplicate a new jsonTree from current jsonTree
         """
         return Tree(self.dump())
 

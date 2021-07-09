@@ -65,7 +65,7 @@ def main():
                     print(response)
                     if 500 <= response.status_code <= 599:
                         status_code_5xx_num += 1
-                        f = open("recording_and_replay_5xx.log", "a")
+                        f = open("bugsLog/recording_and_replay_5xx.log", "a")
                         f.write(request.__str__())
                         f.close()
                         print("Server error,please check the log!")
