@@ -133,6 +133,10 @@ python3 main.py
 
  
 # BUG
+
+| Date | Project | Link | Finder | Status | Description |
+|---------|---------|---------|---------|---------|---------|
+| 2021-7-4 | GitLab | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/334609) |  | submitted | POST  /hooks |
 | 2021-7-4 | GitLab | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/334610) |  | submitted | POST  /admin/clusters/add |
 | 2021-7-4 | GitLab | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/334610) |  | submitted | POST  /clusters/{id}/metrics_dashboard/annotations/ |
 | 2021-7-4 | GitLab | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/334609) |  | submitted | DELETE/PUT/GET  /users/{id}/custom_attributes/{key} |
