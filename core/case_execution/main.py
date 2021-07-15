@@ -112,16 +112,16 @@ if __name__ == '__main__':
                     # next_api当前测试api的id
                     next_api = random.choice(next_apis)
                     print(next_api)
-                    api_info = api_info_list[next_api-1]
+                    api_info = api_info_list[next_api]
                     '''生成测试用例'''
                     if flag.sismember('over', 0):
                         if nums == 0:
                             ''' 因为必选参数较少，生成测试用例可以尽可能多的包含fuzz的字典，不需太担心组合爆炸，故*5 '''
                             for time in range(fuzz_test_times * 10):
-                                case_generation().fuzz_generation(api_info_list[next_api-1], fuzz_pool, params_pool)
+                                case_generation().fuzz_generation(api_info_list[next_api], fuzz_pool, params_pool)
                         else:
                             for time in range(fuzz_test_times):
-                                case_generation().fuzz_optional_generation(api_info_list[next_api-1], fuzz_pool, nums,
+                                case_generation().fuzz_optional_generation(api_info_list[next_api], fuzz_pool, nums,
                                                                            params_pool)
                     flag.srem('over', 0)
                     flag.sadd('over', 1)

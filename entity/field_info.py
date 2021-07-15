@@ -1,5 +1,5 @@
 class field_info:
-    def __init__(self,field_name,type_,require,default,fuzz,location,description,enum,object,array,max,min,format):
+    def __init__(self, field_name, type_, require,location,default=None,fuzz=None,description=None,enum=None,object=None,array=None,max=None,min=None,format=None):
         self.field_name = field_name
         self.field_type = type_
         self.require = require
@@ -13,3 +13,7 @@ class field_info:
         self.max = max
         self.min = min
         self.format = format
+        self.depend_list = []
+
+    def add_depend_api(self, depend_api_id):
+        self.depend_list += depend_api_id

@@ -1,23 +1,23 @@
 from prance import ResolvingParser
 from entity.api_info import api_info
 from entity.field_info import field_info
-from entity.object_info import object_info
 import os.path
 
 
-def array_handle(items):
+def array_handle(items, location):
     if 'type' in items:
         type = items['type']
     else:
         type = 'object'
     if 'properties' in items:
-        return object_handle(items['properties'])
+        return object_handle(items['properties'], location)
     elif type == 'array':
-        return array_handle(items['items'])
+        return array_handle(items['items'], location)
     else:
         return items['type']
 
-def object_handle(objects):
+
+def object_handle(objects, location, required=False):
     object_list = []
     for object in objects:
         if 'type' in objects[object]:
@@ -26,21 +26,23 @@ def object_handle(objects):
             type = 'object'
         if type == 'object':
             if 'properties' in objects[object]:
-                object_feild = object_info(object,type,object_handle(objects[object]['properties']))
+                object_field = field_info(field_name=object, type_=type,
+                                          object=object_handle(objects[object]['properties'], location),
+                                          location=location, require=required)
             else:
-                object_feild = object_info(object,type,None)
+                object_field = field_info(field_name=object, type_=type,location=location, require=required)
         elif type == 'array':
-            object_feild = object_info(object,type,array_handle(objects[object]['items']))
+            object_field = field_info(field_name=object, type_=type,
+                                      array=array_handle(objects[object]['items'], location=location),
+                                      location=location, require=required)
         else:
-            object_feild = object_info(object,type,None)
-        object_list.append(object_feild)
+            object_field = field_info(field_name=object, type_=type, location=location, require=required)
+        object_list.append(object_field)
     return object_list
 
 
-def properties_handle(properties,required_list,properties_list):
-    if required_list == None and properties_list == None:
-        required_list = []
-        properties_list = []
+def properties_handle(properties,location,required_list=[]):
+    properties_list = []
     for property in properties:
         if property in required_list:
             request_required = True
@@ -63,10 +65,10 @@ def properties_handle(properties,required_list,properties_list):
         else:
             request_type = None
         if request_type == 'object' and 'properties' in properties[property]:
-            object_list = object_handle(properties[property]['properties'])
+            object_list = object_handle(properties[property]['properties'], location=location)
             array_type = None
         elif request_type == 'array' and 'items' in properties[property]:
-            array_type = array_handle(properties[property]['items'])
+            array_type = array_handle(properties[property]['items'], location=location)
             object_list = None
         else:
             object_list = None
@@ -83,8 +85,9 @@ def properties_handle(properties,required_list,properties_list):
             format = properties[property]['format']
         else:
             format = None
-        request_property = field_info(property, request_type, request_required, request_default,
-                                      None, 3,  request_description,request_enum,object_list,array_type,max,min,format)
+        request_property = field_info(field_name=property, type_=request_type, require=request_required, default=request_default,
+                                    location=3, description=request_description, enum=request_enum, object=object_list,
+                                      array=array_type, max=max, min=min, format=format)
         properties_list.append(request_property)
     return properties_list
 
@@ -135,11 +138,19 @@ def parameter_handle(parameter_list, req_param_list):
         else:
             parameter_required = False
         if parameter_type == 'array':
-            array_type = array_handle(parameter['schema']['items'])
+            array_type = array_handle(parameter['schema']['items'], parameter_location)
         else:
             array_type = None
-        req_param = field_info(parameter_name, parameter_type, parameter_required, parameter_default,
-                               "No", parameter_location,  parameter_description,parameter_enum,None,array_type,max,min,format)
+        if parameter_type == 'object':
+            try:
+                object_type = object_handle(parameter['properties'], location=parameter_location, required=parameter_required)
+            except:
+                object_type = None
+        else:
+            object_type = None
+        req_param = field_info(field_name=parameter_name, type_=parameter_type, require=parameter_required, default=parameter_default,
+                                location=parameter_location,  description=parameter_description, enum=parameter_enum,
+                               object=object_type, array=array_type, max=max, min=min, format=format)
         req_param_list.append(req_param)
     return req_param_list
 
@@ -182,13 +193,13 @@ def parameter_swagger_handle(parameter_list,req_param_list):
             parameter_required = False
         if parameter_type == 'array':
             if 'items' in parameter:
-                array_type = array_handle(parameter['items'])
+                array_type = array_handle(parameter['items'],location=parameter_location)
             else:
                 array_type = None
         else:
             array_type = None
         if parameter_type == 'object':
-            object_type = object_handle(parameter['schema']['properties'])
+            object_type = object_handle(parameter['schema']['properties'],location=parameter_location)
         else:
             object_type = None
         if 'maxLength' in parameter:
@@ -216,10 +227,10 @@ def response_swagger_handle(responses):
         if 'schema' in responses[response]:
             if 'properties' in responses[response]['schema']:
                     properties = responses[response]['schema']['properties']
-                    resp_params_list = properties_handle(properties,None,None)
+                    resp_params_list = properties_handle(properties, location=5)
             elif 'array' == responses[response]['schema']['type']:
                 items = responses[response]['schema']['items']
-                resp_params_list = array_handle(items)
+                resp_params_list = array_handle(items, location=5)
         return resp_params_list
 
 
@@ -231,10 +242,10 @@ def response_handle(responses):
                 properties_alls = key
             if 'object' in responses[response]['content'][properties_alls]['schema']['type']:
                 properties = responses[response]['content'][properties_alls]['schema']['properties']
-                resp_params_list = properties_handle(properties, None, None)
+                resp_params_list = properties_handle(properties, location=5)
             elif 'array' == responses[response]['content'][properties_alls]['schema']['type']:
                 properties = responses[response]['content'][properties_alls]['schema']['items']
-                resp_params_list = properties_handle(properties, None, None)
+                resp_params_list = properties_handle(properties, location=5)
         return resp_params_list
 
 
@@ -250,15 +261,15 @@ def requestBody_handle(requestBody, req_params_list):
         properties = requestBody['content'][properties_alls]['schema']['items']
     if 'required' in requestBody['content'][properties_alls]['schema']:
         required_list = requestBody['content'][properties_alls]['schema']['required']
-    return properties_handle(properties, required_list,req_params_list)
+    return properties_handle(properties, location=3,required_list=required_list)
 
 
-def swagger_handle(spec):
+def get_swagger_url(spec):
     url = spec.get('host') + spec.get('basePath')
     return url
 
 
-def open_api_handle(spec):
+def get_open_api_url(spec):
     servers = spec.get('servers')
     for server in servers:
         url = server.get('url').replace('https','http')
@@ -267,17 +278,17 @@ def open_api_handle(spec):
 
 def paths_handle(spec):
     if 'swagger' in spec:
-        url = swagger_handle(spec)
+        host = get_swagger_url(spec)
     else:
-        url = open_api_handle(spec)
+        host = get_open_api_url(spec)
+    '''Obtain the domain name from the document'''
     api_id = 0
     api_list = []
     paths = spec.get('paths')
     for api_path in paths:
         methods = paths.get(api_path)
         for method in methods:
-            api_id = api_id + 1
-            complete_api_path = url + api_path
+            complete_api_path = host + api_path
             params = methods.get(method).get("parameters")
             requestBody = methods.get(method).get("requestBody")
             req_param_list = []
@@ -294,55 +305,26 @@ def paths_handle(spec):
                 resp_param_list = response_handle(methods.get(method).get("responses"))
             api = api_info(api_id, complete_api_path, req_param_list, resp_param_list, method)
             api_list.append(api)
+            api_id = api_id + 1
     return api_list
 
+
 def main():
-    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/elastic.yaml")
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/openapi.yaml")
     a = get_api_info(1,path)
     print(1)
 
+
 def get_api_info(version, path):
-    parser = ResolvingParser(path)
-    spec = parser.specification
+    spec = ''
+    try:
+        parser = ResolvingParser(path)
+        spec = parser.specification
+    except:
+        print("open-api file can't parse")
     api_list = paths_handle(spec)
     return api_list
 
 
 if __name__  == '__main__':
     main()
-#
-# dictionary = {
-#     79: {"id + sha +responses", "short_id + sha + responses"},
-#     80: {"id + sha +responses", "short_id + sha + responses"},
-#     81: {"id + sha +responses", "short_id + sha + responses"},
-#     83: {"id + sha +responses", "short_id + sha + responses"},
-#     84: {"id + sha +responses", "short_id + sha + responses"},
-#     88: {"id + sha +responses"},
-#     624: {"id + group_id + responses", "name + group_name + responses"},
-#     625: {"name + group_name + responses", "name + group_name + parameters"},
-#     626: {"id + group_id + responses", "name + group_name + responses"},
-#     627: {"id + group_id + parameters", "id + group_id + responses", "name + group_name + responses"},
-#     628: {"id + group_id + parameters", "id + group_id + responses"},
-#     629: {"id + group_id + parameters", "id + group_id + responses", "name + group_name + responses"},
-#     630: {"id + group_id + parameters", "id + group_id + responses", "name + group_name + responses"},
-#     631: {"id + group_id + parameters", "id + group_id + responses", "name + group_name + parameters", "name + group_name + responses"},
-#     632: {"id + group_id + parameters"},
-#     633: {"id + group_id + parameters", "id + group_id + responses"},
-#     634: {"id + group_id + parameters"},
-#     635: {"id + group_id + parameters"},
-#     636: {"id + group_id + parameters", "id + group_id + responses"},
-#     637: {"id + group_id + parameters"},
-#     638: {"id + group_id + parameters"},
-#     639: {"id + group_id + parameters"},
-#     640: {"id + group_id + parameters"},
-#     641: {"id + group_id + parameters"},
-#     642: {"id + group_id + parameters"},
-#     643: {"id + group_id + parameters"},
-#     644: {"id + group_id + parameters"},
-#     645: {"id + group_id + parameters"},
-#     646: {"id + group_id + parameters"},
-#     647: {"id + group_id + parameters", "id + group_id + responses"},
-#     648: {"id + group_id + parameters", "id + group_id + responses"},
-#     649: {"id + group_id + parameters", "id + group_id + responses"},
-#     640: {"id + group_id + parameters"},
-# }

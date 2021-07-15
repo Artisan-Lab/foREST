@@ -23,3 +23,4 @@ def fuzz(type):
     elif 'boolean' == type:
         list_boolean = ['False', 'True']
         return random.choice(list_boolean)
+    elif 'object' == type:

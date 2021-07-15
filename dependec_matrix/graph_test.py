@@ -21,7 +21,7 @@ class CreateTree:
 
     def __init__(self, api_list):
         self.api_list = api_list
-        self.path_tree = Tree()
+        self.semantic_tree = Tree()
         self.node_id = 1
 
     def create_tree(self):
@@ -30,34 +30,34 @@ class CreateTree:
             api_method = api_info.http_method
             api_id = api_info.api_id
             self.find_node(api_path_nodes, api_method, api_id)
-        self.path_tree.show(idhidden=False, data_property='method')
+        self.semantic_tree.show(idhidden=False, data_property='method')
 
     def find_node(self, api_path_nodes, api_method, api_id):
-        current_node = self.path_tree.get_node('/'.join(api_path_nodes))
+        current_node = self.semantic_tree.get_node('/'.join(api_path_nodes))
         if not current_node:
-            current_node = self.path_tree.root
+            current_node = self.semantic_tree.root
             for i in range(len(api_path_nodes)):
                 new_node_id = '/'.join(api_path_nodes[:i + 1])
-                if not self.path_tree.contains(new_node_id):
-                    self.path_tree.create_node(identifier=new_node_id, parent=current_node,
-                                               data=Method({}, api_path_nodes[i]))
-                current_node = self.path_tree.get_node(new_node_id)
+                if not self.semantic_tree.contains(new_node_id):
+                    self.semantic_tree.create_node(identifier=new_node_id, parent=current_node,
+                                                   data=Method({}, api_path_nodes[i]))
+                current_node = self.semantic_tree.get_node(new_node_id)
         data = current_node.data
         data.method[api_method] = api_id
-        self.path_tree.update_node(current_node.identifier, data=data)
+        self.semantic_tree.update_node(current_node.identifier, data=data)
 
     def find_dependency(self):
         node_number = len(self.api_list)
         matrix_zero =  np.zeros([node_number+1, node_number+1], dtype=int)
         matrix_one = np.ones([node_number+1, node_number+1], dtype=int)
         matrix = matrix_zero-matrix_one
-        all_nodes = self.path_tree.all_nodes()
+        all_nodes = self.semantic_tree.all_nodes()
         for node in all_nodes:
             post_id = self.find_last_post(node)
             if post_id:
                 if 'post' in node.data.method:
-                    if self.path_tree.parent(node.identifier):
-                        last_post = self.find_last_post(self.path_tree.parent(node.identifier))
+                    if self.semantic_tree.parent(node.identifier):
+                        last_post = self.find_last_post(self.semantic_tree.parent(node.identifier))
                         if last_post:
                             matrix[node.data.method['post']][last_post] = 1
                 if 'get' in node.data.method:
@@ -71,16 +71,23 @@ class CreateTree:
     def find_last_post(self, node):
         if 'post' in node.data.method:
             return node.data.method['post']
-        elif self.path_tree.parent(node.identifier):
-            return self.find_last_post(self.path_tree.parent(node.identifier))
+        elif self.semantic_tree.parent(node.identifier):
+            return self.find_last_post(self.semantic_tree.parent(node.identifier))
         else:
             return None
 
 
+def main():
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/elastic.yaml")
+    api_list = parse.get_api_info(1, path)
+    tree = CreateTree(api_list)
+    tree.create_tree()
+    matrix = tree.find_dependency()
+    print(matrix)
 
 
-
-
+if __name__ == '__main__':
+    main()
 
 # class Node:
 #
@@ -194,17 +201,3 @@ class CreateTree:
 #     print()
 #
 #
-
-
-
-def main():
-    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/elastic.yaml")
-    api_list = parse.get_api_info(1, path)
-    tree = CreateTree(api_list)
-    tree.create_tree()
-    matrix = tree.find_dependency()
-    print(matrix)
-
-
-if __name__ == '__main__':
-    main()

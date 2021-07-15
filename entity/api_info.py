@@ -3,6 +3,7 @@ from .field_info import *
 from common import *
 
 class api_info:
+
     def __init__(self,api_id,path,req_param,resp_param,http_method):
         self.api_id = api_id
         self.path = path
