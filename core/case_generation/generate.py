@@ -28,8 +28,9 @@ class case_generation():
                         index = random.randint(0, length)
                         value = params_pool.lindex(str(field_info.field_name), index)
                     else:
-                        dic = fuzz_object.object_handle(field_info.object)
-                        value = json.dumps(dic)
+                        if field_info.object:
+                            dic = fuzz_object().object_handle(field_info.object)
+                            value = json.dumps(dic)
                     parameter[str(field_info.field_name)] = str(value) + str(field_info.location)
                 else:
                     if params_pool.llen(str(field_info.field_name)) != 0:
@@ -37,8 +38,12 @@ class case_generation():
                         index = random.randint(0, length)
                         value = params_pool.lindex(str(field_info.field_name), index)
                     else:
-                        value = []
-                        value.append(fuzz(field_info.array))
+                        if field_info.array == 'string' or field_info.array == 'integer' \
+                                or field_info.array == 'boolean':
+                            value = []
+                            value.append(fuzz(field_info.array))
+                        else:
+                            value = [{"name": "linjiaxian", "type": "human", "age": 18}, {"id": 100, "cloud_id": 2}]
                     parameter[str(field_info.field_name)] = str(value) + str(field_info.location)
 
         fuzz_pool.sadd(str(id), str(parameter))
@@ -62,23 +67,23 @@ class case_generation():
             parameter = {}
             for field_info in api_info.req_param:
                 if not field_info.require:
-                    if optional_param != None and field_info.field_name in optional_param:
+                    if optional_param is not None and field_info.field_name in optional_param:
                         if field_info.field_type == 'string' or field_info.field_type == 'integer' \
                                 or field_info.field_type == 'boolean':
-                            if params_pool.llen(str(field_info.field_name)) != None:
+                            if params_pool.llen(str(field_info.field_name)) is not None:
                                 length = params_pool.llen(str(field_info.field_name))
                                 index = random.randint(0, length)
                                 value = params_pool.lindex(str(field_info.field_name), index)
                             else:
                                 value = fuzz(field_info.field_type)
                             parameter[str(field_info.field_name)] = str(value) + str(field_info.location)
-                        elif field_info.field_type == 'object' and field_info.object != None:
+                        elif field_info.field_type == 'object' and field_info.object is not None:
                             if params_pool.llen(str(field_info.field_name)) != 0:
                                 length = params_pool.llen(str(field_info.field_name))
                                 index = random.randint(0, length)
                                 value = params_pool.lindex(str(field_info.field_name), index)
                             else:
-                                dic = fuzz_object.object_handle(field_info.object)
+                                dic = fuzz_object().object_handle(field_info.object)
                                 value = json.dumps(dic)
                             parameter[str(field_info.field_name)] = str(value) + str(field_info.location)
 
@@ -88,7 +93,12 @@ class case_generation():
                                 index = random.randint(0, length)
                                 value = params_pool.lindex(str(field_info.field_name), index)
                             else:
-                                value = []
-                                value.append(fuzz(field_info.array))
+                                if field_info.array == 'string' or field_info.array == 'integer' \
+                                        or field_info.array == 'boolean':
+                                    value = []
+                                    value.append(fuzz(field_info.array))
+                                else:
+                                    value = [{"name": "linjiaxian", "type": "human", "age": 18},
+                                             {"id": 100, "cloud_id": 2}]
                             parameter[str(field_info.field_name)] = str(value) + str(field_info.location)
             fuzz_pool.sadd(str(id) + 'optional', str(parameter))

@@ -3,6 +3,7 @@ import os
 import random
 import time
 from configparser import ConfigParser
+from fnmatch import fnmatch
 
 import redis
 import requests
@@ -15,7 +16,7 @@ from module.object_handle import fuzz_object
 from module.response_parse import response_parse
 from module.save_success_case import save_success_case
 from module.type_fuzz import fuzz
-from log.get_logging import Logger
+from log.get_logging import Log
 
 testingConfig = TestingConfig()
 
@@ -107,16 +108,35 @@ db_o = int(config.get('redis', 'db_o'))
 redis_host = config.get('redis', 'host')
 redis_port = config.get('redis', 'port')
 need_coverage = int(config.get('operation_mode', 'need_coverage'))
+db_statistics = int(config.get('redis', 'db_statistics'))
 
 params_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_params, decode_responses=True)
 success_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_success, decode_responses=True)
 fuzz_pool = redis.StrictRedis(host=redis_host, port=redis_port, db=db_fuzz_pool, decode_responses=True)
 flag = redis.StrictRedis(host=redis_host, port=redis_port, db=db_o, decode_responses=True)
+statistics = redis.StrictRedis(host=redis_host, port=redis_port, db=db_statistics, decode_responses=True)
 
 
 def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, username, password, cases):
     ini_coverage_rate_executed_code = 1000
-    request_log = Logger('request.log', level='debug')
+    request_log = Log('request.log')
+    post_failed_log = Log('post_failed.log')
+    post_success_log = Log('post_success.log')
+    get_success_log = Log('get_success.log')
+    get_failed_log = Log('post_failed.log')
+    statistics.setnx('success_request_number', 0)
+    statistics.setnx('total_request_number', 0)
+    statistics.setnx('failed_request_number', 0)
+    statistics.setnx('status_code_5xx_num', 0)
+    statistics.setnx('status_code_4xx_num', 0)
+    statistics.setnx('status_code_2xx_num', 0)
+    total_request_number = int(statistics.get('total_request_number'))
+    success_request_number = int(statistics.get('success_request_number'))
+    failed_request_number = int(statistics.get('failed_request_number'))
+    status_code_5xx_num = int(statistics.get('status_code_5xx_num'))
+    status_code_4xx_num = int(statistics.get('status_code_4xx_num'))
+    status_code_2xx_num = int(statistics.get('status_code_2xx_num'))
+
     if operation_mode == 0:
         if need_coverage == 1:
             ini_coverage_rate_executed_code = GetCoverage().getCoverage_rate_executed_code(cov_url)
@@ -171,7 +191,7 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                             index = random.randint(0, length)
                             value = testingConfig.params_pool.lindex(str(field_info.field_name), index)
                         else:
-                            dic = fuzz_object.object_handle(field_info.object)
+                            dic = fuzz_object().object_handle(field_info.object)
                             value = json.dumps(dic)
                         no_optional_fuzz_cases[str(field_info.field_name)] = str(value) + str(field_info.location)
                     else:
@@ -180,8 +200,12 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                             index = random.randint(0, length)
                             value = testingConfig.params_pool.lindex(str(field_info.field_name), index)
                         else:
-                            value = [fuzz(field_info.array)]
-
+                            if field_info.array == 'string' or field_info.array == 'integer' \
+                                    or field_info.array == 'boolean':
+                                value = []
+                                value.append(fuzz(field_info.array))
+                            else:
+                                value = [{"name": "linjiaxian", "type": "human", "age": 18}, {"id": 100, "cloud_id": 2}]
                         no_optional_fuzz_cases[str(field_info.field_name)] = str(value) + str(field_info.location)
             no_optional_fuzz_cases, pa_names, pa_locations, value_fuzzs = process_no_optional_fuzz_cases(
                 no_optional_fuzz_cases,
@@ -196,7 +220,7 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                     value = eval(value)
                 except:
                     pass
-                if not isinstance(value, int) and not isinstance(value, bool) and value != None:
+                if not isinstance(value, int) and not isinstance(value, bool) and value is not None:
                     try:
                         value = json.loads(value)
                     except:
@@ -206,7 +230,7 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
             pa_locations.clear()
             pa_names.clear()
             value_fuzzs.clear()
-        print("组装完成！！！！！！！！！！！！！！！！！！")
+        # print("组装完成！！！！！！！！！！！！！！！！！！")
     fuzz__cases = []
 
     if nums == 0:
@@ -214,7 +238,7 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
             for fuzz_case in cases:
                 url = api_info.path
                 fuzz_case = eval(fuzz_case)
-                print(fuzz_case)
+                # print(fuzz_case)
                 for q in fuzz_case.keys():
                     pa_names.append(q)
                     pa_locations.append(int(list(fuzz_case[q])[-1]))
@@ -237,18 +261,25 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                 pa_locations.clear()
                 pa_names.clear()
                 value_fuzzs.clear()
-                request_log.print_info(
-                    f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
-                if method == 'post':
-                    response = requests.post(url=url, headers=headers, data=data)
-                if method == 'put':
-                    response = requests.put(url=url, headers=headers, data=data)
-                if method == 'patch':
-                    response = requests.patch(url=url, headers=headers, data=data)
-                if method == 'get':
-                    response = requests.get(url=url, headers=headers, data=data)
-                if method == 'delete':
-                    response = requests.delete(url=url, headers=headers, data=data)
+                # request_log.info(
+                #     f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
+                try:
+                    if method == 'post':
+                        response = requests.post(url=url, headers=headers, data=data, timeout=(300, 300))
+                    if method == 'put':
+                        response = requests.put(url=url, headers=headers, data=data, timeout=(300, 300))
+                    if method == 'patch':
+                        response = requests.patch(url=url, headers=headers, data=data, timeout=(300, 300))
+                    if method == 'get':
+                        response = requests.get(url=url, headers=headers, data=data, timeout=(300, 300))
+                    if method == 'delete':
+                        response = requests.delete(url=url, headers=headers, data=data, timeout=(300, 300))
+                except:
+                    request_log.warning(
+                        f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'\n")
+                    response = None
+                total_request_number = total_request_number + 1
+                statistics.set("total_request_number", total_request_number)
                 if response is not None:
                     try:
                         response_json = response.json()
@@ -270,10 +301,48 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                                                                           fuzz_success_json_data, method)
                     except ValueError:
                         print("NOT JSON")
-                try:
-                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
-                except:
-                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
+                    try:
+                        request_log.info(
+                            f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                            f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                        )
+                    except:
+                        request_log.info(
+                            f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                            f'Received: \'HTTP/1.1 {response.status_code} response : {response}\n\n'
+                        )
+                    if response.status_code is not None:
+                        if fnmatch(str(response.status_code), "5*"):
+                            request_log.error(
+                                f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'\n")
+                            status_code_5xx_num += 1
+                            statistics.set('status_code_5xx_num', status_code_5xx_num)
+                        elif fnmatch(str(response.status_code), "4*"):
+                            status_code_4xx_num += 1
+                            statistics.set('status_code_4xx_num', status_code_4xx_num)
+                        elif fnmatch(str(response.status_code), "2*"):
+                            status_code_2xx_num += 1
+                            statistics.set('status_code_2xx_num', status_code_2xx_num)
+                            if response.text:
+                                if 'status' in response.json():
+                                    if response.json()["status"] == "SUCCESS":
+                                        success_request_number += 1
+                                        statistics.set('success_request_number', success_request_number)
+                                        statistics.sadd(str(method.upper()) + "_SUCCESS", str(id))
+                                        if method == 'post':
+                                            post_success_log.info(
+                                                f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                                                f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                                            )
+                                    elif response.json()["status"] == "FAILED":
+                                        failed_request_number += 1
+                                        statistics.set('failed_request_number', failed_request_number)
+                                        statistics.sadd(str(method.upper()) + "_FAILED", str(id))
+                                        if method == 'post':
+                                            post_failed_log.info(
+                                                f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                                                f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                                            )
 
         else:
             if Authorization is not None:
@@ -281,18 +350,25 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                 # headers.update({'username': username})
                 # headers.update({'password': password})
             url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-            request_log.print_info(
-                f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
-            if method == 'post':
-                response = requests.post(url=url, headers=headers, data=data)
-            if method == 'put':
-                response = requests.put(url=url, headers=headers, data=data)
-            if method == 'patch':
-                response = requests.patch(url=url, headers=headers, data=data)
-            if method == 'get':
-                response = requests.get(url=url, headers=headers, data=data)
-            if method == 'delete':
-                response = requests.delete(url=url, headers=headers, data=data)
+            # request_log.info(
+            #     f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
+            try:
+                if method == 'post':
+                    response = requests.post(url=url, headers=headers, data=data, timeout=(300, 300))
+                if method == 'put':
+                    response = requests.put(url=url, headers=headers, data=data, timeout=(300, 300))
+                if method == 'patch':
+                    response = requests.patch(url=url, headers=headers, data=data, timeout=(300, 300))
+                if method == 'get':
+                    response = requests.get(url=url, headers=headers, data=data, timeout=(300, 300))
+                if method == 'delete':
+                    response = requests.delete(url=url, headers=headers, data=data, timeout=(300, 300))
+            except:
+                request_log.warning(
+                    f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'\n")
+                response = None
+            total_request_number = total_request_number + 1
+            statistics.set("total_request_number", total_request_number)
             if response is not None:
                 try:
                     response_json = response.json()
@@ -307,16 +383,52 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                             restart_coverage_tool(now_coverage_rate_executed_code, restart_url)
                 except ValueError:
                     print("NOT JSON")
-            else:
-                pass
-            try:
-                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
-            except:
-                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
+                    try:
+                        request_log.info(
+                            f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                            f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                        )
+                    except:
+                        request_log.info(
+                            f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                            f'Received: \'HTTP/1.1 {response.status_code} response : {response}\n\n'
+                        )
+                if response.status_code is not None:
+                    if fnmatch(str(response.status_code), "5*"):
+                        request_log.error(
+                            f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'\n")
+                        status_code_5xx_num += 1
+                        statistics.set('status_code_5xx_num', status_code_5xx_num)
+                    elif fnmatch(str(response.status_code), "4*"):
+                        status_code_4xx_num += 1
+                        statistics.set('status_code_4xx_num', status_code_4xx_num)
+                    elif fnmatch(str(response.status_code), "2*"):
+                        status_code_2xx_num += 1
+                        statistics.set('status_code_2xx_num', status_code_2xx_num)
+                        if response.text:
+                            if 'status' in response.json():
+                                if response.json()["status"] == "SUCCESS":
+                                    success_request_number += 1
+                                    statistics.set('success_request_number', success_request_number)
+                                    statistics.sadd(str(method.upper()) + "_SUCCESS", str(id))
+                                    if method == 'post':
+                                        post_success_log.info(
+                                            f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                                            f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                                        )
+                                elif response.json()["status"] == "FAILED":
+                                    failed_request_number += 1
+                                    statistics.set('failed_request_number', failed_request_number)
+                                    statistics.sadd(str(method.upper()) + "_FAILED", str(id))
+                                    if method == 'post':
+                                        post_failed_log.info(
+                                            f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                                            f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                                        )
 
     else:
         if len(cases) != 0:
-            print("有参数")
+            # print("有参数")
             for fuzz_case in cases:
                 if len(eval(fuzz_case)) == nums:
                     fuzz__cases.append(fuzz_case)
@@ -337,23 +449,30 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                         except:
                             print("obj")
                     value_fuzzs.append(value)
-                if Authorization is not None:
+                if Authorization:
                     headers.update({"Authorization": Authorization})
                     # headers.update({'username': username})
                     # headers.update({'password': password})
                 url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-                request_log.print_info(
-                    f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
-                if method == 'post':
-                    response = requests.post(url=url, headers=headers, data=data)
-                if method == 'put':
-                    response = requests.put(url=url, headers=headers, data=data)
-                if method == 'patch':
-                    response = requests.patch(url=url, headers=headers, data=data)
-                if method == 'get':
-                    response = requests.get(url=url, headers=headers, data=data)
-                if method == 'delete':
-                    response = requests.delete(url=url, headers=headers, data=data)
+                # request_log.info(
+                #     f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
+                try:
+                    if method == 'post':
+                        response = requests.post(url=url, headers=headers, data=data, timeout=(300, 300))
+                    if method == 'put':
+                        response = requests.put(url=url, headers=headers, data=data, timeout=(300, 300))
+                    if method == 'patch':
+                        response = requests.patch(url=url, headers=headers, data=data, timeout=(300, 300))
+                    if method == 'get':
+                        response = requests.get(url=url, headers=headers, data=data, timeout=(300, 300))
+                    if method == 'delete':
+                        response = requests.delete(url=url, headers=headers, data=data, timeout=(300, 300))
+                except:
+                    request_log.warning(
+                        f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'\n")
+                    response = None
+                total_request_number = total_request_number + 1
+                statistics.set("total_request_number", total_request_number)
                 if response is not None:
                     try:
                         response_json = response.json()
@@ -377,13 +496,51 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                                                                                    method)
                     except ValueError:
                         print("NOT JSON")
-                try:
-                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
-                except:
-                    request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
-            fuzz__cases.clear()
+                    try:
+                        request_log.info(
+                            f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                            f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                        )
+                    except:
+                        request_log.info(
+                            f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                            f'Received: \'HTTP/1.1 {response.status_code} response : {response}\n\n'
+                        )
+                    if response.status_code is not None:
+                        if fnmatch(str(response.status_code), "5*"):
+                            request_log.error(
+                                f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'\n")
+                            status_code_5xx_num += 1
+                            statistics.set('status_code_5xx_num', status_code_5xx_num)
+                        elif fnmatch(str(response.status_code), "4*"):
+                            status_code_4xx_num += 1
+                            statistics.set('status_code_4xx_num', status_code_4xx_num)
+                        elif fnmatch(str(response.status_code), "2*"):
+                            status_code_2xx_num += 1
+                            statistics.set('status_code_2xx_num', status_code_2xx_num)
+                            if response.text:
+                                if 'status' in response.json():
+                                    if response.json()["status"] == "SUCCESS":
+                                        success_request_number += 1
+                                        statistics.set('success_request_number', success_request_number)
+                                        statistics.sadd(str(method.upper()) + "_SUCCESS", str(id))
+                                        if method == 'post':
+                                            post_success_log.info(
+                                                f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                                                f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                                            )
+                                    elif response.json()["status"] == "FAILED":
+                                        failed_request_number += 1
+                                        statistics.set('failed_request_number', failed_request_number)
+                                        statistics.sadd(str(method.upper()) + "_FAILED", str(id))
+                                        if method == 'post':
+                                            post_failed_log.info(
+                                                f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                                                f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                                            )
+
         else:
-            print("无参数！！！！！！！！！！！！！！")
+            # print("无参数！！！！！！！！！！！！！！")
             if Authorization is not None:
                 headers.update({"Authorization": Authorization})
                 # headers.update({'username': username})
@@ -391,18 +548,25 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
             else:
                 pass
             url, headers, data = make_url().make(url, pa_locations, pa_names, value_fuzzs, headers, data)
-            request_log.print_info(
-                f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
-            if method == 'post':
-                response = requests.post(url=url, headers=headers, data=data)
-            if method == 'put':
-                response = requests.put(url=url, headers=headers, data=data)
-            if method == 'patch':
-                response = requests.patch(url=url, headers=headers, data=data)
-            if method == 'get':
-                response = requests.get(url=url, headers=headers, data=data)
-            if method == 'delete':
-                response = requests.delete(url=url, headers=headers, data=data)
+            # request_log.info(
+            #     f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
+            try:
+                if method == 'post':
+                    response = requests.post(url=url, headers=headers, data=data, timeout=(300, 300))
+                if method == 'put':
+                    response = requests.put(url=url, headers=headers, data=data, timeout=(300, 300))
+                if method == 'patch':
+                    response = requests.patch(url=url, headers=headers, data=data, timeout=(300, 300))
+                if method == 'get':
+                    response = requests.get(url=url, headers=headers, data=data, timeout=(300, 300))
+                if method == 'delete':
+                    response = requests.delete(url=url, headers=headers, data=data, timeout=(300, 300))
+            except:
+                request_log.warning(
+                    f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'")
+                response = None
+            total_request_number = total_request_number + 1
+            statistics.set("total_request_number", total_request_number)
             if response is not None:
                 try:
                     response_json = response.json()
@@ -417,7 +581,45 @@ def test(operation_mode, cov_url, restart_url, nums, api_info, Authorization, us
                             restart_coverage_tool(now_coverage_rate_executed_code, restart_url)
                 except ValueError:
                     print("NOT JSON")
-            try:
-                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}')
-            except:
-                request_log.print_info(f'Received: \'HTTP/1.1 {response.status_code} response : {response}')
+                try:
+                    request_log.info(
+                        f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                        f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                    )
+                except:
+                    request_log.info(
+                        f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                        f'Received: \'HTTP/1.1 {response.status_code} response : {response}\n\n'
+                    )
+                if response.status_code is not None:
+                    if fnmatch(str(response.status_code), "5*"):
+                        request_log.error(
+                            f"Sending: \'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data}\'\n")
+                        status_code_5xx_num += 1
+                        statistics.set('status_code_5xx_num', status_code_5xx_num)
+                    elif fnmatch(str(response.status_code), "4*"):
+                        status_code_4xx_num += 1
+                        statistics.set('status_code_4xx_num', status_code_4xx_num)
+                    elif fnmatch(str(response.status_code), "2*"):
+                        status_code_2xx_num += 1
+                        statistics.set('status_code_2xx_num', status_code_2xx_num)
+                        if response.text:
+                            if 'status' in response.json():
+                                if response.json()["status"] == "SUCCESS":
+                                    success_request_number += 1
+                                    statistics.set('success_request_number', success_request_number)
+                                    statistics.sadd(str(method.upper()) + "_SUCCESS", str(id))
+                                    if method == 'post':
+                                        post_success_log.info(
+                                            f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                                            f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                                        )
+                                elif response.json()["status"] == "FAILED":
+                                    failed_request_number += 1
+                                    statistics.set('failed_request_number', failed_request_number)
+                                    statistics.sadd(str(method.upper()) + "_FAILED", str(id))
+                                    if method == 'post':
+                                        post_failed_log.info(
+                                            f'{method.upper()} {api_info.path} {url} API_id:{id} header:{headers}  data:{data} \n'
+                                            f'Received: \'HTTP/1.1 {response.status_code} response : {response.json()}\n\n'
+                                        )

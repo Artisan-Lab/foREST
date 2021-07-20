@@ -255,6 +255,8 @@ def requestBody_handle(requestBody, req_params_list):
 
 def swagger_handle(spec):
     url = spec.get('host') + spec.get('basePath')
+    if 'schemes' in spec:
+        url = spec['schemes'][0] + '://' + url
     return url
 
 

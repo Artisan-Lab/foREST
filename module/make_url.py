@@ -18,4 +18,5 @@ class make_url:
             elif p_location[i] == 3:
                 # 参数组成json字符串 ==> data
                 data[str(p_name[i])] = str(value_fuzz[i])
+        headers['Content-Type'] = "application/json"
         return url, headers, data

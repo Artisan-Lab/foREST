@@ -18,7 +18,10 @@ class fuzz_object:
         for object_ in objects:
             value = None
             if object_.type == 'object':
-                value = fuzz_object().object_handle(object_.object)
+                if object_.object:
+                    value = fuzz_object().object_handle(object_.object)
+                else:
+                    value = 'None'
             elif object_.type == 'string' or object_.type == 'boolean' or object_.type == 'integer':
                 value = fuzz(object_.type)
             elif object_.type == 'array':

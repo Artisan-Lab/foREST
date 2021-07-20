@@ -192,7 +192,7 @@ class CreateTree:
 
 
 def main():
-    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/elastic.yaml")
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/pipeline-service_swagger.yaml")
     api_list = parse.get_api_info(1, path)
     tree = CreateTree(api_list)
     tree.create_tree()

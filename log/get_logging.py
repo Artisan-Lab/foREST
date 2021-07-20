@@ -25,10 +25,11 @@ class Log:
         if not os.path.exists(log_path):
             os.mkdir(log_path)  # 如果不存在这个logs文件夹，就自动创建一个
         if not log_name:
-            log_name = os.path.join(log_path, '%s.log' % time.strftime('%Y-%m-%d'))  # 文件的命名
+            log_name = os.path.join(log_path, '%s' % time.strftime('%Y-%m-%d'))  # 文件的命名
         else:
-            log_name = os.path.join(log_path, '%s.log' % log_name)
-        self.error_log_name = os.path.join(log_path, 'ERROR.log')
+            log_name = os.path.join(log_path, '%s' % log_name)
+        self.error_log_name = os.path.join(log_path, 'ERROR')
+        self.warning_log_name = os.path.join(log_path, 'warning')
         self.log_name = log_name
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.DEBUG)
@@ -37,6 +38,68 @@ class Log:
             log_colors=log_colors_config)  # 日志输出格式
         self.formatter_file = logging.Formatter(
             '%(asctime)s : %(message)s')
+
+    def delete_logs(self, file_path):
+        try:
+            os.remove(file_path)
+        except PermissionError as e:
+            Log().warning('删除日志文件失败：{}'.format(e))
+
+    def __console(self, level, message):
+        # 创建一个FileHandler，用于写到本地
+        info_handle = RotatingFileHandler(filename=self.log_name, mode='a', encoding='utf-8')  # 使用RotatingFileHandler类，滚动备份日志
+        info_handle.setLevel(logging.DEBUG)
+        info_handle.setFormatter(self.formatter_file)
+        # 创建一个StreamHandler,用于输出到控制台
+        creen_handle = colorlog.StreamHandler()
+        creen_handle.setLevel(logging.DEBUG)
+        creen_handle.setFormatter(self.formatter)
+        # 创建一个ErrorHandler ，用于输出Bug
+        bug_handle = RotatingFileHandler(filename=self.error_log_name, mode='a', encoding='utf-8')
+        bug_handle.setLevel(logging.DEBUG)
+        bug_handle.setFormatter(self.formatter_file)
+
+        warning_handle = RotatingFileHandler(filename=self.warning_log_name, mode='a', encoding='utf-8')
+        warning_handle.setLevel(logging.DEBUG)
+        bug_handle.setFormatter(self.formatter_file)
+
+        if level == 'info':
+            self.logger.addHandler(info_handle)
+            self.logger.addHandler(creen_handle)
+            self.logger.info(message)
+            # 这两行代码是为了避免日志输出重复问题
+            self.logger.removeHandler(creen_handle)
+            self.logger.removeHandler(info_handle)
+        elif level == 'debug':
+            self.logger.addHandler(creen_handle)
+            self.logger.debug(message)
+            self.logger.removeHandler(creen_handle)
+        elif level == 'warning':
+            self.logger.addHandler(creen_handle)
+            self.logger.addHandler(warning_handle)
+            self.logger.warning(message)
+            self.logger.removeHandler(creen_handle)
+            self.logger.removeHandler(warning_handle)
+        elif level == 'error':
+            self.logger.addHandler(creen_handle)
+            self.logger.addHandler(bug_handle)
+            self.logger.error(message)
+            self.logger.removeHandler(creen_handle)
+            self.logger.removeHandler(bug_handle)
+
+        info_handle.close()  # 关闭打开的文件
+
+    def debug(self, message):
+        self.__console('debug', message)
+
+    def info(self, message):
+        self.__console('info', message)
+
+    def warning(self, message):
+        self.__console('warning', message)
+
+    def error(self, message):
+        self.__console('error', message)
 
     # def get_file_sorted(self, file_path):
     #     """最后修改时间顺序升序排列 os.path.getmtime()->获取文件最后修改时间"""
@@ -70,68 +133,7 @@ class Log:
     #                     print(file_path)
     #                     self.delete_logs(file_path)
 
-    def delete_logs(self, file_path):
-        try:
-            os.remove(file_path)
-        except PermissionError as e:
-            Log().warning('删除日志文件失败：{}'.format(e))
 
-    def __console(self, level, message):
-        # 创建一个FileHandler，用于写到本地
-        info_handle = RotatingFileHandler(filename=self.log_name, mode='a', maxBytes=1024 * 1024 * 5, backupCount=5,
-                                          encoding='utf-8')  # 使用RotatingFileHandler类，滚动备份日志
-        info_handle.setLevel(logging.DEBUG)
-        info_handle.setFormatter(self.formatter_file)
-        # 创建一个StreamHandler,用于输出到控制台
-        creen_handle = colorlog.StreamHandler()
-        creen_handle.setLevel(logging.DEBUG)
-        creen_handle.setFormatter(self.formatter)
-        # 创建一个ErrorHandler ，用于输出Bug
-        bug_handle = RotatingFileHandler(filename=self.error_log_name, mode='a', maxBytes=1024 * 1024 * 5, backupCount=5,
-                                          encoding='utf-8')
-        bug_handle.setLevel(logging.DEBUG)
-        bug_handle.setFormatter(self.formatter_file)
-
-
-
-        if level == 'info':
-            self.logger.addHandler(info_handle)
-            self.logger.addHandler(creen_handle)
-            self.logger.info(message)
-            # 这两行代码是为了避免日志输出重复问题
-            self.logger.removeHandler(creen_handle)
-            self.logger.removeHandler(info_handle)
-        elif level == 'debug':
-            self.logger.addHandler(creen_handle)
-            self.logger.debug(message)
-            self.logger.removeHandler(creen_handle)
-        elif level == 'warning':
-            self.logger.addHandler(creen_handle)
-            self.logger.addHandler(info_handle)
-            self.logger.warning(message)
-            self.logger.removeHandler(creen_handle)
-            self.logger.removeHandler(info_handle)
-        elif level == 'error':
-            self.logger.addHandler(creen_handle)
-            self.logger.addHandler(bug_handle)
-            self.logger.error(message)
-            self.logger.removeHandler(creen_handle)
-            self.logger.removeHandler(bug_handle)
-
-
-        info_handle.close()  # 关闭打开的文件
-
-    def debug(self, message):
-        self.__console('debug', message)
-
-    def info(self, message):
-        self.__console('info', message)
-
-    def warning(self, message):
-        self.__console('warning', message)
-
-    def error(self, message):
-        self.__console('error', message)
 
 
 if __name__ == "__main__":
