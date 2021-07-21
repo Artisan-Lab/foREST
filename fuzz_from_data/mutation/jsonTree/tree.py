@@ -5,9 +5,9 @@ from anytree import PreOrderIter
 from anytree import RenderTree
 from anytree.exporter import DotExporter
 
-from commons import constants
-from commons.utils import Utils
-from mutation.jsonTree.node import Node
+from fuzz_from_data.commons import constants
+from fuzz_from_data.commons.utils import Utils
+from fuzz_from_data.mutation.jsonTree.node import Node
 
 
 class Tree:

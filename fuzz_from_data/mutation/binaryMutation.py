@@ -1,6 +1,6 @@
 import os
 
-from mutation.mutation import Mutation
+from fuzz_from_data.mutation.mutation import Mutation
 
 
 class BinaryMutation(Mutation):

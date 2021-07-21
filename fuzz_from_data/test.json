@@ -1,0 +1,8 @@
+[
+  {
+    "method": "get",
+    "url": "http://fuxi-pipeline-api-mutation.pipeline-beta.dev.titan.huawei.com/pipelineserv/api/v2/pipelineinstance/comp_name/476105945625536?",
+    "headers": {"x-request-id": "41c69b8e-ead0-4e0a-a533-128c902c2308", "content-length": "0", "x-forwarded-proto": "http", "x-forwarded-port": "80", "x-forwarded-for": "100.94.0.186", "x-real-ip": "100.94.0.186", "authorization": null, "x-envoy-external-address": "100.79.64.164", "x-forwarded-host": "fuxi.huawei.com", "host": "fuxi.huawei.com", "content-type": "application/json", "x-envoy-expected-rq-timeout-ms": "499000", "accept-encoding": "gzip", "user-agent": "unirest-java/1.3.11"},
+    "body": ""
+  }
+]

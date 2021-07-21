@@ -1,7 +1,7 @@
 import json
 import random
 
-from commons import constants
+from fuzz_from_data.commons import constants
 
 
 class Utils:

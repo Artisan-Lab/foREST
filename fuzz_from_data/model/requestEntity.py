@@ -6,8 +6,8 @@ class RequestEntity:
     def __init__(self, method, url, headers, body):
         self.method = method
         self.url = url
-        self.headers = headers
-        self.body = body
+        self.headers = headers # type:dict
+        self.body = body # type:dict
         self.files = None
 
     def clone(self):

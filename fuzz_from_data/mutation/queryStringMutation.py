@@ -1,10 +1,10 @@
 import random
 from urllib.parse import urlencode
 
-from commons import mutateConstants
-from commons.fuzzFromDataConfig import FUZZ_FROM_DATA_CONFIG
-from commons.utils import Utils
-from mutation.mutation import Mutation
+from fuzz_from_data.commons import mutateConstants
+from fuzz_from_data.commons.fuzzFromDataConfig import FUZZ_FROM_DATA_CONFIG
+from fuzz_from_data.commons.utils import Utils
+from fuzz_from_data.mutation.mutation import Mutation
 
 
 class QueryStringMutation(Mutation):

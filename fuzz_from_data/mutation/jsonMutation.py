@@ -1,8 +1,8 @@
-import commons.mutateConstants
-from commons.fuzzFromDataConfig import FUZZ_FROM_DATA_CONFIG
-from commons.sequence import Sequence
-from mutation.jsonTree.tree import *
-from mutation.mutation import Mutation
+import fuzz_from_data.commons.mutateConstants
+from fuzz_from_data.commons.fuzzFromDataConfig import FUZZ_FROM_DATA_CONFIG
+from fuzz_from_data.commons.sequence import Sequence
+from fuzz_from_data.mutation.jsonTree.tree import *
+from fuzz_from_data.mutation.mutation import Mutation
 
 
 class JsonMutation(Mutation):
@@ -101,9 +101,9 @@ class JsonMutation(Mutation):
         selected_node = self.random_select_one_leaf_node()
         # if random.randint(0, 1) == 0:
         if selected_node.type == constants.STRING:
-            selected_node.value = random.choice(commons.mutateConstants.STRINGS_FOR_MUTATED)
+            selected_node.value = random.choice(fuzz_from_data.commons.mutateConstants.STRINGS_FOR_MUTATED)
         elif selected_node.type == constants.NUMBER:
-            selected_node.value = random.choice(commons.mutateConstants.INTEGERS_FOR_MUTATED)
+            selected_node.value = random.choice(fuzz_from_data.commons.mutateConstants.INTEGERS_FOR_MUTATED)
         elif selected_node.type == constants.BOOLEAN:
             selected_node.value = (bool(selected_node.value) != True)
         # else:

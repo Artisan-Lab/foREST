@@ -183,6 +183,9 @@ def parameter_swagger_handle(parameter_list,req_param_list):
         if parameter_type == 'array':
             if 'items' in parameter:
                 array_type = array_handle(parameter['items'])
+            elif 'schema' in parameter:
+                if 'items' in parameter['schema']:
+                    array_type = array_handle(parameter['schema']['items'])
             else:
                 array_type = None
         else:

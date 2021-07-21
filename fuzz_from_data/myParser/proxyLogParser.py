@@ -1,14 +1,14 @@
 import json
 
-from model.requestEntity import RequestEntity
-from parser.logParser import LogParser
+from fuzz_from_data.model.requestEntity import RequestEntity
+from fuzz_from_data.myParser.logParser import LogParser
 
 EXCLUDE_DOMAIN = 'gravatar.com'
 
 
 class ProxyLogParser(LogParser):
     """
-    log parser for captured requests by proxy
+    log myParser for captured requests by proxy
     """
 
     def __init__(self, log_path):
@@ -21,7 +21,7 @@ class ProxyLogParser(LogParser):
         logs = self.log_path.split(',')
         for item in logs:
             print(f'reading log file: {item}')
-            f = open(item, )
+            f = open(item,encoding='UTF-8')
             self.content += json.load(f)
             f.close()
 
@@ -36,9 +36,9 @@ class ProxyLogParser(LogParser):
             request_entity_list.append(RequestEntity(item['method'], item['url'], item['headers'], item['body']))
         return request_entity_list
 
-# parser = ProxyLogParser(
+# myParser = ProxyLogParser(
 #     '/home/yang/PycharmProjects/Restful-api-testing/fuzz_from_data/capture/1625410012.0339994-log.json')
 #
-# parser.read_logs()
-# a = parser.parse()
+# myParser.read_logs()
+# a = myParser.parse()
 # print(a)

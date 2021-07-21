@@ -14,9 +14,13 @@ class make_url:
                 else:
                     url = url + "&" + str(p_name[i]) + "=" + str(value_fuzz[i])
             elif p_location[i] == 2:
-                headers[str(p_name[i])] = str(value_fuzz[i])
+                headers[str(p_name[i])] = value_fuzz[i]
             elif p_location[i] == 3:
                 # 参数组成json字符串 ==> data
-                data[str(p_name[i])] = str(value_fuzz[i])
+                if isinstance(data, dict):
+                    data[str(p_name[i])] = value_fuzz[i]
+                else:
+                    if isinstance(value_fuzz[i], list) and value_fuzz[i]:
+                        data.append(value_fuzz[i][0])
         headers['Content-Type'] = "application/json"
         return url, headers, data

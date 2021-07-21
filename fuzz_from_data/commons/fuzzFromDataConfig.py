@@ -45,6 +45,7 @@ class FuzzFromDataConfig:
             config.get('fuzz_from_data', 'query_string_selection_mutation_probability'))
         self.query_string_value_mutation_probability = float(
             config.get('fuzz_from_data', 'query_string_value_mutation_probability'))
+        self.log_parser_name = str(config.get('fuzz_from_data', 'log_parser_name'))
 
 
 FUZZ_FROM_DATA_CONFIG = FuzzFromDataConfig()  # type: FuzzFromDataConfig

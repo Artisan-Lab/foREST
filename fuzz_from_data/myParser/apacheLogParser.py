@@ -1,8 +1,8 @@
 import codecs
 import re
 
-from model.requestEntity import RequestEntity
-from parser.logParser import LogParser
+from fuzz_from_data.model.requestEntity import RequestEntity
+from fuzz_from_data.myParser.logParser import LogParser
 
 FRAGMENT_LENGTH_PATTERN = r'[0-9]+\sbytes$'
 REQUEST_1ST_LINE_PATTERN = r'(GET|POST|PUT|PATCH).*HTTP/(1\.1|2\.0)'
@@ -14,7 +14,7 @@ NEXT_LINE_PATTERN = r'(\\r\\n)+'
 
 class ApacheLogParser(LogParser):
     """
-    log parser for apache server
+    log myParser for apache server
     """
 
     def __init__(self, log_path):

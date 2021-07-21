@@ -1,6 +1,6 @@
 from anytree import NodeMixin
 
-from commons.sequence import Sequence
+from fuzz_from_data.commons.sequence import Sequence
 
 
 class Node(NodeMixin):  # Add Node feature

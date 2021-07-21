@@ -1,5 +1,5 @@
-from model.requestEntity import RequestEntity
-from model.responseEntity import ResponseEntity
+from fuzz_from_data.model.requestEntity import RequestEntity
+from fuzz_from_data.model.responseEntity import ResponseEntity
 
 
 class MessageEntity:
