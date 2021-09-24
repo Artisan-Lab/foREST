@@ -1,4 +1,4 @@
-from config.config import ReadConfig
+from tool.tools import Tool
 from entity.api_info import api_info
 from entity.field_info import field_info
 
@@ -7,7 +7,7 @@ class SwaggerParser:
 
     def __init__(self, data):
         self.paths = data.get('paths')
-        self.base_url = ReadConfig.readconfig('api_file', 'http') + data.get('host') + data.get('basePath')
+        self.base_url = Tool.readconfig('api_file', 'http') + data.get('host') + data.get('basePath')
         self.api_id = 0
         self.api_list = []
         self.current_field = []
@@ -25,6 +25,7 @@ class SwaggerParser:
                                self.parameters_handle(api_parameters),
                                self.responses_handle(api_responses), method)
                 self.api_list.append(api)
+                self.api_id += 1
         return self.api_list
 
     def create_filed_info(self, api_parameter):
@@ -42,7 +43,7 @@ class SwaggerParser:
         if parameter_schema:
             return field_info(field_name=api_parameter.get('name'),
                               type_=parameter_schema.get('type'),
-                              require=api_parameter.get('required'),
+                              require=True if api_parameter.get('required') else False,
                               location=self.location,
                               max_lenth=parameter_schema.get('maxLength'),
                               min_lenth=parameter_schema.get('minLength'),
@@ -59,7 +60,7 @@ class SwaggerParser:
         else:
             return field_info(field_name=api_parameter.get('name'),
                               type_=api_parameter.get('type'),
-                              require=api_parameter.get('required'),
+                              require=True if api_parameter.get('required') else False,
                               location=self.location,
                               max_lenth=api_parameter.get('maxLength'),
                               min_lenth=api_parameter.get('minLength'),
@@ -79,7 +80,7 @@ class SwaggerParser:
         if not objects:
             return None
         for object_name in objects:
-            required = True if object_name in required_list else None
+            required = True if object_name in required_list else False
             single_object = objects[object_name]
             objects_list.append(field_info(
                 field_name=object_name,

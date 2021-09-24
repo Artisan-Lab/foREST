@@ -1,6 +1,9 @@
 from anytree import NodeMixin, RenderTree
 import os
-from open_api_parse import parse
+
+from tool.tools import Tool
+from open_api_parse.parser import Parser
+
 
 
 class SemanticNode(NodeMixin):
@@ -45,8 +48,9 @@ class CreateSemanticTree:
 
 
 def main():
-    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../openapi/pipeline-service_swagger.yaml")
-    api_list = parse.get_api_info(1, path)
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), Tool.readconfig('api_file', 'file_path'))
+    api_parser = Parser(path)
+    api_list = api_parser.get_api_list()
     tree = CreateSemanticTree(api_list)
     tree.create_tree()
     root = tree.root

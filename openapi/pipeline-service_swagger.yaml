@@ -285,7 +285,7 @@ paths:
           allowEmptyValue: false
         - name: type
           in: query
-          description: 变更类型 code/db/config
+          description: 变更类型 code/db/tool
           required: false
           type: string
           allowEmptyValue: false
@@ -13229,8 +13229,8 @@ definitions:
         description: 测试人员
       type:
         type: string
-        example: code/db/config
-        description: '变更类型:code/db/config'
+        example: code/db/tool
+        description: '变更类型:code/db/tool'
       workitemId:
         type: string
         description: vision work item id
@@ -13398,7 +13398,7 @@ definitions:
         description: 配置文件分支名称
       configFileName:
         type: string
-        example: conf/config.yaml
+        example: conf/tool.yaml
         description: 配置文件路径和文件名
       configRepoUrl:
         type: string
@@ -13479,7 +13479,7 @@ definitions:
         description: 测试人员
       type:
         type: string
-        example: code/db/config
+        example: code/db/tool
         description: 变更类型
       updateAt:
         type: string
@@ -13630,7 +13630,7 @@ definitions:
         description: 配置文件分支名称
       configFileName:
         type: string
-        example: conf/config.yaml
+        example: conf/tool.yaml
         description: 配置文件路径和文件名
       configRepoUrl:
         type: string
@@ -13711,7 +13711,7 @@ definitions:
         description: 测试人员
       type:
         type: string
-        example: code/db/config
+        example: code/db/tool
         description: 变更类型
       updateAt:
         type: string
@@ -13904,7 +13904,7 @@ definitions:
         description: 配置文件分支名称
       configFileName:
         type: string
-        example: conf/config.yaml
+        example: conf/tool.yaml
         description: 配置文件路径和文件名
       configRepoUrl:
         type: string
@@ -13985,7 +13985,7 @@ definitions:
         description: 测试人员
       type:
         type: string
-        example: code/db/config
+        example: code/db/tool
         description: 变更类型
       updateAt:
         type: string
@@ -21235,8 +21235,8 @@ definitions:
         description: 测试人员
       type:
         type: string
-        example: code/db/config
-        description: '变更类型:code/db/config'
+        example: code/db/tool
+        description: '变更类型:code/db/tool'
       versionId:
         type: integer
         format: int64
@@ -21475,8 +21475,8 @@ definitions:
         description: 测试人员
       type:
         type: string
-        example: code/db/config
-        description: '变更类型:code/db/config'
+        example: code/db/tool
+        description: '变更类型:code/db/tool'
       workItemList:
         type: array
         description: 工作项列表
@@ -21634,8 +21634,8 @@ definitions:
         description: 测试人员
       type:
         type: string
-        example: code/db/config
-        description: '变更类型:code/db/config'
+        example: code/db/tool
+        description: '变更类型:code/db/tool'
       workItemList:
         type: array
         description: 工作项列表
