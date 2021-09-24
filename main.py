@@ -6,7 +6,7 @@ from core.case_execution.process_test import test
 from module.get_next_apis import get_next_apis
 from core.case_generation.generate import case_generation
 from dependec_matrix.graph_test import CreateTree
-from parse.parse import get_api_info
+from open_api_parse.parse import get_api_info
 from log.summary import pre_summary
 from log.get_logging import Logger
 import os.path

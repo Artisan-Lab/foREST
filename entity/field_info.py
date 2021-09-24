@@ -1,15 +1,18 @@
 class field_info:
-    def __init__(self,field_name,type_,require,default,fuzz,location,description,enum,object,array,max,min,format):
+    def __init__(self, field_name, type_, require,location,max_lenth=None, min_lenth=None,default=None,description=None,enum=None,object=None,array=None,max=None,min=None,format=None):
         self.field_name = field_name
         self.field_type = type_
         self.require = require
         self.default = default
-        self.fuzz = fuzz
         self.location = location
+        self.max_lenth = max_lenth
+        self.min_lenth = min_lenth
         self.enum = enum
         self.description = description
         self.object = object
         self.array = array
-        self.max = max
-        self.min = min
+        self.maximum = max
+        self.minimum = min
         self.format = format
+        self.depend_list = []
+
