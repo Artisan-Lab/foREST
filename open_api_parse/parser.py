@@ -25,6 +25,7 @@ class Parser:
         key_value_parser = SetKeyValueDependency(self.api_list)
         self.api_list = key_value_parser.get_dependency()
 
+    @property
     def get_api_list(self):
         return self.api_list
 

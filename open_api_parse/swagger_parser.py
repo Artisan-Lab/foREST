@@ -37,7 +37,7 @@ class SwaggerParser:
             self.location = 1
         elif api_parameter.get("in") == 'header':
             self.location = 2
-        elif api_parameter.get("in") == 'body':
+        elif api_parameter.get("in") == 'body' or api_parameter.get('in') == 'formData':
             self.location = 3
         parameter_schema = api_parameter.get('schema')
         if parameter_schema:
@@ -92,7 +92,7 @@ class SwaggerParser:
                 default=single_object.get('default'),
                 description=single_object.get('description'),
                 enum=single_object.get('enum'),
-                object=self.object_handle(single_object.get('property'), single_object.get('required')),
+                object=self.object_handle(single_object.get('properties'), single_object.get('required') if single_object.get('required') else []),
                 array=self.create_filed_info(single_object.get('items')),
                 max=single_object.get('maximum'),
                 min=single_object.get('minimum'),
@@ -102,12 +102,14 @@ class SwaggerParser:
 
     def parameters_handle(self, api_parameters):
         parameter_list = []
-        for api_parameter in api_parameters:
-            parameter_list.append(self.create_filed_info(api_parameter))
+        if api_parameters:
+            for api_parameter in api_parameters:
+                parameter_list.append(self.create_filed_info(api_parameter))
         return parameter_list
 
     def responses_handle(self, api_responses):
         responses_list = []
+        self.location = 5
         for response_code in api_responses:
             response = api_responses[response_code]
             response_schema = response.get('schema')

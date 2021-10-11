@@ -134,7 +134,7 @@ class Log:
     #                     self.delete_logs(file_path)
 
 
-
+DebugLog = Log()
 
 if __name__ == "__main__":
     log = Log(log_name='request')
