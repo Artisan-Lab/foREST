@@ -1,6 +1,6 @@
 import redis
 from tool.tools import Tool
-from entity.request import Request
+from common.entity import Request
 
 redis_host = Tool.readconfig('redis', 'redis_host')
 redis_port = Tool.readconfig('redis', 'redis_port')

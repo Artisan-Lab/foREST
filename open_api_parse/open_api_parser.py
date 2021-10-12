@@ -1,6 +1,5 @@
-from tool.tools import Tool
-from entity.api_info import api_info
-from entity.field_info import field_info
+from common.entity import api_info
+from common.entity import field_info
 import random
 
 class OpenAPIParser:
