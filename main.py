@@ -1,5 +1,5 @@
-from open_api_parse.parser import Parser
-from common.dependency.semantictree import CreateSemanticTree
+from dependency.open_api_parse import Parser
+from dependency.semantictree import CreateSemanticTree
 import os
 from tool.tools import Tool
 

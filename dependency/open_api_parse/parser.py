@@ -1,9 +1,9 @@
 import json
 import yaml
 import jsonref
-from open_api_parse.swagger_parser import SwaggerParser
-from open_api_parse.open_api_parser import OpenAPIParser
-from open_api_parse.keyvaluedependency import SetKeyValueDependency
+from dependency.open_api_parse.swagger_parser import SwaggerParser
+from dependency.open_api_parse.open_api_parser import OpenAPIParser
+from dependency.open_api_parse.keyvaluedependency import SetKeyValueDependency
 
 
 class Parser:

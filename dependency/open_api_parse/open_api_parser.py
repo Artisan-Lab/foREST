@@ -1,5 +1,4 @@
-from common.entity import api_info
-from common.entity import field_info
+from entity import api_info, field_info
 import random
 
 class OpenAPIParser:
@@ -22,7 +21,7 @@ class OpenAPIParser:
                 api_request_body = api.get('requestBody')
                 api_responses = api.get('responses')
                 api = api_info(self.api_id, self.base_url, path,
-                               self.parameters_handle(api_parameters)+self.request_body_handle(api_request_body),
+                               self.parameters_handle(api_parameters) + self.request_body_handle(api_request_body),
                                self.responses_handle(api_responses), method)
                 self.api_list.append(api)
                 self.api_id += 1

@@ -1,6 +1,5 @@
 from tool.tools import Tool
-from common.entity import api_info
-from common.entity import field_info
+from entity import api_info, field_info
 
 
 class SwaggerParser:
