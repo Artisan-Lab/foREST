@@ -1,5 +1,4 @@
 from module.jsonhandle import JsonHandle
-from tool.tools import Tool
 
 
 class Response:

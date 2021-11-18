@@ -1,37 +1,23 @@
-import json
-import requests
-from tool.tools import Tool
-request_timeout = Tool.readconfig('request', 'timeout')
+
+from tool.tools import token
+from module.sendrequest import SendRequest
 
 
-class Request:
+class Request(SendRequest):
 
     def __init__(self, base_url, method):
+        super().__init__(base_url, method, header={}, data={})
         self.base_url = base_url
-        self.url = base_url
         self.method = method
         self.data = {}
-        self.header = {}
-        self.timeout = request_timeout
+        self.header = {'Content-Type': "application/json",
+                       'Authorization': "Bearer " + token}
+        self.url = base_url
         self.path_parameter_list = {}
         self.query_parameter_list = {}
         self.data_parameter_list = {}
         self.header_parameter_list = {}
         self.response = None
-
-    def send_request(self):
-        if self.method == "post":
-            self.response = requests.post(url=self.url, data=self.data, headers=self.header, timeout=self.timeout)
-        if self.method == 'get':
-            self.response = requests.get(url=self.url, data=self.data, headers=self.header, timeout=self.timeout)
-        if self.method == "delete":
-            self.response = requests.delete(url=self.url, data=self.data, headers=self.header, timeout=self.timeout)
-        if self.method == "put":
-            self.response = requests.put(url=self.url, data=self.data, headers=self.header, timeout=self.timeout)
-
-    @property
-    def get_response(self):
-        return self.response
 
     def compose_request(self):
         if self.path_parameter_list:
@@ -44,16 +30,16 @@ class Request:
                 else:
                     self.url = self.url + '?' + str(query_parameter) + '=' + str(self.query_parameter_list[query_parameter])
         if self.data_parameter_list:
-            self.data += self.data_parameter_list
+            self.data.update(self.data_parameter_list)
         if self.header_parameter_list:
-            self.header += self.header_parameter_list
+            self.header.update(self.header_parameter_list)
 
     def add_parameter(self, location, key, value):
-        if location == 0:
+        if location == 0 or location == 'path':
             self.path_parameter_list[key] = value
-        elif location == 1:
+        elif location == 1 or location == 'query':
             self.query_parameter_list[key] = value
-        elif location == 2:
+        elif location == 2 or location == 'header':
             self.header_parameter_list[key] = value
-        elif location == 3:
+        elif location == 3 or location == 'body':
             self.data_parameter_list[key] = value

@@ -1,5 +1,5 @@
 import random
-from datatime import timedelta, datetime
+from datetime import timedelta, datetime
 import json
 import sys
 
@@ -29,9 +29,9 @@ class BasicFuzz:
     def fuzz_integer(field_info):
         integer_max = 100
         integer_min = 0
-        if field_info.max:
-            integer_max = field_info.max
-        if field_info.min:
+        if field_info.maximum:
+            integer_max = field_info.maximum
+        if field_info.minimum:
             integer_min = field_info.min
         fuzz_value = random.randint(integer_min, integer_max)
         return fuzz_value

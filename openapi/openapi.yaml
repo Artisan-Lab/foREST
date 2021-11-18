@@ -4,7 +4,7 @@ info:
   version: v4
   description: An OpenAPI definition for the GitLab REST API.
 servers:
-  - url: 'http://10.176.65.32/api/v4'
+  - url: 'http://192.168.112.128/api/v4'
 paths:
   /templates/gitignores:
     get:
@@ -5070,7 +5070,7 @@ paths:
             type: string
           required: false
           in: query
-          description: 'Filter by build stage, e.g., test'
+          description: 'Filter by build stage, e.g., testing_render'
         - name: name
           schema:
             type: string
@@ -21365,9 +21365,7 @@ paths:
               type: object
               properties:
                 project_id:
-                  oneOf:
-                    - type: integer
-                    - type: string
+                  type: string
                   description: The ID or path of the project.
                 name:
                   type: string
@@ -34339,6 +34337,11 @@ paths:
                     created_at:
                       type: string
     post:
+      parameters:
+      - name: path
+        in: query
+        type: string
+        required: true
       requestBody:
         required: true
         content:
@@ -34349,9 +34352,6 @@ paths:
                 name:
                   type: string
                   description: The name of the group.
-                path:
-                  type: string
-                  description: The path of the group.
                 description:
                   type: string
                   description: The group’s description.

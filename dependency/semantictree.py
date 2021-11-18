@@ -2,7 +2,7 @@ from anytree import NodeMixin, RenderTree
 import os
 
 from tool.tools import Tool
-from open_api_parse.parser import Parser
+from dependency.open_api_parse.parser import Parser
 
 
 

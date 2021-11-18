@@ -1,5 +1,7 @@
-from entity import api_info, field_info
+from entity.api_info import api_info
+from entity.field_info import field_info
 import random
+
 
 class OpenAPIParser:
 
@@ -43,7 +45,7 @@ class OpenAPIParser:
             if parameter_schema.get('oneOf'):
                 parameter_schema = random.choice(parameter_schema.get('oneOf'))
             return field_info(field_name=api_parameter.get('name'),
-                              type_=parameter_schema.get('type'),
+                              type_=self.yaml_type_switch(parameter_schema.get('type')),
                               require=api_parameter.get('required'),
                               location=self.location,
                               max_lenth=parameter_schema.get('maxLength'),
@@ -60,7 +62,7 @@ class OpenAPIParser:
                               format=parameter_schema.get('format'))
         else:
             return field_info(field_name=api_parameter.get('name'),
-                              type_=api_parameter.get('type'),
+                              type_=self.yaml_type_switch(api_parameter.get('type')),
                               require=api_parameter.get('required'),
                               location=self.location,
                               max_lenth=api_parameter.get('maxLength'),
@@ -79,13 +81,13 @@ class OpenAPIParser:
     def object_handle(self, objects, required_list):
         objects_list = []
         if not required_list: required_list = []
-        if not objects:return None
+        if not objects: return None
         for object_name in objects:
             required = True if object_name in required_list else None
             single_object = objects[object_name]
             objects_list.append(field_info(
                 field_name=object_name,
-                type_=single_object.get('type'),
+                type_=self.yaml_type_switch(single_object.get('type')),
                 require=required,
                 location=self.location,
                 max_lenth=single_object.get('maxLength'),
@@ -139,3 +141,16 @@ class OpenAPIParser:
                         elif response_schema.get('items'):
                             responses_list.append(self.create_filed_info(response_schema.get('items')))
         return responses_list
+
+    @staticmethod
+    def yaml_type_switch(type_):
+        if type_ == 'object':
+            return 'dict'
+        if type_ == 'integer':
+            return 'int'
+        if type_ == 'string':
+            return 'str'
+        if type_ == 'boolean':
+            return 'bool'
+        if type_ == 'array':
+            return 'list'

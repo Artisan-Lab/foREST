@@ -6,6 +6,7 @@ class api_info:
         self.api_id = api_id
         self.base_url = base_url
         self.path = path
+        self.key_depend_api_list = []
         self.req_param = req_param         # type: list[field_info]
         self.resp_param = resp_param       # type: list[field_info]
         self.http_method = http_method

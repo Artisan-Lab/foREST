@@ -2,43 +2,69 @@ import json
 import redis
 from module.jsonhandle import JsonHandle
 from tool.tools import Tool
-from log.get_logging import DebugLog
 import random
-redis_response_pool = redis.StrictRedis(host=Tool.readconfig('redis', 'redis_host'), port=Tool.readconfig('redis', 'redisport'))
+redis_response_pool = redis.StrictRedis(host=Tool.readconfig('redis', 'redis_host'), port=Tool.readconfig('redis', 'redis_port'))
 
 
-class ResponseRedis:
+class RedisHandle:
 
+    @staticmethod
+    def get_api_response(api_id):
+        return redis_response_pool.get(api_id)
 
-    def __init__(self, response_pool):
-        self.response_pool = response_pool
+    @staticmethod
+    def set_api_response(api_id, response_list):
+        return redis_response_pool.set(api_id, response_list)
 
-    def get_api_response(self, api_id):
-        return self.response_pool.get(api_id)
-
-    def set_api_response(self, api_id, response_list):
-        return self.response_pool.set(api_id, response_list)
-
-    def add_data_to_redis(self, response, api_id, only_save_one_data=True):
+    @staticmethod
+    def add_data_to_redis(response, api_id):
         response_dic = JsonHandle.json2dic(response.text)
-        if only_save_one_data:
-            response_dic["data"] = [random.choice(response_dic.get("data"))]
-        if self.response_pool.get_api_response(api_id):
-            redis_response_list = JsonHandle.json2dic(self.response_pool.get_api_response(api_id))
-            parameter_list = redis_response_list + [response_dic]
+        if RedisHandle.get_api_response(api_id):
+            redis_response_list = JsonHandle.json2dic(RedisHandle.get_api_response(api_id))
+            if response_dic not in redis_response_list:
+                parameter_list = redis_response_list + [response_dic]
+            else:
+                parameter_list = redis_response_list
             redis_response_list = JsonHandle.dic2json(parameter_list)
-            self.response_pool.set_api_response(api_id, redis_response_list)
+            RedisHandle.set_api_response(api_id, redis_response_list)
         else:
             parameter_list = [response_dic]
             redis_response_list = JsonHandle.dic2json(parameter_list)
-            self.response_pool.set_api_response(api_id, redis_response_list)
+            RedisHandle.set_api_response(api_id, redis_response_list)
 
-    def get_value_from_response_pool(self, depend_list):
+    def get_value_from_response_pool(self, field_info):
         value = None
+        depend_list = field_info.depend_list
         random.shuffle(depend_list)
         for depended_api in depend_list:
-            if self.response_pool.get(depended_api):
-                redis_parameter_dic = json.loads(self.response_pool.get(depended_api))
-
+            if RedisHandle.get_api_response(depended_api):
+                redis_parameter_dic = json.loads(RedisHandle.get_api_response(depended_api))
+                value = RedisHandle.find_field_in_dic(redis_parameter_dic, field_info)
         return value
 
+    @staticmethod
+    def find_field_in_dic(dic, field_info):
+        if isinstance(dic, dict):
+            for key in dic:
+                if key == field_info.field_name and (isinstance(dic[key], int) and field_info.field_type == 'integer' or
+                                                     isinstance(dic[key], str) and field_info.field_type == 'string' or
+                                                     isinstance(dic[key], list) and field_info.field_type == 'array' or
+                                                     isinstance(dic[key], dict) and field_info.field_type == 'object' or
+                                                     isinstance(dic[key], bool) and field_info.field_type == 'boolean'):
+                    value = dic[key]
+                    return value
+                else:
+                    if isinstance(dic[key], dict) or isinstance(dic[key], list):
+                        value = RedisHandle.find_field_in_dic(dic[key], field_info)
+                        if value:
+                            return value
+        elif isinstance(dic, list):
+            if (dic is not None) and (len(dic) > 0) and (isinstance(dic[0], dict) or isinstance(dic[0], list)):
+                for sub_dic in dic:
+                    value = RedisHandle.find_field_in_dic(sub_dic, field_info)
+                    if value:
+                        return value
+        return None
+
+
+redis_response_handle = RedisHandle()

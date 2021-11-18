@@ -135,10 +135,15 @@ class Log:
 
 
 DebugLog = Log()
+summery_log = Log(log_name='summery')
 
-if __name__ == "__main__":
-    log = Log(log_name='request')
-    log.debug("---测试开始----")
-    log.info("操作步骤")
-    log.warning("----测试结束----")
-    log.error("----测试错误----")
+summery_count = {
+    'api number': 0,
+    'test rounds nember': 0,
+    'Expected requests number': 0,
+    'already send requests number': 0,
+    '2xx requests number': 0,
+    '4xx requests number': 0,
+    '5xx requests number': 0,
+    'timeout requests number': 0
+}

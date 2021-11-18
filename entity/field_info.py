@@ -16,8 +16,11 @@ class field_info:
         self.format = format
         self.depend_list = []
 
-    def add_depend_api(self, depend_api_id):
-        self.depend_list += depend_api_id
+    def add_depend_api(self, depend_api_id, field_path_list):
+        if self.depend_list[depend_api_id]:
+            self.depend_list[depend_api_id] += field_path_list
+        else:
+            self.depend_list[depend_api_id] = field_path_list
 
 
 def field_info_traverse(field_info, func):

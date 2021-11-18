@@ -13,7 +13,7 @@ tags:
     description: CR变更单管理
   - name: change-request-dependency-controller
     description: CR单依赖关系管理
-  - name: change-request-test-controller
+  - name: change-request-testing_render-controller
     description: CR测试变更管理
   - name: favorites-group-controller
     description: 收藏分组管理
@@ -55,7 +55,7 @@ tags:
     description: 局点管理(v2)
   - name: temporary-controller
     description: 临时接口
-  - name: test-case-controller
+  - name: testing_render-case-controller
     description: 测试用例
   - name: version-review-controller
     description: 流水线版本评审管理
@@ -871,7 +871,7 @@ paths:
   '/api/v1/change/crtest/{crTestId}/mergeinfo':
     get:
       tags:
-        - change-request-test-controller
+        - change-request-testing_render-controller
       summary: 通过CR集成测试单ID获取分支合并详情
       operationId: getCrTestMergedInfoUsingGET
       produces:
@@ -1957,7 +1957,7 @@ paths:
   /api/v1/change/test:
     get:
       tags:
-        - change-request-test-controller
+        - change-request-testing_render-controller
       summary: 查询CR测试变更列表
       operationId: getCRTestListUsingGET_1
       produces:
@@ -2033,7 +2033,7 @@ paths:
       deprecated: false
     post:
       tags:
-        - change-request-test-controller
+        - change-request-testing_render-controller
       summary: 创建CR测试变更
       operationId: addCRTestUsingPOST
       consumes:
@@ -2074,7 +2074,7 @@ paths:
   /api/v1/change/test/mergeresult:
     put:
       tags:
-        - change-request-test-controller
+        - change-request-testing_render-controller
       summary: CodeService测试分支代码合并结果回调接口
       operationId: callBackCRTestMergeUsingPUT
       consumes:
@@ -2115,7 +2115,7 @@ paths:
   '/api/v1/change/test/{crId}/info':
     get:
       tags:
-        - change-request-test-controller
+        - change-request-testing_render-controller
       summary: 查询CR测试变更详情列表
       operationId: getCRTestListUsingGET
       produces:
@@ -2152,7 +2152,7 @@ paths:
   '/api/v1/change/test/{id}':
     get:
       tags:
-        - change-request-test-controller
+        - change-request-testing_render-controller
       summary: 通过ID获取CR测试变更
       operationId: getCRTestByIdUsingGET
       produces:
@@ -2188,7 +2188,7 @@ paths:
       deprecated: false
     put:
       tags:
-        - change-request-test-controller
+        - change-request-testing_render-controller
       summary: 通过ID更新CR测试变更内容
       operationId: updateCRTestUsingPUT
       consumes:
@@ -2234,7 +2234,7 @@ paths:
       deprecated: false
     delete:
       tags:
-        - change-request-test-controller
+        - change-request-testing_render-controller
       summary: 通过ID删除CR测试变更
       operationId: delCRTestUsingDELETE
       produces:
@@ -2271,7 +2271,7 @@ paths:
   '/api/v1/change/test/{id}/merge':
     put:
       tags:
-        - change-request-test-controller
+        - change-request-testing_render-controller
       summary: 触发CR测试变更合并及流水线创建
       operationId: mergeCRTestUsingPUT
       consumes:
@@ -2312,7 +2312,7 @@ paths:
   '/api/v1/change/test/{id}/mergecheck':
     get:
       tags:
-        - change-request-test-controller
+        - change-request-testing_render-controller
       summary: 校验测试单代码合并是否成功
       operationId: checkCRTestMergeResultUsingGET
       produces:
@@ -11815,7 +11815,7 @@ paths:
   /api/v2/testcase/:
     get:
       tags:
-        - test-case-controller
+        - testing_render-case-controller
       summary: 通过pipelineInstanceIds获取测试用例
       description: 通过pipelineInstanceIds获取测试用例
       operationId: findAllTestCaseUsingGET
@@ -11890,7 +11890,7 @@ paths:
       deprecated: false
     post:
       tags:
-        - test-case-controller
+        - testing_render-case-controller
       summary: 新增
       description: 新增
       operationId: saveUsingPOST
@@ -11929,7 +11929,7 @@ paths:
   /api/v2/testcase/all:
     get:
       tags:
-        - test-case-controller
+        - testing_render-case-controller
       summary: 通过actionInstanceId获取测试用例
       description: 通过actionInstanceId获取测试用例
       operationId: findAllTestCaseUsingGET_1
@@ -11995,7 +11995,7 @@ paths:
   /api/v2/testcase/output:
     put:
       tags:
-        - test-case-controller
+        - testing_render-case-controller
       summary: 获取测试插件的output
       description: 获取测试插件的output
       operationId: getTestOutPutUsingPUT
@@ -12046,7 +12046,7 @@ paths:
   /api/v2/testcase/output/stage:
     put:
       tags:
-        - test-case-controller
+        - testing_render-case-controller
       summary: 根据stage获取测试插件的output
       description: 根据stage获取测试插件的output
       operationId: getTestOutPutByStageUsingPUT
@@ -12096,7 +12096,7 @@ paths:
   /api/v2/testcase/testcase/deploy:
     get:
       tags:
-        - test-case-controller
+        - testing_render-case-controller
       summary: 统计测试用例数据和部署环境的关系
       description: 统计测试用例数据和部署环境的关系
       operationId: statisticsTestCaseDeployUsingGET
@@ -12124,7 +12124,7 @@ paths:
   '/api/v2/testcase/{action_id}':
     delete:
       tags:
-        - test-case-controller
+        - testing_render-case-controller
       summary: 删除
       description: 删除
       operationId: deleteUsingDELETE_5
@@ -12157,7 +12157,7 @@ paths:
   '/api/v2/testcase/{id}':
     put:
       tags:
-        - test-case-controller
+        - testing_render-case-controller
       summary: 更新测试用例描述
       description: 更新测试用例描述
       operationId: updateDescriptionUsingPUT
@@ -12862,7 +12862,7 @@ definitions:
         description: git仓库地址
       crDescription:
         type: string
-        example: test
+        example: testing_render
         description: 合并变更单描述
       crId:
         type: integer
@@ -22378,7 +22378,7 @@ definitions:
         description: git仓库地址
       crDescription:
         type: string
-        example: test
+        example: testing_render
         description: 合并变更单描述
       crId:
         type: integer

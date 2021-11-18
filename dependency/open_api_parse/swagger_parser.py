@@ -1,12 +1,13 @@
 from tool.tools import Tool
-from entity import api_info, field_info
+from entity.api_info import api_info
+from entity.field_info import field_info
 
 
 class SwaggerParser:
 
     def __init__(self, data):
         self.paths = data.get('paths')
-        self.base_url = Tool.readconfig('api_file', 'http') + data.get('host') + data.get('basePath')
+        self.base_url = Tool.readconfig('api_file', 'http') + '://' + data.get('host') + data.get('basePath')
         self.api_id = 0
         self.api_list = []
         self.current_field = []
@@ -41,7 +42,7 @@ class SwaggerParser:
         parameter_schema = api_parameter.get('schema')
         if parameter_schema:
             return field_info(field_name=api_parameter.get('name'),
-                              type_=parameter_schema.get('type'),
+                              type_=self.yaml_type_switch(parameter_schema.get('type')),
                               require=True if api_parameter.get('required') else False,
                               location=self.location,
                               max_lenth=parameter_schema.get('maxLength'),
@@ -58,7 +59,7 @@ class SwaggerParser:
                               format=parameter_schema.get('format'))
         else:
             return field_info(field_name=api_parameter.get('name'),
-                              type_=api_parameter.get('type'),
+                              type_=self.yaml_type_switch(api_parameter.get('type')),
                               require=True if api_parameter.get('required') else False,
                               location=self.location,
                               max_lenth=api_parameter.get('maxLength'),
@@ -83,7 +84,7 @@ class SwaggerParser:
             single_object = objects[object_name]
             objects_list.append(field_info(
                 field_name=object_name,
-                type_=single_object.get('type'),
+                type_=self.yaml_type_switch(single_object.get('type')),
                 require=required,
                 location=self.location,
                 max_lenth=single_object.get('maxLength'),
@@ -118,4 +119,17 @@ class SwaggerParser:
                 elif response_schema.get('items'):
                     responses_list += self.create_filed_info(response_schema.get('items'))
         return responses_list
+
+    @staticmethod
+    def yaml_type_switch(type_):
+        if type_ == 'object':
+            return 'dict'
+        if type_ == 'integer':
+            return 'int'
+        if type_ == 'string':
+            return 'str'
+        if type_ == 'boolean':
+            return 'bool'
+        if type_ == 'array':
+            return 'list'
 
