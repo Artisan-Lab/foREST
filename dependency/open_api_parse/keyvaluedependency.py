@@ -34,7 +34,7 @@ class SetKeyValueDependency:
         compare_method = Compare(self.current_field_info.field_name, self.current_field_info.field_type,
                                  compare_field.field_name, parent_name, compare_field.field_type)
         if compare_method.smart_match():
-            self.current_field_info.depend_list.append([copy.deepcopy(self.depended_field_path), 5, 5])
+            self.current_field_info.depend_list.append([copy.deepcopy(self.depended_field_path), 5])
             self.depended_field_path.pop(-1)
             return True
         elif compare_field.field_type == 'dict':
