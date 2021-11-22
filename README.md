@@ -11,7 +11,7 @@ Restful-api-testing会依据OpenAPI文档，自动地推断出云服务API之间
 
 ## foREST代码结构
 
-foREST代码总体分为两部分：[依赖分析]()与测试执行
+foREST代码总体分为两部分：[依赖分析](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/dependency/dependency.md) 与 [测试执行](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/testing_render/testing.md) 。
 
 
 
