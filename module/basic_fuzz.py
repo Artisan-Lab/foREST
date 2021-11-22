@@ -1,9 +1,11 @@
 import random
+import string
 from datetime import timedelta, datetime
 import json
 import sys
 
 random_integer = [1, 2, 0, 3, -45, -81, sys.maxsize, -sys.maxsize-1, sys.float_info.min]
+random_letter = string.ascii_letters
 
 def random_date(start, end):
     delta = end - start
@@ -37,6 +39,17 @@ class BasicFuzz:
         return fuzz_value
 
     @staticmethod
+    def fuzz_mutation_parameter(value):
+        mutation_character_number = random.randint(1, int(len(value)/2))
+        for _ in range(mutation_character_number):
+            mutation_index = random.randint(0, len(value))
+            if value[mutation_index].isdigit():
+                value[mutation_index] = str(random.randint(0, 9))
+            if value[mutation_index].isalpha():
+                value[mutation_index] = random.choice(random_letter)
+        return value
+
+    @staticmethod
     def fuzz_string(field_info, string_len=10):
         if field_info.format:
             if field_info.format == 'ISO 8601 YYYY-MM0DDTHH:MM:SSZ':
@@ -57,11 +70,11 @@ class BasicFuzz:
 
     @staticmethod
     def fuzz_value(field_info):
-        if field_info.field_type == 'boolean':
+        if field_info.field_type == 'bool':
             return BasicFuzz.fuzz_boolean()
-        elif field_info.field_type == 'string':
+        elif field_info.field_type == 'str':
             return BasicFuzz.fuzz_string(field_info)
-        elif field_info.field_type == 'integer':
+        elif field_info.field_type == 'int':
             return BasicFuzz.fuzz_integer(field_info)
 
     @staticmethod

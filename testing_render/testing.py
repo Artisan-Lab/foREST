@@ -25,11 +25,9 @@ class Test:
         summery_count['test rounds nember'] = set_traverse_nums
         summery_count['Expected requests number'] = self.api_number * set_traverse_nums * 2
 
-    def api_testing(self, api_id, close_api_list=None):
-        if close_api_list is None:
-            close_api_list = []
+    def api_testing(self, api_id):
         api_info = self.api_list[api_id]
-        compose_request = ComposeRequest(api_info, close_api_list)
+        compose_request = ComposeRequest(api_info)
         compose_request.compose_request()
         request = compose_request.get_request
         requests_message = f'Sending: {api_info.http_method.upper()} {api_info.path} {request.url} \n' \
@@ -44,6 +42,7 @@ class Test:
             status_timeout_log.info(requests_message)
             self.timeout_pool[api_info.api_id] += 1
             summery_count['timeout requests number'] += 1
+            print(1)
         else:
             response_handle = ResponseJudge(requests_message,
                                             response, api_info, self.success_pool, self.vaild_pool)
@@ -57,14 +56,10 @@ class Test:
         self.visited_pool[api_info.api_id] += 1
 
     def node_testing(self, node):
-        close_api_list = []
-        if node.parent:
-            close_api_list.append(node.parent.method_dic)
-        close_api_list.append(node.method_dic)
         exec_method_list = ['post', 'get', 'put', 'patch', 'delete', 'delete', 'patch', 'put', 'get', 'post']
         for exec_method in exec_method_list:
             if exec_method in node.method_dic:
-                self.api_testing(node.method_dic[exec_method], close_api_list)
+                self.api_testing(node.method_dic[exec_method])
 
     def foREST_BFS(self):
         while self.traverse_nums < self.set_traverse_nums:
@@ -93,7 +88,7 @@ class Test:
                 next_api_list = []
                 min_depend_number = self.api_number
                 for i in range(self.api_number):
-                    if topology_graph[i][-1] < min_depend_number and topology_graph[i][-1]>-1:
+                    if min_depend_number > topology_graph[i][-1] > -1:
                         min_depend_number = topology_graph[i][-1]
                         next_api_list = [i]
                     elif topology_graph[i][-1] == min_depend_number:

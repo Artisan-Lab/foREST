@@ -43,14 +43,17 @@ class RedisHandle:
         return value
 
     @staticmethod
+    def find_specific_parameter_in_dic(dic, parameter_path):
+        if len(parameter_path) == 1:
+            if parameter_path[0] in dic:
+                return dic[parameter_path[0]]
+
+
+    @staticmethod
     def find_field_in_dic(dic, field_info):
         if isinstance(dic, dict):
             for key in dic:
-                if key == field_info.field_name and (isinstance(dic[key], int) and field_info.field_type == 'integer' or
-                                                     isinstance(dic[key], str) and field_info.field_type == 'string' or
-                                                     isinstance(dic[key], list) and field_info.field_type == 'array' or
-                                                     isinstance(dic[key], dict) and field_info.field_type == 'object' or
-                                                     isinstance(dic[key], bool) and field_info.field_type == 'boolean'):
+                if key == field_info.field_name and (type(dic[key]).__name__ == field_info.field_type):
                     value = dic[key]
                     return value
                 else:

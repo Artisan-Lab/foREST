@@ -1,5 +1,6 @@
 from module.basic_fuzz import BasicFuzz
 from module.redishandle import redis_response_handle
+from module.genetic_algorithm import GeneticAlgorithm
 from tool.tools import redis_external_key
 from log.get_logging import Log
 from entity.request import Request
@@ -10,10 +11,9 @@ class ComposeRequest:
 
     """
 
-    def __init__(self, api_info, close_api_list):
+    def __init__(self, api_info):
         self.api_info = api_info
         self.request = Request(api_info.base_url+api_info.path, api_info.http_method)
-        self.close_api_list = close_api_list
 
     @staticmethod
     def get_required_value(field_info):
@@ -23,7 +23,9 @@ class ComposeRequest:
             log = Log(log_name='hit_external_field')
             log.info('Key: ' + str(field_info.field_name) + 'Value: ' + str(value))
             return value
-        if field_info.depend_list:
+        if field_info.depend_list[0]:
+            genetic_algorithm = GeneticAlgorithm(field_info[1])
+            genetic_algorithm.Roulette_Wheel_Selection_method()
             value = redis_response_handle.get_value_from_response_pool(field_info)
             if value:
                 return value
