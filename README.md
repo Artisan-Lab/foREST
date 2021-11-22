@@ -1,8 +1,4 @@
- 
 
-#  
-
-#  
 
 # Restful-api-testing
 
@@ -13,19 +9,19 @@ Restful-api-testing 是一款基于OpenAPI文档的有状态的REST API模糊测
 Restful-api-testing会依据OpenAPI文档，自动地推断出云服务API之间的生产者-消费者关系，构建依赖树，并依据依赖树生成满足依赖关系的测试用例，这种方式使得Restful-api-testing能够智能地生成测试用例，提高测试用例的生成效率，并发现更多的错误。
 
 
+## foREST代码结构
 
- 
+foREST代码总体分为两部分：[依赖分析]()与测试执行
 
 
 
-
-# 使用说明
+## 使用说明
 
 
 
 1.将待测服务的yaml文档存放在openapi文件夹下
 
-2.根据实际需要在配置文件[FoREST_config]中配置
+2.根据实际需要在配置文件[FoREST_config](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/FoREST_config.conf)中配置
 
 
 启动命令
@@ -37,7 +33,7 @@ python3 main.py
 
 
  
-# BUG
+## BUG
 
 | Date | Project | Link | Finder | Status | Description |
 |---------|---------|---------|---------|---------|---------|
