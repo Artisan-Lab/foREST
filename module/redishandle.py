@@ -17,16 +17,16 @@ class RedisHandle:
         return redis_response_pool.set(api_id, response_list)
 
     @staticmethod
-    def add_data_to_redis(response, api_id):
+    def add_data_to_redis(response, api_info):
         response_dic = JsonHandle.json2dic(response.text)
-        if RedisHandle.get_api_response(api_id):
-            redis_response_list = JsonHandle.json2dic(RedisHandle.get_api_response(api_id))
+        if RedisHandle.get_api_response(api_info.api_id):
+            redis_response_list = JsonHandle.json2dic(RedisHandle.get_api_response(api_info.api_id))
             if response_dic not in redis_response_list:
                 parameter_list = redis_response_list + [response_dic]
             else:
                 parameter_list = redis_response_list
             redis_response_list = JsonHandle.dic2json(parameter_list)
-            RedisHandle.set_api_response(api_id, redis_response_list)
+            RedisHandle.set_api_response(api_info.api_id, redis_response_list)
         else:
             parameter_list = [response_dic]
             redis_response_list = JsonHandle.dic2json(parameter_list)

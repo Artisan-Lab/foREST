@@ -34,7 +34,7 @@ class ResponseJudge:
             status_2xx_log.info(self.request_message + self.response_message)
             self.success_pool[self.api_info.api_id] = 1
             if JsonHandle.json_judge(self.response):
-                redis_response_handle.add_data_to_redis(self.response, self.api_info.api_id)
+                redis_response_handle.add_data_to_redis(self.response, self.api_info)
         elif re.match('4..', str(self.response.status_code)):
             summery_count['4xx requests number'] += 1
             self.response_status = 4

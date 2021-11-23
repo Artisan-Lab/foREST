@@ -23,9 +23,10 @@ class SetKeyValueDependency:
                 continue
             for field_info in api_info.resp_param:
                 self.depended_field_path = [api_info.api_id]
-                if self.find_depend_field(field_info):
-                    if self.current_field_info.require:
-                        self.key_depend_api_list.append(api_info.api_id)
+                if self.find_depend_field(field_info) and \
+                        self.current_field_info.require and \
+                        api_info.api_id not in self.key_depend_api_list:
+                    self.key_depend_api_list.append(api_info.api_id)
 
     def find_depend_field(self, compare_field, parent_name=''):
         if parent_name is None:
