@@ -7,12 +7,12 @@ import sys
 random_integer = [1, 2, 0, 3, -45, -81, sys.maxsize, -sys.maxsize-1, sys.float_info.min]
 random_letter = string.ascii_letters
 
+
 def random_date(start, end):
     delta = end - start
     int_delta = (delta.day * 24 * 60 * 60) + delta.seconds
     random_second = random.randrange(int_delta)
     return start + timedelta(seconds=random_second)
-
 
 
 def random_str(slen=10):
@@ -23,6 +23,14 @@ def random_str(slen=10):
         sa.append(random.choice(seed))
     random_string = random.choice(list_string)
     return random.choice([''.join(sa), random_string])
+
+
+def str_replace(init_string, index, new_letter):
+    new = []
+    for s in init_string:
+        new.append(s)
+    new[index] = new_letter
+    return ''.join(new)
 
 
 class BasicFuzz:
@@ -40,13 +48,16 @@ class BasicFuzz:
 
     @staticmethod
     def fuzz_mutation_parameter(value):
-        mutation_character_number = random.randint(1, int(len(value)/2))
+        if len(value) > 3:
+            mutation_character_number = random.randint(1, int(len(value)/2))
+        else:
+            mutation_character_number = len(value)
         for _ in range(mutation_character_number):
-            mutation_index = random.randint(0, len(value))
+            mutation_index = random.randint(0, len(value)-1)
             if value[mutation_index].isdigit():
-                value[mutation_index] = str(random.randint(0, 9))
+                value = str_replace(value, mutation_index, str(random.randint(0, 9)))
             if value[mutation_index].isalpha():
-                value[mutation_index] = random.choice(random_letter)
+                value = str_replace(value, mutation_index, random.choice(random_letter))
         return value
 
     @staticmethod

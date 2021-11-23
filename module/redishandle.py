@@ -32,7 +32,8 @@ class RedisHandle:
             redis_response_list = JsonHandle.dic2json(parameter_list)
             RedisHandle.set_api_response(api_id, redis_response_list)
 
-    def get_value_from_response_pool(self, field_info):
+    @staticmethod
+    def get_value_from_response_pool(field_info):
         value = None
         depend_list = field_info.depend_list
         random.shuffle(depend_list)
@@ -43,11 +44,31 @@ class RedisHandle:
         return value
 
     @staticmethod
+    def get_specific_value_from_response_pool(field_path):
+        value = None
+        api_id = field_path[0]
+        if RedisHandle.get_api_response(api_id):
+            redis_parameter_dic = json.loads(RedisHandle.get_api_response(api_id))
+            for single_response in redis_parameter_dic:
+                value = RedisHandle.find_specific_parameter_in_dic(single_response, field_path[1:])
+                if value:
+                    return value
+        return value
+
+    @staticmethod
     def find_specific_parameter_in_dic(dic, parameter_path):
         if len(parameter_path) == 1:
             if parameter_path[0] in dic:
                 return dic[parameter_path[0]]
-
+        if isinstance(dic, dict) and parameter_path[0] in dic:
+            return RedisHandle.find_specific_parameter_in_dic(dic[parameter_path[0]], parameter_path[1:])
+        if isinstance(dic, list) and parameter_path[0] is None:
+            value = None
+            for sub_dict in dic:
+                value = RedisHandle.find_specific_parameter_in_dic(sub_dict, parameter_path[1:])
+                if value:
+                    return value
+        return None
 
     @staticmethod
     def find_field_in_dic(dic, field_info):

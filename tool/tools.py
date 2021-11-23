@@ -38,14 +38,12 @@ class Tool:
         with open(path + '/' + file_name + '.json', 'w') as f:
             f.write(str(no_reference_key))
 
-
     @staticmethod
     def set_external_fields_from_file(path):
         reader = csv.reader(open(path))
         for line in reader:
             key, value = line[0], line[1]
             redis_external_key.set(key, value)
-
 
 
 redis_external_key = redis.StrictRedis(host=Tool.readconfig('redis', 'redis_host'),

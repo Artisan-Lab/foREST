@@ -56,7 +56,7 @@ class SetKeyValueDependency:
         self.current_field_info = field_info
         if field_info.field_name:
             self.find_depend_API()
-        if not field_info.depend_list:
+        if not field_info.depend_list[0]:
             if field_info.field_name not in self.not_reference_field:
                 self.not_reference_field.append(field_info.field_name)
         if field_info.field_type == 'list':

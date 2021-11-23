@@ -42,21 +42,23 @@ class Test:
             status_timeout_log.info(requests_message)
             self.timeout_pool[api_info.api_id] += 1
             summery_count['timeout requests number'] += 1
-            print(1)
         else:
             response_handle = ResponseJudge(requests_message,
                                             response, api_info, self.success_pool, self.vaild_pool)
             self.success_pool, response_status = response_handle.response_judge()
             if response_status == 2:
                 self.status_2xx_pool[api_info.api_id] += 1
+                request.genetic_algorithm_success()
             elif response_status == 4:
                 self.status_4xx_pool[api_info.api_id] += 1
+                request.genetic_algorithm_faild()
             elif response_status == 5:
                 self.status_5xx_pool[api_info.api_id] += 1
+                request.genetic_algorithm_success()
         self.visited_pool[api_info.api_id] += 1
 
     def node_testing(self, node):
-        exec_method_list = ['post', 'get', 'put', 'patch', 'delete', 'delete', 'patch', 'put', 'get', 'post']
+        exec_method_list = ['post', 'get', 'put', 'patch', 'delete', 'post']
         for exec_method in exec_method_list:
             if exec_method in node.method_dic:
                 self.api_testing(node.method_dic[exec_method])

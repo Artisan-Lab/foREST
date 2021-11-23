@@ -9,7 +9,7 @@ import os
 
 
 log_colors_config = {
-    'DEBUG': 'cyan',
+    'DEBUG': 'white',
     'INFO': 'green',
     'WARNING': 'yellow',
     'ERROR': 'red',
@@ -65,10 +65,8 @@ class Log:
 
         if level == 'info':
             self.logger.addHandler(info_handle)
-            self.logger.addHandler(creen_handle)
             self.logger.info(message)
             # 这两行代码是为了避免日志输出重复问题
-            self.logger.removeHandler(creen_handle)
             self.logger.removeHandler(info_handle)
         elif level == 'debug':
             self.logger.addHandler(creen_handle)

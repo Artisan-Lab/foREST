@@ -18,6 +18,7 @@ class Request(SendRequest):
         self.data_parameter_list = {}
         self.header_parameter_list = {}
         self.response = None
+        self.genetic_algorithm_list = []
 
     def compose_request(self):
         if self.path_parameter_list:
@@ -43,3 +44,15 @@ class Request(SendRequest):
             self.header_parameter_list[key] = value
         elif location == 3 or location == 'body':
             self.data_parameter_list[key] = value
+
+    def add_genetic_algorithm(self, genetic_algorithm):
+        self.genetic_algorithm_list.append(genetic_algorithm)
+
+    def genetic_algorithm_success(self):
+        for genetic_algorithm in self.genetic_algorithm_list:
+            genetic_algorithm.winner_success()
+
+    def genetic_algorithm_faild(self):
+        for genetic_algorithm in self.genetic_algorithm_list:
+            genetic_algorithm.winner_failed()
+
