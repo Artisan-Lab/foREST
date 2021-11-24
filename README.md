@@ -23,6 +23,10 @@ foREST代码总体分为两部分：[依赖分析](https://github.com/Artisan-La
 
 2.根据实际需要在配置文件[FoREST_config](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/FoREST_config.conf)中配置
 
+3.安装运行foREST所需的依赖
+```bash
+pip3 install -r requirements.txt
+```
 
 启动命令
 ```bash

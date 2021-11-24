@@ -1,0 +1,6 @@
+anytree==2.8.0
+colorlog==6.6.0
+jsonref==0.2
+PyYAML==6.0
+redis==4.0.2
+requests==2.26.0
