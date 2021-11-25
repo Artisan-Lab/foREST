@@ -46,7 +46,10 @@ sudo docker run --detach \
 
 ### 使用方法
 
-访问http://localhost进入GitLab主界面，确认GitLab运行状态，如图所示
+访问 http://localhost 进入GitLab主界面，确认GitLab运行状态，如图所示
+
+![image](https://user-images.githubusercontent.com/71680354/143377420-13759ad8-9440-4d9e-842c-7cb9b3d2c845.png)
+
 
 #### 更改root用户账号密码
 
@@ -54,6 +57,7 @@ sudo docker run --detach \
 ```
 ps docker
 ```
+![image](https://user-images.githubusercontent.com/71680354/143377461-387c9583-f668-4552-b793-c724cf0a536a.png)
 
 2、修改GitLab root用户账号密码
 ```
@@ -78,6 +82,9 @@ quit
 ```
 GET http://localhost/api/v4/templates/get_coverage
 ```
+![image](https://user-images.githubusercontent.com/71680354/143377559-10a32939-cfe9-45a5-83d4-b33eb9376e9b.png)
+
+覆盖率统计精度精确到小数点后四位
 
 2、清空覆盖率统计：
 
