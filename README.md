@@ -33,7 +33,9 @@ pip3 install -r requirements.txt
 python3 main.py
 ```
 
- 
+ ## 实验设置
+
+具体实验过程见[实验文件](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/experiment.md)
 
 
  
