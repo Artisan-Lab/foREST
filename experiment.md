@@ -26,6 +26,7 @@ docker -v
 ```
 mkdir gitlab
 export GITLAB_HOME={path to dir}/gitlab
+cd {path to dir}/gitlab
 ```
 
 3、安装GitLab
@@ -55,7 +56,7 @@ sudo docker run --detach \
 
 1、获取docker 容器id
 ```
-ps docker
+docker ps
 ```
 ![image](https://user-images.githubusercontent.com/71680354/143377461-387c9583-f668-4552-b793-c724cf0a536a.png)
 
@@ -67,7 +68,7 @@ docker exec -it <容器id> bash
 ```
 gitlab-rails console
 user = User.where(id:1).first
-user.password = ‘password’
+user.password = 'password'
 user.password_confirmation = 'password'
 user.save!
 quit

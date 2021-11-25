@@ -4,7 +4,7 @@ info:
   version: v4
   description: An OpenAPI definition for the GitLab REST API.
 servers:
-  - url: 'http://192.168.112.154/api/v4'
+  - url: 'http://192.168.112.155/api/v4'
 paths:
   /projects:
     post:
@@ -2202,6 +2202,11 @@ paths:
           required: true
           in: path
           description: The user ID of the project owner.
+        - name: name
+          schema:
+            type: string
+          required: true
+          in: query
       requestBody:
         required: true
         content:
@@ -2316,9 +2321,6 @@ paths:
                 mirror:
                   type: boolean
                   description: Enables pull mirroring in a project.
-                name:
-                  type: string
-                  description: The name of the new project.
                 namespace_id:
                   type: integer
                   description: >-
@@ -2629,12 +2631,20 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
+        - name: path
+          schema:
+            type: string
+          in: query
+          required: true
+        - name: name
+          schema:
+            type: string
+          in: query
+          required: true
       requestBody:
         required: true
         content:
@@ -3259,6 +3269,12 @@ paths:
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
+        - name: url
+          schema:
+            type: string
+          required: true
+          in: query
+
       requestBody:
         required: true
         content:
@@ -3307,14 +3323,9 @@ paths:
                   description: >-
                     Secret token to validate received payloads; this isn’t
                     returned in the response.
-                url:
-                  type: string
-                  description: The hook URL.
                 wiki_page_events:
                   type: boolean
                   description: Trigger hook on wiki events.
-              required:
-                - url
       responses:
         '200':
           description: success
@@ -3373,6 +3384,11 @@ paths:
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
+        - name: url
+          schema:
+            type: string
+          required: true
+          in: query
       requestBody:
         required: true
         content:
@@ -3430,8 +3446,6 @@ paths:
                 releases_events:
                   type: boolean
                   description: Trigger hook on release events.
-              required:
-                - url
       responses:
         '200':
           description: success
@@ -3537,208 +3551,6 @@ paths:
       responses:
         '200':
           description: success
-  '/projects/{id}/push_rule':
-    delete:
-      tags:
-        - projects-api
-      parameters:
-        - name: id
-          schema:
-            oneOf:
-              - type: string
-              - type: integer
-          required: true
-          in: path
-          description: The ID or URL-encoded path of the project.
-      responses:
-        '200':
-          description: success
-    put:
-      tags:
-        - projects-api
-      parameters:
-        - name: id
-          schema:
-            oneOf:
-              - type: string
-              - type: integer
-          required: true
-          in: path
-          description: The ID of the project or NAMESPACE/PROJECT_NAME.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                author_email_regex:
-                  type: string
-                  description: >-
-                    All commit author emails must match this, for example
-                    @my-company.com$.
-                branch_name_regex:
-                  type: string
-                  description: >-
-                    All branch names must match this, for example
-                    (feature|hotfix)\/*.
-                commit_committer_check:
-                  type: boolean
-                  description: >-
-                    Users can only push commits to this repository that were
-                    committed with one of their own verified emails.
-                commit_message_negative_regex:
-                  type: string
-                  description: >-
-                    No commit message is allowed to match this, for example
-                    ssh\:\/\/.
-                commit_message_regex:
-                  type: string
-                  description: >-
-                    All commit messages must match this, for example Fixed
-                    \d+\..*.
-                deny_delete_tag:
-                  type: boolean
-                  description: Deny deleting a tag.
-                file_name_regex:
-                  type: string
-                  description: >-
-                    All committed filenames must not match this, for example
-                    (jar|exe)$.
-                max_file_size:
-                  type: integer
-                  description: Maximum file size (MB).
-                member_check:
-                  type: boolean
-                  description: Restrict commits by author (email) to existing GitLab users.
-                prevent_secrets:
-                  type: boolean
-                  description: >-
-                    GitLab will reject any files that are likely to contain
-                    secrets.
-                reject_unsigned_commits:
-                  type: boolean
-                  description: Reject commits when they are not GPG signed.
-      responses:
-        '200':
-          description: success
-    post:
-      tags:
-        - projects-api
-      parameters:
-        - name: id
-          schema:
-            oneOf:
-              - type: string
-              - type: integer
-          required: true
-          in: path
-          description: The ID of the project or NAMESPACE/PROJECT_NAME.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                author_email_regex:
-                  type: string
-                  description: >-
-                    All commit author emails must match this, for example
-                    @my-company.com$.
-                branch_name_regex:
-                  type: string
-                  description: >-
-                    All branch names must match this, for example
-                    (feature|hotfix)\/*.
-                commit_committer_check:
-                  type: boolean
-                  description: >-
-                    Users can only push commits to this repository that were
-                    committed with one of their own verified emails.
-                commit_message_negative_regex:
-                  type: string
-                  description: >-
-                    No commit message is allowed to match this, for example
-                    ssh\:\/\/.
-                commit_message_regex:
-                  type: string
-                  description: >-
-                    All commit messages must match this, for example Fixed
-                    \d+\..*.
-                deny_delete_tag:
-                  type: boolean
-                  description: Deny deleting a tag.
-                file_name_regex:
-                  type: string
-                  description: >-
-                    All committed filenames must not match this, for example
-                    (jar|exe)$.
-                max_file_size:
-                  type: integer
-                  description: Maximum file size (MB).
-                member_check:
-                  type: boolean
-                  description: Restrict commits by author (email) to existing GitLab users.
-                prevent_secrets:
-                  type: boolean
-                  description: >-
-                    GitLab will reject any files that are likely to contain
-                    secrets.
-                reject_unsigned_commits:
-                  type: boolean
-                  description: Reject commit when it’s not signed through GPG.
-      responses:
-        '200':
-          description: success
-    get:
-      tags:
-        - projects-api
-      parameters:
-        - name: id
-          schema:
-            oneOf:
-              - type: string
-              - type: integer
-          required: true
-          in: path
-          description: The ID of the project or NAMESPACE/PROJECT_NAME.
-      responses:
-        '200':
-          description: success
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: integer
-                  project_id:
-                    type: integer
-                  commit_message_regex:
-                    type: string
-                  commit_message_negative_regex:
-                    type: string
-                  branch_name_regex:
-                    type: string
-                  deny_delete_tag:
-                    type: boolean
-                  created_at:
-                    type: string
-                  member_check:
-                    type: boolean
-                  prevent_secrets:
-                    type: boolean
-                  author_email_regex:
-                    type: string
-                  file_name_regex:
-                    type: string
-                  max_file_size:
-                    type: integer
-                  commit_committer_check:
-                    type: boolean
-                  reject_unsigned_commits:
-                    type: boolean
   '/projects/{id}/transfer':
     put:
       tags:

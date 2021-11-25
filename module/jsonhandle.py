@@ -15,7 +15,7 @@ class JsonHandle:
     @staticmethod
     def json_judge(dic):
         try:
-            json_file = dic.json()
+            json_file = json.loads(dic)
             return True
         except:
             return False

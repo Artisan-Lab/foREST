@@ -12,7 +12,7 @@ class ResponseJudge:
 
     def __init__(self, request_message, response, api_info, success_pool, valid_pool):
         self.request_message = request_message
-        if JsonHandle.json_judge(response):
+        if JsonHandle.json_judge(response.text):
             self.response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.text} \n\n'
         else:
             self.response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.raw.data} \n\n'
@@ -33,8 +33,7 @@ class ResponseJudge:
             summery_count['2xx requests number'] += 1
             status_2xx_log.info(self.request_message + self.response_message)
             self.success_pool[self.api_info.api_id] = 1
-            if JsonHandle.json_judge(self.response):
-                redis_response_handle.add_data_to_redis(self.response, self.api_info)
+            redis_response_handle.add_data_to_redis(self.response, self.api_info)
         elif re.match('4..', str(self.response.status_code)):
             summery_count['4xx requests number'] += 1
             self.response_status = 4

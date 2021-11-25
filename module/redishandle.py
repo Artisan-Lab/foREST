@@ -18,19 +18,21 @@ class RedisHandle:
 
     @staticmethod
     def add_data_to_redis(response, api_info):
-        response_dic = JsonHandle.json2dic(response.text)
+        if JsonHandle.json_judge(response.text):
+            response_dic = JsonHandle.json2dic(response.text)
+        else:
+            response_dic = response.text
         if RedisHandle.get_api_response(api_info.api_id):
             redis_response_list = JsonHandle.json2dic(RedisHandle.get_api_response(api_info.api_id))
-            if response_dic not in redis_response_list:
-                parameter_list = redis_response_list + [response_dic]
-            else:
-                parameter_list = redis_response_list
-            redis_response_list = JsonHandle.dic2json(parameter_list)
-            RedisHandle.set_api_response(api_info.api_id, redis_response_list)
         else:
-            parameter_list = [response_dic]
-            redis_response_list = JsonHandle.dic2json(parameter_list)
-            RedisHandle.set_api_response(api_id, redis_response_list)
+            redis_response_list = []
+        if isinstance(response_dic, list):
+            redis_response_list += response_dic
+        else:
+            redis_response_list.append(response_dic)
+        redis_response_list = Tool.list_de_duplicate(redis_response_list)
+        redis_response_list = JsonHandle.dic2json(redis_response_list)
+        RedisHandle.set_api_response(api_info.api_id, redis_response_list)
 
     @staticmethod
     def get_value_from_response_pool(field_info):
@@ -49,6 +51,9 @@ class RedisHandle:
         api_id = field_path[0]
         if RedisHandle.get_api_response(api_id):
             redis_parameter_dic = json.loads(RedisHandle.get_api_response(api_id))
+            random.shuffle(redis_parameter_dic)
+            if field_path[1] is None:
+                field_path.pop(1)
             for single_response in redis_parameter_dic:
                 value = RedisHandle.find_specific_parameter_in_dic(single_response, field_path[1:])
                 if value:

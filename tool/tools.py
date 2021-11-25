@@ -9,6 +9,14 @@ import csv
 class Tool:
 
     @staticmethod
+    def list_de_duplicate(list1):
+        temp = []
+        for item in list1:
+            if not item in temp:
+                temp.append(item)
+        return temp
+
+    @staticmethod
     def readconfig(title, key):
         conf = configparser.ConfigParser()
         root_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../FoREST_config.conf")
