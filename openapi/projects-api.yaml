@@ -236,6 +236,10 @@ paths:
                     group_with_project_templates_id) project template.
                 visibility:
                   type: string
+                  enmu:
+                  - private
+                  - internal
+                  - public
                   description: See project visibility level.
                 wiki_access_level:
                   type: string
@@ -552,6 +556,10 @@ paths:
         - name: visibility
           schema:
             type: string
+            enmu:
+            - private
+            - internal
+            - public
           required: false
           in: query
           description: 'Limit by visibility public, internal, or private.'
@@ -892,6 +900,10 @@ paths:
         - name: visibility
           schema:
             type: string
+            enmu:
+            - private
+            - internal
+            - public
           required: false
           in: query
           description: 'Limit by visibility public, internal, or private.'
@@ -1212,6 +1224,10 @@ paths:
         - name: visibility
           schema:
             type: string
+            enmu:
+            - private
+            - internal
+            - public
           required: false
           in: query
           description: 'Limit by visibility public, internal, or private.'
@@ -1620,6 +1636,10 @@ paths:
                     should be finally assigned to a project.
                 visibility:
                   type: string
+                  enmu:
+                  - private
+                  - internal
+                  - public
                   description: See project visibility level.
                 wiki_access_level:
                   type: string
@@ -2414,6 +2434,10 @@ paths:
                     group_with_project_templates_id) project template.
                 visibility:
                   type: string
+                  enmu:
+                  - private
+                  - internal
+                  - public
                   description: See project visibility level.
                 wiki_access_level:
                   type: string
@@ -2754,6 +2778,10 @@ paths:
         - name: visibility
           schema:
             type: string
+            enmu:
+            - private
+            - internal
+            - public
           required: false
           in: query
           description: 'Limit by visibility public, internal, or private.'
@@ -2793,6 +2821,10 @@ paths:
                       type: string
                     visibility:
                       type: string
+                      enmu:
+                      - private
+                      - internal
+                      - public
                     ssh_url_to_repo:
                       type: string
                     http_url_to_repo:
@@ -3212,6 +3244,19 @@ paths:
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
+        - name: group_id
+          schema:
+            type: integer
+          required: true
+          in: query
+        - name: group_access
+            schema:
+              type: integer
+              enum:
+                - 5
+                - 10
+            required: true
+            in: query
       requestBody:
         required: true
         content:
@@ -3564,20 +3609,11 @@ paths:
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                namespace:
-                  oneOf:
-                    - type: integer
-                    - type: string
-                  description: The ID or path of the namespace to transfer to project to.
-              required:
-                - namespace
+        - name: namespace
+          schema:
+            type: string
+          requried: true
+          in: query
       responses:
         '200':
           description: success
@@ -3644,3 +3680,30 @@ paths:
       responses:
         '200':
           description: success
+  '/projects/{id}/storage':
+    get:
+      parameters:
+        - name: id
+          schema:
+            oneOf:
+              - type: string
+              - type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                properties:
+                  project_id:
+                    type: integer
+                  disk_path:
+                    type: string
+                  created_at:
+                    type: string
+                  repository_storage:
+                    type: string
