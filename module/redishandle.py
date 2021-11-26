@@ -55,7 +55,8 @@ class RedisHandle:
             if field_path[1] is None:
                 field_path.pop(1)
             for single_response in redis_parameter_dic:
-                value = RedisHandle.find_specific_parameter_in_dic(single_response, field_path[1:])
+                if single_response:
+                    value = RedisHandle.find_specific_parameter_in_dic(single_response, field_path[1:])
                 if value:
                     return value
         return value
