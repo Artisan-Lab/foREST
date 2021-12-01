@@ -1,6 +1,7 @@
 from tool.tools import Tool
 import copy
 
+
 class SetKeyValueDependency:
     """
         find the parameter dependency and save it in field_info.depend_list
@@ -10,6 +11,7 @@ class SetKeyValueDependency:
         self.api_info_list = api_info_list
         self.api_numbers = len(api_info_list)
         self.current_field_info = None
+        self.current_api_info = None
         self.not_reference_field = []
         self.key_depend_api_list = []
         self.depended_field_list = []
@@ -34,9 +36,12 @@ class SetKeyValueDependency:
         self.depended_field_path.append(compare_field.field_name)
         compare_method = Compare(self.current_field_info.field_name, self.current_field_info.field_type,
                                  compare_field.field_name, parent_name, compare_field.field_type)
-        if compare_method.smart_match():
+        point = compare_method.smart_match()
+        if point:
+            if self.depended_field_path[0] in self.current_api_info.close_api:
+                point += 1
             self.current_field_info.depend_list[0].append(copy.deepcopy(self.depended_field_path))
-            self.current_field_info.depend_list[1].extend([5, 5])
+            self.current_field_info.depend_list[1].extend([point, point])
             self.depended_field_path.pop(-1)
             return True
         elif compare_field.field_type == 'dict':
@@ -70,6 +75,7 @@ class SetKeyValueDependency:
     def get_dependency(self):
         """get every field dependency reference"""
         for api_info in self.api_info_list:
+            self.current_api_info = api_info
             self.key_depend_api_list = []
             if api_info.req_param:
                 # traverse every parameter
@@ -105,12 +111,14 @@ class Compare:
             return None
         if self.compared_field_name.lower() == self.compare_field_name.lower() and \
                 self.compared_field_type == self.compare_field_type:
-            return self.compared_field_name
+            return 7.5
         compared_field_name_list = self.compared_field_parent_name.split('_') + self.compared_field_name.split('_')
         compare_field_name_list = self.compare_field_name.split('_')[-1]
         compared_field_name = ''.join(compared_field_name_list).lower()
         compare_field_name = ''.join(compare_field_name_list).lower()
+        if compared_field_name == compare_field_name:
+            return 5
         if compared_field_name.endswith(compare_field_name):
-            return self.compared_field_name
+            return 2.5
         else:
             return None

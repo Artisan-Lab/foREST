@@ -4,7 +4,7 @@ info:
   version: v4
   description: An OpenAPI definition for the GitLab REST API.
 servers:
-  - url: 'http://192.168.112.155/api/v4'
+  - url: 'http://192.168.112.156/api/v4'
 paths:
   /projects:
     post:
@@ -236,7 +236,7 @@ paths:
                     group_with_project_templates_id) project template.
                 visibility:
                   type: string
-                  enmu:
+                  enum:
                   - private
                   - internal
                   - public
@@ -556,7 +556,7 @@ paths:
         - name: visibility
           schema:
             type: string
-            enmu:
+            enum:
             - private
             - internal
             - public
@@ -900,7 +900,7 @@ paths:
         - name: visibility
           schema:
             type: string
-            enmu:
+            enum:
             - private
             - internal
             - public
@@ -1224,7 +1224,7 @@ paths:
         - name: visibility
           schema:
             type: string
-            enmu:
+            enum:
             - private
             - internal
             - public
@@ -1636,7 +1636,7 @@ paths:
                     should be finally assigned to a project.
                 visibility:
                   type: string
-                  enmu:
+                  enum:
                   - private
                   - internal
                   - public
@@ -2434,7 +2434,7 @@ paths:
                     group_with_project_templates_id) project template.
                 visibility:
                   type: string
-                  enmu:
+                  enum:
                   - private
                   - internal
                   - public
@@ -2778,7 +2778,7 @@ paths:
         - name: visibility
           schema:
             type: string
-            enmu:
+            enum:
             - private
             - internal
             - public
@@ -2821,7 +2821,7 @@ paths:
                       type: string
                     visibility:
                       type: string
-                      enmu:
+                      enum:
                       - private
                       - internal
                       - public
@@ -3250,13 +3250,13 @@ paths:
           required: true
           in: query
         - name: group_access
-            schema:
-              type: integer
-              enum:
-                - 5
-                - 10
-            required: true
-            in: query
+          schema:
+            type: integer
+            enum:
+              - 5
+              - 10
+          required: true
+          in: query
       requestBody:
         required: true
         content:
@@ -3612,7 +3612,7 @@ paths:
         - name: namespace
           schema:
             type: string
-          requried: true
+          required: true
           in: query
       responses:
         '200':
@@ -3698,12 +3698,14 @@ paths:
             application/json:
               schema:
                 type: array
-                properties:
-                  project_id:
-                    type: integer
-                  disk_path:
-                    type: string
-                  created_at:
-                    type: string
-                  repository_storage:
-                    type: string
+                items:
+                  type: object
+                  properties:
+                    project_id:
+                      type: integer
+                    disk_path:
+                      type: string
+                    created_at:
+                      type: string
+                    repository_storage:
+                      type: string

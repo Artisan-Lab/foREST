@@ -1,9 +1,7 @@
 from anytree import NodeMixin, RenderTree
 import os
-
 from tool.tools import Tool
-from dependency.open_api_parse.parser import Parser
-
+from open_api_parse.parser import Parser
 
 
 class SemanticNode(NodeMixin):
@@ -16,20 +14,47 @@ class SemanticNode(NodeMixin):
         if children:
             self.children = children
 
+
 class CreateSemanticTree:
 
     def __init__(self, api_list):
         self.api_list = api_list
         self.root = SemanticNode('root')
 
+    @property
     def create_tree(self):
         for api_info in self.api_list:
             self.find_node(api_info.path.split('/'), api_info.http_method, api_info.api_id, self.root)
         for pre, fill, node in RenderTree(self.root):
             treestr = u"%s%s" % (pre, node.name)
             print(treestr.ljust(8), node.method_dic)
+        self.add_close_api(self.root)
         return self.root
 
+    def add_close_api(self, node):
+        close_api_list = []
+        if node.method_dic:
+            if node.ancestors:
+                for ancestors_node in node.ancestors:
+                    close_api_list += self.add_close_node_api(ancestors_node)
+            close_api_list += self.add_close_node_api(node)
+            if node.parent and node.parent.children:
+                for parent_children_node in node.parent.children:
+                    close_api_list += self.add_close_node_api(parent_children_node)
+            for method in node.method_dic:
+                self.api_list[node.method_dic[method]].close_api += close_api_list
+        if node.children:
+            for children_node in node.children:
+                self.add_close_api(children_node)
+
+
+    @staticmethod
+    def add_close_node_api(node):
+        close_api = []
+        if node.method_dic:
+            for method in node.method_dic:
+                close_api.append(node.method_dic[method])
+        return close_api
     @staticmethod
     def find_node(api_path_nodes, api_method, api_id, parent_node):
         if not api_path_nodes:
