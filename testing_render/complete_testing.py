@@ -10,6 +10,7 @@ class CompleteTest:
         self.semantic_tree_root = semantic_tree_root
         self.api_list = api_list
         self.api_number = len(api_list)
+        self.depend_graph = [[0 for i in range(0, self.api_number)] for j in range(0,self.api_number)]
         self.success_pool = [0 for i in range(0, self.api_number)]
         self.visited_pool = [0 for i in range(0, self.api_number)]
         self.vaild_pool = [0 for i in range(0, self.api_number)]
@@ -30,7 +31,7 @@ class CompleteTest:
         compose_request = ComposeRequest(api_info)
         if required:
             compose_request.compose_required_request()
-        request = compose_request.get_request
+        request = compose_request.get_required_request
         requests_message = f'Sending: {api_info.http_method.upper()} {api_info.path} {request.url} \n' \
                            f'API_id: {api_info.api_id} header:{request.header}\n' \
                            f''f'data: {request.data}\n'
@@ -65,6 +66,13 @@ class CompleteTest:
         for exec_method in exec_method_list:
             if exec_method in node.method_dic:
                 self.api_testing(node.method_dic[exec_method])
+
+    def post_testing(self, api_id):
+        self.api_testing(api_id)
+        api_info = self.api_list[api_id]
+        compose_request = ComposeRequest(api_info)
+        compose_request.compose_required_request()
+        requests = compose_request.get_required_request
 
     def foREST_BFS(self):
         self.node_queue = [self.semantic_tree_root]

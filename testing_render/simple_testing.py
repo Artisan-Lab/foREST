@@ -28,7 +28,7 @@ class Test:
         api_info = self.api_list[api_id]
         compose_request = ComposeRequest(api_info)
         compose_request.compose_required_request()
-        request = compose_request.get_request
+        request = compose_request.get_required_request
         requests_message = f'Sending: {api_info.http_method.upper()} {api_info.path} {request.url} \n' \
                            f'API_id: {api_info.api_id} header:{request.header}\n' \
                            f''f'data: {request.data}\n'

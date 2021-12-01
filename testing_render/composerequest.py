@@ -89,11 +89,14 @@ class ComposeRequest:
         parameter_list = []
         for field_info in self.api_info.req_param:
             if not field_info.require:
-
-
-
+                pass
 
     @property
-    def get_request(self):
+    def get_optional_request(self):
+        self.compose_optional_request()
+
+    @property
+    def get_required_request(self):
         # 返回生成的request
+        self.compose_required_request()
         return self.request
