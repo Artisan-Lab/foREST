@@ -1,7 +1,7 @@
 from open_api_parse.parser import Parser
 import os
 from tool.tools import Tool
-from testing_render.testing import Test
+from testing_render.simple_testing import Test
 import datetime
 from dependency.dependency import Dependency
 

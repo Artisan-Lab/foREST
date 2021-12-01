@@ -15,9 +15,12 @@ class ComposeRequest:
         self.api_info = api_info
         self.request = Request(api_info.base_url + api_info.path, api_info.http_method)
 
-    def get_required_value(self, field_info):
-        # 获取required的参数值
+    def get_value(self, field_info):
+        # 获取参数值
         value = None
+        if field_info.field_type == 'bool':
+            value = BasicFuzz.fuzz_value(field_info)
+            return value
         if redis_external_key.exists(field_info.field_name):
             # 先判断该参数有没有由外部指定
             value = redis_external_key.get(field_info.field_name)
@@ -45,7 +48,7 @@ class ComposeRequest:
             if field_info.object:
                 for sub_field_info in field_info.object:
                     if sub_field_info.require:
-                        sub_field_value = ComposeRequest.get_required_value(sub_field_info)
+                        sub_field_value = ComposeRequest.get_value(sub_field_info)
                         if sub_field_value:
                             value[sub_field_info.field_name] = sub_field_value
                 return value
@@ -56,7 +59,7 @@ class ComposeRequest:
                 sub_value = {}
                 for array_field in field_info.array:
                     if array_field.require:
-                        sub_value[array_field.field_name] = ComposeRequest.get_required_value(array_field)
+                        sub_value[array_field.field_name] = ComposeRequest.get_value(array_field)
                 value.append(sub_value)
                 return value
             elif isinstance(field_info.array, str):
@@ -69,16 +72,26 @@ class ComposeRequest:
             value = BasicFuzz.fuzz_value(field_info)
         return value
 
-    def compose_request(self):
+    def compose_required_request(self):
         # 该函数用于组装请求，是此类入口
         if not self.api_info.req_param:
             return
         for field_info in self.api_info.req_param:
             if field_info.require:
-                value = self.get_required_value(field_info)
+                value = self.get_value(field_info)
                 self.request.add_parameter(field_info.location, field_info.field_name, value)
         self.request.compose_request()
         return
+
+    def compose_optional_request(self, request):
+        if not self.api_info.req_param:
+            return
+        parameter_list = []
+        for field_info in self.api_info.req_param:
+            if not field_info.require:
+
+
+
 
     @property
     def get_request(self):

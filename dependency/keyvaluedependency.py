@@ -80,6 +80,8 @@ class SetKeyValueDependency:
             if api_info.req_param:
                 # traverse every parameter
                 for req_field_info in api_info.req_param:
+                    if req_field_info.field_type == 'bool':
+                        continue
                     self.get_field_dependency(req_field_info)
             api_info.key_depend_api_list = self.key_depend_api_list
         Tool.save_no_reference(self.not_reference_field)
