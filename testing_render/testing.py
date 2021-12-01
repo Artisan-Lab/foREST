@@ -74,6 +74,8 @@ class Test:
                         self.node_queue.append(child)
             self.traverse_nums += 1
 
+
+
     def create_topology_graph(self):
         topology_graph = [[0 for i in range(self.api_number+1)] for i in range(self.api_number)]
         for api_info in self.api_list:

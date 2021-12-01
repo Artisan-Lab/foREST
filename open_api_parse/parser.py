@@ -1,9 +1,8 @@
 import json
 import yaml
 import jsonref
-from dependency.open_api_parse.swagger_parser import SwaggerParser
-from dependency.open_api_parse.open_api_parser import OpenAPIParser
-from dependency.open_api_parse.keyvaluedependency import SetKeyValueDependency
+from open_api_parse.swagger_parser import SwaggerParser
+from open_api_parse.open_api_parser import OpenAPIParser
 
 
 class Parser:
@@ -22,8 +21,6 @@ class Parser:
             self.version = 'openapi'
             open_api_parser = OpenAPIParser(self.json_data)
             self.api_list = open_api_parser.openAPI_parser()
-        key_value_parser = SetKeyValueDependency(self.api_list)
-        self.api_list = key_value_parser.get_dependency()
 
     @property
     def get_api_list(self):
