@@ -22,6 +22,7 @@ class Request(SendRequest):
 
     def compose_request(self):
         if self.path_parameter_list:
+            self.url = self.base_url
             for path_parameter in self.path_parameter_list:
                 self.url = self.url.replace('{' + path_parameter + '}', str(self.path_parameter_list[path_parameter]))
         if self.query_parameter_list:

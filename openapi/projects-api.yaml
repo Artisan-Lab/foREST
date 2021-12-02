@@ -4,7 +4,7 @@ info:
   version: v4
   description: An OpenAPI definition for the GitLab REST API.
 servers:
-  - url: 'http://192.168.112.156/api/v4'
+  - url: 'http://192.168.112.140/api/v4'
 paths:
   /projects:
     post:
@@ -3292,9 +3292,7 @@ paths:
           description: The ID of the group.
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -3402,9 +3400,7 @@ paths:
           description: The ID of the project hook.
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -3642,22 +3638,6 @@ paths:
                     type: array
                     items:
                       type: object
-  '/projects/{id}/mirror/pull':
-    post:
-      tags:
-        - projects-api
-      parameters:
-        - name: id
-          schema:
-            oneOf:
-              - type: string
-              - type: integer
-          required: true
-          in: path
-          description: The ID or URL-encoded path of the project.
-      responses:
-        '200':
-          description: success
   '/projects/{id}/snapshot':
     get:
       tags:

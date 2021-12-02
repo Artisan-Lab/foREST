@@ -51,6 +51,7 @@ class CompleteTest:
             if response_status == 2:
                 self.status_2xx_pool[api_info.api_id] += 1
                 request.genetic_algorithm_success()
+                self.success_request_pool[api_id].append(request)
             elif response_status == 4:
                 self.status_4xx_pool[api_info.api_id] += 1
                 request.genetic_algorithm_faild()
@@ -59,13 +60,24 @@ class CompleteTest:
                 request.genetic_algorithm_success()
         self.visited_pool[api_info.api_id] += 1
 
-    def node_testing(self, node):
-        if 'post' in node.method_dic:
-
-        exec_method_list = ['post', 'get', 'put', 'patch', 'delete', 'post']
+    def simple_node_testing(self, node):
+        exec_method_list = ['get', 'post', 'put', 'patch', 'delete', 'post']
         for exec_method in exec_method_list:
             if exec_method in node.method_dic:
                 self.api_testing(node.method_dic[exec_method])
+
+    def pre_foREST_BFS(self):
+        self.node_queue = [self.semantic_tree_root]
+        while self.node_queue:
+            node = self.node_queue.pop(0)
+            self.simple_node_testing(node)
+            if node.children:
+                self.node_queue += node.children
+                random.shuffle(self.node_queue)
+
+    def foREST_test(self):
+        self.pre_foREST_BFS()
+        # 先执行一遍所有的结点，只执行必选参数
 
     def post_testing(self, api_id):
         self.api_testing(api_id)
@@ -74,17 +86,6 @@ class CompleteTest:
         compose_request.compose_required_request()
         requests = compose_request.get_required_request
 
-    def foREST_BFS(self):
-        self.node_queue = [self.semantic_tree_root]
-        while self.node_queue:
-            node = self.node_queue.pop(0)
-            self.node_testing(node)
-            if node.children:
-                self.node_queue += node.children
-                random.shuffle(self.node_queue)
 
-    def foREST_test(self):
-        self.foREST_BFS()
-        while self.traverse_nums < self.set_traverse_nums:
-            self.foREST_BFS()
-            self.traverse_nums += 1
+
+
