@@ -79,5 +79,11 @@ redis-server也集成进来
 
 实验方面，我自认为我原先提的需求已经写得非常清楚了。我今天跑实验出来的曲线是这样的。经过沟通才发现，gitlab代码执行时会缓存代码到redis，而
 他读取的覆盖率是缓存的覆盖率，并不是实际执行的覆盖率。
+![T@8LB%U{N7BQXFNJS{8_(O](https://user-images.githubusercontent.com/71680354/144589473-ff5a96b6-1c08-43cb-8b29-4f4428a4404f.png)
+![MPVM Y3_)T HHH5FIABVUK](https://user-images.githubusercontent.com/71680354/144589497-b579450c-e113-4781-a5af-dca9b8e513c9.png)
+
+restler的问题https://github.com/microsoft/restler-fuzzer/issues/283
+
+![image](https://user-images.githubusercontent.com/71680354/144589822-bb713838-ed62-4a73-82e9-e5337322200a.png)
 
 gitlabAPI文档我更新在另一个项目里
