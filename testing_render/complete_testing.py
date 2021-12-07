@@ -1,6 +1,6 @@
 import random
 from testing_render.composerequest import ComposeRequest
-from log.get_logging import Log
+from log.get_logging import summery_log, requests_log, status_2xx_log, status_4xx_log, status_5xx_log
 from testing_render.responsehandle import ResponseJudge
 from log.get_logging import summery_count
 

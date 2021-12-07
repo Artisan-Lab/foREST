@@ -33,7 +33,7 @@ class ComposeRequest:
             # 判断该参数可否从其他请求的响应中获取
             genetic_algorithm = GeneticAlgorithm(field_info.depend_list[1])
             for i in range(len(field_info.depend_list[1])):
-                winner_depend_field_index = genetic_algorithm.get_winner_index
+                winner_depend_field_index = genetic_algorithm.get_next_winner_index()
                 value = redis_response_handle.get_specific_value_from_response_pool(
                     field_info.depend_list[0][int(winner_depend_field_index / 2)])
                 if value:
@@ -91,10 +91,16 @@ class ComposeRequest:
         for field_info in self.api_info.req_param:
             if not field_info.require:
                 request = copy.deepcopy(self.request)
+                request.genetic_algorithm_list = Request.copy_genetic_algorithm_list(self.request)
                 value = self.get_value(field_info)
                 request.add_parameter(field_info.location, field_info.field_name, value)
                 request.compose_request()
                 self.optional_request_pool.append(request)
+
+    def compose_request(self):
+        if not self.api_info.req_param:
+            return
+
 
     def get_parameter_list(self):
         parameter_list = []
@@ -102,7 +108,6 @@ class ComposeRequest:
             if not field_info.require:
                 parameter_list.append(field_info)
 
-    @property
     def get_optional_request(self):
         self.compose_optional_request()
         return self.optional_request_pool

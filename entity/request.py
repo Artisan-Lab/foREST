@@ -1,3 +1,4 @@
+import copy
 
 from tool.tools import token
 from module.sendrequest import SendRequest
@@ -57,3 +58,9 @@ class Request(SendRequest):
         for genetic_algorithm in self.genetic_algorithm_list:
             genetic_algorithm.winner_failed()
 
+    @staticmethod
+    def copy_genetic_algorithm_list(request):
+        algorithm_list = []
+        for genetic_algorithm in request.genetic_algorithm_list:
+            algorithm_list.append(genetic_algorithm)
+        return algorithm_list

@@ -134,14 +134,18 @@ class Log:
 
 DebugLog = Log()
 summery_log = Log(log_name='summery')
-
+requests_log = Log(log_name='total_request')
+status_2xx_log = Log(log_name='2xx_request')
+status_4xx_log = Log(log_name='4xx_request')
+status_5xx_log = Log(log_name='5xx_request')
+status_timeout_log = Log(log_name='timeout_request')
 summery_count = {
     'api number': 0,
     'test rounds nember': 0,
-    'Expected requests number': 0,
     'already send requests number': 0,
     '2xx requests number': 0,
     '4xx requests number': 0,
+    '3xx requests number':0,
     '5xx requests number': 0,
     'timeout requests number': 0
 }

@@ -95,7 +95,7 @@ class OpenAPIParser:
                 default=single_object.get('default'),
                 description=single_object.get('description'),
                 enum=single_object.get('enum'),
-                object=self.object_handle(single_object.get('property'), single_object.get('required')),
+                object=self.object_handle(single_object.get('properties'), single_object.get('required')),
                 array=self.create_filed_info(single_object.get('items')),
                 max=single_object.get('maximum'),
                 min=single_object.get('minimum'),
