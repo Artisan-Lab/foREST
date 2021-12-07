@@ -33,7 +33,7 @@ class ComposeRequest:
             # 判断该参数可否从其他请求的响应中获取
             genetic_algorithm = GeneticAlgorithm(field_info.depend_list[1])
             for i in range(len(field_info.depend_list[1])):
-                winner_depend_field_index = genetic_algorithm.get_next_winner_index()
+                winner_depend_field_index = genetic_algorithm.get_winner_index()
                 value = redis_response_handle.get_specific_value_from_response_pool(
                     field_info.depend_list[0][int(winner_depend_field_index / 2)])
                 if value:
@@ -112,7 +112,6 @@ class ComposeRequest:
         self.compose_optional_request()
         return self.optional_request_pool
 
-    @property
     def get_required_request(self):
         # 返回生成的request
         self.compose_required_request()

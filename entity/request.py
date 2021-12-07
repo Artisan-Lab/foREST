@@ -1,5 +1,4 @@
-import copy
-
+import json
 from tool.tools import token
 from module.sendrequest import SendRequest
 
@@ -11,7 +10,7 @@ class Request(SendRequest):
         self.base_url = base_url
         self.method = method
         self.data = {}
-        self.header = {'Content-Type': "application/json",
+        self.base_header = {'Content-Type': "application/json",
                        'Authorization': "Bearer " + token}
         self.url = base_url
         self.path_parameter_list = {}
@@ -22,8 +21,8 @@ class Request(SendRequest):
         self.genetic_algorithm_list = []
 
     def compose_request(self):
+        self.url = self.base_url
         if self.path_parameter_list:
-            self.url = self.base_url
             for path_parameter in self.path_parameter_list:
                 self.url = self.url.replace('{' + path_parameter + '}', str(self.path_parameter_list[path_parameter]))
         if self.query_parameter_list:
@@ -34,8 +33,9 @@ class Request(SendRequest):
                     self.url = self.url + '?' + str(query_parameter) + '=' + str(self.query_parameter_list[query_parameter])
         if self.data_parameter_list:
             self.data.update(self.data_parameter_list)
+            self.data = json.dumps(self.data)
         if self.header_parameter_list:
-            self.header.update(self.header_parameter_list)
+            self.base_header.update(self.header_parameter_list)
 
     def add_parameter(self, location, key, value):
         if location == 0 or location == 'path':

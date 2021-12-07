@@ -29,11 +29,11 @@ class Test:
     def testing_evaluate(self, request):
         summery_count['already send requests number'] += 1
         self.request_message = f'Sending: {self.api_info.http_method.upper()} {self.api_info.path} {request.url} \n' \
-                           f'API_id: {self.api_info.api_id} header:{request.header}\n' \
+                           f'API_id: {self.api_info.api_id} header:{request.base_header}\n' \
                            f''f'data: {request.data}\n'
         try:
             request.send_request()
-            response = request.get_response
+            response = request.get_response()
         except:
             status_timeout_log.info(self.request_message)
             self.timeout_pool[self.api_info.api_id] += 1
@@ -73,7 +73,7 @@ class Test:
         self.api_info = self.api_list[api_id]
         compose_request = ComposeRequest(self.api_info)
         compose_request.compose_required_request()
-        request = compose_request.get_required_request
+        request = compose_request.get_required_request()
         response_status = self.testing_evaluate(request)
         if request.method == 'put':
             optional_request_list = compose_request.get_optional_request()
