@@ -105,7 +105,12 @@ gitlabAPI文档我更新在另一个项目里
 * foREST：成功访问的API占比、找到的bug数量、代码覆盖行数对比、代码覆盖率对比
 ### 测试服务
 #### 一、gitlab
-* restler论文中跑过的分支  foREST vs RESTler 
-* gitlab所有API  foREST vs RESTler
+* restler论文中跑过的分支  foREST vs RESTler vs evomaster
+* gitlab所有API  foREST vs RESTler vs evomaster
 ### 二、wordpress
-* 所有API foREST vs RESTler
+* 所有API foREST vs RESTler vs evomaster
+
+##12.15
+时间过得很快，这个月过去一半了。这段时间在琢磨evomaster的实现手段，后来重新搭建gitlab跑实验，发现与之前的实验结果有出入，应该是之前测的时候
+误操作了gitlab，正确的实验结果如图，与我预想的区别不大，但evomaster是发了十七万条请求所达到的结果，我们的速度只有一万多，速度方面差距确实很大
+我还是想把foREST2.0写出来，最近写的时候遇到问题，主要还是资源池的调用和匹配问题，这个工作感觉很复杂，涉及到nlp的一些知识
