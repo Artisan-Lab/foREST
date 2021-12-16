@@ -1,34 +1,17 @@
-import copy
 from module.basic_fuzz import BasicFuzz
 from module.genetic_algorithm import GeneticAlgorithm
-from module.get_value import GetValue
-from entity.resource_pool import foREST_resource_pool
-from entity.request import Request
+from module.jsonhandle import JsonHandle
 
 
-class ComposeRequest:
-    """
-        这个模块是用于生成单条请求的
-    """
+class GetValue:
 
-    def __init__(self, api_info):
-        self.api_info = api_info
-        self.request = Request(api_info.base_url + api_info.path, api_info.http_method)
-        self.optional_request_pool = []
+    @staticmethod
+    def get_value_from_resource(resource, parameter_name, parameter_type):
+        value = JsonHandle.find_field_in_dic(resource.resource_data, parameter_name, parameter_type)
+        return value
 
-    def get_path_parameter(self):
-        base_url_list = self.api_info.base_url.split('/')
-        for i in range(len(base_url_list)):
-            if base_url_list[i][0] == '{' and base_url_list[i][-1] == '}':
-                api_resource = foREST_resource_pool.find_resource_from_resource_name(base_url_list[i][1:-2])
-                value = JsonHandle.find_field_in_dic(resource.resource_data, base_url_list[i-1], parameter_type)
-
-
-
-
-    def pre_compose(self):
-
-    def get_value(self, field_info):
+    @staticmethod
+    def get_value(field_info):
         # 获取参数值
         value = None
         if field_info.field_type == 'bool':
@@ -61,7 +44,7 @@ class ComposeRequest:
             if field_info.object:
                 for sub_field_info in field_info.object:
                     if sub_field_info.require:
-                        sub_field_value = ComposeRequest.get_value(sub_field_info)
+                        sub_field_value = ComposeRequest.GetValue(sub_field_info)
                         if sub_field_value:
                             value[sub_field_info.field_name] = sub_field_value
                 return value
@@ -72,7 +55,7 @@ class ComposeRequest:
                 sub_value = {}
                 for array_field in field_info.array:
                     if array_field.require:
-                        sub_value[array_field.field_name] = ComposeRequest.get_value(array_field)
+                        sub_value[array_field.field_name] = ComposeRequest.GetValue(array_field)
                 value.append(sub_value)
                 return value
             elif isinstance(field_info.array, str):
@@ -84,45 +67,3 @@ class ComposeRequest:
             # 如果不能获得该参数的话，用fuzz
             value = BasicFuzz.fuzz_value_from_field(field_info)
         return value
-
-    def compose_required_request(self):
-        # 该函数用于组装请求，是此类入口
-        if not self.api_info.req_param:
-            return
-        for field_info in self.api_info.req_param:
-            if field_info.require:
-                value = self.get_value(field_info)
-                self.request.add_parameter(field_info.location, field_info.field_name, value)
-        self.request.compose_request()
-        return
-
-    def compose_optional_request(self):
-        if not self.api_info.req_param:
-            return
-        for field_info in self.api_info.req_param:
-            if not field_info.require:
-                request = copy.deepcopy(self.request)
-                request.genetic_algorithm_list = Request.copy_genetic_algorithm_list(self.request)
-                value = self.get_value(field_info)
-                request.add_parameter(field_info.location, field_info.field_name, value)
-                request.compose_request()
-                self.optional_request_pool.append(request)
-
-    def compose_request(self):
-        if not self.api_info.req_param:
-            return
-
-    def get_parameter_list(self):
-        parameter_list = []
-        for field_info in self.api_info.req_param:
-            if not field_info.require:
-                parameter_list.append(field_info)
-
-    def get_optional_request(self):
-        self.compose_optional_request()
-        return self.optional_request_pool
-
-    def get_required_request(self):
-        # 返回生成的request
-        self.compose_required_request()
-        return self.request

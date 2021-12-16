@@ -137,6 +137,7 @@ summery_log = Log(log_name='summery')
 requests_log = Log(log_name='total_request')
 status_2xx_log = Log(log_name='2xx_request')
 status_4xx_log = Log(log_name='4xx_request')
+status_3xx_log = Log(log_name='3xx_request')
 status_5xx_log = Log(log_name='5xx_request')
 status_timeout_log = Log(log_name='timeout_request')
 summery_count = {

@@ -9,7 +9,7 @@ class Request(SendRequest):
         super().__init__(base_url, method, header={}, data={})
         self.base_url = base_url
         self.method = method
-        self.data = {}
+        self.data = ''
         self.base_header = {'Content-Type': "application/json",
                        'Authorization': "Bearer " + token}
         self.url = base_url
@@ -20,8 +20,14 @@ class Request(SendRequest):
         self.response = None
         self.genetic_algorithm_list = []
 
-    def compose_request(self):
+    def reset_base_request(self):
         self.url = self.base_url
+        self.data = ''
+        self.base_header = {'Content-Type': "application/json",
+                            'Authorization': "Bearer " + token}
+
+    def compose_request(self):
+        self.reset_base_request()
         if self.path_parameter_list:
             for path_parameter in self.path_parameter_list:
                 self.url = self.url.replace('{' + path_parameter + '}', str(self.path_parameter_list[path_parameter]))
@@ -32,8 +38,7 @@ class Request(SendRequest):
                 else:
                     self.url = self.url + '?' + str(query_parameter) + '=' + str(self.query_parameter_list[query_parameter])
         if self.data_parameter_list:
-            self.data.update(self.data_parameter_list)
-            self.data = json.dumps(self.data)
+            self.data = json.dumps(self.data_parameter_list)
         if self.header_parameter_list:
             self.base_header.update(self.header_parameter_list)
 
@@ -54,7 +59,7 @@ class Request(SendRequest):
         for genetic_algorithm in self.genetic_algorithm_list:
             genetic_algorithm.winner_success()
 
-    def genetic_algorithm_faild(self):
+    def genetic_algorithm_fail(self):
         for genetic_algorithm in self.genetic_algorithm_list:
             genetic_algorithm.winner_failed()
 

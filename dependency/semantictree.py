@@ -47,7 +47,6 @@ class CreateSemanticTree:
             for children_node in node.children:
                 self.add_close_api(children_node)
 
-
     @staticmethod
     def add_close_node_api(node):
         close_api = []
@@ -55,6 +54,7 @@ class CreateSemanticTree:
             for method in node.method_dic:
                 close_api.append(node.method_dic[method])
         return close_api
+
     @staticmethod
     def find_node(api_path_nodes, api_method, api_id, parent_node):
         if not api_path_nodes:
