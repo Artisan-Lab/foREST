@@ -1,6 +1,7 @@
 from entity.resource import Resource
 import random
 import nltk
+from fuzzywuzzy import fuzz
 sno = nltk.stem.SnowballStemmer('english')
 # Stemming algorithm
 
@@ -42,10 +43,11 @@ class ResourcePool:
             return random.choice(self.__resource_name_dict[resource_api_id])
         return None
 
-    def find_resource_from_resource_name(self, resource_name):
-        resource_name = sno.stem(resource_name)
-        if resource_name in self.__resource_name_dict:
-            return random.choice(self.__resource_name_dict[resource_name])
+    def find_resource_from_resource_name(self, name):
+        name = sno.stem(name)
+        for resource_name in self.__resource_name_dict:
+            if fuzz.partial_ratio(name, resource_name) >= 90:
+                return random.choice(self.__resource_name_dict[resource_name])
         return None
 
     def __delete_resource(self, resource):

@@ -3,6 +3,15 @@
 
 class StringMatch:
 
+
+    @staticmethod
+    def is_path_variable(str):
+        if str[0] == '{' and str[-1] == '}':
+            return str[1:-2]
+        else:
+            return False
+
+
     @staticmethod
     def find_field_in_dic(dic, field_name, field_type):
         if isinstance(dic, dict):

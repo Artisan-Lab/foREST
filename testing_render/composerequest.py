@@ -1,7 +1,7 @@
 import copy
 from module.basic_fuzz import BasicFuzz
 from module.genetic_algorithm import GeneticAlgorithm
-from module.get_value import GetValue
+from module.string_march import StringMatch
 from entity.resource_pool import foREST_resource_pool
 from entity.request import Request
 
@@ -15,18 +15,28 @@ class ComposeRequest:
         self.api_info = api_info
         self.request = Request(api_info.base_url + api_info.path, api_info.http_method)
         self.optional_request_pool = []
+        self.current_parent_source = None
 
     def get_path_parameter(self):
         base_url_list = self.api_info.base_url.split('/')
-        for i in range(len(base_url_list)):
-            if base_url_list[i][0] == '{' and base_url_list[i][-1] == '}':
-                api_resource = foREST_resource_pool.find_resource_from_resource_name(base_url_list[i][1:-2])
-                value = JsonHandle.find_field_in_dic(resource.resource_data, base_url_list[i-1], parameter_type)
+        self.find_parent_resource(base_url_list)
 
+    def find_parent_resource(self, base_url_list):
+        for i in range(len(base_url_list), 0, -1):
+            field_name = StringMatch.is_path_variable(base_url_list[i])
+            if field_name:
+                self.current_parent_source = foREST_resource_pool.find_resource_from_resource_name(base_url_list[i-1])
+                field_info = self.find_field_from_name(field_name)
+                value = StringMatch.find_field_in_dic(self.current_parent_source, field_name, field_info.field_type)
+                self.request.add_parameter(0, field_name, value)
+            else:
+                break
 
+    def find_field_from_name(self, field_name):
+        for field_info in self.api_info.req_param:
+            if field_info.field_name == field_name:
+                return field_info
 
-
-    def pre_compose(self):
 
     def get_value(self, field_info):
         # 获取参数值

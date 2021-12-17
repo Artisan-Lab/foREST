@@ -48,17 +48,32 @@ class Test:
     def api_testing(self, api_id):
         self.api_info = self.api_list[api_id]
         compose_request = ComposeRequest(self.api_info)
-        compose_request.compose_required_request()
-        request = compose_request.get_required_request()
-        response_status = self.testing_evaluate(request)
-        if request.method == 'put':
-            optional_request_list = compose_request.get_optional_request()
-            for optional_request in optional_request_list:
-                self.testing_evaluate(optional_request)
-        if response_status == 2:
-            optional_request_list = compose_request.get_optional_request()
-            for optional_request in optional_request_list:
-                self.testing_evaluate(optional_request)
+        compose_request.get_path_parameter()
+        # request = compose_request.get_required_request()
+        # response_status = self.testing_evaluate(request)
+        # if request.method == 'put':
+        #     optional_request_list = compose_request.get_optional_request()
+        #     for optional_request in optional_request_list:
+        #         self.testing_evaluate(optional_request)
+        # if response_status == 2:
+        #     optional_request_list = compose_request.get_optional_request()
+        #     for optional_request in optional_request_list:
+        #         self.testing_evaluate(optional_request)
+
+    def post_api_testing(self, api_info):
+        pass
+
+    def get_api_testing(self, api_info):
+        pass
+
+    def put_api_testing(self, api_info):
+        pass
+
+    def delete_api_testing(self, api_info):
+        pass
+
+    def patch_api_testing(self, api_info):
+        pass
 
     def testing_evaluate(self, request):
         summery_count['already send requests number'] += 1

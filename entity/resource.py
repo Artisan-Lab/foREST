@@ -1,6 +1,7 @@
 from tool.tools import sno
 from module.string_march import StringMatch
 
+
 class Resource:
 
     def __init__(self, resource_id, api_id, resource_name, resource_data, resource_request):
@@ -46,12 +47,12 @@ class Resource:
 
     def find_field_in_resource(self, field_name, field_type):
         value = StringMatch.find_field_in_dic(self.resource_data, field_name, field_type)
-        if value: return value
-        value
-        field_name_list = field_name.split('_')
-        for i in range(len(field_name_list)):
-            field_name_list[i] =
-        if len(field_name_list) > 1:
-            if self.resource_name
-
-
+        if value:
+            return value
+        if '_' in field_name and '_' in self.resource_name:
+            field_name_list = field_name.split('_')
+            resource_name_list = self.resource_name.split('_')
+            while resource_name_list:
+                if field_name_list.pop(0) != resource_name_list.pop(0):
+                    break
+            value = StringMatch.find_field_in_dic(self.resource_data, field_name, field_type)
