@@ -3,7 +3,7 @@ from log.get_logging import summery_log, requests_log, status_2xx_log, \
                             status_3xx_log, status_4xx_log, status_5xx_log, status_timeout_log
 from log.get_logging import summery_count
 import re
-from entity.resource_pool import foREST_resource_pool
+from entity.resource_pool import foREST_POST_resource_pool
 from module.jsonhandle import JsonHandle
 
 
@@ -13,6 +13,7 @@ class Test:
         self.api_list = api_list
         self.api_info = None
         self.api_number = len(api_list)
+        self.node = None
         self.dependency_graph = [[0 for j in range(self.api_number)] for i in range(self.api_number)]
         self.success_pool = [0 for i in range(self.api_number)]
         self.visited_pool = [0 for i in range(self.api_number)]
@@ -32,10 +33,10 @@ class Test:
         while self.traverse_nums < self.set_traverse_nums:
             self.node_queue = [self.semantic_tree_root]
             while self.node_queue:
-                node = self.node_queue.pop(0)
-                self.node_testing(node)
-                if node.children:
-                    for child in node.children:
+                self.node = self.node_queue.pop(0)
+                self.node_testing(self.node)
+                if self.node.children:
+                    for child in self.node.children:
                         self.node_queue.append(child)
             self.traverse_nums += 1
 
@@ -47,8 +48,9 @@ class Test:
 
     def api_testing(self, api_id):
         self.api_info = self.api_list[api_id]
-        compose_request = ComposeRequest(self.api_info)
+        compose_request = ComposeRequest(self.api_info, self.node)
         compose_request.get_path_parameter()
+        compose_request.compose_required_request()
         # request = compose_request.get_required_request()
         # response_status = self.testing_evaluate(request)
         # if request.method == 'put':

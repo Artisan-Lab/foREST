@@ -21,7 +21,7 @@ class SetKeyValueDependency:
         depend_field_dict = {}
         for api_info in self.api_info_list:
             self.depended_field_list = []
-            if not api_info.resp_param:
+            if not api_info.resp_param or api_info.http_method != 'post':
                 continue
             for field_info in api_info.resp_param:
                 self.depended_field_path = [api_info.api_id]

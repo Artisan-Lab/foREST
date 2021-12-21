@@ -7,14 +7,17 @@ sno = nltk.stem.SnowballStemmer('english')
 
 
 class ResourcePool:
-    '''
+    """
         this class define the Resource pool
-    '''
+    """
     def __init__(self):
         self.__resource_name_dict = {}
         self.__resource_list = []
         self.__resource_api_id_dict = {}
         self.resource_id = 0
+
+    def get_special_value_from_resource(self, api_id, field_path):
+        resource = self.find_resource_from_api_id(api_id)
 
     def save_response(self, api_info, request, response):
         base_url_list = api_info.base_url.split('/')
@@ -68,6 +71,6 @@ class ResourcePool:
         self.__delete_resource(resource)
 
 
-foREST_resource_pool = ResourcePool()
+foREST_POST_resource_pool = ResourcePool()
 
 

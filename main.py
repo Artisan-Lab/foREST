@@ -8,7 +8,7 @@ from dependency.dependency import Dependency
 
 start_time = datetime.datetime.now()
 open_api_file_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '.\\openapi\\' +
-                                  Tool.readconfig('api_file', 'file_path'))
+                                  Tool.read_config('api_file', 'file_path'))
 open_api_parser = Parser(path=open_api_file_path)
 open_api_list = open_api_parser.get_api_list
 semantic_tree_root = Dependency(open_api_list)

@@ -4,9 +4,10 @@ from module.string_march import StringMatch
 
 class Resource:
 
-    def __init__(self, resource_id, api_id, resource_name, resource_data, resource_request):
+    def __init__(self, resource_id, api_id, resource_path, resource_name, resource_data, resource_request):
         self.__resource_id = resource_id
         self.__resource_api_id = api_id
+        self.__resource_path = resource_path
         self.__resource_name = sno.stem(resource_name)
         self.resource_data = resource_data
         self.__resource_request = resource_request
@@ -45,7 +46,7 @@ class Resource:
     def children_resource(self, children_resource):
         self.__children_resource.append(children_resource)
 
-    def find_field_in_resource(self, field_name, field_type):
+    def find_field_from_name(self, field_name, field_type):
         value = StringMatch.find_field_in_dic(self.resource_data, field_name, field_type)
         if value:
             return value
@@ -56,3 +57,13 @@ class Resource:
                 if field_name_list.pop(0) != resource_name_list.pop(0):
                     break
             value = StringMatch.find_field_in_dic(self.resource_data, field_name, field_type)
+            if value:
+                return value
+        return None
+
+    def find_field_from_path(self, resource_dict, field_path):
+        if field_path[0] in resource_dict:
+            if len(field_path) == 1:
+                return resource_dict[field_path[0]]
+            else:
+                return self.find_field_from_path(resource_dict[field_path[0]], field_path[1:])

@@ -16,7 +16,13 @@ class Tool:
         return temp
 
     @staticmethod
-    def readconfig(title, key):
+    def read_json_file(file_path):
+        with open(file_path, 'r') as json_file:
+            load_dict = json.load(json_file)
+        return load_dict
+
+    @staticmethod
+    def read_config(title, key):
         conf = configparser.ConfigParser()
         root_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../FoREST_config.conf")
         conf.read(root_path)
@@ -25,7 +31,7 @@ class Tool:
     @staticmethod
     def save_api_list(open_api_list):
         pattern = re.compile(r'([a-z]*)', re.I)
-        file_name = pattern.match(Tool.readconfig('api_file', 'file_path'))[0]
+        file_name = pattern.match(Tool.read_config('api_file', 'file_path'))[0]
         cur_path = os.path.dirname(os.path.realpath(__file__))  # log_path是存放日志的路径
         path = os.path.join(os.path.dirname(cur_path), './log/api_list')
         if not os.path.exists(path):
@@ -46,7 +52,9 @@ class Tool:
             f.write(str(no_reference_key))
 
 
-token = Tool.readconfig('service', 'token')
-send_timeout = Tool.readconfig('request', 'send_timeout')
-received_timeout = Tool.readconfig('request', 'received_timeout')
+token = Tool.read_config('service', 'token')
+send_timeout = Tool.read_config('request', 'send_timeout')
+received_timeout = Tool.read_config('request', 'received_timeout')
 sno = nltk.stem.SnowballStemmer('english')
+annotation_table = Tool.read_json_file('./annotation_table.json')
+external_key_dict = Tool.read_json_file('./external_key.json')

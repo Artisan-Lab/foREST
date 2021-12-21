@@ -9,6 +9,7 @@ class SemanticNode(NodeMixin):
     def __init__(self, name, parent=None, children=None):
         super(SemanticNode, self).__init__()
         self.name = name
+        self.resource = []
         self.method_dic = {}
         self.parent = parent
         if children:
@@ -73,12 +74,11 @@ class CreateSemanticTree:
 
 
 def main():
-    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), Tool.readconfig('api_file', 'file_path'))
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), Tool.read_config('api_file', 'file_path'))
     api_parser = Parser(path)
     api_list = api_parser.get_api_list()
     tree = CreateSemanticTree(api_list)
-    tree.create_tree()
-    root = tree.root
+    root = tree.create_tree
 
 
 if __name__ == '__main__':
