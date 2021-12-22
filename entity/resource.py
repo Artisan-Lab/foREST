@@ -4,11 +4,10 @@ from module.string_march import StringMatch
 
 class Resource:
 
-    def __init__(self, resource_id, api_id, resource_path, resource_name, resource_data, resource_request):
+    def __init__(self, resource_id, api_id, resource_name, resource_data, resource_request):
         self.__resource_id = resource_id
         self.__resource_api_id = api_id
-        self.__resource_path = resource_path
-        self.__resource_name = sno.stem(resource_name)
+        self.__resource_name = resource_name
         self.resource_data = resource_data
         self.__resource_request = resource_request
         self.__parent_resource = []

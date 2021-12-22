@@ -42,6 +42,18 @@ class Tool:
                 f.write(jst)
 
     @staticmethod
+    def save_resource_pool(resource_pool):
+        pattern = re.compile(r'([a-z]*)', re.I)
+        file_name = pattern.match(Tool.read_config('api_file', 'file_path'))[0]
+        cur_path = os.path.dirname(os.path.realpath(__file__))  # log_path是存放日志的路径
+        path = os.path.join(os.path.dirname(cur_path), './log/resource')
+        if not os.path.exists(path):
+            os.mkdir(path)  # 如果不存在这个logs文件夹，就自动创建一个
+        jst = json.dumps(resource_pool, default=lambda o: o.__dict__, indent=4)
+        if not os.path.isfile(path + '/' + file_name + '.json'):
+            with open(path + '/' + file_name + '.json', 'w') as f:
+                f.write(jst)
+    @staticmethod
     def save_no_reference(no_reference_key):
         cur_path = os.path.dirname(os.path.realpath(__file__))  # log_path是存放日志的路径
         path = os.path.join(os.path.dirname(cur_path), './log/no_reference_key')
@@ -52,7 +64,10 @@ class Tool:
             f.write(str(no_reference_key))
 
 
-token = Tool.read_config('service', 'token')
+http_header = {
+    'Content-Type': Tool.read_config('http_header', 'Content-Type'),
+    'Authorization': Tool.read_config('http_header', 'Authorization')
+               }
 send_timeout = Tool.read_config('request', 'send_timeout')
 received_timeout = Tool.read_config('request', 'received_timeout')
 sno = nltk.stem.SnowballStemmer('english')

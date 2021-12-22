@@ -678,9 +678,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+              type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -970,9 +968,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1500,9 +1496,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1571,9 +1565,7 @@ paths:
           description: Limit by archived status.
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1800,9 +1792,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1841,9 +1831,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1882,9 +1870,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1928,9 +1914,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1957,9 +1941,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1998,9 +1980,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2039,9 +2019,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2055,9 +2033,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2098,9 +2074,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2166,9 +2140,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2238,9 +2210,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2279,9 +2249,7 @@ paths:
           description: The ID of the project hook.
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2362,9 +2330,7 @@ paths:
           description: The ID of a project hook.
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2427,9 +2393,7 @@ paths:
           description: The ID of the project that was forked from.
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2443,9 +2407,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID of the project or NAMESPACE/PROJECT_NAME.
@@ -2459,9 +2421,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2505,9 +2465,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2527,9 +2485,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.

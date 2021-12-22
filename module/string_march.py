@@ -14,7 +14,7 @@ class StringMatch:
     def find_field_in_dic(dic, field_name, field_type):
         if isinstance(dic, dict):
             for key in dic:
-                if key == field_name and type(dic[key].__name__) == field_type:
+                if key == field_name and type(dic[key]).__name__ == field_type:
                     value = dic[key]
                     return value
                 else:

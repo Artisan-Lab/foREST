@@ -2,6 +2,7 @@ from entity.resource import Resource
 import random
 import nltk
 from fuzzywuzzy import fuzz
+from module.string_march import StringMatch
 sno = nltk.stem.SnowballStemmer('english')
 # Stemming algorithm
 
@@ -11,54 +12,64 @@ class ResourcePool:
         this class define the Resource pool
     """
     def __init__(self):
-        self.__resource_name_dict = {}
-        self.__resource_list = []
-        self.__resource_api_id_dict = {}
+        self.resource_name_dict = {}
+        self.resource_list = []
+        self.resource_api_id_dict = {}
         self.resource_id = 0
 
     def get_special_value_from_resource(self, api_id, field_path):
         resource = self.find_resource_from_api_id(api_id)
+        if resource:
+            return  resource.find_field_from_path(resource.resource_data, field_path)
+        else:
+            return None
 
     def save_response(self, api_info, request, response):
-        base_url_list = api_info.base_url.split('/')
-        if not(base_url_list[-1][0] == '{' and base_url_list[-1][-1] == '}'):
-            resource_name = '/'.join(api_info.base_url.split('/')[-2:-1])
-            resource_name = sno.stem(resource_name)
-            self.create_resource(api_info.api_id, resource_name, response, request)
+        base_url_list = api_info.path.split('/')
+        if not StringMatch.is_path_variable(base_url_list[-1]):
+            resource_name = base_url_list[-1]
+            self.create_resource(resource_name, api_info.api_id, response, request)
 
     def create_resource(self, resource_name, api_id, resource_data, resource_request):
-        resource = Resource(self.resource_id, resource_name, api_id, resource_data, resource_request)
-        self.__resource_list.append(resource)
-        if resource_name in self.__resource_name_dict:
-            self.__resource_name_dict[resource_name].append(resource)
+        resource_name = sno.stem(resource_name)
+        resource = Resource(self.resource_id, api_id, resource_name, resource_data, resource_request)
+        self.resource_list.append(resource)
+        if resource_name in self.resource_name_dict:
+            self.resource_name_dict[resource_name].append(resource)
         else:
-            self.__resource_name_dict[resource_name] = [resource]
+            self.resource_name_dict[resource_name] = [resource]
+        if api_id in self.resource_api_id_dict:
+            self.resource_api_id_dict[api_id].append(resource)
+        else:
+            self.resource_api_id_dict[api_id] = [resource]
         self.resource_id += 1
 
     def find_resource_from_id(self, resource_id):
-        for resource in self.__resource_list:
+        for resource in self.resource_list:
             if resource.resource_id == resource_id:
                 return resource
         return None
 
     def find_resource_from_api_id(self, resource_api_id):
-        if resource_api_id in self.__resource_name_dict:
-            return random.choice(self.__resource_name_dict[resource_api_id])
+        if resource_api_id in self.resource_name_dict:
+            return random.choice(self.resource_name_dict[resource_api_id])
         return None
 
     def find_resource_from_resource_name(self, name):
         name = sno.stem(name)
-        for resource_name in self.__resource_name_dict:
+        for resource_name in self.resource_name_dict:
             if fuzz.partial_ratio(name, resource_name) >= 90:
-                return random.choice(self.__resource_name_dict[resource_name])
+                if self.resource_name_dict[resource_name]:
+                    return random.choice(self.resource_name_dict[resource_name])
         return None
 
     def __delete_resource(self, resource):
+        self.resource_list.remove(resource)
+        self.resource_name_dict[sno.stem(resource.resource_name)].remove(resource)
+        self.resource_api_id_dict[resource.resource_api_id].remove(resource)
         if resource.children_resource:
             for child_resource in resource.children_resource:
                 self.delete_resource(resource=child_resource)
-            self.__resource_list.remove(resource)
-            self.__resource_name_dict[resource.resource_api_id].remove(resource)
         if resource.parent_resource:
             for single_parent_resource in resource.parent_resource:
                 single_parent_resource.children_resource.remove(resource)

@@ -1,8 +1,11 @@
+import random
+
 from testing_render.composerequest import ComposeRequest
 from log.get_logging import summery_log, requests_log, status_2xx_log, \
                             status_3xx_log, status_4xx_log, status_5xx_log, status_timeout_log
 from log.get_logging import summery_count
 import re
+import json
 from entity.resource_pool import foREST_POST_resource_pool
 from module.jsonhandle import JsonHandle
 
@@ -26,6 +29,7 @@ class Test:
         self.traverse_nums = 0
         self.node_queue = []
         self.request_message = None
+        self.compose_request = None
         summery_count['api number'] = self.api_number
         summery_count['test rounds number'] = set_traverse_nums
 
@@ -39,43 +43,63 @@ class Test:
                     for child in self.node.children:
                         self.node_queue.append(child)
             self.traverse_nums += 1
+        print(1)
 
     def node_testing(self, node):
-        exec_method_list = ['get', 'post', 'put', 'patch', 'delete', 'post']
+        exec_method_list = ['get', 'post', 'put', 'patch', 'delete']
         for exec_method in exec_method_list:
             if exec_method in node.method_dic:
-                self.api_testing(node.method_dic[exec_method])
+                if exec_method == 'post':
+                    k = random.randint(1, 5)
+                    for _ in range(k):
+                        self.api_testing(node.method_dic[exec_method])
+                else:
+                    self.api_testing(node.method_dic[exec_method])
 
     def api_testing(self, api_id):
         self.api_info = self.api_list[api_id]
-        compose_request = ComposeRequest(self.api_info, self.node)
-        compose_request.get_path_parameter()
-        compose_request.compose_required_request()
-        # request = compose_request.get_required_request()
-        # response_status = self.testing_evaluate(request)
-        # if request.method == 'put':
-        #     optional_request_list = compose_request.get_optional_request()
-        #     for optional_request in optional_request_list:
-        #         self.testing_evaluate(optional_request)
-        # if response_status == 2:
-        #     optional_request_list = compose_request.get_optional_request()
-        #     for optional_request in optional_request_list:
-        #         self.testing_evaluate(optional_request)
+        self.compose_request = ComposeRequest(self.api_info, self.node)
+        self.compose_request.get_path_parameter()
+        self.compose_request.compose_required_request()
+        if self.api_info.http_method == 'post':
+            self.post_api_testing()
+        elif self.api_info.http_method == 'delete':
+            self.delete_api_testing()
+        elif self.api_info.http_method == 'get':
+            self.get_api_testing()
+        elif self.api_info.http_method == 'put':
+            self.put_api_testing()
+        elif self.api_info.http_method == 'patch':
+            self.patch_api_testing()
 
-    def post_api_testing(self, api_info):
-        pass
+    def post_api_testing(self):
+        request = self.compose_request.request
+        response_status = self.testing_evaluate(request)
+        if response_status == 2:
+            foREST_POST_resource_pool.save_response(self.api_info, request, json.loads(request.response.text))
 
-    def get_api_testing(self, api_info):
-        pass
+    def get_api_testing(self):
+        request = self.compose_request.request
+        response_status = self.testing_evaluate(request)
+        if response_status == 2:
+            optional_request_list = self.compose_request.get_optional_request()
+            for optional_request in optional_request_list:
+                self.testing_evaluate(optional_request)
 
-    def put_api_testing(self, api_info):
-        pass
+    def put_api_testing(self):
+        request = self.compose_request.request
+        response_status = self.testing_evaluate(request)
 
-    def delete_api_testing(self, api_info):
-        pass
+    def delete_api_testing(self):
+        request = self.compose_request.request
+        response_status = self.testing_evaluate(request)
+        if response_status == 2:
+            foREST_POST_resource_pool.delete_resource(self.compose_request.current_parent_source)
 
-    def patch_api_testing(self, api_info):
-        pass
+
+    def patch_api_testing(self):
+        request = self.compose_request.request
+        response_status = self.testing_evaluate(request)
 
     def testing_evaluate(self, request):
         summery_count['already send requests number'] += 1

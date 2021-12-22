@@ -1,5 +1,6 @@
+import copy
 import json
-from tool.tools import token
+from tool.tools import http_header
 from module.sendrequest import SendRequest
 
 
@@ -10,8 +11,7 @@ class Request(SendRequest):
         self.base_url = base_url
         self.method = method
         self.data = ''
-        self.base_header = {'Content-Type': "application/json",
-                       'Authorization': "Bearer " + token}
+        self.base_header = copy.deepcopy(http_header)
         self.url = base_url
         self.path_parameter_list = {}
         self.query_parameter_list = {}
@@ -23,8 +23,7 @@ class Request(SendRequest):
     def reset_base_request(self):
         self.url = self.base_url
         self.data = ''
-        self.base_header = {'Content-Type': "application/json",
-                            'Authorization': "Bearer " + token}
+        self.base_header = copy.deepcopy(http_header)
 
     def compose_request(self):
         self.reset_base_request()
