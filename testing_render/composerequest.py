@@ -23,7 +23,7 @@ class ComposeRequest:
     def get_path_parameter(self):
         self.current_parent_source = None
         base_url_list = self.api_info.path.split('/')
-        for i in range(len(base_url_list)-1, 0, -1):
+        for i in range(len(base_url_list) - 1, 0, -1):
             if StringMatch.is_path_variable(base_url_list[i]):
                 if not StringMatch.is_path_variable(base_url_list[i - 1]):
                     self.current_parent_source = foREST_POST_resource_pool.find_resource_from_resource_name(
@@ -33,9 +33,9 @@ class ComposeRequest:
                     for path_parameter in path_parameter_list:
                         self.request.add_parameter(0, path_parameter, path_parameter_list[path_parameter])
                     field_info = self.find_field_from_name(base_url_list[i][1:-1])
-                    temp_name = StringMatch.get_value_from_external(self.api_info.path,
-                                                                    self.api_info.http_method,
-                                                                    field_info.field_name, 'real_field_name')
+                    temp_name = StringMatch.get_real_name_from_external(self.api_info.path,
+                                                                        self.api_info.http_method,
+                                                                        field_info.field_name)
                     if temp_name:
                         field_name = temp_name
                     else:
@@ -45,7 +45,8 @@ class ComposeRequest:
                                                           field_info.field_type)
                     self.request.add_parameter(0, field_info.field_name, value)
             else:
-                self.current_parent_source = foREST_POST_resource_pool.find_resource_from_resource_name(base_url_list[i])
+                self.current_parent_source = foREST_POST_resource_pool.find_resource_from_resource_name(
+                    base_url_list[i])
                 if self.current_parent_source:
                     path_parameter_list = self.current_parent_source.get_resource_request.path_parameter_list
                     for path_parameter in path_parameter_list:
@@ -64,15 +65,15 @@ class ComposeRequest:
         value = StringMatch.get_value_from_external(self.api_info.path,
                                                     self.api_info.http_method,
                                                     field_info.field_name,
-                                                    'value')
+                                                    )
         # 先判断该参数有没有由外部指定
         if value:
             external_log.info('Key: ' + str(field_info.field_name) + 'Value: ' + str(value))
             return value
-        if self.current_parent_source:
-            value = self.current_parent_source.find_field_from_name(field_info.field_name, field_info.field_type)
-            if value:
-                return
+        # if self.current_parent_source:
+        #     value = self.current_parent_source.find_field_from_name(field_info.field_name, field_info.field_type)
+        #     if value:
+        #         return
         if field_info.depend_list[0]:
             # 判断该参数可否从其他请求的响应中获取
             genetic_algorithm = GeneticAlgorithm(field_info.depend_list[1])
@@ -94,7 +95,7 @@ class ComposeRequest:
             if field_info.object:
                 for sub_field_info in field_info.object:
                     if sub_field_info.require:
-                        sub_field_value = ComposeRequest.get_value(sub_field_info)
+                        sub_field_value = self.get_value(sub_field_info)
                         if sub_field_value:
                             value[sub_field_info.field_name] = sub_field_value
                 return value
@@ -105,7 +106,7 @@ class ComposeRequest:
                 sub_value = {}
                 for array_field in field_info.array:
                     if array_field.require:
-                        sub_value[array_field.field_name] = ComposeRequest.get_value(array_field)
+                        sub_value[array_field.field_name] = self.get_value(array_field)
                 value.append(sub_value)
                 return value
             elif isinstance(field_info.array, str):

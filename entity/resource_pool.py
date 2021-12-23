@@ -51,8 +51,8 @@ class ResourcePool:
         return None
 
     def find_resource_from_api_id(self, resource_api_id):
-        if resource_api_id in self.resource_name_dict:
-            return random.choice(self.resource_name_dict[resource_api_id])
+        if resource_api_id in self.resource_api_id_dict:
+            return random.choice(self.resource_api_id_dict[resource_api_id])
         return None
 
     def find_resource_from_resource_name(self, name):
@@ -80,6 +80,15 @@ class ResourcePool:
         if resource_id:
             resource = self.find_resource_from_id(resource_id)
         self.__delete_resource(resource)
+
+    def find_parent_resource_name(self, path_list):
+        for path in path_list[::-1]:
+            if StringMatch.is_path_variable(path):
+                continue
+            else:
+                if path in self.resource_name_dict:
+                    return path
+        return ''
 
 
 foREST_POST_resource_pool = ResourcePool()

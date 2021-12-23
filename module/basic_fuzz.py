@@ -8,7 +8,7 @@ random_letter = string.ascii_letters
 
 
 def random_str(slen=10):
-    seed =  "0123456789abcdefghijklmnopqrstuvwxyz!@#$%^&*()_=+-"
+    seed = "0123456789abcdefghijklmnopqrstuvwxyz"  #!@#$%^&*()_=+-
     list_string = ["string", "long_string", "email:1@gmail.com"]
     sa = []
     for i in range(slen):

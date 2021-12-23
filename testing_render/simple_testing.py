@@ -50,7 +50,7 @@ class Test:
         for exec_method in exec_method_list:
             if exec_method in node.method_dic:
                 if exec_method == 'post':
-                    k = random.randint(1, 5)
+                    k = random.randint(5, 10)
                     for _ in range(k):
                         self.api_testing(node.method_dic[exec_method])
                 else:

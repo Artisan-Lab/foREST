@@ -8,6 +8,7 @@ import nltk
 
 sno = nltk.stem.SnowballStemmer('english')
 
+
 class SemanticNode(NodeMixin):
 
     def __init__(self, name, parent=None, children=None):

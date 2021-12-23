@@ -30,10 +30,22 @@ class StringMatch:
         return None
 
     @staticmethod
-    def get_value_from_external(api_path, api_method, field_name, func):
+    def get_value_from_external(api_path, api_method, field_name):
         if api_path in external_key_dict:
             if api_method in external_key_dict[api_path]:
                 for external_key in external_key_dict[api_path][api_method]:
                     if external_key.field_name == field_name:
-                        return external_key[func]
+                        return external_key['value']
         return None
+
+    @staticmethod
+    def get_real_name_from_external(api_path, api_method, field_name):
+        if api_path in annotation_table:
+            if api_method in annotation_table[api_path]:
+                for external_key in annotation_table[api_path][api_method]:
+                    if external_key.field_name == field_name:
+                        return external_key['real_field_name']
+        return None
+
+
+
