@@ -20,21 +20,23 @@ class ResourcePool:
     def get_special_value_from_resource(self, api_id, field_path):
         resource = self.find_resource_from_api_id(api_id)
         if resource:
-            return  resource.find_field_from_path(resource.resource_data, field_path)
+            return resource.find_field_from_path(resource.resource_data, field_path)
         else:
             return None
 
-    def save_response(self, api_info, request, response):
+    def save_response(self, api_info, request, response, parent_resource):
         base_url_list = api_info.path.split('/')
         if not StringMatch.is_path_variable(base_url_list[-1]):
             resource_name = base_url_list[-1]
-            self.create_resource(resource_name, api_info.api_id, response, request)
+            return self.create_resource(resource_name, api_info.api_id, response, request, api_info.path, parent_resource)
 
-    def create_resource(self, resource_name, api_id, resource_data, resource_request):
+    def create_resource(self, resource_name, api_id, resource_data, resource_request, resource_path, parent_resource=None):
         resource_name = sno.stem(resource_name)
-        resource = Resource(self.resource_id, api_id, resource_name, resource_data, resource_request)
+        resource = Resource(self.resource_id, api_id, resource_name, resource_data, resource_request, resource_path)
         self.resource_list.append(resource)
         if resource_name in self.resource_name_dict:
+            if len(self.resource_name_dict[resource_name]) > 100:
+                self.delete_resource(self.resource_name_dict[resource_name][0])
             self.resource_name_dict[resource_name].append(resource)
         else:
             self.resource_name_dict[resource_name] = [resource]
@@ -43,6 +45,10 @@ class ResourcePool:
         else:
             self.resource_api_id_dict[api_id] = [resource]
         self.resource_id += 1
+        if parent_resource:
+            resource.parent_resource = parent_resource
+            parent_resource.children_resource = resource
+        return resource
 
     def find_resource_from_id(self, resource_id):
         for resource in self.resource_list:
@@ -51,7 +57,7 @@ class ResourcePool:
         return None
 
     def find_resource_from_api_id(self, resource_api_id):
-        if resource_api_id in self.resource_api_id_dict:
+        if resource_api_id in self.resource_api_id_dict and self.resource_api_id_dict[resource_api_id]:
             return random.choice(self.resource_api_id_dict[resource_api_id])
         return None
 

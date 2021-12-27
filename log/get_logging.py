@@ -147,7 +147,7 @@ summery_count = {
     'already send requests number': 0,
     '2xx requests number': 0,
     '4xx requests number': 0,
-    '3xx requests number':0,
+    '3xx requests number': 0,
     '5xx requests number': 0,
     'timeout requests number': 0
 }

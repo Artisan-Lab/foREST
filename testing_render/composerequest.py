@@ -9,7 +9,7 @@ from entity.request import Request
 
 class ComposeRequest:
     """
-        这个模块是用于生成单条请求的
+        这个模块是用于生成请求的
     """
 
     def __init__(self, api_info, node):
@@ -19,43 +19,28 @@ class ComposeRequest:
         self.optional_request_pool = []
         self.parent_source_list = []
         self.current_parent_source = None
+        self.current_request = self.request
 
     def get_path_parameter(self):
         self.current_parent_source = None
         base_url_list = self.api_info.path.split('/')
-        for i in range(len(base_url_list) - 1, 0, -1):
-            if StringMatch.is_path_variable(base_url_list[i]):
-                if not StringMatch.is_path_variable(base_url_list[i - 1]):
-                    self.current_parent_source = foREST_POST_resource_pool.find_resource_from_resource_name(
-                        base_url_list[i - 1])
+        base_url_list.remove('')
+        for path in base_url_list[::-1]:
+            if not StringMatch.is_path_variable(path):
+                # 从后往前找到路径中的定值
+                self.current_parent_source = foREST_POST_resource_pool.find_resource_from_resource_name(path) # 在资源池中检索是否有该资源
                 if self.current_parent_source:
-                    path_parameter_list = self.current_parent_source.get_resource_request.path_parameter_list
-                    for path_parameter in path_parameter_list:
-                        self.request.add_parameter(0, path_parameter, path_parameter_list[path_parameter])
-                    field_info = self.find_field_from_name(base_url_list[i][1:-1])
-                    temp_name = StringMatch.get_real_name_from_external(self.api_info.path,
-                                                                        self.api_info.http_method,
-                                                                        field_info.field_name)
-                    if temp_name:
-                        field_name = temp_name
-                    else:
-                        field_name = field_info.field_name
-                    value = StringMatch.find_field_in_dic(self.current_parent_source.resource_data,
-                                                          field_name,
-                                                          field_info.field_type)
-                    self.request.add_parameter(0, field_info.field_name, value)
-            else:
-                self.current_parent_source = foREST_POST_resource_pool.find_resource_from_resource_name(
-                    base_url_list[i])
-                if self.current_parent_source:
-                    path_parameter_list = self.current_parent_source.get_resource_request.path_parameter_list
-                    for path_parameter in path_parameter_list:
-                        self.request.add_parameter(0, path_parameter, path_parameter_list[path_parameter])
+                    if self.current_parent_source.resource_api_id == self.api_info.api_id:
+                        # 排除掉自己做自己父资源的情况
+                        self.current_parent_source = None
+                        continue
+                    self.get_path_parameter_from_parent_resource()
+                    break
 
-    def find_field_from_name(self, field_name):
-        for field_info in self.api_info.req_param:
-            if field_info.field_name == field_name:
-                return field_info
+    def get_path_parameter_from_parent_resource(self):
+        path_parameter_list = self.current_parent_source.get_resource_request.path_parameter_list
+        for path_parameter in path_parameter_list:
+            self.current_request.add_parameter(0, path_parameter, path_parameter_list[path_parameter])
 
     def get_value(self, field_info):
         # 获取参数值
@@ -80,9 +65,13 @@ class ComposeRequest:
             for i in range(len(field_info.depend_list[1])):
                 winner_depend_field_index = genetic_algorithm.get_winner_index()
                 field_path = field_info.depend_list[0][int(winner_depend_field_index / 2)]
-                value = foREST_POST_resource_pool.get_special_value_from_resource(field_path[0], field_path[1:])
+                if self.current_parent_source and field_path[0] == self.current_parent_source.resource_api_id:
+                    value = self.current_parent_source.find_field_from_path(self.current_parent_source.resource_data,
+                                                                            field_path[1:])
+                else:
+                    value = foREST_POST_resource_pool.get_special_value_from_resource(field_path[0], field_path[1:])
                 if value:
-                    self.request.add_genetic_algorithm(genetic_algorithm)
+                    self.current_request.add_genetic_algorithm(genetic_algorithm)
                     if winner_depend_field_index % 2 == 0 and (isinstance(value, str)):
                         return BasicFuzz.fuzz_mutation_parameter(value)
                     else:
@@ -120,14 +109,34 @@ class ComposeRequest:
         return value
 
     def compose_required_request(self):
+        # 组装必选参数
         if not self.api_info.req_param:
             return
         for field_info in self.api_info.req_param:
-            if field_info.require and field_info.field_name not in self.request.path_parameter_list:
+            if field_info.require and field_info.field_name not in self.current_request.path_parameter_list:
                 value = self.get_value(field_info)
                 self.request.add_parameter(field_info.location, field_info.field_name, value)
         self.request.compose_request()
         return
+
+    def recompose_optional_request(self):
+        self.request.initialization()
+        if self.api_info.api_id == 0:
+            print(1)
+        if self.current_parent_source:
+            self.get_path_parameter_from_parent_resource()
+        for field_info in self.api_info.req_param:
+            if not field_info.require:
+                request = copy.deepcopy(self.request)
+                self.current_request = request
+                for req_field_info in self.api_info.req_param:
+                    if req_field_info.require and req_field_info.field_name not in self.request.path_parameter_list:
+                        value = self.get_value(req_field_info)
+                        self.current_request.add_parameter(req_field_info.location, req_field_info.field_name, value)
+                value = self.get_value(field_info)
+                self.current_request.add_parameter(field_info.location, field_info.field_name, value)
+                self.current_request.compose_request()
+                self.optional_request_pool.append(self.current_request)
 
     def compose_optional_request(self):
         if not self.api_info.req_param:
@@ -136,10 +145,11 @@ class ComposeRequest:
             if not field_info.require:
                 request = copy.deepcopy(self.request)
                 request.genetic_algorithm_list = Request.copy_genetic_algorithm_list(self.request)
+                self.current_request = request
                 value = self.get_value(field_info)
-                request.add_parameter(field_info.location, field_info.field_name, value)
-                request.compose_request()
-                self.optional_request_pool.append(request)
+                self.current_request.add_parameter(field_info.location, field_info.field_name, value)
+                self.current_request.compose_request()
+                self.optional_request_pool.append(self.current_request)
 
     def get_optional_request(self):
         self.compose_optional_request()
@@ -149,3 +159,8 @@ class ComposeRequest:
         # 返回生成的request
         self.compose_required_request()
         return self.request
+
+    def find_field_from_name(self, field_name):
+        for field_info in self.api_info.req_param:
+            if field_info.field_name == field_name:
+                return field_info

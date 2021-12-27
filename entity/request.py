@@ -10,9 +10,7 @@ class Request(SendRequest):
         super().__init__(base_url, method, header={}, data={})
         self.base_url = base_url
         self.method = method
-        self.data = ''
-        self.base_header = copy.deepcopy(http_header)
-        self.url = base_url
+        self.initialization()
         self.path_parameter_list = {}
         self.query_parameter_list = {}
         self.data_parameter_list = {}
@@ -24,6 +22,15 @@ class Request(SendRequest):
         self.url = self.base_url
         self.data = ''
         self.base_header = copy.deepcopy(http_header)
+
+    def initialization(self):
+        self.reset_base_request()
+        self.path_parameter_list = {}
+        self.query_parameter_list = {}
+        self.data_parameter_list = {}
+        self.header_parameter_list = {}
+        self.response = None
+        self.genetic_algorithm_list = []
 
     def compose_request(self):
         self.reset_base_request()
