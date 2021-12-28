@@ -7,16 +7,16 @@ import matplotlib.ticker as ticker
 from matplotlib.pyplot import MultipleLocator
 from datetime import datetime
 
-matplotlib.rcParams['timezone'] = 'Asia/Shanghai'
+
 
 
 y_major_locator=MultipleLocator(300)
-forest_file = open('data/foREST_gitlab_projects.csv')  # 打开csv文件
+forest_file = open('../data/gitlab-project/foREST_gitlab_projects.csv')  # 打开csv文件
 forestReader = csv.reader(forest_file)  # 读取csv文件
 forestData = list(forestReader)  # csv数据转换为列表
 forest_length = len(forestData)  # 得到数据行数
 
-evomaster_file = open('data/evomaster_gitlab_projects.csv')
+evomaster_file = open('../data/gitlab-project/evomaster_gitlab_projects.csv')
 evomaster_reader = csv.reader(evomaster_file)
 evomaster_data = list(evomaster_reader)
 evomaster_length = len(evomaster_data)
@@ -48,7 +48,7 @@ fig, ax = plt.subplots()
 
 # Plot the date using plot_date rather than plot
 ax.plot(x1, y1, 'r-', label='foREST', linewidth=1)
-ax.plot_date(x2, y2, 'b-', label='EvoMaster', linewidth=1)
+ax.plot_date(x2, y2, 'b--', label='EvoMaster', linewidth=1)
 ax.spines['right'].set_color('none')
 ax.spines['top'].set_color('none')
 plt.ylabel('Code coverage')
@@ -64,7 +64,7 @@ ax.yaxis.set_major_locator(y_major_locator)
 # plt.ylim((10000, 30000))
 plt.title('GitLab-projects')
 plt.legend(bbox_to_anchor=(1, 0.11), loc='upper right', borderaxespad=0, fontsize=8)
-fig.savefig('myimage.svg', format='svg', dpi=300)
+fig.savefig('gitlab_projects-evo_vs_forest.svg', format='svg', dpi=300)
 
 plt.show()
 

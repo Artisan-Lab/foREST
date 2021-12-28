@@ -3,6 +3,7 @@ import random
 import nltk
 from fuzzywuzzy import fuzz
 from module.string_march import StringMatch
+from tool.tools import Tool
 sno = nltk.stem.SnowballStemmer('english')
 # Stemming algorithm
 
@@ -63,6 +64,7 @@ class ResourcePool:
 
     def find_resource_from_resource_name(self, name):
         name = sno.stem(name)
+        self.resource_name_dict = Tool.random_dic(self.resource_name_dict)
         for resource_name in self.resource_name_dict:
             if fuzz.partial_ratio(name, resource_name) >= 90:
                 if self.resource_name_dict[resource_name]:

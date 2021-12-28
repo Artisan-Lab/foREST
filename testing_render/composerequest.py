@@ -25,6 +25,8 @@ class ComposeRequest:
         self.current_parent_source = None
         base_url_list = self.api_info.path.split('/')
         base_url_list.remove('')
+        if self.api_info.api_id == 22:
+            print(1)
         for path in base_url_list[::-1]:
             if not StringMatch.is_path_variable(path):
                 # 从后往前找到路径中的定值
@@ -34,13 +36,13 @@ class ComposeRequest:
                         # 排除掉自己做自己父资源的情况
                         self.current_parent_source = None
                         continue
-                    self.get_path_parameter_from_parent_resource()
+                    self.get_path_parameter_from_parent_resource(self.request)
                     break
 
-    def get_path_parameter_from_parent_resource(self):
+    def get_path_parameter_from_parent_resource(self, request):
         path_parameter_list = self.current_parent_source.get_resource_request.path_parameter_list
         for path_parameter in path_parameter_list:
-            self.current_request.add_parameter(0, path_parameter, path_parameter_list[path_parameter])
+            request.add_parameter(0, path_parameter, path_parameter_list[path_parameter])
 
     def get_value(self, field_info):
         # 获取参数值
@@ -120,15 +122,15 @@ class ComposeRequest:
         return
 
     def recompose_optional_request(self):
-        self.request.initialization()
+        request = copy.deepcopy(self.request)
+        request.initialization()
         if self.api_info.api_id == 0:
             print(1)
         if self.current_parent_source:
-            self.get_path_parameter_from_parent_resource()
+            self.get_path_parameter_from_parent_resource(request)
         for field_info in self.api_info.req_param:
             if not field_info.require:
-                request = copy.deepcopy(self.request)
-                self.current_request = request
+                self.current_request = copy.deepcopy(request)
                 for req_field_info in self.api_info.req_param:
                     if req_field_info.require and req_field_info.field_name not in self.request.path_parameter_list:
                         value = self.get_value(req_field_info)
@@ -151,8 +153,8 @@ class ComposeRequest:
                 self.current_request.compose_request()
                 self.optional_request_pool.append(self.current_request)
 
+    @property
     def get_optional_request(self):
-        self.compose_optional_request()
         return self.optional_request_pool
 
     def get_required_request(self):

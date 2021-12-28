@@ -116,12 +116,12 @@ class Compare:
     def smart_match(self):
         if self.compared_field_name is None:
             return 0
-        match_point = fuzz.partial_ratio(self.compare_parent_resource_name + self.compare_field_name,
-                                         self.compared_parent_resource_name + self.compared_field_name)
+        match_point = max(fuzz.partial_ratio(self.compare_parent_resource_name + self.compare_field_name,
+                                         self.compared_parent_resource_name + self.compared_field_name), fuzz.partial_ratio(self.compare_field_name, self.compared_field_name))
         if self.compare_field_type != self.compared_field_type:
-            match_point -= 40
-        if match_point > 60:
-            return (match_point-60)/4
+            match_point -= 20
+        if match_point > 80:
+            return (match_point-80)/2
         else:
             return 0
 

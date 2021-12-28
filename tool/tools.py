@@ -1,5 +1,6 @@
 import os
 import json
+import random
 import re
 import configparser
 import nltk
@@ -63,11 +64,20 @@ class Tool:
         with open(path + '/' + file_name + '.json', 'w') as f:
             f.write(str(no_reference_key))
 
+    @staticmethod
+    def random_dic(dicts):
+        dict_key_ls = list(dicts.keys())
+        random.shuffle(dict_key_ls)
+        new_dic = {}
+        for key in dict_key_ls:
+            new_dic[key] = dicts.get(key)
+        return new_dic
 
 http_header = {
     'Content-Type': Tool.read_config('http_header', 'Content-Type'),
     'Authorization': Tool.read_config('http_header', 'Authorization')
                }
+traverse_nums = int(Tool.read_config('testing_setting', 'traverse_nums'))
 send_timeout = Tool.read_config('request', 'send_timeout')
 received_timeout = Tool.read_config('request', 'received_timeout')
 sno = nltk.stem.SnowballStemmer('english')

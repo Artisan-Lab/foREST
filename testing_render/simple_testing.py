@@ -75,7 +75,7 @@ class Test:
             self.patch_api_testing()
 
     def optional_request_testing(self):
-        optional_request_list = self.compose_request.get_optional_request()
+        optional_request_list = self.compose_request.get_optional_request
         for optional_request in optional_request_list:
             self.testing_evaluate(optional_request)
 
@@ -90,11 +90,13 @@ class Test:
         request = self.compose_request.request
         response_status = self.testing_evaluate(request)
         if response_status == 2:
+            self.compose_request.compose_optional_request()
             self.optional_request_testing()
 
     def put_api_testing(self):
         request = self.compose_request.request
         response_status = self.testing_evaluate(request)
+        self.compose_request.compose_optional_request()
         self.optional_request_testing()
 
     def delete_api_testing(self):
@@ -133,6 +135,8 @@ class Test:
         response_status = 0
         if re.match('2..', str(response.status_code)):
             if request.method == 'post':
+                if self.api_info.api_id == 17:
+                    print(1)
                 foREST_POST_resource_pool.save_response(self.api_info, request,
                                                         json.loads(request.response.text),
                                                         self.compose_request.current_parent_source)
