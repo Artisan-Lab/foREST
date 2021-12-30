@@ -1,9 +1,9 @@
 import os
 import json
+import random
 import re
 import configparser
-import redis
-import csv
+import nltk
 
 
 class Tool:
@@ -17,7 +17,13 @@ class Tool:
         return temp
 
     @staticmethod
-    def readconfig(title, key):
+    def read_json_file(file_path):
+        with open(file_path, 'r') as json_file:
+            load_dict = json.load(json_file)
+        return load_dict
+
+    @staticmethod
+    def read_config(title, key):
         conf = configparser.ConfigParser()
         root_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), "../FoREST_config.conf")
         conf.read(root_path)
@@ -26,7 +32,7 @@ class Tool:
     @staticmethod
     def save_api_list(open_api_list):
         pattern = re.compile(r'([a-z]*)', re.I)
-        file_name = pattern.match(Tool.readconfig('api_file', 'file_path'))[0]
+        file_name = pattern.match(Tool.read_config('api_file', 'file_path'))[0]
         cur_path = os.path.dirname(os.path.realpath(__file__))  # log_path是存放日志的路径
         path = os.path.join(os.path.dirname(cur_path), './log/api_list')
         if not os.path.exists(path):
@@ -36,6 +42,18 @@ class Tool:
             with open(path + '/' + file_name + '.json', 'w') as f:
                 f.write(jst)
 
+    @staticmethod
+    def save_resource_pool(resource_pool):
+        pattern = re.compile(r'([a-z]*)', re.I)
+        file_name = pattern.match(Tool.read_config('api_file', 'file_path'))[0]
+        cur_path = os.path.dirname(os.path.realpath(__file__))  # log_path是存放日志的路径
+        path = os.path.join(os.path.dirname(cur_path), './log/resource')
+        if not os.path.exists(path):
+            os.mkdir(path)  # 如果不存在这个logs文件夹，就自动创建一个
+        jst = json.dumps(resource_pool, default=lambda o: o.__dict__, indent=4)
+        if not os.path.isfile(path + '/' + file_name + '.json'):
+            with open(path + '/' + file_name + '.json', 'w') as f:
+                f.write(jst)
     @staticmethod
     def save_no_reference(no_reference_key):
         cur_path = os.path.dirname(os.path.realpath(__file__))  # log_path是存放日志的路径
@@ -47,27 +65,21 @@ class Tool:
             f.write(str(no_reference_key))
 
     @staticmethod
-    def set_external_fields_from_file(path):
-        reader = csv.reader(open(path))
-        for line in reader:
-            key, value = line[0], line[1]
-            redis_external_key.set(key, value)
+    def random_dic(dicts):
+        dict_key_ls = list(dicts.keys())
+        random.shuffle(dict_key_ls)
+        new_dic = {}
+        for key in dict_key_ls:
+            new_dic[key] = dicts.get(key)
+        return new_dic
 
-
-redis_external_key = redis.StrictRedis(host=Tool.readconfig('redis', 'redis_host'),
-                                       port=Tool.readconfig('redis', 'redis_port'),
-                                       db=0
-                                       )
-
-redis_response_pool = redis.StrictRedis(host=Tool.readconfig('redis', 'redis_host'),
-                                        port=Tool.readconfig('redis', 'redis_port'),
-                                        db=1
-                                        )
-
-redis_result_pool = redis.StrictRedis(host=Tool.readconfig('redis', 'redis_host'),
-                                      port=Tool.readconfig('redis', 'redis_port'),
-                                      db=2
-                                      )
-token = Tool.readconfig('service', 'token')
-send_timeout = Tool.readconfig('request', 'send_timeout')
-received_timeout = Tool.readconfig('request', 'received_timeout')
+http_header = {
+    'Content-Type': Tool.read_config('http_header', 'Content-Type'),
+    'Authorization': Tool.read_config('http_header', 'Authorization')
+               }
+traverse_nums = int(Tool.read_config('testing_setting', 'traverse_nums'))
+send_timeout = Tool.read_config('request', 'send_timeout')
+received_timeout = Tool.read_config('request', 'received_timeout')
+sno = nltk.stem.SnowballStemmer('english')
+annotation_table = Tool.read_json_file('./annotation_table.json')
+external_key_dict = Tool.read_json_file('./external_key.json')

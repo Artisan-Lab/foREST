@@ -12,7 +12,7 @@ class ResponseJudge:
 
     def __init__(self, request_message, response, api_info, success_pool, valid_pool):
         self.request_message = request_message
-        if JsonHandle.json_judge(response.text):
+        if JsonHandle.is_json(response.text):
             self.response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.text} \n\n'
         else:
             self.response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.raw.data} \n\n'

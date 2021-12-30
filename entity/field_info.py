@@ -22,16 +22,3 @@ class field_info:
             self.depend_list[depend_api_id] += field_path_list
         else:
             self.depend_list[depend_api_id] = field_path_list
-
-
-def field_info_traverse(field_info, func):
-    if field_info.field_type == 'array':
-        if isinstance(field_info.array, list):
-            for array_item in field_info.array:
-                field_info_traverse(array_item, func)
-    elif field_info.field_type  == 'object':
-        if field_info.object:
-            for sub_field_info in field_info.object:
-                field_info_traverse(sub_field_info, func)
-    else:
-        func(field_info)

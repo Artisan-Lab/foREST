@@ -1,7 +1,12 @@
 from anytree import NodeMixin, RenderTree
 import os
+from module.string_march import StringMatch
 from tool.tools import Tool
 from open_api_parse.parser import Parser
+from entity.resource_pool import foREST_POST_resource_pool
+import nltk
+
+sno = nltk.stem.SnowballStemmer('english')
 
 
 class SemanticNode(NodeMixin):
@@ -9,6 +14,7 @@ class SemanticNode(NodeMixin):
     def __init__(self, name, parent=None, children=None):
         super(SemanticNode, self).__init__()
         self.name = name
+        self.resource = []
         self.method_dic = {}
         self.parent = parent
         if children:
@@ -47,7 +53,6 @@ class CreateSemanticTree:
             for children_node in node.children:
                 self.add_close_api(children_node)
 
-
     @staticmethod
     def add_close_node_api(node):
         close_api = []
@@ -55,9 +60,12 @@ class CreateSemanticTree:
             for method in node.method_dic:
                 close_api.append(node.method_dic[method])
         return close_api
+
     @staticmethod
     def find_node(api_path_nodes, api_method, api_id, parent_node):
         if not api_path_nodes:
+            if api_method == 'post' and not StringMatch.is_path_variable(parent_node.name):
+                foREST_POST_resource_pool.resource_name_dict[sno.stem(parent_node.name)] = []
             parent_node.method_dic[api_method] = api_id
             return
         flag = 0
@@ -73,12 +81,11 @@ class CreateSemanticTree:
 
 
 def main():
-    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), Tool.readconfig('api_file', 'file_path'))
+    path = os.path.join(os.path.abspath(os.path.dirname(__file__)), Tool.read_config('api_file', 'file_path'))
     api_parser = Parser(path)
     api_list = api_parser.get_api_list()
     tree = CreateSemanticTree(api_list)
-    tree.create_tree()
-    root = tree.root
+    root = tree.create_tree
 
 
 if __name__ == '__main__':

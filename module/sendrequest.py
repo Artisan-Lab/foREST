@@ -8,7 +8,7 @@ class SendRequest:
     def __init__(self, url, method, header, data):
         self.url = url
         self.method = method
-        self.header = header
+        self.base_header = header
         self.data = data
         self.timeout = (int(send_timeout), int(received_timeout))
         self.response = None
@@ -38,19 +38,18 @@ class SendRequest:
         response = requests.patch(url=url, headers=header, data=data, timeout=timeout)
         return response
 
-    @property
     def get_response(self):
         return self.response
 
     def send_request(self):
         if self.method == 'post':
-            self.response = SendRequest.send_post_request(self.url, self.header, self.data, self.timeout)
+            self.response = SendRequest.send_post_request(self.url, self.base_header, self.data, self.timeout)
         if self.method == 'get':
-            self.response = SendRequest.send_get_request(self.url, self.header, self.data, self.timeout)
+            self.response = SendRequest.send_get_request(self.url, self.base_header, self.data, self.timeout)
         if self.method == 'delete':
-            self.response = SendRequest.send_delete_request(self.url, self.header, self.data, self.timeout)
+            self.response = SendRequest.send_delete_request(self.url, self.base_header, self.data, self.timeout)
         if self.method == 'put':
-            self.response = SendRequest.send_put_request(self.url, self.header, self.data, self.timeout)
+            self.response = SendRequest.send_put_request(self.url, self.base_header, self.data, self.timeout)
         if self.method == 'patch':
-            self.response = SendRequest.send_patch_request(self.url, self.header, self.data, self.timeout)
+            self.response = SendRequest.send_patch_request(self.url, self.base_header, self.data, self.timeout)
 

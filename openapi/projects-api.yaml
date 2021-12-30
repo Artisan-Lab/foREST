@@ -4,7 +4,7 @@ info:
   version: v4
   description: An OpenAPI definition for the GitLab REST API.
 servers:
-  - url: 'http://192.168.112.162/api/v4'
+  - url: 'http://192.168.112.166/api/v4'
 paths:
   /projects:
     post:
@@ -512,7 +512,7 @@ paths:
           description: Include project statistics.
         - name: user_id
           schema:
-            type: string
+            type: integer
           required: true
           in: path
           description: The ID or username of the user.
@@ -630,7 +630,7 @@ paths:
           description: Include project statistics.
         - name: user_id
           schema:
-            type: string
+            type: integer
           required: true
           in: path
           description: The ID or username of the user.
@@ -678,9 +678,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+              type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -970,9 +968,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1500,9 +1496,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1571,9 +1565,7 @@ paths:
           description: Limit by archived status.
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1800,9 +1792,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1841,9 +1831,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1882,9 +1870,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1928,9 +1914,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1957,9 +1941,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -1998,9 +1980,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2039,9 +2019,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2055,9 +2033,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2098,9 +2074,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2166,9 +2140,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2177,7 +2149,6 @@ paths:
             type: string
           required: true
           in: query
-
       requestBody:
         required: true
         content:
@@ -2232,21 +2203,27 @@ paths:
       responses:
         '200':
           description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hooks'
     get:
       tags:
         - projects-api
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
       responses:
         '200':
           description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hooks'
   '/projects/{id}/hooks/{hook_id}':
     delete:
       tags:
@@ -2267,6 +2244,10 @@ paths:
       responses:
         '200':
           description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hooks'
     put:
       tags:
         - projects-api
@@ -2279,9 +2260,7 @@ paths:
           description: The ID of the project hook.
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2350,6 +2329,10 @@ paths:
       responses:
         '200':
           description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hooks'
     get:
       tags:
         - projects-api
@@ -2362,9 +2345,7 @@ paths:
           description: The ID of a project hook.
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2376,44 +2357,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    url:
-                      type: string
-                    project_id:
-                      type: integer
-                    push_events:
-                      type: boolean
-                    push_events_branch_filter:
-                      type: string
-                    issues_events:
-                      type: boolean
-                    confidential_issues_events:
-                      type: boolean
-                    merge_requests_events:
-                      type: boolean
-                    tag_push_events:
-                      type: boolean
-                    note_events:
-                      type: boolean
-                    confidential_note_events:
-                      type: boolean
-                    job_events:
-                      type: boolean
-                    pipeline_events:
-                      type: boolean
-                    wiki_page_events:
-                      type: boolean
-                    deployment_events:
-                      type: boolean
-                    releases_events:
-                      type: boolean
-                    enable_ssl_verification:
-                      type: boolean
-                    created_at:
-                      type: string
+                  $ref: '#/components/schemas/project_info'
   '/projects/{id}/fork/{forked_from_id}':
     post:
       tags:
@@ -2427,9 +2371,7 @@ paths:
           description: The ID of the project that was forked from.
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+            type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2443,9 +2385,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID of the project or NAMESPACE/PROJECT_NAME.
@@ -2459,9 +2399,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2505,9 +2443,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2527,9 +2463,7 @@ paths:
       parameters:
         - name: id
           schema:
-            oneOf:
-              - type: string
-              - type: integer
+             type: integer
           required: true
           in: path
           description: The ID or URL-encoded path of the project.
@@ -2553,6 +2487,41 @@ paths:
                       type: string
 components:
   schemas:
+    hooks:
+      type: object
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        push_events:
+          type: boolean
+        issues_events:
+          type: boolean
+        confidential_issues_events:
+          type: boolean
+        merge_requests_events:
+          type: boolean
+        tag_push_events:
+          type: boolean
+        note_events:
+          type: boolean
+        confidential_note_events:
+          type: boolean
+        job_events:
+          type: boolean
+        pipeline_events:
+          type: boolean
+        wiki_page_events:
+          type: boolean
+        deployment_events:
+          type: boolean
+        releases_events:
+          type: boolean
+        enable_ssl_verification:
+          type: boolean
+        created_at:
+          type: string
     project_info:
       type: object
       properties:

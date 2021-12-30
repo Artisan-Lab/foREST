@@ -7,7 +7,7 @@ class SwaggerParser:
 
     def __init__(self, data):
         self.paths = data.get('paths')
-        self.base_url = Tool.readconfig('api_file', 'http') + '://' + data.get('host') + data.get('basePath')
+        self.base_url = Tool.read_config('api_file', 'http') + '://' + data.get('host') + data.get('basePath')
         self.api_id = 0
         self.api_list = []
         self.current_field = []

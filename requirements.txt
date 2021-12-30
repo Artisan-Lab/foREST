@@ -4,3 +4,5 @@ jsonref==0.2
 PyYAML==6.0
 redis==4.0.2
 requests==2.26.0
+nltk~=3.6.5
+fuzzywuzzy~=0.18.0

@@ -1,5 +1,7 @@
 from tool.tools import Tool
 import copy
+from entity.resource_pool import foREST_POST_resource_pool
+from fuzzywuzzy import fuzz
 
 
 class SetKeyValueDependency:
@@ -12,6 +14,7 @@ class SetKeyValueDependency:
         self.api_numbers = len(api_info_list)
         self.current_field_info = None
         self.current_api_info = None
+        self.current_parent_resource_name = None
         self.not_reference_field = []
         self.key_depend_api_list = []
         self.depended_field_list = []
@@ -21,11 +24,12 @@ class SetKeyValueDependency:
         depend_field_dict = {}
         for api_info in self.api_info_list:
             self.depended_field_list = []
-            if not api_info.resp_param:
+            if not api_info.resp_param or api_info.http_method != 'post':
                 continue
             for field_info in api_info.resp_param:
                 self.depended_field_path = [api_info.api_id]
-                if self.find_depend_field(field_info) and \
+                parent_resource_name = foREST_POST_resource_pool.find_parent_resource_name(api_info.path)
+                if self.find_depend_field(field_info, parent_resource_name) and \
                         self.current_field_info.require and \
                         api_info.api_id not in self.key_depend_api_list:
                     self.key_depend_api_list.append(api_info.api_id)
@@ -34,12 +38,11 @@ class SetKeyValueDependency:
         if parent_name is None:
             parent_name = ''
         self.depended_field_path.append(compare_field.field_name)
-        compare_method = Compare(self.current_field_info.field_name, self.current_field_info.field_type,
-                                 compare_field.field_name, parent_name, compare_field.field_type)
+        compare_method = Compare(self.current_field_info.field_name, self.current_parent_resource_name,
+                                 self.current_field_info.field_type, compare_field.field_name,
+                                 parent_name, compare_field.field_type)
         point = compare_method.smart_match()
         if point:
-            if self.depended_field_path[0] in self.current_api_info.close_api:
-                point += 1
             self.current_field_info.depend_list[0].append(copy.deepcopy(self.depended_field_path))
             self.current_field_info.depend_list[1].extend([point, point])
             self.depended_field_path.pop(-1)
@@ -76,6 +79,7 @@ class SetKeyValueDependency:
         """get every field dependency reference"""
         for api_info in self.api_info_list:
             self.current_api_info = api_info
+            self.current_parent_resource_name = foREST_POST_resource_pool.find_parent_resource_name(api_info.path)
             self.key_depend_api_list = []
             if api_info.req_param:
                 # traverse every parameter
@@ -90,13 +94,14 @@ class SetKeyValueDependency:
 
 class Compare:
 
-    def __init__(self, compare_field_name, compare_field_type, compared_field_name,
-                 compared_field_parent_name, compared_field_type):
+    def __init__(self, compare_field_name, compare_parent_resource_name, compare_field_type, compared_field_name,
+                 compared_parent_resource_name, compared_field_type):
         self.compare_field_name = compare_field_name
+        self.compare_parent_resource_name = compare_parent_resource_name
         self.compare_field_type = compare_field_type
         self.compared_field_name = compared_field_name
         self.compared_field_type = compared_field_type
-        self.compared_field_parent_name = compared_field_parent_name
+        self.compared_parent_resource_name = compared_parent_resource_name
 
     def simple_match(self):
         if self.compared_field_name is None:
@@ -110,17 +115,26 @@ class Compare:
 
     def smart_match(self):
         if self.compared_field_name is None:
-            return None
-        if self.compared_field_name.lower() == self.compare_field_name.lower() and \
-                self.compared_field_type == self.compare_field_type:
-            return 7.5
-        compared_field_name_list = self.compared_field_parent_name.split('_') + self.compared_field_name.split('_')
-        compare_field_name_list = self.compare_field_name.split('_')[-1]
-        compared_field_name = ''.join(compared_field_name_list).lower()
-        compare_field_name = ''.join(compare_field_name_list).lower()
-        if compared_field_name == compare_field_name:
-            return 5
-        if compared_field_name.endswith(compare_field_name):
-            return 2.5
+            return 0
+        match_point = max(fuzz.partial_ratio(self.compare_parent_resource_name + self.compare_field_name,
+                                         self.compared_parent_resource_name + self.compared_field_name), fuzz.partial_ratio(self.compare_field_name, self.compared_field_name))
+        if self.compare_field_type != self.compared_field_type:
+            match_point -= 20
+        if match_point > 80:
+            return (match_point-80)/2
         else:
-            return None
+            return 0
+
+        # if self.compared_field_name.lower() == self.compare_field_name.lower() and \
+        #         self.compared_field_type == self.compare_field_type:
+        #     return 7.5
+        # compared_field_name_list = self.compared_parent_resource_name.split('_') + self.compared_field_name.split('_')
+        # compare_field_name_list = self.compare_field_name.split('_')[-1]
+        # compared_field_name = ''.join(compared_field_name_list).lower()
+        # compare_field_name = ''.join(compare_field_name_list).lower()
+        # if compared_field_name == compare_field_name:
+        #     return 5
+        # if compared_field_name.endswith(compare_field_name):
+        #     return 2.5
+        # else:
+        #     return None
