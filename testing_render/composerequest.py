@@ -25,8 +25,6 @@ class ComposeRequest:
         self.current_parent_source = None
         base_url_list = self.api_info.path.split('/')
         base_url_list.remove('')
-        if self.api_info.api_id == 22:
-            print(1)
         for path in base_url_list[::-1]:
             if not StringMatch.is_path_variable(path):
                 # 从后往前找到路径中的定值

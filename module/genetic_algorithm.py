@@ -33,8 +33,7 @@ class GeneticAlgorithm:
         return self.survival_points_list
 
     def winner_success(self):
-        self.winner_score = self.survival_points_list[self.winner_index]
-        self.winner_score += pow(10-self.winner_score, 2)/10
+        self.winner_score = 10
         self.survival_points_list[self.winner_index] = self.winner_score
         self.Roulette_Wheel_Selection_method()
 

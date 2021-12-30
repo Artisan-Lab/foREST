@@ -1,5 +1,6 @@
 import copy
 import json
+import numpy as np
 from tool.tools import http_header
 from module.sendrequest import SendRequest
 
@@ -21,7 +22,10 @@ class Request(SendRequest):
     def reset_base_request(self):
         self.url = self.base_url
         self.data = ''
-        self.base_header = copy.deepcopy(http_header)
+        if np.random.choice([1, 0], replace=True, p=[0.95, 0.05]):
+            self.base_header = copy.deepcopy(http_header)
+        else:
+            self.base_header = {}
 
     def initialization(self):
         self.reset_base_request()

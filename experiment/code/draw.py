@@ -11,12 +11,12 @@ from datetime import datetime
 
 
 y_major_locator=MultipleLocator(300)
-forest_file = open('../data/gitlab-project/foREST_gitlab_projects.csv')  # 打开csv文件
+forest_file = open('../data/gitlab-group/foREST_gitlab_group.csv')  # 打开csv文件
 forestReader = csv.reader(forest_file)  # 读取csv文件
 forestData = list(forestReader)  # csv数据转换为列表
 forest_length = len(forestData)  # 得到数据行数
 
-evomaster_file = open('../data/gitlab-project/evomaster_gitlab_projects.csv')
+evomaster_file = open('../data/gitlab-group/evomaster_gitlab_group.csv')
 evomaster_reader = csv.reader(evomaster_file)
 evomaster_data = list(evomaster_reader)
 evomaster_length = len(evomaster_data)

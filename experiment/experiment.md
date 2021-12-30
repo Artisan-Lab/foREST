@@ -95,6 +95,10 @@ POST http://localhost/api/v4/templates/reset_coverage
 
 ### 实验过程
 
+#### [EvoMaster](https://github.com/EMResearch/EvoMaster) blackbox model
 
+```
+java -jar evomaster.jar --blackBox true --bbSwaggerUrl file:///C:/Users/42511/OneDrive/coding/Restful-api-testing/openapi/projects-api.yaml --outputFormat JAVA_JUNIT_4 --maxTime 600s --ratePerMinute 300 --bbTargetUrl http://192.168.112.162 --header0 'Authorization:Bearer qt36fUTL6m_1Y8r4iiob' --header1 'a:a' --header2 'b:b'
+```
 
 
