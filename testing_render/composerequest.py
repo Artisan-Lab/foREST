@@ -44,12 +44,15 @@ class ComposeRequest:
 
     def get_value(self, field_info):
         # 获取参数值
+        if field_info.field_name == 'actions[]':
+            print(1)
         if field_info.field_type == 'bool':
             value = BasicFuzz.fuzz_value_from_field(field_info)
             return value
         value = StringMatch.get_value_from_external(self.api_info.path,
                                                     self.api_info.http_method,
                                                     field_info.field_name,
+                                                    field_info.location
                                                     )
         # 先判断该参数有没有由外部指定
         if value:
@@ -65,6 +68,8 @@ class ComposeRequest:
             for i in range(len(field_info.depend_list[1])):
                 winner_depend_field_index = genetic_algorithm.get_winner_index()
                 field_path = field_info.depend_list[0][int(winner_depend_field_index / 2)]
+                if field_path == -1 and (field_info.field_type == 'int' or field_info.field_type == 'str'):
+                    return BasicFuzz.fuzz_value_from_field(field_info)
                 if self.current_parent_source and field_path[0] == self.current_parent_source.resource_api_id:
                     value = self.current_parent_source.find_field_from_path(self.current_parent_source.resource_data,
                                                                             field_path[1:])
@@ -90,18 +95,19 @@ class ComposeRequest:
                 return value
         elif field_info.field_type == 'list':
             # 同上
-            if isinstance(field_info.array, list):
+            if field_info.array.field_type == 'dict':
                 value = []
                 sub_value = {}
-                for array_field in field_info.array:
-                    if array_field.require:
-                        sub_value[array_field.field_name] = self.get_value(array_field)
-                value.append(sub_value)
+                if field_info.array.object:
+                    for array_field in field_info.array.object:
+                        if array_field.require:
+                            sub_value[array_field.field_name] = self.get_value(array_field)
+                    value.append(sub_value)
                 return value
-            elif isinstance(field_info.array, str):
+            else:
                 value = []
                 for i in range(0, 5):
-                    value.append(BasicFuzz.fuzz_value_from_type(field_info.array))
+                    value.append(BasicFuzz.fuzz_value_from_type(field_info.array.field_type))
                 return value
         if value is None:
             # 如果不能获得该参数的话，用fuzz

@@ -35,6 +35,8 @@ class ResourcePool:
         resource_name = sno.stem(resource_name)
         resource = Resource(self.resource_id, api_id, resource_name, resource_data, resource_request, resource_path)
         self.resource_list.append(resource)
+        if api_id == 34:
+            print(1)
         if resource_name in self.resource_name_dict:
             if len(self.resource_name_dict[resource_name]) > 100:
                 self.delete_resource(self.resource_name_dict[resource_name][0])
@@ -72,15 +74,17 @@ class ResourcePool:
         return None
 
     def __delete_resource(self, resource):
-        self.resource_list.remove(resource)
-        self.resource_name_dict[sno.stem(resource.resource_name)].remove(resource)
-        self.resource_api_id_dict[resource.resource_api_id].remove(resource)
+        if resource.resource_api_id == 34:
+            print(1)
         if resource.children_resource:
             for child_resource in resource.children_resource:
                 self.delete_resource(resource=child_resource)
         if resource.parent_resource:
             for single_parent_resource in resource.parent_resource:
                 single_parent_resource.children_resource.remove(resource)
+        self.resource_list.remove(resource)
+        self.resource_name_dict[sno.stem(resource.resource_name)].remove(resource)
+        self.resource_api_id_dict[resource.resource_api_id].remove(resource)
 
     def delete_resource(self, resource=None, resource_id=None):
         if not (resource or resource_id):

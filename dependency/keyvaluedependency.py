@@ -2,6 +2,7 @@ from tool.tools import Tool
 import copy
 from entity.resource_pool import foREST_POST_resource_pool
 from fuzzywuzzy import fuzz
+from module.string_march import StringMatch
 
 
 class SetKeyValueDependency:
@@ -15,6 +16,8 @@ class SetKeyValueDependency:
         self.current_field_info = None
         self.current_api_info = None
         self.current_parent_resource_name = None
+        self.current_compare_field_info = None
+        self.current_compare_api_info = None
         self.not_reference_field = []
         self.key_depend_api_list = []
         self.depended_field_list = []
@@ -23,10 +26,12 @@ class SetKeyValueDependency:
     def find_depend_API(self):
         depend_field_dict = {}
         for api_info in self.api_info_list:
+            self.current_compare_api_info = api_info
             self.depended_field_list = []
             if not api_info.resp_param or api_info.http_method != 'post':
                 continue
             for field_info in api_info.resp_param:
+                self.current_compare_field_info = field_info
                 self.depended_field_path = [api_info.api_id]
                 parent_resource_name = foREST_POST_resource_pool.find_parent_resource_name(api_info.path)
                 if self.find_depend_field(field_info, parent_resource_name) and \
@@ -38,8 +43,20 @@ class SetKeyValueDependency:
         if parent_name is None:
             parent_name = ''
         self.depended_field_path.append(compare_field.field_name)
-        compare_method = Compare(self.current_field_info.field_name, self.current_parent_resource_name,
-                                 self.current_field_info.field_type, compare_field.field_name,
+        real_field_name = StringMatch.get_real_name_from_external(self.current_api_info.path,
+                                                                  self.current_api_info.http_method,
+                                                                  self.current_field_info.field_name,
+                                                                  self.current_field_info.location)
+        real_compare_field_name = StringMatch.get_real_name_from_external(self.current_compare_api_info.path,
+                                                                          self.current_compare_api_info.http_method,
+                                                                          self.current_compare_field_info.field_name,
+                                                                          self.current_compare_field_info.location)
+        if not real_field_name:
+            real_field_name = self.current_field_info.field_name
+        if not real_compare_field_name:
+            real_compare_field_name = self.current_compare_field_info.field_name
+        compare_method = Compare(real_field_name, self.current_parent_resource_name,
+                                 self.current_field_info.field_type, real_compare_field_name,
                                  parent_name, compare_field.field_type)
         point = compare_method.smart_match()
         if point:

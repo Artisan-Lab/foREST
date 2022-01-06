@@ -1,7 +1,7 @@
 import copy
 import json
 import numpy as np
-from tool.tools import http_header
+from tool.tools import http_header, http_header_no_auth
 from module.sendrequest import SendRequest
 
 
@@ -25,7 +25,7 @@ class Request(SendRequest):
         if np.random.choice([1, 0], replace=True, p=[0.95, 0.05]):
             self.base_header = copy.deepcopy(http_header)
         else:
-            self.base_header = {}
+            self.base_header = copy.deepcopy(http_header_no_auth)
 
     def initialization(self):
         self.reset_base_request()

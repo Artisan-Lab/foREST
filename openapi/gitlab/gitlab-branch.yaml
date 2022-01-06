@@ -1,0 +1,275 @@
+openapi: 3.0.0
+info:
+  title: openapi
+  version: v4
+  description: An OpenAPI definition for the GitLab REST API.
+servers:
+  - url: 'http://192.168.112.166/api/v4'
+paths:
+  '/projects/{id}/repository/branches':
+    get:
+      tags:
+        - branches
+      parameters:
+        - name: id
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+          required: true
+          in: path
+          description:
+            ID or URL-encoded path of the project owned by the authenticated
+            user.
+        - name: search
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            Return list of branches containing the search string. You can use
+            ^term and term$ to find branches that begin and end with term
+            respectively.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  merged:
+                    type: boolean
+                  protected:
+                    type: boolean
+                  default:
+                    type: boolean
+                  developers_can_push:
+                    type: boolean
+                  developers_can_merge:
+                    type: boolean
+                  can_push:
+                    type: boolean
+                  web_url:
+                    type: string
+                  commit:
+                    type: object
+                    properties:
+                      author_email:
+                        type: string
+                      author_name:
+                        type: string
+                      authored_date:
+                        type: string
+                      created_at:
+                        type: string
+                      committed_date:
+                        type: string
+                      committer_email:
+                        type: string
+                      committer_name:
+                        type: string
+                      id:
+                        type: string
+                      short_id:
+                        type: string
+                      title:
+                        type: string
+                      message:
+                        type: string
+                      parent_ids:
+                        type: array
+                        items:
+                          type: string
+                      web_url:
+                        type: string
+    post:
+      tags:
+        - branches
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description:
+            ID or URL-encoded path of the project owned by the authenticated
+            user.
+        - name: branch
+          schema:
+            type: string
+          required: true
+          in: query
+          description: Name of the branch.
+        - name: ref
+          schema:
+            type: string
+          required: true
+          in: query
+          description: Branch name or commit SHA to create branch from.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  commit:
+                    type: object
+                    properties:
+                      author_email:
+                        type: string
+                      author_name:
+                        type: string
+                      authored_date:
+                        type: string
+                      committed_date:
+                        type: string
+                      committer_email:
+                        type: string
+                      committer_name:
+                        type: string
+                      id:
+                        type: string
+                      short_id:
+                        type: string
+                      title:
+                        type: string
+                      message:
+                        type: string
+                      parent_ids:
+                        type: array
+                        items:
+                          type: string
+                  name:
+                    type: string
+                  merged:
+                    type: boolean
+                  protected:
+                    type: boolean
+                  default:
+                    type: boolean
+                  developers_can_push:
+                    type: boolean
+                  developers_can_merge:
+                    type: boolean
+                  can_push:
+                    type: boolean
+                  web_url:
+                    type: string
+  '/projects/{id}/repository/branches/{branch}':
+    get:
+      tags:
+        - branches
+      parameters:
+        - name: id
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+          required: true
+          in: path
+          description:
+            ID or URL-encoded path of the project owned by the authenticated
+            user.
+        - name: branch
+          schema:
+            type: string
+          required: true
+          in: path
+          description: Name of the branch.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  merged:
+                    type: boolean
+                  protected:
+                    type: boolean
+                  default:
+                    type: boolean
+                  developers_can_push:
+                    type: boolean
+                  developers_can_merge:
+                    type: boolean
+                  can_push:
+                    type: boolean
+                  web_url:
+                    type: string
+                  commit:
+                    type: object
+                    properties:
+                      author_email:
+                        type: string
+                      author_name:
+                        type: string
+                      authored_date:
+                        type: string
+                      committed_date:
+                        type: string
+                      committer_email:
+                        type: string
+                      committer_name:
+                        type: string
+                      id:
+                        type: string
+                      short_id:
+                        type: string
+                      title:
+                        type: string
+                      message:
+                        type: string
+                      parent_ids:
+                        type: array
+                        items:
+                          type: string
+    delete:
+      tags:
+        - branches
+      parameters:
+        - name: id
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+          required: true
+          in: path
+          description:
+            ID or URL-encoded path of the project owned by the authenticated
+            user.
+        - name: branch
+          schema:
+            type: string
+          required: true
+          in: path
+          description: Name of the branch.
+      responses:
+        '200':
+          description: success
+  '/projects/{id}/repository/merged_branches':
+    delete:
+      tags:
+        - branches
+      parameters:
+        - name: id
+          schema:
+            oneOf:
+              - type: integer
+              - type: string
+          required: true
+          in: path
+          description:
+            ID or URL-encoded path of the project owned by the authenticated
+            user.
+      responses:
+        '200':
+          description: success
