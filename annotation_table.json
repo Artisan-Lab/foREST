@@ -3,7 +3,114 @@
     "api_method": [
       {
         "field_name": "",
-        "real_field_name": ""
+        "real_field_name": "",
+        "location": "path=0, query=1, body=2, header=3 or response=4"
+      }
+    ]
+  },
+  "/projects/{id}/repository/commits/{sha}": {
+    "get": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ]
+  },
+  "/projects/{id}/repository/commits/{sha}/refs": {
+    "get": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ]
+  },
+  "/projects/{id}/repository/commits/{sha}/cherry_pick": {
+    "post": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ]
+  },
+  "/projects/{id}/repository/commits/{sha}/revert": {
+    "post": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ]
+  },
+  "/projects/{id}/repository/commits/{sha}/diff": {
+    "get": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ]
+  },
+ "/projects/{id}/repository/commits/{sha}/comments": {
+   "get": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ],
+   "post": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ]
+ },
+  "/projects/{id}/repository/commits/{sha}/discussions": {
+    "get": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ]
+  },
+  "/projects/{id}/repository/commits/{sha}/statuses": {
+    "get": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ]
+  },
+  "/projects/{id}/statuses/{sha}": {
+    "post": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ]
+  },
+  "/projects/{id}/repository/commits/{sha}/signature": {
+    "get": [
+      {
+        "field_name": "sha",
+        "real_field_name": "commit_id",
+        "location": 0
+      }
+    ]
+  },
+  "/projects/{id}/repository/branches": {
+    "post": [
+      {
+        "field_name": "ref",
+        "real_field_name": "ref_branch",
+        "location": 1
       }
     ]
   }

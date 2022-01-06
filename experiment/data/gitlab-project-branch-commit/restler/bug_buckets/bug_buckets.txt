@@ -1,0 +1,19 @@
+PayloadBodyChecker_500: 4
+Total Buckets: 4
+-------------
+PayloadBodyChecker_500 - Bug was reproduced - PayloadBodyChecker_500_1.txt
+Hash: PayloadBodyChecker_500_60dd7ee238ddf5a08f61315bd65ca6bcdc0b8a85
+POST /api/v4/projects?name=fuzzstring HTTP/1.1\r\nAccept: application/json\r\nHost: 192.168.112.175\r\nContent-Type: application/json\r\nauthentication_token_tag\r\n{"use_custom_template":false}
+--------------------------------------------------------------------------------
+PayloadBodyChecker_500 - Bug was reproduced - PayloadBodyChecker_500_2.txt
+Hash: PayloadBodyChecker_500_6dff4d0b48671e435f93d17fe23173b3b3b38da3
+POST /api/v4/projects?name=fuzzstring HTTP/1.1\r\nAccept: application/json\r\nHost: 192.168.112.175\r\nContent-Type: application/json\r\nauthentication_token_tag\r\n{"use_custom_template":0}
+--------------------------------------------------------------------------------
+PayloadBodyChecker_500 - Bug was reproduced - PayloadBodyChecker_500_3.txt
+Hash: PayloadBodyChecker_500_9c52d50bf646531213ed7d3b2a1fefc8e3d313e0
+POST /api/v4/projects/user/1?name=fuzzstring HTTP/1.1\r\nAccept: application/json\r\nHost: 192.168.112.175\r\nContent-Type: application/json\r\nauthentication_token_tag\r\n{"use_custom_template":false}
+--------------------------------------------------------------------------------
+PayloadBodyChecker_500 - Bug was reproduced - PayloadBodyChecker_500_4.txt
+Hash: PayloadBodyChecker_500_32d72fcfe19f432f30cea1c99dd75f6691c6feb7
+POST /api/v4/projects/user/1?name=fuzzstring HTTP/1.1\r\nAccept: application/json\r\nHost: 192.168.112.175\r\nContent-Type: application/json\r\nauthentication_token_tag\r\n{"use_custom_template":0}
+--------------------------------------------------------------------------------

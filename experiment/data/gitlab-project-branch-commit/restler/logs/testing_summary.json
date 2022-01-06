@@ -1,0 +1,25 @@
+{
+    "final_spec_coverage": "3 / 51",
+    "rendered_requests": "5 / 51",
+    "rendered_requests_valid_status": "3 / 5",
+    "num_fully_valid": 3,
+    "num_sequence_failures": 0,
+    "num_invalid_by_failed_resource_creations": 0,
+    "total_object_creations": 1,
+    "total_requests_sent": {
+        "gc": 1,
+        "main_driver": 375126,
+        "LeakageRuleChecker": 0,
+        "ResourceHierarchyChecker": 0,
+        "UseAfterFreeChecker": 0,
+        "InvalidDynamicObjectChecker": 0,
+        "PayloadBodyChecker": 3100,
+        "ExamplesChecker": 0
+    },
+    "bug_buckets": {
+        "PayloadBodyChecker_500": 4
+    },
+    "reproducible_bug_buckets": {
+        "PayloadBodyChecker_500": 4
+    }
+}

@@ -45,18 +45,19 @@ class Test:
                         self.node_queue.append(child)
             self.traverse_nums += 1
             summery_count['already send rounds'] = self.traverse_nums
-        print(1)
 
     def node_testing(self, node):
         exec_method_list = ['get', 'post', 'put', 'patch', 'delete']
         for exec_method in exec_method_list:
             if exec_method in node.method_dic:
-                if exec_method == 'post':
+                api_id = node.method_dic[exec_method]
+                if exec_method == 'post' and (api_id not in foREST_POST_resource_pool.resource_api_id_dict
+                                              or len(foREST_POST_resource_pool.resource_api_id_dict[api_id])) < 100:
                     k = random.randint(1, 5)
                     for _ in range(k):
-                        self.api_testing(node.method_dic[exec_method])
+                        self.api_testing(api_id)
                 else:
-                    self.api_testing(node.method_dic[exec_method])
+                    self.api_testing(api_id)
 
     def api_testing(self, api_id):
         self.api_info = self.api_list[api_id]
@@ -82,6 +83,8 @@ class Test:
     def post_api_testing(self):
         request = self.compose_request.request
         response_status = self.testing_evaluate(request)
+        if self.api_info.api_id == 34:
+            print(1)
         if response_status == 2:
             self.compose_request.recompose_optional_request()
             self.optional_request_testing()

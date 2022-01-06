@@ -1,0 +1,4081 @@
+openapi: 3.0.0
+info:
+  title: openapi
+  version: v4
+  description: An OpenAPI definition for the GitLab REST API.
+servers:
+  - url: 'http://192.168.112.175/api/v4'
+paths:
+  /projects:
+    post:
+      tags:
+      - projects-api
+      parameters:
+      - name: name
+        schema:
+          type: string
+        required: true
+        in: query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                allow_merge_on_skipped_pipeline:
+                  type: boolean
+                  description:
+                    Set whether or not merge requests can be merged with skipped
+                    jobs.
+                approvals_before_merge:
+                  type: integer
+                  description: How many approvers should approve merge requests by default.
+                auto_cancel_pending_pipelines:
+                  type: string
+                  description:
+                    Auto-cancel pending pipelines. This isn’t a boolean, but
+                    enabled/disabled.
+                auto_devops_deploy_strategy:
+                  type: string
+                  description:
+                    Auto Deploy strategy (continuous, manual or
+                    timed_incremental).
+                auto_devops_enabled:
+                  type: boolean
+                  description: Enable Auto DevOps for this project.
+                autoclose_referenced_issues:
+                  type: boolean
+                  description:
+                    Set whether auto-closing referenced issues on default
+                    branch.
+                avatar:
+                  type: object
+                  description: Image file for avatar of the project.
+                build_coverage_regex:
+                  type: string
+                  description: Test coverage parsing.
+                build_git_strategy:
+                  type: string
+                  description: The Git strategy. Defaults to fetch.
+                build_timeout:
+                  type: integer
+                  description:
+                    The maximum amount of time in minutes that a job is able run
+                    (in seconds).
+                builds_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                ci_config_path:
+                  type: string
+                  description: The path to CI configuration file.
+                container_expiration_policy_attributes:
+                  type: object
+                  description:
+                    'Update the image cleanup policy for this project. Accepts:
+                    cadence (string), keep_n (string), older_than (string),
+                    name_regex (string), name_regex_delete (string),
+                    name_regex_keep (string), enabled (boolean).'
+                container_registry_enabled:
+                  type: boolean
+                  description: Enable container registry for this project.
+                default_branch:
+                  type: string
+                  description: master by default.
+                description:
+                  type: string
+                  description: Short project description.
+                emails_disabled:
+                  type: boolean
+                  description: Disable email notifications.
+                external_authorization_classification_label:
+                  type: string
+                  description: The classification label for the project.
+                forking_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                group_with_project_templates_id:
+                  type: integer
+                  description:
+                    For group-level custom templates, specifies ID of group from
+                    which all the custom project templates are sourced. Leave
+                    empty for instance-level templates. Requires
+                    use_custom_template to be true.
+                import_url:
+                  type: string
+                  description: URL to import repository from.
+                initialize_with_readme:
+                  type: boolean
+                  description: false by default.
+                issues_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                issues_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable issues for this project. Use
+                    issues_access_level instead.
+                jobs_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable jobs for this project. Use
+                    builds_access_level instead.
+                lfs_enabled:
+                  type: boolean
+                  description: Enable LFS.
+                merge_method:
+                  type: string
+                  description: Set the merge method used.
+                merge_requests_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                merge_requests_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable merge requests for this project. Use
+                    merge_requests_access_level instead.
+                mirror_trigger_builds:
+                  type: boolean
+                  description: Pull mirroring triggers builds.
+                mirror:
+                  type: boolean
+                  description: Enables pull mirroring in a project.
+                namespace_id:
+                  type: integer
+                  description:
+                    Namespace for the new project (defaults to the current
+                    user’s namespace).
+                only_allow_merge_if_all_discussions_are_resolved:
+                  type: boolean
+                  description:
+                    Set whether merge requests can only be merged when all the
+                    discussions are resolved.
+                only_allow_merge_if_pipeline_succeeds:
+                  type: boolean
+                  description:
+                    Set whether merge requests can only be merged with
+                    successful jobs.
+                packages_enabled:
+                  type: boolean
+                  description: Enable or disable packages repository feature.
+                pages_access_level:
+                  type: string
+                  description: 'One of disabled, private, enabled, or public.'
+                requirements_access_level:
+                  type: string
+                  description: 'One of disabled, private, enabled or public'
+                path:
+                  type: string
+                  description:
+                    Repository name for new project. Generated based on name if
+                    not provided (generated as lowercase with dashes).
+                printing_merge_request_link_enabled:
+                  type: boolean
+                  description:
+                    Show link to create/view merge request when pushing from the
+                    command line.
+                public_builds:
+                  type: boolean
+                  description: 'If true, jobs can be viewed by non-project members.'
+                remove_source_branch_after_merge:
+                  type: boolean
+                  description:
+                    Enable Delete source branch option by default for all new
+                    merge requests.
+                repository_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                repository_storage:
+                  type: string
+                  description: Which storage shard the repository is on. (admins only)
+                request_access_enabled:
+                  type: boolean
+                  description: Allow users to request member access.
+                resolve_outdated_diff_discussions:
+                  type: boolean
+                  description:
+                    Automatically resolve merge request diffs discussions on
+                    lines changed with a push.
+                shared_runners_enabled:
+                  type: boolean
+                  description: Enable shared runners for this project.
+                show_default_award_emojis:
+                  type: boolean
+                  description: Show default award emojis.
+                snippets_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                snippets_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable snippets for this project. Use
+                    snippets_access_level instead.
+                tag_list:
+                  type: array
+                  items:
+                    type: object
+                  description:
+                    The list of tags for a project; put array of tags, that
+                    should be finally assigned to a project.
+                template_name:
+                  type: string
+                  description:
+                    When used without use_custom_template, name of a built-in
+                    project template. When used with use_custom_template, name
+                    of a custom project template.
+                template_project_id:
+                  type: integer
+                  description:
+                    When used with use_custom_template, project ID of a custom
+                    project template. This is preferable to using template_name
+                    since template_name may be ambiguous.
+                use_custom_template:
+                  type: boolean
+                  description:
+                    Use either custom instance or group (with
+                    group_with_project_templates_id) project template.
+                visibility:
+                  type: string
+                  enum:
+                  - private
+                  - internal
+                  - public
+                  description: See project visibility level.
+                wiki_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                wiki_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable wiki for this project. Use
+                    wiki_access_level instead.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project_info'
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: archived
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by archived status.
+        - name: id_after
+          schema:
+            type: integer
+          required: false
+          in: query
+          description: Limit results to projects with IDs greater than the specified ID.
+        - name: id_before
+          schema:
+            type: integer
+          required: false
+          in: query
+          description: Limit results to projects with IDs less than the specified ID.
+        - name: last_activity_after
+          schema:
+            type: string
+            format: ISO 8601 YYYY-MM-DDTHH:MM:SSZ
+          required: false
+          in: query
+          description:
+            Limit results to projects with last_activity after specified time.
+        - name: last_activity_before
+          schema:
+            type: string
+            format: ISO 8601 YYYY-MM-DDTHH:MM:SSZ
+          required: false
+          in: query
+          description:
+            Limit results to projects with last_activity before specified time.
+        - name: membership
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects that the current user is a member of.
+        - name: min_access_level
+          schema:
+            type: integer
+          required: false
+          in: query
+          description: Limit by current user minimal access level.
+        - name: order_by
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            Return projects ordered by id, name, path, created_at, updated_at,
+            or last_activity_at fields. repository_size, storage_size,
+            packages_size or wiki_size fields are only allowed for admins.
+            Default is created_at.
+        - name: owned
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects explicitly owned by the current user.
+        - name: repository_checksum_failed
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description:
+            Limit projects where the repository checksum calculation has failed
+            (Introduced in GitLab Premium 11.2).
+        - name: repository_storage
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            Limit results to projects stored on repository_storage. (admins
+            only)
+        - name: search_namespaces
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description:
+            Include ancestor namespaces when matching search criteria. Default
+            is false.
+        - name: search
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Return list of projects matching the search criteria.
+        - name: simple
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description:
+            Return only limited fields for each project. This is a no-op without
+            authentication as then only simple fields are returned.
+        - name: sort
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Return projects sorted in asc or desc order. Default is desc.
+        - name: starred
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects starred by the current user.
+        - name: statistics
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include project statistics.
+        - name: visibility
+          schema:
+            type: string
+            enum:
+            - private
+            - internal
+            - public
+          required: false
+          in: query
+          description: 'Limit by visibility public, internal, or private.'
+        - name: wiki_checksum_failed
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description:
+            Limit projects where the wiki checksum calculation has failed
+            (Introduced in GitLab Premium 11.2).
+        - name: with_custom_attributes
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include custom attributes in response. (admins only)
+        - name: with_issues_enabled
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by enabled issues feature.
+        - name: with_merge_requests_enabled
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by enabled merge requests feature.
+        - name: with_programming_language
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Limit by projects which use the given programming language.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/project_info'
+  '/users/{user_id}/projects':
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: archived
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by archived status.
+        - name: id_after
+          schema:
+            type: integer
+          required: false
+          in: query
+          description: Limit results to projects with IDs greater than the specified ID.
+        - name: id_before
+          schema:
+            type: integer
+          required: false
+          in: query
+          description: Limit results to projects with IDs less than the specified ID.
+        - name: membership
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects that the current user is a member of.
+        - name: min_access_level
+          schema:
+            type: integer
+          required: false
+          in: query
+          description: Limit by current user minimal access level.
+        - name: order_by
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            Return projects ordered by id, name, path, created_at, updated_at,
+            or last_activity_at fields. Default is created_at.
+        - name: owned
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects explicitly owned by the current user.
+        - name: search
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Return list of projects matching the search criteria.
+        - name: simple
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description:
+            Return only limited fields for each project. This is a no-op without
+            authentication as then only simple fields are returned.
+        - name: sort
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Return projects sorted in asc or desc order. Default is desc.
+        - name: starred
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects starred by the current user.
+        - name: statistics
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include project statistics.
+        - name: user_id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or username of the user.
+        - name: visibility
+          schema:
+            type: string
+            enum:
+            - private
+            - internal
+            - public
+          required: false
+          in: query
+          description: 'Limit by visibility public, internal, or private.'
+        - name: with_custom_attributes
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include custom attributes in response. (admins only)
+        - name: with_issues_enabled
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by enabled issues feature.
+        - name: with_merge_requests_enabled
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by enabled merge requests feature.
+        - name: with_programming_language
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Limit by projects which use the given programming language.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/project_info'
+  '/users/{user_id}/starred_projects':
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: archived
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by archived status.
+        - name: membership
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects that the current user is a member of.
+        - name: min_access_level
+          schema:
+            type: integer
+          required: false
+          in: query
+          description: Limit by current user minimal access level.
+        - name: order_by
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            Return projects ordered by id, name, path, created_at, updated_at,
+            or last_activity_at fields. Default is created_at.
+        - name: owned
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects explicitly owned by the current user.
+        - name: search
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Return list of projects matching the search criteria.
+        - name: simple
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description:
+            Return only limited fields for each project. This is a no-op without
+            authentication as then only simple fields are returned..
+        - name: sort
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Return projects sorted in asc or desc order. Default is desc.
+        - name: starred
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects starred by the current user.
+        - name: statistics
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include project statistics.
+        - name: user_id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or username of the user.
+        - name: visibility
+          schema:
+            type: string
+            enum:
+            - private
+            - internal
+            - public
+          required: false
+          in: query
+          description: 'Limit by visibility public, internal, or private.'
+        - name: with_custom_attributes
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include custom attributes in response. (admins only)
+        - name: with_issues_enabled
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by enabled issues feature.
+        - name: with_merge_requests_enabled
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by enabled merge requests feature.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/project_info'
+  '/projects/{id}':
+    delete:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+              type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+    put:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                allow_merge_on_skipped_pipeline:
+                  type: boolean
+                  description:
+                    Set whether or not merge requests can be merged with skipped
+                    jobs.
+                approvals_before_merge:
+                  type: integer
+                  description: How many approvers should approve merge request by default.
+                auto_cancel_pending_pipelines:
+                  type: string
+                  description:
+                    Auto-cancel pending pipelines. This isn’t a boolean, but
+                    enabled/disabled.
+                auto_devops_deploy_strategy:
+                  type: string
+                  description:
+                    Auto Deploy strategy (continuous, manual, or
+                    timed_incremental).
+                auto_devops_enabled:
+                  type: boolean
+                  description: Enable Auto DevOps for this project.
+                autoclose_referenced_issues:
+                  type: boolean
+                  description:
+                    Set whether auto-closing referenced issues on default
+                    branch.
+                avatar:
+                  type: object
+                  description: Image file for avatar of the project.
+                build_coverage_regex:
+                  type: string
+                  description: Test coverage parsing.
+                build_git_strategy:
+                  type: string
+                  description: The Git strategy. Defaults to fetch.
+                build_timeout:
+                  type: integer
+                  description:
+                    The maximum amount of time in minutes that a job is able run
+                    (in seconds).
+                builds_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                ci_config_path:
+                  type: string
+                  description: The path to CI configuration file.
+                ci_default_git_depth:
+                  type: integer
+                  description: Default number of revisions for shallow cloning.
+                ci_forward_deployment_enabled:
+                  type: boolean
+                  description:
+                    When a new deployment job starts, skip older deployment jobs
+                    that are still pending
+                container_expiration_policy_attributes:
+                  type: object
+                  description:
+                    'Update the image cleanup policy for this project. Accepts:
+                    cadence (string), keep_n (string), older_than (string),
+                    name_regex (string), name_regex_delete (string),
+                    name_regex_keep (string), enabled (boolean).'
+                container_registry_enabled:
+                  type: boolean
+                  description: Enable container registry for this project.
+                default_branch:
+                  type: string
+                  description: master by default.
+                description:
+                  type: string
+                  description: Short project description.
+                emails_disabled:
+                  type: boolean
+                  description: Disable email notifications.
+                external_authorization_classification_label:
+                  type: string
+                  description: The classification label for the project.
+                forking_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                import_url:
+                  type: string
+                  description: URL to import repository from.
+                issues_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                issues_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable issues for this project. Use
+                    issues_access_level instead.
+                jobs_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable jobs for this project. Use
+                    builds_access_level instead.
+                lfs_enabled:
+                  type: boolean
+                  description: Enable LFS.
+                merge_method:
+                  type: string
+                  description: Set the merge method used.
+                merge_requests_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                merge_requests_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable merge requests for this project. Use
+                    merge_requests_access_level instead.
+                mirror_overwrites_diverged_branches:
+                  type: boolean
+                  description: Pull mirror overwrites diverged branches.
+                mirror_trigger_builds:
+                  type: boolean
+                  description: Pull mirroring triggers builds.
+                mirror_user_id:
+                  type: integer
+                  description:
+                    User responsible for all the activity surrounding a pull
+                    mirror event. (admins only)
+                mirror:
+                  type: boolean
+                  description: Enables pull mirroring in a project.
+                name:
+                  type: string
+                  description: The name of the project.
+                only_allow_merge_if_all_discussions_are_resolved:
+                  type: boolean
+                  description:
+                    Set whether merge requests can only be merged when all the
+                    discussions are resolved.
+                only_allow_merge_if_pipeline_succeeds:
+                  type: boolean
+                  description:
+                    Set whether merge requests can only be merged with
+                    successful jobs.
+                only_mirror_protected_branches:
+                  type: boolean
+                  description: Only mirror protected branches.
+                packages_enabled:
+                  type: boolean
+                  description: Enable or disable packages repository feature.
+                pages_access_level:
+                  type: string
+                  description: 'One of disabled, private, enabled, or public.'
+                requirements_access_level:
+                  type: string
+                  description: 'One of disabled, private, enabled or public'
+                path:
+                  type: string
+                  description:
+                    Custom repository name for the project. By default generated
+                    based on name.
+                public_builds:
+                  type: boolean
+                  description: 'If true, jobs can be viewed by non-project members.'
+                remove_source_branch_after_merge:
+                  type: boolean
+                  description:
+                    Enable Delete source branch option by default for all new
+                    merge requests.
+                repository_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                repository_storage:
+                  type: string
+                  description: Which storage shard the repository is on. (admins only)
+                request_access_enabled:
+                  type: boolean
+                  description: Allow users to request member access.
+                resolve_outdated_diff_discussions:
+                  type: boolean
+                  description:
+                    Automatically resolve merge request diffs discussions on
+                    lines changed with a push.
+                service_desk_enabled:
+                  type: boolean
+                  description: Enable or disable Service Desk feature.
+                shared_runners_enabled:
+                  type: boolean
+                  description: Enable shared runners for this project.
+                show_default_award_emojis:
+                  type: boolean
+                  description: Show default award emojis.
+                snippets_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                snippets_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable snippets for this project. Use
+                    snippets_access_level instead.
+                suggestion_commit_message:
+                  type: string
+                  description: The commit message used to apply merge request suggestions.
+                tag_list:
+                  type: array
+                  items:
+                    type: object
+                  description:
+                    The list of tags for a project; put array of tags, that
+                    should be finally assigned to a project.
+                visibility:
+                  type: string
+                  enum:
+                  - private
+                  - internal
+                  - public
+                  description: See project visibility level.
+                wiki_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                wiki_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable wiki for this project. Use
+                    wiki_access_level instead.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project_info'
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+        - name: license
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include project license data.
+        - name: statistics
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include project statistics.
+        - name: with_custom_attributes
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include custom attributes in response. (admins only)
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project_info'
+  '/projects/{id}/users':
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+        - name: search
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Search for specific users.
+        - name: skip_users
+          schema:
+            type: array
+            items:
+              type: integer
+          required: false
+          in: query
+          description: Filter out users with the specified IDs.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    username:
+                      type: string
+                    name:
+                      type: string
+                    state:
+                      type: string
+                    avatar_url:
+                      type: string
+                    web_url:
+                      type: string
+  '/projects/{id}/groups':
+    get:
+      tags:
+      - projects-api
+      parameters:
+      - name: id
+        schema:
+          type: integer
+        required: true
+        in: path
+      - name: search
+        schema:
+          type: string
+        required: false
+        in: query
+      - name: skip_group
+        schema:
+          type: array
+          items:
+            type: integer
+        in: query
+        required: false
+      - name: with_shared
+        schema:
+          type: boolean
+        in: query
+        required: false
+      - name: shared_min_access_level
+        schema:
+          type: integer
+        in: query
+        required: false
+      - name: shared_visible_only
+        in: query
+        schema:
+          type: boolean
+        required: false
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    name:
+                      type: string
+                    full_name:
+                      type: string
+                    full_path:
+                      type: string
+                    avatar_url:
+                      type: string
+                    web_url:
+                      type: string
+  '/projects/user/{user_id}':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: user_id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The user ID of the project owner.
+        - name: name
+          schema:
+            type: string
+          required: true
+          in: query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                allow_merge_on_skipped_pipeline:
+                  type: boolean
+                  description:
+                    Set whether or not merge requests can be merged with skipped
+                    jobs.
+                approvals_before_merge:
+                  type: integer
+                  description: How many approvers should approve merge requests by default.
+                auto_cancel_pending_pipelines:
+                  type: string
+                  description:
+                    Auto-cancel pending pipelines. This isn’t a boolean, but
+                    enabled/disabled.
+                auto_devops_deploy_strategy:
+                  type: string
+                  description:
+                    Auto Deploy strategy (continuous, manual or
+                    timed_incremental).
+                auto_devops_enabled:
+                  type: boolean
+                  description: Enable Auto DevOps for this project.
+                autoclose_referenced_issues:
+                  type: boolean
+                  description:
+                    Set whether auto-closing referenced issues on default
+                    branch.
+                avatar:
+                  type: object
+                  description: Image file for avatar of the project.
+                build_coverage_regex:
+                  type: string
+                  description: Test coverage parsing.
+                build_git_strategy:
+                  type: string
+                  description: The Git strategy. Defaults to fetch.
+                build_timeout:
+                  type: integer
+                  description:
+                    The maximum amount of time in minutes that a job is able run
+                    (in seconds).
+                builds_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                ci_config_path:
+                  type: string
+                  description: The path to CI configuration file.
+                container_registry_enabled:
+                  type: boolean
+                  description: Enable container registry for this project.
+                description:
+                  type: string
+                  description: Short project description.
+                emails_disabled:
+                  type: boolean
+                  description: Disable email notifications.
+                external_authorization_classification_label:
+                  type: string
+                  description: The classification label for the project.
+                forking_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                group_with_project_templates_id:
+                  type: integer
+                  description:
+                    For group-level custom templates, specifies ID of group from
+                    which all the custom project templates are sourced. Leave
+                    empty for instance-level templates. Requires
+                    use_custom_template to be true.
+                import_url:
+                  type: string
+                  description: URL to import repository from.
+                initialize_with_readme:
+                  type: boolean
+                  description: false by default.
+                issues_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                issues_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable issues for this project. Use
+                    issues_access_level instead.
+                jobs_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable jobs for this project. Use
+                    builds_access_level instead.
+                lfs_enabled:
+                  type: boolean
+                  description: Enable LFS.
+                merge_method:
+                  type: string
+                  description: Set the merge method used.
+                merge_requests_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                merge_requests_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable merge requests for this project. Use
+                    merge_requests_access_level instead.
+                mirror_trigger_builds:
+                  type: boolean
+                  description: Pull mirroring triggers builds.
+                mirror:
+                  type: boolean
+                  description: Enables pull mirroring in a project.
+                namespace_id:
+                  type: integer
+                  description:
+                    Namespace for the new project (defaults to the current
+                    user’s namespace).
+                only_allow_merge_if_all_discussions_are_resolved:
+                  type: boolean
+                  description:
+                    Set whether merge requests can only be merged when all the
+                    discussions are resolved.
+                only_allow_merge_if_pipeline_succeeds:
+                  type: boolean
+                  description:
+                    Set whether merge requests can only be merged with
+                    successful jobs.
+                packages_enabled:
+                  type: boolean
+                  description: Enable or disable packages repository feature.
+                pages_access_level:
+                  type: string
+                  description: 'One of disabled, private, enabled, or public.'
+                requirements_access_level:
+                  type: string
+                  description: 'One of disabled, private, enabled or public'
+                path:
+                  type: string
+                  description:
+                    Custom repository name for new project. By default generated
+                    based on name.
+                printing_merge_request_link_enabled:
+                  type: boolean
+                  description:
+                    Show link to create/view merge request when pushing from the
+                    command line.
+                public_builds:
+                  type: boolean
+                  description: 'If true, jobs can be viewed by non-project-members.'
+                remove_source_branch_after_merge:
+                  type: boolean
+                  description:
+                    Enable Delete source branch option by default for all new
+                    merge requests.
+                repository_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                repository_storage:
+                  type: string
+                  description: Which storage shard the repository is on. (admins only)
+                request_access_enabled:
+                  type: boolean
+                  description: Allow users to request member access.
+                resolve_outdated_diff_discussions:
+                  type: boolean
+                  description:
+                    Automatically resolve merge request diffs discussions on
+                    lines changed with a push.
+                shared_runners_enabled:
+                  type: boolean
+                  description: Enable shared runners for this project.
+                show_default_award_emojis:
+                  type: boolean
+                  description: Show default award emojis.
+                snippets_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                snippets_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable snippets for this project. Use
+                    snippets_access_level instead.
+                suggestion_commit_message:
+                  type: string
+                  description: The commit message used to apply merge request suggestions.
+                tag_list:
+                  type: array
+                  items:
+                    type: object
+                  description:
+                    The list of tags for a project; put array of tags, that
+                    should be finally assigned to a project.
+                template_name:
+                  type: string
+                  description:
+                    When used without use_custom_template, name of a built-in
+                    project template. When used with use_custom_template, name
+                    of a custom project template.
+                use_custom_template:
+                  type: boolean
+                  description:
+                    Use either custom instance or group (with
+                    group_with_project_templates_id) project template.
+                visibility:
+                  type: string
+                  enum:
+                  - private
+                  - internal
+                  - public
+                  description: See project visibility level.
+                wiki_access_level:
+                  type: string
+                  description: 'One of disabled, private, or enabled.'
+                wiki_enabled:
+                  type: boolean
+                  description:
+                    (Deprecated) Enable wiki for this project. Use
+                    wiki_access_level instead.
+              required:
+                - name
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    "id":
+                      type: integer
+                    "description":
+                      type: string
+                    "name":
+                      type: string
+                    "name_with_namespace":
+                      type: string
+                    "path":
+                      type: string
+                    "path_with_namespace":
+                      type: string
+                    "created_at":
+                      type: string
+                    "default_branch":
+                      type: string
+                    "tag_list":
+                      type: array
+                      items:
+                        type: string
+                    "topics":
+                      type: array
+                      items:
+                        type: string
+                    "ssh_url_to_repo":
+                      type: string
+                    "http_url_to_repo":
+                      type: string
+                    "web_url":
+                      type: string
+                    "readme_url":
+                      type: string
+                    "avatar_url":
+                      type: string
+                    "forks_count":
+                      type: integer
+                    "star_count":
+                      type: integer
+                    "last_activity_at":
+                      type: string
+                    namespace:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        path:
+                          type: string
+                        kind:
+                          type: string
+                        full_path:
+                          type: string
+                    import_status:
+                      type: string
+                    import_error:
+                      type: string
+                    permissions:
+                      type: object
+                      properties:
+                        project_access:
+                          type: object
+                          properties:
+                            access_level:
+                              type: integer
+                            notification_level:
+                              type: integer
+                        group_access:
+                          type: object
+                          properties:
+                            access_level:
+                              type: integer
+                            notification_level:
+                              type: integer
+                    archived:
+                      type: boolean
+                    shared_runners_enabled:
+                      type: boolean
+                    runners_token:
+                      type: string
+                    ci_default_git_depth:
+                      type: integer
+                    ci_forward_deployment_enabled:
+                      type: boolean
+                    public_jobs:
+                      type: boolean
+                    shared_with_groups:
+                      type: array
+                      items:
+                        type: string
+                    only_allow_merge_if_pipeline_succeeds:
+                      type: boolean
+                    allow_merge_on_skipped_pipeline:
+                      type: boolean
+                    restrict_user_defined_variables:
+                      type: boolean
+                    only_allow_merge_if_all_discussions_are_resolved:
+                      type: boolean
+                    remove_source_branch_after_merge:
+                      type: boolean
+                    request_access_enabled:
+                      type: boolean
+                    merge_method:
+                      type: string
+                    squash_option:
+                      type: string
+                    auto_devops_enabled:
+                      type: boolean
+                    auto_devops_deploy_strategy:
+                      type: string
+                    repository_storage:
+                      type: string
+                    approvals_before_merge:
+                      type: integer
+                    mirror:
+                      type: boolean
+                    mirror_user_id:
+                      type: integer
+                    mirror_trigger_builds:
+                      type: boolean
+                    only_mirror_protected_branches:
+                      type: boolean
+                    mirror_overwrites_diverged_branches:
+                      type: boolean
+                    external_authorization_classification_label:
+                      type: string
+                    packages_enabled:
+                      type: boolean
+                    service_desk_enabled:
+                      type: boolean
+                    service_desk_address:
+                      type: string
+                    autoclose_referenced_issues:
+                      type: boolean
+                    suggestion_commit_message:
+                      type: string
+                    statistics:
+                      type: object
+                      properties:
+                        commit_count:
+                          type: integer
+                        storage_size:
+                          type: integer
+                        repository_size:
+                          type: integer
+                        wiki_size:
+                          type: integer
+                        lfs_objects_size:
+                          type: integer
+                        job_artifacts_size:
+                          type: integer
+                        packages_size:
+                          type: integer
+                        snippets_size:
+                          type: integer
+                    container_registry_image_prefix:
+                      type: string
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                        issues:
+                          type: string
+                        merge_requests:
+                          type: string
+                        repo_branches:
+                          type: string
+                        labels:
+                          type: string
+                        events:
+                          type: string
+                        members:
+                          type: string
+  '/projects/{id}/fork':
+    delete:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+        - name: path
+          schema:
+            type: string
+          in: query
+          required: true
+        - name: name
+          schema:
+            type: string
+          in: query
+          required: true
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name assigned to the resultant project after forking.
+                namespace_id:
+                  type: integer
+                  description: The ID of the namespace that the project is forked to.
+                namespace_path:
+                  type: string
+                  description: The path of the namespace that the project is forked to.
+                namespace:
+                  oneOf:
+                    - type: integer
+                    - type: string
+                  description:
+                    (Deprecated) The ID or path of the namespace that the
+                    project is forked to.
+                path:
+                  type: string
+                  description: The path assigned to the resultant project after forking.
+      responses:
+        '200':
+          description: success
+  '/projects/{id}/forks':
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: archived
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by archived status.
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+        - name: membership
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects that the current user is a member of.
+        - name: min_access_level
+          schema:
+            type: integer
+          required: false
+          in: query
+          description: Limit by current user minimal access level.
+        - name: order_by
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            Return projects ordered by id, name, path, created_at, updated_at,
+            or last_activity_at fields. Default is created_at.
+        - name: owned
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects explicitly owned by the current user.
+        - name: search
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Return list of projects matching the search criteria.
+        - name: simple
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description:
+            Return only limited fields for each project. This is a no-op without
+            authentication as then only simple fields are returned.
+        - name: sort
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Return projects sorted in asc or desc order. Default is desc.
+        - name: starred
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by projects starred by the current user.
+        - name: statistics
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include project statistics.
+        - name: visibility
+          schema:
+            type: string
+            enum:
+            - private
+            - internal
+            - public
+          required: false
+          in: query
+          description: 'Limit by visibility public, internal, or private.'
+        - name: with_custom_attributes
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include custom attributes in response. (admins only)
+        - name: with_issues_enabled
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by enabled issues feature.
+        - name: with_merge_requests_enabled
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Limit by enabled merge requests feature.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                    description:
+                      type: string
+                    default_branch:
+                      type: string
+                    visibility:
+                      type: string
+                      enum:
+                      - private
+                      - internal
+                      - public
+                    ssh_url_to_repo:
+                      type: string
+                    http_url_to_repo:
+                      type: string
+                    web_url:
+                      type: string
+                    readme_url:
+                      type: string
+                    tag_list:
+                      type: array
+                      items:
+                        type: string
+                    name:
+                      type: string
+                    name_with_namespace:
+                      type: string
+                    path:
+                      type: string
+                    path_with_namespace:
+                      type: string
+                    issues_enabled:
+                      type: boolean
+                    open_issues_count:
+                      type: integer
+                    merge_requests_enabled:
+                      type: boolean
+                    jobs_enabled:
+                      type: boolean
+                    wiki_enabled:
+                      type: boolean
+                    snippets_enabled:
+                      type: boolean
+                    can_create_merge_request_in:
+                      type: boolean
+                    resolve_outdated_diff_discussions:
+                      type: boolean
+                    container_registry_enabled:
+                      type: boolean
+                    created_at:
+                      type: string
+                    last_activity_at:
+                      type: string
+                    creator_id:
+                      type: integer
+                    namespace:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        name:
+                          type: string
+                        path:
+                          type: string
+                        kind:
+                          type: string
+                        full_path:
+                          type: string
+                    import_status:
+                      type: string
+                    archived:
+                      type: boolean
+                    avatar_url:
+                      type: string
+                    shared_runners_enabled:
+                      type: boolean
+                    forks_count:
+                      type: integer
+                    star_count:
+                      type: integer
+                    public_jobs:
+                      type: boolean
+                    shared_with_groups:
+                      type: array
+                      items:
+                        type: object
+                    only_allow_merge_if_pipeline_succeeds:
+                      type: boolean
+                    allow_merge_on_skipped_pipeline:
+                      type: boolean
+                    only_allow_merge_if_all_discussions_are_resolved:
+                      type: boolean
+                    remove_source_branch_after_merge:
+                      type: boolean
+                    request_access_enabled:
+                      type: boolean
+                    merge_method:
+                      type: string
+                    autoclose_referenced_issues:
+                      type: boolean
+                    suggestion_commit_message:
+                      type: string
+                    _links:
+                      type: object
+                      properties:
+                        self:
+                          type: string
+                        issues:
+                          type: string
+                        merge_requests:
+                          type: string
+                        repo_branches:
+                          type: string
+                        labels:
+                          type: string
+                        events:
+                          type: string
+                        members:
+                          type: string
+  '/projects/{id}/star':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  description:
+                    type: string
+                  default_branch:
+                    type: string
+                  visibility:
+                    type: string
+                  ssh_url_to_repo:
+                    type: string
+                  http_url_to_repo:
+                    type: string
+                  web_url:
+                    type: string
+                  readme_url:
+                    type: string
+                  tag_list:
+                    type: array
+                    items:
+                      type: object
+  '/projects/{id}/unstar':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  description:
+                    type: string
+                  default_branch:
+                    type: string
+                  visibility:
+                    type: string
+                  ssh_url_to_repo:
+                    type: string
+                  http_url_to_repo:
+                    type: string
+                  web_url:
+                    type: string
+                  readme_url:
+                    type: string
+                  tag_list:
+                    type: array
+                    items:
+                      type: object
+  '/projects/{id}/starrers':
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+        - name: search
+          schema:
+            type: string
+          required: false
+          in: query
+          description: Search for specific users.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    starred_since:
+                      type: string
+                    user:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        username:
+                          type: string
+                        name:
+                          type: string
+                        state:
+                          type: string
+                        avatar_url:
+                          type: string
+                        web_url:
+                          type: string
+  '/projects/{id}/languages':
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Ruby:
+                    type: string
+                  JavaScript:
+                    type: string
+                  HTML:
+                    type: string
+                  CoffeeScript:
+                    type: string
+  '/projects/{id}/archive':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  description:
+                    type: string
+                  default_branch:
+                    type: string
+                  visibility:
+                    type: string
+                  ssh_url_to_repo:
+                    type: string
+                  http_url_to_repo:
+                    type: string
+                  web_url:
+                    type: string
+                  readme_url:
+                    type: string
+                  tag_list:
+                    type: array
+                    items:
+                      type: object
+  '/projects/{id}/unarchive':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  description:
+                    type: string
+                  default_branch:
+                    type: string
+                  visibility:
+                    type: string
+                  ssh_url_to_repo:
+                    type: string
+                  http_url_to_repo:
+                    type: string
+                  web_url:
+                    type: string
+                  readme_url:
+                    type: string
+                  tag_list:
+                    type: array
+                    items:
+                      type: object
+  '/projects/{id}/restore':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+  '/projects/{id}/uploads':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  description: The file to be uploaded.
+              required:
+                - file
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  alt:
+                    type: string
+                  url:
+                    type: string
+                  full_path:
+                    type: string
+                  markdown:
+                    type: array
+                    items:
+                      type: object
+  '/projects/{id}/share':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+        - name: group_id
+          schema:
+            type: integer
+          required: true
+          in: query
+        - name: group_access
+          schema:
+            type: integer
+            enum:
+              - 5
+              - 10
+          required: true
+          in: query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                expires_at:
+                  type: string
+                  description: 'Share expiration date in ISO 8601 format: 2016-09-26'
+                group_access:
+                  type: integer
+                  description: The access level to grant the group.
+                group_id:
+                  type: integer
+                  description: The ID of the group to share with.
+              required:
+                - group_access
+                - group_id
+      responses:
+        '200':
+          description: success
+  '/projects/{id}/share/{group_id}':
+    delete:
+      tags:
+        - projects-api
+      parameters:
+        - name: group_id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID of the group.
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+  '/projects/{id}/hooks':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+        - name: url
+          schema:
+            type: string
+          required: true
+          in: query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confidential_issues_events:
+                  type: boolean
+                  description: Trigger hook on confidential issues events.
+                confidential_note_events:
+                  type: boolean
+                  description: Trigger hook on confidential note events.
+                deployment_events:
+                  type: boolean
+                  description: Trigger hook on deployment events.
+                enable_ssl_verification:
+                  type: boolean
+                  description: Do SSL verification when triggering the hook.
+                issues_events:
+                  type: boolean
+                  description: Trigger hook on issues events.
+                job_events:
+                  type: boolean
+                  description: Trigger hook on job events.
+                merge_requests_events:
+                  type: boolean
+                  description: Trigger hook on merge requests events.
+                note_events:
+                  type: boolean
+                  description: Trigger hook on note events.
+                pipeline_events:
+                  type: boolean
+                  description: Trigger hook on pipeline events.
+                push_events_branch_filter:
+                  type: string
+                  description: Trigger hook on push events for matching branches only.
+                push_events:
+                  type: boolean
+                  description: Trigger hook on push events.
+                tag_push_events:
+                  type: boolean
+                  description: Trigger hook on tag push events.
+                token:
+                  type: string
+                  description:
+                    Secret token to validate received payloads; this isn’t
+                    returned in the response.
+                wiki_page_events:
+                  type: boolean
+                  description: Trigger hook on wiki events.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hooks'
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hooks'
+  '/projects/{id}/hooks/{hook_id}':
+    delete:
+      tags:
+        - projects-api
+      parameters:
+        - name: hook_id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID of the project hook.
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hooks'
+    put:
+      tags:
+        - projects-api
+      parameters:
+        - name: hook_id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID of the project hook.
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+        - name: url
+          schema:
+            type: string
+          required: true
+          in: query
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                confidential_issues_events:
+                  type: boolean
+                  description: Trigger hook on confidential issues events.
+                confidential_note_events:
+                  type: boolean
+                  description: Trigger hook on confidential note events.
+                deployment_events:
+                  type: boolean
+                  description: Trigger hook on deployment events.
+                enable_ssl_verification:
+                  type: boolean
+                  description: Do SSL verification when triggering the hook.
+                issues_events:
+                  type: boolean
+                  description: Trigger hook on issues events.
+                job_events:
+                  type: boolean
+                  description: Trigger hook on job events.
+                merge_requests_events:
+                  type: boolean
+                  description: Trigger hook on merge requests events.
+                note_events:
+                  type: boolean
+                  description: Trigger hook on note events.
+                pipeline_events:
+                  type: boolean
+                  description: Trigger hook on pipeline events.
+                push_events_branch_filter:
+                  type: string
+                  description: Trigger hook on push events for matching branches only.
+                push_events:
+                  type: boolean
+                  description: Trigger hook on push events.
+                tag_push_events:
+                  type: boolean
+                  description: Trigger hook on tag push events.
+                token:
+                  type: string
+                  description:
+                    Secret token to validate received payloads; this isn’t
+                    returned in the response.
+                url:
+                  type: string
+                  description: The hook URL.
+                wiki_events:
+                  type: boolean
+                  description: Trigger hook on wiki events.
+                releases_events:
+                  type: boolean
+                  description: Trigger hook on release events.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/hooks'
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: hook_id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID of a project hook.
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/project_info'
+  '/projects/{id}/fork/{forked_from_id}':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: forked_from_id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID of the project that was forked from.
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+  '/projects/{id}/housekeeping':
+    post:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID of the project or NAMESPACE/PROJECT_NAME.
+      responses:
+        '200':
+          description: success
+  '/projects/{id}/transfer':
+    put:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+        - name: namespace
+          schema:
+            type: string
+          required: true
+          in: query
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  description:
+                    type: string
+                  name:
+                    type: string
+                  name_with_namespace:
+                    type: string
+                  path:
+                    type: string
+                  path_with_namespace:
+                    type: string
+                  created_at:
+                    type: string
+                  default_branch:
+                    type: string
+                  tag_list:
+                    type: array
+                    items:
+                      type: object
+  '/projects/{id}/snapshot':
+    get:
+      tags:
+        - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+        - name: wiki
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: 'Whether to download the wiki, rather than project, repository.'
+      responses:
+        '200':
+          description: success
+  '/projects/{id}/storage':
+    get:
+      tags:
+      - projects-api
+      parameters:
+        - name: id
+          schema:
+             type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    project_id:
+                      type: integer
+                    disk_path:
+                      type: string
+                    created_at:
+                      type: string
+                    repository_storage:
+                      type: string
+  '/projects/{id}/repository/commits':
+    get:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: ref_name
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            The name of a repository branch, tag or revision range, or if not
+            given the default branch
+        - name: since
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            Only commits after or on this date will be returned in ISO 8601
+            format YYYY-MM-DDTHH:MM:SSZ
+        - name: until
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            Only commits before or on this date will be returned in ISO 8601
+            format YYYY-MM-DDTHH:MM:SSZ
+        - name: path
+          schema:
+            type: string
+          required: false
+          in: query
+          description: The file path
+        - name: all
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Retrieve every commit from the repository
+        - name: with_stats
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Stats about each commit will be added to the response
+        - name: first_parent
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Follow only the first parent commit upon seeing a merge commit
+        - name: order
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            'List commits in order. Possible values: default, topo. Defaults to
+            default, the commits are shown in reverse chronological order.'
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: string
+                    short_id:
+                      type: string
+                    title:
+                      type: string
+                    author_name:
+                      type: string
+                    author_email:
+                      type: string
+                    authored_date:
+                      type: string
+                    committer_name:
+                      type: string
+                    committer_email:
+                      type: string
+                    committed_date:
+                      type: string
+                    created_at:
+                      type: string
+                    message:
+                      type: string
+                    parent_ids:
+                      type: array
+                      items:
+                        type: string
+                    web_url:
+                      type: string
+    post:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description: The ID or URL-encoded path of the project
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                branch:
+                  type: string
+                  description:
+                    Name of the branch to commit into. To create a new branch,
+                    also provide either start_branch or start_sha, and
+                    optionally start_project.
+                commit_message:
+                  type: string
+                  description: Commit message
+                start_branch:
+                  type: string
+                  description: Name of the branch to start the new branch from
+                start_sha:
+                  type: string
+                  description: SHA of the commit to start the new branch from
+                start_project:
+                  oneOf:
+                    - type: string
+                    - type: integer
+                  description:
+                    The project ID or URL-encoded path of the project to start
+                    the new branch from. Defaults to the value of id.
+                actions:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      action:
+                        type: string
+                        enum:
+                        - create
+                        - delete
+                        - move
+                        - update
+                        - chmod
+                        description:
+                          The action to perform, create, delete, move, update,
+                          chmod
+                      file_path:
+                        type: string
+                        description: Full path to the file. Ex. lib/class.rb
+                      previous_path:
+                        type: string
+                        description:
+                          Original full path to the file being moved. Ex.
+                          lib/class1.rb. Only considered for move action.
+                      content:
+                        type: string
+                        description:
+                          File content, required for all except delete, chmod,
+                          and move. Move actions that do not specify content
+                          will preserve the existing file content, and any other
+                          value of content will overwrite the file content.
+                      encoding:
+                        type: string
+                        description: text or base64. text is default.
+                      last_commit_id:
+                        type: string
+                        description:
+                          Last known file commit ID. Will be only considered in
+                          update, move, and delete actions.
+                      execute_filemode:
+                        type: boolean
+                        description:
+                          When true/false enables/disables the execute flag on
+                          the file. Only considered for chmod action.
+                    required:
+                      - action
+                      - file_path
+                      - execute_filemode
+                author_email:
+                  type: string
+                  description: Specify the commit author’s email address
+                author_name:
+                  type: string
+                  description: Specify the commit author’s name
+                stats:
+                  type: boolean
+                  description: Include commit stats. Default is true
+                force:
+                  type: boolean
+                  description:
+                    When true overwrites the target branch with a new commit
+                    based on the start_branch or start_sha
+              required:
+              - branch
+              - commit_message
+              - actions
+      responses:
+        '202':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  short_id:
+                    type: string
+                  title:
+                    type: string
+                  author_name:
+                    type: string
+                  author_email:
+                    type: string
+                  committer_name:
+                    type: string
+                  committer_email:
+                    type: string
+                  created_at:
+                    type: string
+                  message:
+                    type: string
+                  parent_ids:
+                    type: array
+                    items:
+                      type: string
+                  committed_date:
+                    type: string
+                  authored_date:
+                    type: string
+                  stats:
+                    type: object
+                    properties:
+                      additions:
+                        type: integer
+                      deletions:
+                        type: integer
+                      total:
+                        type: integer
+                  status:
+                    type: string
+                  web_url:
+                    type: string
+  '/projects/{id}/repository/commits/{sha}':
+    get:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: sha
+          schema:
+            type: string
+          required: true
+          in: path
+          description: The commit hash or name of a repository branch or tag
+        - name: stats
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: Include commit stats. Default is true
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  short_id:
+                    type: string
+                  title:
+                    type: string
+                  author_name:
+                    type: string
+                  author_email:
+                    type: string
+                  committer_name:
+                    type: string
+                  committer_email:
+                    type: string
+                  created_at:
+                    type: string
+                  message:
+                    type: string
+                  committed_date:
+                    type: string
+                  authored_date:
+                    type: string
+                  parent_ids:
+                    type: array
+                    items:
+                      type: string
+                  last_pipeline:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      ref:
+                        type: string
+                      sha:
+                        type: string
+                      status:
+                        type: string
+                  stats:
+                    type: object
+                    properties:
+                      additions:
+                        type: integer
+                      deletions:
+                        type: integer
+                      total:
+                        type: integer
+                  status:
+                    type: string
+                  web_url:
+                    type: string
+  '/projects/{id}/repository/commits/{sha}/refs':
+    get:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: sha
+          schema:
+            type: string
+          required: true
+          in: path
+          description: The commit hash
+        - name: type
+          schema:
+            type: string
+            enum:
+            - branch
+            - tag
+            - all
+          required: false
+          in: query
+          description:
+            The scope of commits. Possible values branch, tag, all. Default is
+            all.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    type:
+                      type: string
+                    name:
+                      type: string
+  '/projects/{id}/repository/commits/{sha}/cherry_pick':
+    post:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          in: path
+          required: true
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: sha
+          schema:
+            type: string
+          required: true
+          in: path
+          description: The commit hash
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                branch:
+                  type: string
+                  description: Target branch name
+                dry_run:
+                  type: boolean
+                  description:
+                    Does not commit any changes. Default is false. Introduced in
+                    GitLab 13.3
+              required:
+                - branch
+      responses:
+        '202':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  short_id:
+                    type: string
+                  title:
+                    type: string
+                  author_name:
+                    type: string
+                  author_email:
+                    type: string
+                  authored_date:
+                    type: string
+                  created_at:
+                    type: string
+                  committer_name:
+                    type: string
+                  committer_email:
+                    type: string
+                  committed_date:
+                    type: string
+                  message:
+                    type: string
+                  parent_ids:
+                    type: array
+                    items:
+                      type: string
+                  web_url:
+                    type: string
+  '/projects/{id}/repository/commits/{sha}/revert':
+    post:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          in: path
+          required: true
+          description: The ID or URL-encoded path of the project
+        - name: sha
+          schema:
+            type: string
+          required: true
+          in: path
+          description: Commit SHA to revert
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                branch:
+                  type: string
+                  description: Target branch name
+                dry_run:
+                  type: boolean
+                  description:
+                    Does not commit any changes. Default is false. Introduced in
+                    GitLab 13.3
+              required:
+                - branch
+      responses:
+        '202':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  short_id:
+                    type: string
+                  title:
+                    type: string
+                  created_at:
+                    type: string
+                  parent_ids:
+                    type: array
+                    items:
+                      type: string
+                  message:
+                    type: string
+                  author_name:
+                    type: string
+                  author_email:
+                    type: string
+                  authored_date:
+                    type: string
+                  committer_name:
+                    type: string
+                  committer_email:
+                    type: string
+                  committed_date:
+                    type: string
+                  web_url:
+                    type: string
+  '/projects/{id}/repository/commits/{sha}/diff':
+    get:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          in: path
+          required: true
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: sha
+          schema:
+            type: string
+          required: true
+          in: path
+          description: The commit hash or name of a repository branch or tag
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  diff:
+                    type: string
+                  new_path:
+                    type: string
+                  old_path:
+                    type: string
+                  a_mode:
+                    type: string
+                  b_mode:
+                    type: string
+                  new_file:
+                    type: boolean
+                  renamed_file:
+                    type: boolean
+                  deleted_file:
+                    type: boolean
+  '/projects/{id}/repository/commits/{sha}/comments':
+    get:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          in: path
+          required: true
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: sha
+          schema:
+            type: string
+          required: true
+          in: path
+          description: The commit hash or name of a repository branch or tag
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  note:
+                    type: string
+                  path:
+                    type: string
+                  line:
+                    type: integer
+                  line_type:
+                    type: string
+                  author:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      username:
+                        type: string
+                      email:
+                        type: string
+                      name:
+                        type: string
+                      state:
+                        type: string
+                      created_at:
+                        type: string
+    post:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          in: path
+          required: true
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: sha
+          schema:
+            type: string
+          required: true
+          in: path
+          description: The commit SHA or name of a repository branch or tag
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                note:
+                  type: string
+                  description: The text of the comment
+                path:
+                  type: string
+                  description: The file path relative to the repository
+                line:
+                  type: integer
+                  description: The line number where the comment should be placed
+                line_type:
+                  type: string
+                  description: The line type. Takes new or old as arguments
+              required:
+                - note
+      responses:
+        '202':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  author:
+                    type: object
+                    properties:
+                      web_url:
+                        type: string
+                      avatar_url:
+                        type: string
+                      username:
+                        type: string
+                      state:
+                        type: string
+                      name:
+                        type: string
+                      id:
+                        type: integer
+                  created_at:
+                    type: string
+                  line_type:
+                    type: string
+                  path:
+                    type: string
+                  line:
+                    type: integer
+                  note:
+                    type: string
+  '/projects/{id}/repository/commits/{sha}/discussions':
+    get:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          in: path
+          required: true
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: sha
+          schema:
+            type: string
+          in: path
+          required: true
+          description: The commit hash or name of a repository branch or tag
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  individual_note:
+                    type: boolean
+                  notes:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        type:
+                          type: string
+                        body:
+                          type: string
+                        attachment:
+                          type: string
+                        author:
+                          type: object
+                          properties:
+                            id:
+                              type: integer
+                            name:
+                              type: string
+                            username:
+                              type: string
+                            web_url:
+                              type: string
+                            state:
+                              type: string
+                            avatar_url:
+                              type: string
+                        created_at:
+                          type: string
+                        updated_at:
+                          type: string
+                        system:
+                          type: boolean
+                        noteable_id:
+                          type: integer
+                        noteable_type:
+                          type: string
+                        resolvable:
+                          type: boolean
+                        confidential:
+                          type: string
+                        noteable_iid:
+                          type: integer
+                        commands_changes:
+                          type: object
+  '/projects/{id}/repository/commits/{sha}/statuses':
+    get:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          in: path
+          required: true
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: sha
+          schema:
+            type: string
+          required: true
+          in: path
+          description: The commit SHA
+        - name: ref
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            The name of a repository branch or tag or, if not given, the default
+            branch
+        - name: stage
+          schema:
+            type: string
+          required: false
+          in: query
+          description: 'Filter by build stage, e.g., testing_render'
+        - name: name
+          schema:
+            type: string
+          required: false
+          in: query
+          description: 'Filter by job name, e.g., bundler:audit'
+        - name: all
+          schema:
+            type: boolean
+          required: false
+          in: query
+          description: 'Return all statuses, not only the latest ones'
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  created_at:
+                    type: string
+                  started_at:
+                    type: string
+                  name:
+                    type: string
+                  allow_failure:
+                    type: boolean
+                  author:
+                    type: object
+                    properties:
+                      username:
+                        type: string
+                      state:
+                        type: string
+                      web_url:
+                        type: string
+                      avatar_url:
+                        type: string
+                      id:
+                        type: integer
+                      name:
+                        type: string
+                  description:
+                    type: string
+                  sha:
+                    type: string
+                  target_url:
+                    type: string
+                  finished_at:
+                    type: string
+                  id:
+                    type: integer
+                  ref:
+                    type: string
+  '/projects/{id}/statuses/{sha}':
+    post:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          in: path
+          required: true
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: sha
+          schema:
+            type: string
+          required: true
+          in: path
+          description: The commit SHA
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                state:
+                  type: string
+                  description:
+                    'The state of the status. Can be one of the following:
+                    pending, running, success, failed, canceled'
+                  enum:
+                  - pending
+                  - running
+                  - success
+                  - failed
+                  - canceled
+                ref:
+                  type: string
+                  description: The ref (branch or tag) to which the status refers
+                name or context:
+                  type: string
+                  description:
+                    The label to differentiate this status from the status of
+                    other systems. Default value is default
+                target_url:
+                  type: string
+                  description: The target URL to associate with this status
+                description:
+                  type: string
+                  description: The short description of the status
+                coverage:
+                  type: number
+                  description: The total code coverage
+                pipeline_id:
+                  type: integer
+                  description:
+                    The ID of the pipeline to set status. Use in case of several
+                    pipeline on same SHA.
+              required:
+                - state
+      responses:
+        '202':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  sha:
+                    type: string
+                  ref:
+                    type: string
+                  status:
+                    type: string
+                  name:
+                    type: string
+                  target_url:
+                    type: string
+                  description:
+                    type: string
+                  created_at:
+                    type: string
+                  started_at:
+                    type: string
+                  finished_at:
+                    type: string
+                  allow_failure:
+                    type: string
+                  coverage:
+                    type: string
+                  author:
+                    type: object
+                    properties:
+                      web_url:
+                        type: string
+                      name:
+                        type: string
+                      avatar_url:
+                        type: string
+                      username:
+                        type: string
+                      state:
+                        type: string
+                      id:
+                        type: integer
+  '/projects/{id}/repository/commits/{sha}/signature':
+    get:
+      tags:
+        - commits
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          in: path
+          required: true
+          description:
+            The ID or URL-encoded path of the project owned by the authenticated
+            user
+        - name: sha
+          schema:
+            type: string
+          in: path
+          required: true
+          description: The commit hash or name of a repository branch or tag
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  signature_type:
+                    type: string
+                  verification_status:
+                    type: string
+                  gpg_key_id:
+                    type: integer
+                  gpg_key_primary_keyid:
+                    type: string
+                  gpg_key_user_name:
+                    type: string
+                  gpg_key_user_email:
+                    type: string
+                  gpg_key_subkey_id:
+                    type: string
+                  commit_source:
+                    type: string
+  '/projects/{id}/repository/branches':
+    get:
+      tags:
+        - branches
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description:
+            ID or URL-encoded path of the project owned by the authenticated
+            user.
+        - name: search
+          schema:
+            type: string
+          required: false
+          in: query
+          description:
+            Return list of branches containing the search string. You can use
+            ^term and term$ to find branches that begin and end with term
+            respectively.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  merged:
+                    type: boolean
+                  protected:
+                    type: boolean
+                  default:
+                    type: boolean
+                  developers_can_push:
+                    type: boolean
+                  developers_can_merge:
+                    type: boolean
+                  can_push:
+                    type: boolean
+                  web_url:
+                    type: string
+                  commit:
+                    type: object
+                    properties:
+                      author_email:
+                        type: string
+                      author_name:
+                        type: string
+                      authored_date:
+                        type: string
+                      created_at:
+                        type: string
+                      committed_date:
+                        type: string
+                      committer_email:
+                        type: string
+                      committer_name:
+                        type: string
+                      id:
+                        type: string
+                      short_id:
+                        type: string
+                      title:
+                        type: string
+                      message:
+                        type: string
+                      parent_ids:
+                        type: array
+                        items:
+                          type: string
+                      web_url:
+                        type: string
+    post:
+      tags:
+        - branches
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description:
+            ID or URL-encoded path of the project owned by the authenticated
+            user.
+        - name: branch
+          schema:
+            type: string
+          required: true
+          in: query
+          description: Name of the branch.
+        - name: ref
+          schema:
+            type: string
+          required: true
+          in: query
+          description: Branch name or commit SHA to create branch from.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  commit:
+                    type: object
+                    properties:
+                      author_email:
+                        type: string
+                      author_name:
+                        type: string
+                      authored_date:
+                        type: string
+                      committed_date:
+                        type: string
+                      committer_email:
+                        type: string
+                      committer_name:
+                        type: string
+                      id:
+                        type: string
+                      short_id:
+                        type: string
+                      title:
+                        type: string
+                      message:
+                        type: string
+                      parent_ids:
+                        type: array
+                        items:
+                          type: string
+                  name:
+                    type: string
+                  merged:
+                    type: boolean
+                  protected:
+                    type: boolean
+                  default:
+                    type: boolean
+                  developers_can_push:
+                    type: boolean
+                  developers_can_merge:
+                    type: boolean
+                  can_push:
+                    type: boolean
+                  web_url:
+                    type: string
+  '/projects/{id}/repository/branches/{branch}':
+    get:
+      tags:
+        - branches
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description:
+            ID or URL-encoded path of the project owned by the authenticated
+            user.
+        - name: branch
+          schema:
+            type: string
+          required: true
+          in: path
+          description: Name of the branch.
+      responses:
+        '200':
+          description: success
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  name:
+                    type: string
+                  merged:
+                    type: boolean
+                  protected:
+                    type: boolean
+                  default:
+                    type: boolean
+                  developers_can_push:
+                    type: boolean
+                  developers_can_merge:
+                    type: boolean
+                  can_push:
+                    type: boolean
+                  web_url:
+                    type: string
+                  commit:
+                    type: object
+                    properties:
+                      author_email:
+                        type: string
+                      author_name:
+                        type: string
+                      authored_date:
+                        type: string
+                      committed_date:
+                        type: string
+                      committer_email:
+                        type: string
+                      committer_name:
+                        type: string
+                      id:
+                        type: string
+                      short_id:
+                        type: string
+                      title:
+                        type: string
+                      message:
+                        type: string
+                      parent_ids:
+                        type: array
+                        items:
+                          type: string
+    delete:
+      tags:
+        - branches
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description:
+            ID or URL-encoded path of the project owned by the authenticated
+            user.
+        - name: branch
+          schema:
+            type: string
+          required: true
+          in: path
+          description: Name of the branch.
+      responses:
+        '200':
+          description: success
+  '/projects/{id}/repository/merged_branches':
+    delete:
+      tags:
+        - branches
+      parameters:
+        - name: id
+          schema:
+            type: integer
+          required: true
+          in: path
+          description:
+            ID or URL-encoded path of the project owned by the authenticated
+            user.
+      responses:
+        '200':
+          description: success
+components:
+  schemas:
+    hooks:
+      type: object
+      properties:
+        id:
+          type: integer
+        url:
+          type: string
+        push_events:
+          type: boolean
+        issues_events:
+          type: boolean
+        confidential_issues_events:
+          type: boolean
+        merge_requests_events:
+          type: boolean
+        tag_push_events:
+          type: boolean
+        note_events:
+          type: boolean
+        confidential_note_events:
+          type: boolean
+        job_events:
+          type: boolean
+        pipeline_events:
+          type: boolean
+        wiki_page_events:
+          type: boolean
+        deployment_events:
+          type: boolean
+        releases_events:
+          type: boolean
+        enable_ssl_verification:
+          type: boolean
+        created_at:
+          type: string
+    project_info:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        default_branch:
+          type: string
+        ssh_url_to_repo:
+          type: string
+        http_url_to_repo:
+          type: string
+        web_url:
+          type: string
+        readme_url:
+          type: string
+        tag_list:
+          type: array
+          items:
+            type: string
+        topics:
+          type: array
+          items:
+            type: string
+        avatar_url:
+          type: string
+        forks_count:
+          type: integer
+        owner:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            username:
+              type: string
+            state:
+              type: string
+            avatar_url:
+              type: string
+            web_url:
+              type: string
+        container_expiration_policy:
+          type: object
+          properties:
+            cadence:
+              type: string
+            enabled:
+              type: boolean
+            keep_n:
+              type: integer
+            older_than:
+              type: string
+            name_regex:
+              type: string
+            name_regex_keep:
+              type: string
+            next_run_at:
+              type: string
+        empty_repo:
+          type: boolean
+        visibility:
+          type: string
+        name:
+          type: string
+        name_with_namespace:
+          type: string
+        path:
+          type: string
+        path_with_namespace:
+          type: string
+        issues_enabled:
+          type: boolean
+        open_issues_count:
+          type: integer
+        merge_requests_enabled:
+          type: boolean
+        jobs_enabled:
+          type: boolean
+        wiki_enabled:
+          type: boolean
+        snippets_enabled:
+          type: boolean
+        can_create_merge_request_in:
+          type: boolean
+        resolve_outdated_diff_discussions:
+          type: boolean
+        container_registry_enabled:
+          type: boolean
+        container_registry_access_level:
+          type: string
+        created_at:
+          type: string
+        last_activity_at:
+          type: string
+        creator_id:
+          type: integer
+        namespace:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            path:
+              type: string
+            kind:
+              type: string
+            full_path:
+              type: string
+            parent_id:
+              type: integer
+            avatar_url:
+              type: string
+            web_url:
+              type: string
+        import_status:
+          type: string
+        import_error:
+          type: string
+        permissions:
+          type: object
+          properties:
+            project_access:
+              type: object
+              properties:
+                access_level:
+                  type: integer
+                notification_level:
+                  type: integer
+            group_access:
+              type: object
+              properties:
+                access_level:
+                  type: integer
+                notification_level:
+                  type: integer
+        archived:
+          type: boolean
+        shared_runners_enabled:
+          type: boolean
+        star_count:
+          type: integer
+        runners_token:
+          type: string
+        ci_default_git_depth:
+          type: integer
+        ci_forward_deployment_enabled:
+          type: boolean
+        public_jobs:
+          type: boolean
+        shared_with_groups:
+          type: array
+          items:
+            type: string
+        only_allow_merge_if_pipeline_succeeds:
+          type: boolean
+        allow_merge_on_skipped_pipeline:
+          type: boolean
+        restrict_user_defined_variables:
+          type: boolean
+        only_allow_merge_if_all_discussions_are_resolved:
+          type: boolean
+        remove_source_branch_after_merge:
+          type: boolean
+        request_access_enabled:
+          type: boolean
+        merge_method:
+          type: string
+        squash_option:
+          type: string
+        auto_devops_enabled:
+          type: boolean
+        auto_devops_deploy_strategy:
+          type: string
+        repository_storage:
+          type: string
+        approvals_before_merge:
+          type: integer
+        mirror:
+          type: boolean
+        mirror_user_id:
+          type: integer
+        mirror_trigger_builds:
+          type: boolean
+        only_mirror_protected_branches:
+          type: boolean
+        mirror_overwrites_diverged_branches:
+          type: boolean
+        external_authorization_classification_label:
+          type: string
+        packages_enabled:
+          type: boolean
+        service_desk_enabled:
+          type: boolean
+        service_desk_address:
+          type: string
+        autoclose_referenced_issues:
+          type: boolean
+        suggestion_commit_message:
+          type: string
+        statistics:
+          type: object
+          properties:
+            commit_count:
+              type: integer
+            storage_size:
+              type: integer
+            repository_size:
+              type: integer
+            wiki_size:
+              type: integer
+            lfs_objects_size:
+              type: integer
+            job_artifacts_size:
+              type: integer
+            packages_size:
+              type: integer
+            snippets_size:
+              type: integer
+        container_registry_image_prefix:
+          type: string
+
+        _links:
+          type: object
+          properties:
+            self:
+              type: string
+            issues:
+              type: string
+            merge_requests:
+              type: string
+            repo_branches:
+              type: string
+            labels:
+              type: string
+            events:
+              type: string
+            members:
+              type: string
+        issues_access_level:
+          type: string
+        repository_access_level:
+          type: string
+        merge_requests_access_level:
+          type: string
+        forking_access_level:
+          type: string
+        wiki_access_level:
+          type: string
+        builds_access_level:
+          type: string
+        snippets_access_level:
+          type: string
+        pages_access_level:
+          type: string
+        operations_access_level:
+          type: string
+        analytics_access_level:
+          type: string
+        emails_disabled:
+          type: boolean
+        lfs_enabled:
+          type: boolean
+        ci_job_token_scope_enabled:
+          type: boolean
+        build_git_strategy:
+          type: string
+        build_timeout:
+          type: integer
+        auto_cancel_pending_pipelines:
+          type: string
+        build_coverage_regex:
+          type: string
+        ci_config_path:
+          type: string
+        printing_merge_request_link_enabled:
+          type: boolean
+        keep_latest_artifact:
+          type: boolean
+        requirements_enabled:
+          type: string
+        security_and_compliance_enabled:
+          type: string

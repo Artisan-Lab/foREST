@@ -73,10 +73,14 @@ class Tool:
             new_dic[key] = dicts.get(key)
         return new_dic
 
+
 http_header = {
     'Content-Type': Tool.read_config('http_header', 'Content-Type'),
     'Authorization': Tool.read_config('http_header', 'Authorization')
                }
+http_header_no_auth = {
+    'Content-Type': Tool.read_config('http_header', 'Content-Type')
+}
 traverse_nums = int(Tool.read_config('testing_setting', 'traverse_nums'))
 send_timeout = Tool.read_config('request', 'send_timeout')
 received_timeout = Tool.read_config('request', 'received_timeout')

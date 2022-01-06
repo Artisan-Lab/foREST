@@ -57,6 +57,8 @@ class BasicFuzz:
 
     @staticmethod
     def fuzz_value_from_field(field_info):
+        if field_info.enum:
+            return random.choice(field_info.enum)
         if field_info.field_type == 'bool':
             return BasicFuzz.fuzz_boolean()
         elif field_info.field_type == 'str':
