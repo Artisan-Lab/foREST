@@ -7,7 +7,6 @@ import datetime
 from dependency.dependency import Dependency
 
 
-
 start_time = datetime.datetime.now()
 open_api_file_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '.\\openapi\\' +
                                   Tool.read_config('api_file', 'file_path'))

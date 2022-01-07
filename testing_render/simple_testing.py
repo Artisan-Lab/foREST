@@ -33,6 +33,7 @@ class Test:
         summery_count['api number'] = self.api_number
         summery_count['test rounds number'] = set_traverse_nums
         summery_count['already send rounds'] = 0
+        summery_count['success api number'] = 0
 
     def foREST_BFS(self):
         while self.traverse_nums < self.set_traverse_nums:
@@ -135,18 +136,19 @@ class Test:
         else:
             response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.raw.data} \n\n'
         requests_log.warning(self.request_message + response_message)
+        requests_log.warning(self.success_pool)
         response_status = 0
         if re.match('2..', str(response.status_code)):
             if request.method == 'post':
-                if self.api_info.api_id == 17:
-                    print(1)
                 foREST_POST_resource_pool.save_response(self.api_info, request,
                                                         json.loads(request.response.text),
                                                         self.compose_request.current_parent_source)
             response_status = 2
             summery_count['2xx requests number'] += 1
             status_2xx_log.info(self.request_message + response_message)
-            self.success_pool[self.api_info.api_id] = 1
+            if self.success_pool[self.api_info.api_id] == 0:
+                self.success_pool[self.api_info.api_id] = 1
+                summery_count['success api number'] += 1
             request.genetic_algorithm_success()
         elif re.match('3..', str(response.status_code)):
             summery_count['3xx requests number'] += 1

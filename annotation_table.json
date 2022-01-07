@@ -109,7 +109,7 @@
     "post": [
       {
         "field_name": "ref",
-        "real_field_name": "ref_branch",
+        "real_field_name": "branch",
         "location": 1
       }
     ]
