@@ -11,17 +11,17 @@ from datetime import datetime
 
 
 y_major_locator=MultipleLocator(600)
-forest_file = open('../data/gitlab-group/forest.csv')  # 打开csv文件
+forest_file = open('../data/gitlab-project/foREST_gitlab_projects.csv')  # 打开csv文件
 forestReader = csv.reader(forest_file)  # 读取csv文件
 forestData = list(forestReader)  # csv数据转换为列表
 forest_length = len(forestData)  # 得到数据行数
 
-evomaster_file = open('../data/gitlab-group/evomaster.csv')
+evomaster_file = open('../data/gitlab-project/evomaster_gitlab_projects.csv')
 evomaster_reader = csv.reader(evomaster_file)
 evomaster_data = list(evomaster_reader)
 evomaster_length = len(evomaster_data)
 
-restler_file = open('../data/gitlab-group/restler.csv')
+restler_file = open('../data/gitlab-project/reslter.csv')
 restler_reader = csv.reader(restler_file)
 restler_data = list(restler_reader)
 restler_length = len(restler_data)
@@ -70,9 +70,9 @@ ax.xaxis.set_major_formatter(mdate.DateFormatter('%H:%M:%S'))
 ax.yaxis.set_major_locator(y_major_locator)
 # Sets the tick labels diagonal so they fit easier.
 # plt.ylim((10000, 30000))
-plt.title('GitLab-group')
+plt.title('GitLab-project')
 plt.legend(bbox_to_anchor=(1, 0.11), loc='upper right', borderaxespad=0, fontsize=8)
-fig.savefig('gitlab_projects-branch-commit-6h.svg', format='svg', dpi=300)
+fig.savefig('gitlab_projects.svg', format='svg', dpi=300)
 
 plt.show()
 

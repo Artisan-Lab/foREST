@@ -1,0 +1,10 @@
+Initializing: Garbage collection every 30 seconds.
+No checkpoints used at this phase
+2022-01-09 13:30:53.946: Generation: 1 
+2022-01-09 13:33:36.888: Generation: 2 
+2022-01-09 13:33:39.897: Generation: 3 
+2022-01-09 13:34:51.218: Generation: 4 
+2022-01-09 13:35:23.101: Generation: 5 
+2022-01-09 13:53:48.745: Generation: 6 
+2022-01-09 14:00:31.787: Generation: 7 
+You pressed Ctrl+C!
