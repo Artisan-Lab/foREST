@@ -104,7 +104,7 @@ java -jar evomaster.jar --blackBox true --bbSwaggerUrl file:///C:/Users/42511/On
 #### [RESTler](https://github.com/microsoft/restler-fuzzer)
 
 ```
-./Restler.exe complie --api_spec 
+./Restler.exe compile --api_spec 
 ```
 
 ```

@@ -11,17 +11,17 @@ from datetime import datetime
 
 
 y_major_locator=MultipleLocator(600)
-forest_file = open('../data/gitlab-project-branch-commit/forest.csv')  # 打开csv文件
+forest_file = open('../data/gitlab-group/forest.csv')  # 打开csv文件
 forestReader = csv.reader(forest_file)  # 读取csv文件
 forestData = list(forestReader)  # csv数据转换为列表
 forest_length = len(forestData)  # 得到数据行数
 
-evomaster_file = open('../data/gitlab-project-branch-commit/evomaster.csv')
+evomaster_file = open('../data/gitlab-group/evomaster.csv')
 evomaster_reader = csv.reader(evomaster_file)
 evomaster_data = list(evomaster_reader)
 evomaster_length = len(evomaster_data)
 
-restler_file = open('../data/gitlab-project-branch-commit/restler.csv')
+restler_file = open('../data/gitlab-group/restler.csv')
 restler_reader = csv.reader(restler_file)
 restler_data = list(restler_reader)
 restler_length = len(restler_data)
@@ -37,22 +37,16 @@ y2 = list()
 x3 = list()
 y3 = list()
 for i in range(0, forest_length):  # 从第二行开始读取
-    if '1:00:' in forestData[i][0]:
-        break
     date1 = datetime.strptime(forestData[i][0], '%H:%M:%S.%f')
     x1.append(date1)  # 将第一列数据从第二行读取到最后一行赋给列表x
     y1.append(int(forestData[i][2]))
 
 for _ in range(0, evomaster_length):
-    if '1:00:' in evomaster_data[_][0]:
-        break
     date2 = datetime.strptime(evomaster_data[_][0], '%H:%M:%S.%f')
     x2.append(date2)
     y2.append(int(evomaster_data[_][2]))
 
 for _ in range(0, restler_length):
-    if '1:00:' in restler_data[_][0]:
-        break
     date3 = datetime.strptime(restler_data[_][0], '%H:%M:%S.%f')
     x3.append(date3)
     y3.append(int(restler_data[_][2]))
@@ -76,7 +70,7 @@ ax.xaxis.set_major_formatter(mdate.DateFormatter('%H:%M:%S'))
 ax.yaxis.set_major_locator(y_major_locator)
 # Sets the tick labels diagonal so they fit easier.
 # plt.ylim((10000, 30000))
-plt.title('GitLab-projects')
+plt.title('GitLab-group')
 plt.legend(bbox_to_anchor=(1, 0.11), loc='upper right', borderaxespad=0, fontsize=8)
 fig.savefig('gitlab_projects-branch-commit-6h.svg', format='svg', dpi=300)
 
