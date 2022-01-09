@@ -1,0 +1,4 @@
+2022-01-08 18:07:51.474: Sending: 'DELETE /api/v4/groups/34 HTTP/1.1\r\nAccept: application/json\r\nHost: 192.168.112.181\r\n_OMITTED_AUTH_TOKEN_\r\nContent-Length: 0\r\nUser-Agent: restler/8.3.0\r\n\r\n'
+
+2022-01-08 18:07:51.702: Received: 'HTTP/1.1 202 Accepted\r\nServer: nginx\r\nDate: Sat, 08 Jan 2022 10:07:51 GMT\r\nContent-Type: application/json\r\nContent-Length: 26\r\nConnection: keep-alive\r\nCache-Control: no-cache\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 01FRWJH8YTTDTDQHF32D568FP4\r\nX-Runtime: 0.195877\r\n\r\n{"message":"202 Accepted"}'
+

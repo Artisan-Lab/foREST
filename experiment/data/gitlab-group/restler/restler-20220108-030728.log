@@ -1,0 +1,30 @@
+Restler Information: 0 : Starting task Fuzz...
+    DateTime=2022-01-08T07:07:28.5411217Z
+Restler Information: 0 : Launching 'python.exe --version'
+    DateTime=2022-01-08T07:07:28.7844687Z
+Restler Information: 0 : Process execution terminated in 00:00:00.0256323 with exit code 0x0: 'python.exe --version'
+    DateTime=2022-01-08T07:07:28.8149869Z
+Restler Information: 0 : (5836) python.exe --version exited with code: 0
+    DateTime=2022-01-08T07:07:28.8203942Z
+Restler Information: 0 : Launching 'python.exe -B "E:\code\restler_bin\restler\../engine/restler.py" --restler_grammar "E:\code\restler_bin\restler\Compile\grammar.py" --custom_mutations "E:\code\restler_bin\restler\Compile\dict.json" --set_version 8.3.0  --token_refresh_interval 3600 --token_refresh_cmd "python E:\code\get_token\main.py"  --no_ssl   --settings "E:\code\restler_bin\setting.json" --enable_checkers * --disable_checkers namespacerule --time_budget 3.000000   --include_user_agent --no_tokens_in_logs t --garbage_collection_interval 30 --fuzzing_mode bfs-fast'
+    DateTime=2022-01-08T07:07:28.8341127Z
+Restler Information: 0 : Process execution terminated in 03:00:24.4663832 with exit code 0x0: 'python.exe -B "E:\code\restler_bin\restler\../engine/restler.py" --restler_grammar "E:\code\restler_bin\restler\Compile\grammar.py" --custom_mutations "E:\code\restler_bin\restler\Compile\dict.json" --set_version 8.3.0  --token_refresh_interval 3600 --token_refresh_cmd "python E:\code\get_token\main.py"  --no_ssl   --settings "E:\code\restler_bin\setting.json" --enable_checkers * --disable_checkers namespacerule --time_budget 3.000000   --include_user_agent --no_tokens_in_logs t --garbage_collection_interval 30 --fuzzing_mode bfs-fast'
+    DateTime=2022-01-08T10:07:53.3022617Z
+Restler Information: 0 : (1736) python.exe -B "E:\code\restler_bin\restler\../engine/restler.py" --restler_grammar "E:\code\restler_bin\restler\Compile\grammar.py" --custom_mutations "E:\code\restler_bin\restler\Compile\dict.json" --set_version 8.3.0  --token_refresh_interval 3600 --token_refresh_cmd "python E:\code\get_token\main.py"  --no_ssl   --settings "E:\code\restler_bin\setting.json" --enable_checkers * --disable_checkers namespacerule --time_budget 3.000000   --include_user_agent --no_tokens_in_logs t --garbage_collection_interval 30 --fuzzing_mode bfs-fast exited with code: 0
+    DateTime=2022-01-08T10:07:53.3031834Z
+Restler Information: 0 : Launching 'dotnet "E:\code\restler_bin\restler\../resultsAnalyzer/Restler.ResultsAnalyzer.dll" analyze "E:\code\restler_bin\restler\Fuzz" --output_dir "E:\code\restler_bin\restler\Fuzz\ResponseBuckets" --dictionary_file "E:\code\restler_bin\restler\Compile\dict.json" --max_instances_per_bucket 10'
+    DateTime=2022-01-08T10:07:53.3186236Z
+Restler Information: 0 : Process execution terminated in 00:00:11.7100463 with exit code 0xE0434352: 'dotnet "E:\code\restler_bin\restler\../resultsAnalyzer/Restler.ResultsAnalyzer.dll" analyze "E:\code\restler_bin\restler\Fuzz" --output_dir "E:\code\restler_bin\restler\Fuzz\ResponseBuckets" --dictionary_file "E:\code\restler_bin\restler\Compile\dict.json" --max_instances_per_bucket 10'
+    DateTime=2022-01-08T10:08:05.0288813Z
+Restler Information: 0 : (11796) dotnet "E:\code\restler_bin\restler\../resultsAnalyzer/Restler.ResultsAnalyzer.dll" analyze "E:\code\restler_bin\restler\Fuzz" --output_dir "E:\code\restler_bin\restler\Fuzz\ResponseBuckets" --dictionary_file "E:\code\restler_bin\restler\Compile\dict.json" --max_instances_per_bucket 10 exited with code: -532462766
+    DateTime=2022-01-08T10:08:05.0290943Z
+Restler Error: 0 : Results analyzer for logs in E:\code\restler_bin\restler\Fuzz failed.
+    DateTime=2022-01-08T10:08:05.0323445Z
+Restler Information: 0 : Request coverage (successful / total): 1 / 23
+    DateTime=2022-01-08T10:08:05.2035933Z
+Restler Information: 0 : No bugs were found.
+    DateTime=2022-01-08T10:08:05.2062122Z
+Restler Information: 0 : Task Fuzz succeeded.
+    DateTime=2022-01-08T10:08:05.2110336Z
+Restler Information: 0 : Collecting logs...
+    DateTime=2022-01-08T10:08:05.2140528Z

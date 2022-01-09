@@ -1,0 +1,18 @@
+Initializing: Garbage collection every 30 seconds.
+No checkpoints used at this phase
+2022-01-08 15:07:29.240: Generation: 1 
+2022-01-08 15:07:44.162: Generation: 2 
+2022-01-08 15:07:44.751: Generation: 3 
+2022-01-08 15:07:49.726: Generation: 4 
+2022-01-08 15:07:53.161: Generation: 5 
+2022-01-08 15:08:23.492: Generation: 6 
+2022-01-08 15:08:42.802: Generation: 7 
+2022-01-08 15:11:40.938: Generation: 8 
+2022-01-08 15:13:21.748: Generation: 9 
+2022-01-08 15:30:16.921: Generation: 10 
+2022-01-08 15:39:29.307: Generation: 11 
+2022-01-08 17:12:41.572: Generation: 12 
+2022-01-08 18:07:47.976: Generation: 13 
+seq collection exhausted
+Terminating garbage collection. Waiting for max 300 seconds.
+Done.
