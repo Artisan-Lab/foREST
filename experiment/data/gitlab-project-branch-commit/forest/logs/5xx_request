@@ -1,0 +1,3538 @@
+2022-01-06 21:31:10,199 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:31:18,436 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=AdministrxBor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:31:28,363 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/1/fork/1
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:31:29,532 : Sending: GET /projects/{id}/repository/commits http://192.168.112.179/api/v4/projects/9/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:31:47,225 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=root/AuminiztTavkr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:31:58,688 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/1/fork/23
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:31:58,817 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/1/fork/1
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:32:19,597 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=Adfinisorator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:32:32,990 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=xepb1s2pRl
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:32:41,096 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=AdmkniKtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:32:50,070 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=AdmKnxsVrlMor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:33:26,865 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=AdniniNtLajor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:33:36,388 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=Administzator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:33:48,985 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=ALminlhtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:34:22,621 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=AdminJstCatof
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:34:57,420 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=AzminUstraVor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:35:32,195 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=Administrator / AdministratoP
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:36:03,743 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:36:17,641 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/8/fork/1
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:36:17,707 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/8/fork/1
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:36:17,848 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/8/fork/3
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:36:17,929 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/8/fork/1
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:36:39,080 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=AdminMLtvxtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:38:03,028 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=dl4hddy13v
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:38:13,213 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=dosls4qz40
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:38:44,175 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=cb41gl0vm3
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:38:54,855 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:39:26,394 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=c22jlm0f82
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:39:37,902 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=znmiOksRretor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:39:51,013 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=long_string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:41:19,750 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=http://ziwlab.yxajXme.cbz/roow/55vj1kr56v/-/bFRb/makn/mEuDME.md
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:41:31,182 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=AdMinistrXtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:41:44,415 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/39/fork/571
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:41:44,503 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/39/fork/26
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:41:44,650 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/39/fork/77
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:42:09,866 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=Adminimtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:42:44,878 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=Admenwstrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:42:56,222 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=AdministranJr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:43:06,029 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=Jdministrathr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:43:16,712 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=5z240gnzpl
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:43:26,995 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/10/fork/10
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:43:27,064 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/10/fork/10
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:43:28,249 : Sending: GET /projects/{id}/repository/commits http://192.168.112.179/api/v4/projects/2/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:44:27,568 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=Agministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:44:39,867 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/10/fork/10
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:44:39,952 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/10/fork/10
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:45:04,678 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=AdfWnistrauoM
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:45:14,680 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.179/api/v4/projects/10/fork/10
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:45:37,997 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=Admhnistkator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:47:11,336 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=l641urhcn6
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:47:46,602 : Sending: POST /projects http://192.168.112.179/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer fxLd3GF27x7T9nyh5V7j'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:57:23,392 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=long_string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:58:28,221 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=c0EklozgHu
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:58:53,872 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ntR23b8yfF
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:59:03,490 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:59:12,350 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:59:22,543 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/53/fork/53
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:59:24,119 : Sending: POST /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/66/repository/commits
+API_id: 34 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"branch": "email:1@gmail.com", "commit_message": "string", "actions": [{"action": "create", "file_path": "long_string", "execute_filemode": "False"}]}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 21:59:40,511 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=long_string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:00:06,409 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Acmonistfatfr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:00:14,531 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:00:59,265 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/5/fork/235
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:01:00,372 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/80/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:01:21,151 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=wmujek94v1
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:01:31,134 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=QqNiYistjGtNr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:02:02,001 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Odministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:02:12,151 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminisNrPtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:03:11,500 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admynistrcbzr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:03:31,287 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=rooC/AdzinIsuratoH
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:03:42,536 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admqlistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:03:55,312 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/270/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:04:14,144 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=451unwxz9g
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:04:24,679 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdEiNiPRrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:04:35,288 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admmnistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:05:01,015 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/14/fork/96
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:05:25,407 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=CdfinoAtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:05:34,948 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdMinisarator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:05:45,712 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:06:35,765 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Loot/0sr8c72067
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:06:41,555 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/729/fork/729
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:07:23,825 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmicWstrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:07:52,677 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdRinsytrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:08:02,778 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministraIor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:08:12,647 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:08:23,446 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=long_string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:08:51,228 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/911/fork/911
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:09:17,493 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=mdminihtratwr / YdminertrnGrC
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:10:36,608 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AduinBjtraUoe
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:10:48,718 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminYstFator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:11:00,234 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminisQrwtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:11:28,144 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AsmBbnspJetcg
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:11:39,457 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/270/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:12:02,483 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Azmisistratoh / AdmcniytLjtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:12:09,264 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/18/fork/31
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:12:35,228 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=jrvwsXy1p3
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:13:04,887 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminiptratoQ
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:13:15,601 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administrazor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:13:50,701 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=KdmwRiPsRUfor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:14:06,417 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/1263/fork/31
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:14:32,916 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:14:43,313 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=iPminisFrhtBr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:14:49,903 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/31/fork/1282
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:14:49,974 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/22/fork/78
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:15:15,671 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:15:26,524 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:15:36,379 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=sdminiNtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:15:46,246 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ihWyI94T9t
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:16:22,233 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/1424/fork/31
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:16:51,522 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:17:02,342 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administratge
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:17:33,397 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdPiniqtrmthr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:17:44,725 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AsminfKzrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:17:50,966 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/31/fork/31
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:18:15,397 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=TdminisLnGfor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:18:23,602 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/1645/fork/1645
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:18:23,655 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/1618/fork/1618
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:18:49,701 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdRinistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:18:59,256 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/31/fork/88
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:19:28,935 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/1657/fork/1657
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:19:55,082 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=1ttgscwueo
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:20:27,385 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmInisvDmtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:21:12,929 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Ahdinistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:21:24,659 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ANeinistkator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:21:35,910 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=tdministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:21:46,710 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminnscrazWr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:22:20,398 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Adminiitrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:22:28,031 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/31/fork/1953
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:22:28,126 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/1880/fork/1880
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:22:56,441 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AlFinistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:23:44,562 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=UdminPstrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:23:55,537 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:24:03,555 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/32/fork/32
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:24:04,522 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/270/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:24:31,880 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=aoot/AdmiqistratoL
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:24:43,884 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdbinnwtratoP
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:24:55,841 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=hwqjwd18pf
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:25:06,802 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=bdmHniqtrStor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:25:18,476 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AeminisiAjtoL
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:25:56,896 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=TdSinisVratoQ
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:26:09,467 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administhahoi
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:26:20,887 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=s9exvm3cee
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:27:12,203 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminiutratUz
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:28:26,243 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=yFmrnkstlator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:28:41,774 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/68/fork/634
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:28:41,843 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/68/fork/65
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:28:41,963 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/68/fork/2434
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:29:10,117 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmRsistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:29:43,456 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=LZrXnistNaOoc
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:29:48,289 : Sending: POST /projects/{id}/share http://192.168.112.180/api/v4/projects/33/share?group_id=31&group_access=5
+API_id: 21 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"group_access": 10, "group_id": 88}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:30:19,043 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministrEtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:30:31,548 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/32/fork/2577
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:31:02,294 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=MLpWnistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:32:08,121 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministrqRkF
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:32:38,553 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/2589/fork/2589
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:33:11,112 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiListrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:33:20,412 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/2676/fork/2676
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:33:21,885 : Sending: POST /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/45/repository/commits
+API_id: 34 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"branch": "email:1@gmail.com", "commit_message": "zrynbt5hhf", "actions": [{"action": "create", "file_path": "long_string", "execute_filemode": "False"}]}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:33:51,625 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmrnvstrLtdH
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:35:11,817 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ABmzvtstratoL
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:35:21,105 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/2499/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:35:45,909 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/2698/fork/2698
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:36:13,603 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AkmiuiLtretor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:36:54,565 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:37:06,133 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdHinistrGtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:37:20,499 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=xdmznisFzatol
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:37:34,365 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=e7kky72p5o
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:38:13,163 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AHyinLstrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:38:22,208 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/54/fork/54
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:38:53,232 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=fdmRnUKtratnr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:39:29,544 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/46/fork/57
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:39:58,539 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AVministXatZr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:40:04,161 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/2961/fork/2961
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:40:04,218 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3033/fork/3033
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:40:39,217 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ldmihZstratar
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:41:17,423 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administjator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:41:28,063 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3064/fork/11
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:41:28,151 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3084/fork/2731
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:41:28,222 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3064/fork/22
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:42:00,337 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=long_string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:42:12,771 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/2936/fork/3055
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:42:12,857 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3064/fork/2731
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:42:43,231 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Adminisugatvu
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:42:58,452 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3121/fork/58
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:42:58,515 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3064/fork/42
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:42:58,584 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3064/fork/2731
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:42:58,641 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3064/fork/23
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:42:58,703 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3121/fork/3113
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:43:33,908 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=nxss3uplw2
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:43:46,463 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/48/fork/3222
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:43:46,525 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/48/fork/3130
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:43:46,597 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/48/fork/634
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:43:46,656 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/48/fork/3
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:43:47,594 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/270/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:44:15,109 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ZdNinistratqr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:44:28,590 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdvinismraYor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:45:05,528 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministrKlor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:45:19,477 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminostratFr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:45:31,042 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmimistMator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:45:48,023 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3355/fork/63
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:45:48,148 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3355/fork/57
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:46:21,460 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AIminisErlzog
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:46:35,967 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3355/fork/3402
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:46:36,017 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3355/fork/3347
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:47:06,621 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=mdQiniMtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:47:17,398 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/2707/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:47:45,986 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ACmUnistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:48:25,685 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Aemnnistrmtsr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:49:38,442 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiGisaWaCoL
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:49:57,112 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3553/fork/3493
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:49:57,220 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3553/fork/42
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:49:57,283 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3553/fork/3520
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:50:32,717 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdXiniEtraLow
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:51:18,381 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AvkxHZstNItor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:51:29,736 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=gdmiLzdtratQD
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:51:41,137 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=docfktve4x
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:52:25,624 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdhdEOshratoo
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:52:41,641 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/2936/fork/2936
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:52:41,704 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/2936/fork/75
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:52:41,765 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/2936/fork/95
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:53:16,491 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3684/fork/3684
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:53:53,532 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ALmiBistratwl
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:55:00,651 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:55:12,994 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdRinistraiIr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:55:53,859 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdGanBUtratGr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:56:06,636 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=YdmWTinxrazUr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:56:45,523 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminLsjsator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:56:56,593 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:57:08,386 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:58:50,753 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmxnisFretor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:59:38,142 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/89/fork/78
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:59:38,204 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/89/fork/2936
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 22:59:38,262 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/89/fork/78
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:00:53,673 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=bNZcmisXraoKr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:01:36,878 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminiNteator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:01:48,380 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=0ufgyes3a4
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:02:30,850 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=qkmifistramor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:03:14,995 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=jdriYistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:03:58,799 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administraaor / AdmaListratoL
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:04:36,634 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administjator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:04:50,027 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=jdfiniztEaNoh
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:05:01,850 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AaWitFsbraPoU
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:05:37,631 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/18/fork/54
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:06:26,785 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmioistrUEoJ
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:06:48,853 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/100/fork/43
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:06:48,949 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/100/fork/4342
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:07:26,577 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AtgyEwjWvatMr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:07:36,217 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9/fork/4435
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:08:09,151 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Adminlstgator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:08:20,922 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AImiMistrRtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:08:32,947 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AbmcnistratKr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:09:26,947 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdGdnisSxator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:11:48,390 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminiwMratTa
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:12:06,426 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/101/fork/3135
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:12:06,492 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/101/fork/102
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:12:43,038 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=FdmHJisFraTAs
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:12:49,480 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/4588/fork/4588
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:14:45,379 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminiutraYoh
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:15:32,808 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=vuvgweolza
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:16:19,410 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdlYnOsbrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:17:37,160 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/32/fork/2936
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:18:14,505 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/15/fork/4753
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:18:51,618 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=odkinimtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:19:06,346 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=stpinN
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:19:31,056 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admieistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:20:15,596 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmunistQator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:21:03,449 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=xchpOo7Pme
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:21:11,374 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3135/fork/4896
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:21:11,518 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9/fork/2936
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:22:17,776 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admizisorator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:23:02,639 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministraQor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:23:14,244 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=pUin
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:24:19,505 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AotAnistWatok
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:25:08,423 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminNsSKwtow
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:26:06,100 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministrVtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:26:54,059 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administrqtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:28:41,967 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdlinirtTxtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:28:49,877 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/15/fork/126
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:29:30,606 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=WdministratoM
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:30:18,555 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdySpJptraior
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:30:24,557 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/15/fork/5295
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:31:39,543 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiegstratoU
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:31:55,125 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=29625mxhv4
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:32:07,639 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdcMnEsUratTr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:32:19,320 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminNstlPtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:32:30,077 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3135/fork/35
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:33:10,572 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=qacnuld296
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:34:00,613 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=WdminwstrqVNr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:34:07,916 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3135/fork/5498
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:34:48,972 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=mdmInistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:34:55,352 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/5542/fork/5542
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:34:55,455 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/5552/fork/5552
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:35:32,961 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmynissrNtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:35:46,362 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministNator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:35:56,632 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3135/fork/5613
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:35:57,678 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/2707/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:37:12,257 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ldminhstrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:37:23,653 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiziedraWor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:37:31,114 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/95/fork/5650
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:38:14,536 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdWOnPttrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:38:24,318 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3135/fork/5658
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:39:08,352 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=DxministrJthr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:39:52,108 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admhpittrataw
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:40:45,731 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmFnistratDr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:41:31,254 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=EdmiZimiratoK
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:41:38,839 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3135/fork/99
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:43:09,386 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=wdmiPGstrjtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:43:56,971 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=zdministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:44:49,190 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ZdminiOtrarod
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:45:00,081 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/3135/fork/5918
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:45:42,827 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=wZmWdQZOratov
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:45:49,737 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/5/fork/148
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:46:34,730 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminrsXJNtot
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:47:26,191 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ATmtnisAryxor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:47:42,768 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminSsGSatdr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:47:57,578 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/100/fork/78
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:48:45,316 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:48:52,272 : Sending: POST /projects/{id}/repository/branches http://192.168.112.180/api/v4/projects/6115/repository/branches?branch=long_string&ref=gqirj4ghd1
+API_id: 47 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:49:31,019 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=odpiNistrCtpl
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:51:00,797 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministrwTor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:52:30,977 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=su15s395m0
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:53:28,824 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administravor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:54:56,497 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=gku7uc7dv0
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:55:10,403 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminEstKagor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:55:25,568 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administratop
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:56:15,225 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/155/fork/18
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:57:01,678 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=KdminlOtratom
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:57:49,787 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ab27s82nq4
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:57:59,594 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/56/fork/50
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:59:25,080 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdTiGistrador
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:59:39,220 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmZniSGpatVr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-06 23:59:53,676 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ZvSn
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:00:39,420 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiUcKtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:01:33,190 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=UdmikirtVator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:03:01,462 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=lt8rx25sjl
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:03:56,668 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdoZgistraBor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:05:24,324 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ukfektuxbb
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:05:29,967 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/168/fork/168
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:06:17,196 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AgmGnistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:07:07,976 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=VpminiytraxoF
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:07:21,115 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=OduinAstrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:07:34,357 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Adminosjrttxr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:07:43,943 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/172/fork/172
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:08:36,357 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Adhinistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:09:25,804 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administranor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:09:43,217 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministratoP
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:10:29,763 : Sending: POST /projects/{id}/repository/branches http://192.168.112.180/api/v4/projects/6905/repository/branches?branch=Saun&ref=email:1@gmail.com
+API_id: 47 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:11:19,427 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdYinistSator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:11:31,541 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=maTQ
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:11:39,286 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/5206/fork/4364
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:13:18,685 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=long_string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:14:11,478 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=pdminiotKator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:14:27,011 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AJmjnisXrotNr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:15:19,169 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmVnAstgavwr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:15:29,209 : Sending: POST /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/7103/repository/commits
+API_id: 34 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"branch": "email:1@gmail.com", "commit_message": "bibybn0060", "actions": [{"action": "create", "file_path": "email:1@gmail.com", "execute_filemode": "True"}]}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:16:16,322 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Amdinqstratou
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:17:07,126 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminisNratgr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:17:30,751 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/7147/fork/64
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:17:30,813 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/7147/fork/7234
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:20:32,104 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdyUnistratGr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:21:26,820 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AhMisistXatoe
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:22:12,611 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:24:15,769 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiPJstrZtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:24:29,153 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=rdmQnistcatoX
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:24:35,115 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/187/fork/92
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:25:17,671 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=fdmwnOsprtxLr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:25:31,647 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AvmWnistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:25:44,326 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=OdministrRtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:25:57,803 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AXminSstAatBr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:26:10,695 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmPniYtratGW
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:26:16,344 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/187/fork/40
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:27:03,727 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmbcidtDatKr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:28:39,980 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:28:44,832 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/95/fork/16
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:29:33,552 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=TvmHnOstrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:29:48,687 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminBMtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:30:03,752 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=MKmHnvstSaFNr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:30:11,164 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/32/fork/7729
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:31:58,162 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=mekn
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:32:03,480 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/7774/fork/7774
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:32:03,586 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/7739/fork/7739
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:32:05,489 : Sending: POST /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/7796/repository/commits
+API_id: 34 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"branch": "email:1@gmail.com", "commit_message": "string", "actions": [{"action": "create", "file_path": "email:1@gmail.com", "execute_filemode": "False"}]}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:32:48,290 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:32:56,013 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/189/fork/189
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:33:47,973 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministratYr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:35:01,079 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ALminkstrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:36:48,759 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdQinistrAtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:37:05,518 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=WdGinisuEator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:37:18,465 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmJnpstsNdoQ
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:37:30,900 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=kdmaNiyhraUON
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:38:30,592 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdnigWWtraDor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:38:46,355 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=br769hzvzz
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:39:10,500 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/196/fork/17
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:40:02,762 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admynistracor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:41:12,097 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdwSnisqresor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:42:02,224 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admfnistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:42:07,692 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/8149/fork/8149
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:42:58,102 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AymDnistraoof
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:43:13,495 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ACmizisiratsr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:43:33,655 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/62/fork/6378
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:44:34,365 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/49/fork/202
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:44:34,422 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/49/fork/90
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:45:54,461 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/16/fork/56
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:45:54,521 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/16/fork/8278
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:46:48,140 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=nlglq4x576
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:47:04,173 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AQministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:47:16,157 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=j7A3oZw9Iz
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:47:31,081 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminisoIutor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:48:21,191 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiZistraAor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:50:13,024 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:51:15,728 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministratoB
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:51:47,178 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/47/fork/209
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:52:39,153 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdQiArUtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:54:24,447 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AOhioistqztof
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:54:40,271 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=0x3Om1I822
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:55:41,530 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AsminnstrXtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:55:47,178 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/210/fork/210
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:55:47,246 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/16/fork/27
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 00:57:10,488 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/210/fork/8555
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:01:02,561 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminisYkator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:01:26,284 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/82/fork/215
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:02:22,433 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/27/fork/219
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:04:37,563 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=edministraQor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:04:51,813 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admifrstrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:05:05,357 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdyEnisIratoJ
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:05:12,054 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/22/fork/210
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:05:12,125 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/210/fork/7334
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:05:12,180 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/8826/fork/8826
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:06:51,190 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/8830/fork/7255
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:06:51,252 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/8830/fork/8828
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:07:46,432 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmitZVgrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:08:02,349 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Adgifistbauor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:08:18,020 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AVminigtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:08:33,722 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=k7lrqxsrPg
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:08:44,761 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/48/fork/37
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:09:45,639 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=tdmiZistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:10:47,847 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminisirUtLg
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:10:58,419 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9087/fork/9087
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:12:10,670 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/224/fork/9007
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:12:58,829 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/224/fork/224
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:12:58,971 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/224/fork/9079
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:13:56,666 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=cgw3a5l98g
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:14:14,097 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AGminisHraQoo
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:15:37,075 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=y48c6mxkn3
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:15:55,496 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=SdminrsBrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:16:10,607 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmTlistEator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:16:23,362 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=UNminiVtAaoUr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:18:20,324 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AFmilmTtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:18:37,039 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AominDktrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:18:54,580 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Adiinisiwator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:20:12,231 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=asuuwauh97
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:20:40,779 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9354/fork/40
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:22:26,247 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminOUtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:24:32,674 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmynistraHNm
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:24:51,709 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9445/fork/5727
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:24:51,783 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9445/fork/233
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:24:51,894 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9445/fork/8526
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:24:51,952 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9445/fork/70
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:26:36,522 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdYlvistrataf
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:27:40,048 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AWminiOtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:29:49,787 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdEiniptaqenV
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:30:48,256 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdeiYijBratoD
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:31:46,009 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministSatoE
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:33:04,476 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmdnisxrKtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:33:20,586 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministrJBor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:35:33,940 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9747/fork/9747
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:35:34,014 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/242/fork/9807
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:36:30,050 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdSiniWYraJow
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:36:45,378 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Gdmiqvstrajoc
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:37:43,349 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdHQnistrLtor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:37:50,814 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/32/fork/246
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:39:43,414 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=long_string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:40:06,222 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9490/fork/242
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:40:06,490 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9490/fork/9927
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:40:06,564 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/9490/fork/9935
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:41:02,454 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=4xf9np31id
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:41:19,199 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdrJnistrctor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:42:19,934 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:42:25,848 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/242/fork/202
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:42:27,090 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/270/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:43:20,390 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmXmvsprapor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:44:24,337 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AYminLstMaSor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:45:30,886 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmLnistratUr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:47:35,388 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=long_string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:48:06,333 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/10099/fork/264
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:48:06,432 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/10099/fork/22
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:48:06,500 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/10099/fork/261
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:49:08,361 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdiifLsSratdr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:49:14,231 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/7830/fork/10176
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:49:15,405 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/90/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:51:08,798 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AqmieistrasVP
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:52:48,739 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AnYinisoGatoX
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:53:05,808 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=hdhinYJtCator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:53:40,222 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ndxinisBratoW
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:54:53,028 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=iSminYJtratoV
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:55:53,431 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministSator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:57:36,221 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administraior
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:57:52,817 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=cdministfatoz
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:58:06,821 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ApmimistXatNe
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:58:40,647 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Pdministwaton
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 01:58:48,617 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/40/fork/10691
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:01:01,126 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Agministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:01:08,747 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/273/fork/16
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:01:09,923 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/270/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:02:13,515 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ADmiwiEtiator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:04:07,135 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/280/fork/276
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:05:06,084 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ianj
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:05:22,776 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=root/AdminhUtmakor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:06:26,617 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=mdainistNator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:07:31,698 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdFiniXtrafzE
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:08:33,301 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ycnX
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:09:45,105 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=mQGdn6uxnd
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:10:54,108 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AZQinistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:11:58,369 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administrftmr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:12:08,622 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/11059/fork/11059
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:13:14,725 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdObnijtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:14:21,713 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdninastrayWn
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:14:30,144 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/11116/fork/11116
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:14:30,210 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/85/fork/187
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:16:41,637 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Adminzstratfr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:16:48,920 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/6614/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:17:41,124 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=mSin
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:17:49,663 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/11225/fork/11225
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:17:49,781 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/45/fork/11144
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:18:46,085 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=mbin
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:21:46,280 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=sjulv6li6h
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:21:56,923 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/296/fork/11265
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:23:48,592 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ApmiXistqWtoZ
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:24:48,290 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiZEsAraxUr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:26:50,305 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Asministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:27:56,879 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AvmiOiktraior
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:28:24,703 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/61/fork/11412
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:29:26,728 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminiKtraaBr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:29:52,649 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/61/fork/23
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:29:52,724 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/61/fork/3361
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:30:54,978 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/6538/fork/11442
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:30:55,127 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/6538/fork/96
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:34:32,926 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AGliniEtratVr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:34:51,680 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministPator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:35:59,440 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiIiftrLfor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:36:19,041 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/11505/fork/11505
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:37:26,585 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Administrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:38:41,561 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiYJstraWoz
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:39:54,407 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmLgistrItor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:41:09,271 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AzmInZstratoH
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:42:20,781 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=GLmiZistrHtLr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:42:37,961 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=bkm8wzzuo4
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:42:53,791 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AIministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:44:08,709 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdiixLDtratQs
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:45:29,088 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiXisrrMPKy
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:45:45,711 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=email:1@gmail.com
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:46:03,990 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:46:18,417 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=cdministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:47:30,004 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admipistretor / PdmicistrNtqr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:49:49,017 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdministratXw
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:50:56,469 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=iTministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:51:13,007 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmxPimtrazor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:52:50,588 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/308/fork/311
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:54:53,030 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdQinOstrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:56:11,893 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiRistVCAjr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:56:24,655 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/312/fork/12147
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:58:23,918 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=ldministraior
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:59:36,499 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=HgmEdeBmHatnQ
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 02:59:53,577 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AIministraSoB
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:00:09,657 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AElbnistrBtou
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:00:19,889 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/312/fork/317
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:01:22,287 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:02:29,944 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/12339/fork/12339
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:02:30,835 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/2707/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:03:41,089 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=string
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:04:48,240 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmYnivtratoW
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:07:33,081 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/6130/fork/3
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:07:34,048 : Sending: GET /projects/{id}/repository/commits http://192.168.112.180/api/v4/projects/6614/repository/commits?ref_name=email:1@gmail.com
+API_id: 33 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:08:35,488 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiBistrqinr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:08:53,229 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Admxnistrahop
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:10:20,107 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Azminixtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:11:23,407 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmvaKLtrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:14:34,667 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=lnmYnistrcgor
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:15:56,685 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=9zourybrit
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:16:02,264 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/12610/fork/12610
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:17:06,854 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/12585/fork/12585
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:17:06,932 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/6130/fork/6130
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:18:15,798 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=d54Fk7b6u1
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:19:32,476 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdUinistrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:20:52,911 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdminiRtrdtzr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:22:04,935 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AkWinAstrDtMr
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:25:28,898 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=mIiQ
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "False"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:27:11,177 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/12810/fork/12810
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:28:17,729 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=AdmiHisyrafoC
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:28:25,346 : Sending: POST /projects/{id}/fork/{forked_from_id} http://192.168.112.180/api/v4/projects/12844/fork/12844
+API_id: 28 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data:
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
+
+
+2022-01-07 03:30:41,643 : Sending: POST /projects http://192.168.112.180/api/v4/projects?name=Azministrator
+API_id: 0 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 5dXAjPraokbpHd5s3osy'}
+data: {"use_custom_template": "True"}
+Received: 'HTTP/1.1 500 response : {"message":"500 Internal Server Error"}
