@@ -81,7 +81,7 @@ http_header = {
 http_header_no_auth = {
     'Content-Type': Tool.read_config('http_header', 'Content-Type')
 }
-traverse_nums = int(Tool.read_config('testing_setting', 'traverse_nums'))
+testing_time = int(Tool.read_config('testing_setting', 'testing_time'))
 send_timeout = Tool.read_config('request', 'send_timeout')
 received_timeout = Tool.read_config('request', 'received_timeout')
 sno = nltk.stem.SnowballStemmer('english')

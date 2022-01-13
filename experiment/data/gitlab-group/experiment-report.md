@@ -3,6 +3,11 @@
 API coverage(success/total): 20/23
 runtime 3:55:20.238993
 
+Request coverage (successful / total): 1 / 23
+No bugs were found.
+Task Fuzz succeeded.
+Collecting logs...
+
 * Evaluated tests: 16301
 * Evaluated actions: 89212
 * Needed budget: 92%

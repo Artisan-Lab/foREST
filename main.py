@@ -1,6 +1,6 @@
 from open_api_parse.parser import Parser
 import os
-from tool.tools import Tool, traverse_nums
+from tool.tools import Tool, testing_time
 from entity.resource_pool import foREST_POST_resource_pool
 from testing_render.simple_testing import Test
 import datetime
@@ -13,7 +13,7 @@ open_api_file_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '.
 open_api_parser = Parser(path=open_api_file_path)
 open_api_list = open_api_parser.get_api_list
 semantic_tree_root = Dependency(open_api_list)
-test_process = Test(semantic_tree_root, open_api_list, set_traverse_nums=traverse_nums)
+test_process = Test(semantic_tree_root, open_api_list, start_time=start_time, time=testing_time)
 test_process.foREST_BFS()
 end_time = datetime.datetime.now()
 success_api_number = 0

@@ -1,3 +1,4 @@
+import datetime
 import random
 
 from testing_render.composerequest import ComposeRequest
@@ -11,7 +12,7 @@ from module.jsonhandle import JsonHandle
 
 
 class Test:
-    def __init__(self, semantic_tree_root, api_list, set_traverse_nums=1):
+    def __init__(self, semantic_tree_root, api_list, start_time, time=10):
         self.semantic_tree_root = semantic_tree_root
         self.api_list = api_list
         self.api_info = None
@@ -25,18 +26,18 @@ class Test:
         self.status_4xx_pool = [0 for i in range(self.api_number)]
         self.status_5xx_pool = [0 for i in range(self.api_number)]
         self.timeout_pool = [0 for i in range(self.api_number)]
-        self.set_traverse_nums = set_traverse_nums
         self.traverse_nums = 0
         self.node_queue = []
         self.request_message = None
         self.compose_request = None
+        self.start_time = start_time
+        self.time = time
         summery_count['api number'] = self.api_number
-        summery_count['test rounds number'] = set_traverse_nums
         summery_count['already send rounds'] = 0
         summery_count['success api number'] = 0
 
     def foREST_BFS(self):
-        while self.traverse_nums < self.set_traverse_nums:
+        while True:
             self.node_queue = [self.semantic_tree_root]
             while self.node_queue:
                 self.node = self.node_queue.pop(0)
@@ -46,6 +47,8 @@ class Test:
                         self.node_queue.append(child)
             self.traverse_nums += 1
             summery_count['already send rounds'] = self.traverse_nums
+            if datetime.datetime.now() - self.start_time > datetime.timedelta(minutes=self.time):
+                break
 
     def node_testing(self, node):
         exec_method_list = ['get', 'post', 'put', 'patch', 'delete']

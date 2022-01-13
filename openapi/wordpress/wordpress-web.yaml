@@ -4,13 +4,13 @@ info:
   title: Wordpress v2 API
   description: Wordpress v2 API
 basePath: /wp-json/wp/v2
+host: 192.168.112.185
 produces:
   - application/json
 consumes:
   - application/x-www-form-urlencoded
 schemes:
   - http
-  - https
 securityDefinitions:
   oauth:
     type: oauth2
@@ -71,7 +71,11 @@ paths:
         - $ref: '#/parameters/slug'
         - $ref: '#/parameters/status'
         - $ref: '#/parameters/title'
-        - $ref: '#/parameters/content'
+        - name: content
+          type: string
+          description: The content for the object.
+          in: formData
+          required: true
         - $ref: '#/parameters/author'
         - $ref: '#/parameters/excerpt'
         - $ref: '#/parameters/featured_media'
@@ -927,6 +931,7 @@ definitions:
       content:
         type: string
         description: The content for the object.
+        required: true
       date:
         type: string
         description: 'The date the object was published, in the site''s timezone.'

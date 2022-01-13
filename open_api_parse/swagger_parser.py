@@ -1,13 +1,14 @@
 from tool.tools import Tool
 from entity.api_info import api_info
 from entity.field_info import field_info
+import random
 
 
 class SwaggerParser:
 
     def __init__(self, data):
         self.paths = data.get('paths')
-        self.base_url = Tool.read_config('api_file', 'http') + '://' + data.get('host') + data.get('basePath')
+        self.base_url = random.choice(data.get('schemes')) + '://' + data.get('host') + data.get('basePath')
         self.api_id = 0
         self.api_list = []
         self.current_field = []
@@ -31,6 +32,12 @@ class SwaggerParser:
     def create_filed_info(self, api_parameter):
         if not api_parameter:
             return None
+        if 'allOf' in api_parameter:
+            return field_info(field_name=api_parameter.get('name'),
+                              type_='dict',
+                              location=self.location,
+                              require=True if api_parameter.get('required') else False,
+                              object=self.allOf_handle(api_parameter.get('allOf')))
         if api_parameter.get("in") == 'path':
             self.location = 0
         elif api_parameter.get("in") == 'query':
@@ -79,6 +86,8 @@ class SwaggerParser:
         objects_list = []
         if not objects:
             return None
+        if objects.get('allOf'):
+            return self.allOf_handle(objects['allOf'])
         for object_name in objects:
             required = True if object_name in required_list else False
             single_object = objects[object_name]
@@ -115,10 +124,19 @@ class SwaggerParser:
             response_schema = response.get('schema')
             if response_schema:
                 if response_schema.get('properties'):
-                    responses_list += self.object_handle(response_schema.get('properties'),[])
+                    responses_list += self.object_handle(response_schema.get('properties'), [])
                 elif response_schema.get('items'):
-                    responses_list += self.create_filed_info(response_schema.get('items'))
+                    responses_list.append(self.create_filed_info(response_schema))
+                elif response_schema.get('allOf'):
+                    responses_list += self.allOf_handle(response_schema.get('allOf'))
         return responses_list
+
+    def allOf_handle(self, all_off_item):
+        parameter_list = []
+        for member in all_off_item:
+            if 'properties' in member:
+                parameter_list += self.object_handle(member.get('properties'), [])
+        return parameter_list
 
     @staticmethod
     def yaml_type_switch(type_):
