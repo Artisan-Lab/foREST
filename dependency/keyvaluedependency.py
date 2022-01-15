@@ -138,7 +138,7 @@ class Compare:
         if self.compare_field_type != self.compared_field_type:
             match_point -= 30
         if match_point > 70:
-            return (match_point-70)/23
+            return (match_point-70)/3
         else:
             return 0
 

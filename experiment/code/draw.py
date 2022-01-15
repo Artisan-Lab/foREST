@@ -1,9 +1,6 @@
 import csv
-import matplotlib
 import matplotlib.dates as mdate
-from matplotlib.dates import HourLocator
 import matplotlib.pyplot as plt
-import matplotlib.ticker as ticker
 from matplotlib.pyplot import MultipleLocator
 from datetime import datetime
 
@@ -11,17 +8,17 @@ from datetime import datetime
 
 
 y_major_locator=MultipleLocator(600)
-forest_file = open('../data/gitlab-group/foREST-6h.csv')  # 打开csv文件
+forest_file = open('../data/gitlab-project-branch-commit/foREST-6h.csv')  # 打开csv文件
 forestReader = csv.reader(forest_file)  # 读取csv文件
 forestData = list(forestReader)  # csv数据转换为列表
 forest_length = len(forestData)  # 得到数据行数
 
-evomaster_file = open('../data/gitlab-group/evomaster-6h.csv')
+evomaster_file = open('../data/gitlab-project-branch-commit/evomaster-6h.csv')
 evomaster_reader = csv.reader(evomaster_file)
 evomaster_data = list(evomaster_reader)
 evomaster_length = len(evomaster_data)
 
-restler_file = open('../data/gitlab-group/restler-6h.csv')
+restler_file = open('../data/gitlab-project-branch-commit/restler-6h.csv')
 restler_reader = csv.reader(restler_file)
 restler_data = list(restler_reader)
 restler_length = len(restler_data)
@@ -65,10 +62,10 @@ ax.plot(x2, y2, 'b--', label='EvoMaster', linewidth=3)
 ax.plot(x3, y3, color='violet', linestyle='-.', label='RESTler', linewidth=3)
 ax.spines['right'].set_color('none')
 ax.spines['top'].set_color('none')
-plt.ylabel('Code coverage')
-plt.xlabel('time/s')
+plt.ylabel('code coverage (# LoC)')
+plt.xlabel('time (hours) ')
 
-ax.xaxis.set_major_formatter(mdate.DateFormatter('%H:%M:%S'))
+ax.xaxis.set_major_formatter(mdate.DateFormatter('%H'))
 # Choose your xtick format string
 # date_fmt = '%m-%d %H:%M:%S'
 # Use a DateFormatter to set the data to the correct format.
@@ -76,9 +73,9 @@ ax.xaxis.set_major_formatter(mdate.DateFormatter('%H:%M:%S'))
 ax.yaxis.set_major_locator(y_major_locator)
 # Sets the tick labels diagonal so they fit easier.
 # plt.ylim((10000, 30000))
-plt.title('GitLab-group')
-plt.legend(bbox_to_anchor=(1, 0.11), loc='upper right', borderaxespad=0, fontsize=8)
-fig.savefig('gitlab_group-6h.svg', format='svg', dpi=300)
+plt.title('GitLab-project&branch&commit')
+plt.legend(bbox_to_anchor=(1, 0.15), loc='upper right', borderaxespad=0, fontsize=8)
+fig.savefig('gitlab_project-branch-commit-6h.png', format='png', dpi=300)
 
 plt.show()
 

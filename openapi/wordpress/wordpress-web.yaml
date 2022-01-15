@@ -4,13 +4,14 @@ info:
   title: Wordpress v2 API
   description: Wordpress v2 API
 basePath: /wp-json/wp/v2
-host: 192.168.112.185
 produces:
   - application/json
 consumes:
   - application/x-www-form-urlencoded
 schemes:
   - http
+  - https
+host: 192.168.112.185
 securityDefinitions:
   oauth:
     type: oauth2
@@ -35,23 +36,23 @@ paths:
         url: 'http://v2.wp-api.org/reference/posts/'
       parameters:
         - $ref: '#/parameters/context'
-        - $ref: '#/parameters/page'
-        - $ref: '#/parameters/per_page'
-        - $ref: '#/parameters/search'
-        - $ref: '#/parameters/after'
-        - $ref: '#/parameters/author'
-        - $ref: '#/parameters/author_exclude'
-        - $ref: '#/parameters/before'
-        - $ref: '#/parameters/exclude'
-        - $ref: '#/parameters/include'
-        - $ref: '#/parameters/offset'
-        - $ref: '#/parameters/order'
-        - $ref: '#/parameters/orderby'
-        - $ref: '#/parameters/slug'
-        - $ref: '#/parameters/status'
-        - $ref: '#/parameters/filter'
-        - $ref: '#/parameters/categories'
-        - $ref: '#/parameters/tags'
+        - $ref: '#/parameters/page_query'
+        - $ref: '#/parameters/per_page_query'
+        - $ref: '#/parameters/search_query'
+        - $ref: '#/parameters/after_query'
+        - $ref: '#/parameters/author_query'
+        - $ref: '#/parameters/author_exclude_query'
+        - $ref: '#/parameters/before_query'
+        - $ref: '#/parameters/exclude_query'
+        - $ref: '#/parameters/include_query'
+        - $ref: '#/parameters/offset_query'
+        - $ref: '#/parameters/order_query'
+        - $ref: '#/parameters/orderby_query'
+        - $ref: '#/parameters/slug_query'
+        - $ref: '#/parameters/status_query'
+        - $ref: '#/parameters/filter_query'
+        - $ref: '#/parameters/categories_query'
+        - $ref: '#/parameters/tags_query'
       responses:
         '200':
           description: Posts Listed.
@@ -108,23 +109,23 @@ paths:
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/context'
-        - $ref: '#/parameters/page'
-        - $ref: '#/parameters/per_page'
-        - $ref: '#/parameters/search'
-        - $ref: '#/parameters/after'
-        - $ref: '#/parameters/author'
-        - $ref: '#/parameters/author_exclude'
-        - $ref: '#/parameters/before'
-        - $ref: '#/parameters/exclude'
-        - $ref: '#/parameters/include'
-        - $ref: '#/parameters/offset'
-        - $ref: '#/parameters/order'
-        - $ref: '#/parameters/orderby'
-        - $ref: '#/parameters/slug'
-        - $ref: '#/parameters/status'
-        - $ref: '#/parameters/filter'
-        - $ref: '#/parameters/categories'
-        - $ref: '#/parameters/tags'
+        - $ref: '#/parameters/page_query'
+        - $ref: '#/parameters/per_page_query'
+        - $ref: '#/parameters/search_query'
+        - $ref: '#/parameters/after_query'
+        - $ref: '#/parameters/author_query'
+        - $ref: '#/parameters/author_exclude_query'
+        - $ref: '#/parameters/before_query'
+        - $ref: '#/parameters/exclude_query'
+        - $ref: '#/parameters/include_query'
+        - $ref: '#/parameters/offset_query'
+        - $ref: '#/parameters/order_query'
+        - $ref: '#/parameters/orderby_query'
+        - $ref: '#/parameters/slug_query'
+        - $ref: '#/parameters/status_query'
+        - $ref: '#/parameters/filter_query'
+        - $ref: '#/parameters/categories_query'
+        - $ref: '#/parameters/tags_query'
       responses:
         '200':
           description: Post updated.
@@ -194,24 +195,24 @@ paths:
         url: 'http://v2.wp-api.org/reference/pages/'
       parameters:
         - $ref: '#/parameters/context'
-        - $ref: '#/parameters/page'
-        - $ref: '#/parameters/per_page'
-        - $ref: '#/parameters/search'
-        - $ref: '#/parameters/after'
-        - $ref: '#/parameters/author'
-        - $ref: '#/parameters/author_exclude'
-        - $ref: '#/parameters/before'
-        - $ref: '#/parameters/exclude'
-        - $ref: '#/parameters/include'
-        - $ref: '#/parameters/menu_order'
-        - $ref: '#/parameters/offset'
-        - $ref: '#/parameters/order'
-        - $ref: '#/parameters/orderby'
-        - $ref: '#/parameters/parent'
-        - $ref: '#/parameters/parent_exclude'
-        - $ref: '#/parameters/slug'
-        - $ref: '#/parameters/status'
-        - $ref: '#/parameters/filter'
+        - $ref: '#/parameters/page_query'
+        - $ref: '#/parameters/per_page_query'
+        - $ref: '#/parameters/search_query'
+        - $ref: '#/parameters/after_query'
+        - $ref: '#/parameters/author_query'
+        - $ref: '#/parameters/author_exclude_query'
+        - $ref: '#/parameters/before_query'
+        - $ref: '#/parameters/exclude_query'
+        - $ref: '#/parameters/include_query'
+        - $ref: '#/parameters/menu_order_query'
+        - $ref: '#/parameters/offset_query'
+        - $ref: '#/parameters/order_query'
+        - $ref: '#/parameters/orderby_query'
+        - $ref: '#/parameters/parent_query'
+        - $ref: '#/parameters/parent_exclude_query'
+        - $ref: '#/parameters/slug_query'
+        - $ref: '#/parameters/status_query'
+        - $ref: '#/parameters/filter_query'
       responses:
         '200':
           description: Pages Listed.
@@ -305,25 +306,25 @@ paths:
         url: 'http://v2.wp-api.org/reference/media/'
       parameters:
         - $ref: '#/parameters/context'
-        - $ref: '#/parameters/page'
-        - $ref: '#/parameters/per_page'
-        - $ref: '#/parameters/search'
-        - $ref: '#/parameters/after'
-        - $ref: '#/parameters/author'
-        - $ref: '#/parameters/author_exclude'
-        - $ref: '#/parameters/before'
-        - $ref: '#/parameters/exclude'
-        - $ref: '#/parameters/include'
-        - $ref: '#/parameters/offset'
-        - $ref: '#/parameters/order'
-        - $ref: '#/parameters/orderby'
-        - $ref: '#/parameters/parent'
-        - $ref: '#/parameters/parent_exclude'
-        - $ref: '#/parameters/slug'
-        - $ref: '#/parameters/status'
-        - $ref: '#/parameters/filter'
-        - $ref: '#/parameters/media_type'
-        - $ref: '#/parameters/mime_type'
+        - $ref: '#/parameters/page_query'
+        - $ref: '#/parameters/per_page_query'
+        - $ref: '#/parameters/search_query'
+        - $ref: '#/parameters/after_query'
+        - $ref: '#/parameters/author_query'
+        - $ref: '#/parameters/author_exclude_query'
+        - $ref: '#/parameters/before_query'
+        - $ref: '#/parameters/exclude_query'
+        - $ref: '#/parameters/include_query'
+        - $ref: '#/parameters/offset_query'
+        - $ref: '#/parameters/order_query'
+        - $ref: '#/parameters/orderby_query'
+        - $ref: '#/parameters/parent_query'
+        - $ref: '#/parameters/parent_exclude_query'
+        - $ref: '#/parameters/slug_query'
+        - $ref: '#/parameters/status_query'
+        - $ref: '#/parameters/filter_query'
+        - $ref: '#/parameters/media_type_query'
+        - $ref: '#/parameters/mime_type_query'
       responses:
         '200':
           description: Media Listed.
@@ -471,25 +472,25 @@ paths:
         url: 'http://v2.wp-api.org/reference/comments/'
       parameters:
         - $ref: '#/parameters/context'
-        - $ref: '#/parameters/page'
-        - $ref: '#/parameters/per_page'
-        - $ref: '#/parameters/search'
-        - $ref: '#/parameters/after'
-        - $ref: '#/parameters/author'
-        - $ref: '#/parameters/author_exclude'
-        - $ref: '#/parameters/author_email'
-        - $ref: '#/parameters/before'
-        - $ref: '#/parameters/exclude'
-        - $ref: '#/parameters/include'
-        - $ref: '#/parameters/karma'
-        - $ref: '#/parameters/offset'
-        - $ref: '#/parameters/order'
-        - $ref: '#/parameters/orderby'
-        - $ref: '#/parameters/parent'
-        - $ref: '#/parameters/parent_exclude'
-        - $ref: '#/parameters/post'
-        - $ref: '#/parameters/status'
-        - $ref: '#/parameters/type'
+        - $ref: '#/parameters/page_query'
+        - $ref: '#/parameters/per_page_query'
+        - $ref: '#/parameters/search_query'
+        - $ref: '#/parameters/after_query'
+        - $ref: '#/parameters/author_query'
+        - $ref: '#/parameters/author_exclude_query'
+        - $ref: '#/parameters/author_email_query'
+        - $ref: '#/parameters/before_query'
+        - $ref: '#/parameters/exclude_query'
+        - $ref: '#/parameters/include_query'
+        - $ref: '#/parameters/karma_query'
+        - $ref: '#/parameters/offset_query'
+        - $ref: '#/parameters/order_query'
+        - $ref: '#/parameters/orderby_query'
+        - $ref: '#/parameters/parent_query'
+        - $ref: '#/parameters/parent_exclude_query'
+        - $ref: '#/parameters/post_query'
+        - $ref: '#/parameters/status_query'
+        - $ref: '#/parameters/type_query'
       responses:
         '200':
           description: Comments Listed.
@@ -503,6 +504,11 @@ paths:
         - oauth:
             - basic
       parameters:
+        - name: content
+          description: The id for the associated post of the resource.
+          type: string
+          in: formDate
+          required: true
         - $ref: '#/parameters/date'
         - $ref: '#/parameters/date_gmt'
         - $ref: '#/parameters/password'
@@ -515,7 +521,11 @@ paths:
         - $ref: '#/parameters/alt_text'
         - $ref: '#/parameters/caption'
         - $ref: '#/parameters/description'
-        - $ref: '#/parameters/post'
+        - name: post
+          description: The id for the associated post of the resource.
+          type: interger
+          in: formData
+          required: true
       responses:
         '200':
           description: Comment created.
@@ -603,17 +613,17 @@ paths:
         url: 'http://v2.wp-api.org/reference/categories/'
       parameters:
         - $ref: '#/parameters/context'
-        - $ref: '#/parameters/page'
-        - $ref: '#/parameters/per_page'
-        - $ref: '#/parameters/search'
-        - $ref: '#/parameters/hide_empty'
-        - $ref: '#/parameters/exclude'
-        - $ref: '#/parameters/include'
-        - $ref: '#/parameters/order'
-        - $ref: '#/parameters/orderby'
-        - $ref: '#/parameters/parent'
-        - $ref: '#/parameters/post'
-        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/page_query'
+        - $ref: '#/parameters/per_page_query'
+        - $ref: '#/parameters/search_query'
+        - $ref: '#/parameters/hide_empty_query'
+        - $ref: '#/parameters/exclude_query'
+        - $ref: '#/parameters/include_query'
+        - $ref: '#/parameters/order_query'
+        - $ref: '#/parameters/orderby_query'
+        - $ref: '#/parameters/parent_query'
+        - $ref: '#/parameters/post_query'
+        - $ref: '#/parameters/slug_query'
       responses:
         '200':
           description: Category Listed.
@@ -757,15 +767,15 @@ paths:
         url: 'http://v2.wp-api.org/reference/users/'
       parameters:
         - $ref: '#/parameters/context'
-        - $ref: '#/parameters/page'
-        - $ref: '#/parameters/per_page'
-        - $ref: '#/parameters/search'
-        - $ref: '#/parameters/exclude'
-        - $ref: '#/parameters/include'
-        - $ref: '#/parameters/order'
-        - $ref: '#/parameters/orderby'
-        - $ref: '#/parameters/roles'
-        - $ref: '#/parameters/slug'
+        - $ref: '#/parameters/page_query'
+        - $ref: '#/parameters/per_page_query'
+        - $ref: '#/parameters/search_query'
+        - $ref: '#/parameters/exclude_query'
+        - $ref: '#/parameters/include_query'
+        - $ref: '#/parameters/order_query'
+        - $ref: '#/parameters/orderby_query'
+        - $ref: '#/parameters/roles_query'
+        - $ref: '#/parameters/slug_query'
       responses:
         '200':
           description: Users Listed.
@@ -931,7 +941,6 @@ definitions:
       content:
         type: string
         description: The content for the object.
-        required: true
       date:
         type: string
         description: 'The date the object was published, in the site''s timezone.'
@@ -1315,13 +1324,13 @@ parameters:
   id:
     name: id
     in: path
-    type: string
+    type: integer
     description: Id of object
     required: true
   revisionid:
     name: revisionid
     in: path
-    type: string
+    type: integer
     description: Id of revision
     required: true
   force:
@@ -1348,8 +1357,20 @@ parameters:
     required: false
     description: Current page of the collection. Default 1
     type: integer
+  page_query:
+    name: page
+    in: query
+    required: false
+    description: Current page of the collection. Default 1
+    type: integer
   per_page:
     in: formData
+    name: per_page
+    required: false
+    description: Maximum number of items to be returned in result set. Default 10
+    type: integer
+  per_page_query:
+    in: query
     name: per_page
     required: false
     description: Maximum number of items to be returned in result set. Default 10
@@ -1360,6 +1381,12 @@ parameters:
     type: string
     required: false
     in: formData
+  search_query:
+    name: search
+    description: Limit results to those matching a string.
+    type: string
+    required: false
+    in: query
   after:
     name: after
     description: >-
@@ -1368,9 +1395,23 @@ parameters:
     type: string
     required: false
     in: formData
+  after_query:
+    name: after
+    description: >-
+      Limit response to resources published after a given ISO8601 compliant
+      date.
+    type: string
+    required: false
+    in: query
   author:
     name: author
     in: formData
+    description: Limit result set to posts assigned to specific authors.
+    type: string
+    required: false
+  author_query:
+    name: author
+    in: query
     description: Limit result set to posts assigned to specific authors.
     type: string
     required: false
@@ -1380,6 +1421,12 @@ parameters:
     type: string
     required: false
     in: formData
+  author_exclude_query:
+    name: author_exclude
+    description: Ensure result set excludes posts assigned to specific authors.
+    type: string
+    required: false
+    in: query
   before:
     name: before
     description: >-
@@ -1388,11 +1435,25 @@ parameters:
     type: string
     in: formData
     required: false
+  before_query:
+    name: before
+    description: >-
+      Limit response to resources published before a given ISO8601 compliant
+      date.
+    type: string
+    in: query
+    required: false
   exclude:
     name: exclude
     description: Ensure result set excludes specific ids.
     type: string
     in: formData
+    required: false
+  exclude_query:
+    name: exclude
+    description: Ensure result set excludes specific ids.
+    type: string
+    in: query
     required: false
   include:
     name: include
@@ -1400,12 +1461,24 @@ parameters:
     type: string
     in: formData
     required: false
+  include_query:
+    name: include
+    description: Ensure result set includes specific ids.
+    type: string
+    in: query
+    required: false
   offset:
     name: offset
     description: Offset the result set by a specific number of items.
     type: string
     required: false
     in: formData
+  offset_query:
+    name: offset
+    description: Offset the result set by a specific number of items.
+    type: string
+    required: false
+    in: query
   order:
     name: order
     description: Order sort attribute ascending or descending. Default desc
@@ -1415,6 +1488,15 @@ parameters:
       - desc
       - asc
     in: formData
+  order_query:
+    name: order
+    description: Order sort attribute ascending or descending. Default desc
+    type: string
+    required: false
+    enum:
+      - desc
+      - asc
+    in: query
   orderby:
     name: orderby
     description: Sort collection by object attribute. Default date
@@ -1427,12 +1509,30 @@ parameters:
       - title
       - slug
     in: formData
+  orderby_query:
+    name: orderby
+    description: Sort collection by object attribute. Default date
+    type: string
+    required: false
+    enum:
+      - date
+      - id
+      - include
+      - title
+      - slug
+    in: query
   slug:
     name: slug
     description: Limit result set to posts with a specific slug.
     type: string
     required: false
     in: formData
+  slug_query:
+    name: slug
+    description: Limit result set to posts with a specific slug.
+    type: string
+    required: false
+    in: query
   status:
     name: status
     description: Limit result set to posts assigned a specific status.Default publish
@@ -1445,6 +1545,18 @@ parameters:
       - private
     required: false
     in: formData
+  status_query:
+    name: status
+    description: Limit result set to posts assigned a specific status.Default publish
+    type: string
+    enum:
+      - publish
+      - future
+      - draft
+      - pending
+      - private
+    required: false
+    in: query
   filter:
     name: filter
     description: >-
@@ -1453,6 +1565,14 @@ parameters:
     type: string
     required: false
     in: formData
+  filter_query:
+    name: filter
+    description: >-
+      Use WP Query arguments to modify the response; private query vars require
+      appropriate authorization.
+    type: string
+    required: false
+    in: query
   categories:
     name: categories
     description: >-
@@ -1463,6 +1583,16 @@ parameters:
     items:
       type: string
     in: formData
+  categories_query:
+    name: categories
+    description: >-
+      Limit result set to all items that have the specified term assigned in the
+      categories taxonomy.
+    type: array
+    required: false
+    items:
+      type: string
+    in: query
   tags:
     name: tags
     description: >-
@@ -1473,12 +1603,29 @@ parameters:
     items:
       type: string
     in: formData
+  tags_query:
+    name: tags
+    description: >-
+      Limit result set to all items that have the specified term assigned in the
+      tags taxonomy.
+    type: array
+    required: false
+    items:
+      type: string
+    in: query
   date:
     name: date
     type: string
     description: 'The date the object was published, in the site''s timezone.'
     format: date-time
     in: formData
+    required: false
+  date_query:
+    name: date
+    type: string
+    description: 'The date the object was published, in the site''s timezone.'
+    format: date-time
+    in: query
     required: false
   date_gmt:
     name: date_gmt
@@ -1487,11 +1634,24 @@ parameters:
     format: date-time
     in: formData
     required: false
+  date_gmt_query:
+    name: date_gmt
+    type: string
+    description: 'The date the object was published, as GMT.'
+    format: date-time
+    in: query
+    required: false
   password:
     name: password
     type: string
     description: The A password to protect access to the post.
     in: formData
+    required: false
+  password_query:
+    name: password
+    type: string
+    description: The A password to protect access to the post.
+    in: query
     required: false
   title:
     name: title
@@ -1499,11 +1659,23 @@ parameters:
     description: The title for the object.
     in: formData
     required: false
+  title_query:
+    name: title
+    type: string
+    description: The title for the object.
+    in: query
+    required: false
   content:
     name: content
     type: string
     description: The content for the object.
     in: formData
+    required: false
+  content_query:
+    name: content
+    type: string
+    description: The content for the object.
+    in: query
     required: false
   excerpt:
     name: excerpt
@@ -1511,11 +1683,23 @@ parameters:
     description: The excerpt for the object
     in: formData
     required: false
+  excerpt_query:
+    name: excerpt
+    type: string
+    description: The excerpt for the object
+    in: query
+    required: false
   featured_media:
     name: featured_media
     type: string
     description: The id of the featured media for the object.
     in: formData
+    required: false
+  featured_media_query:
+    name: featured_media
+    type: string
+    description: The id of the featured media for the object.
+    in: query
     required: false
   comment_status:
     name: comment_status
@@ -1526,6 +1710,15 @@ parameters:
     description: Whether or not comments are open on the object
     in: formData
     required: false
+  comment_status_query:
+    name: comment_status
+    type: string
+    enum:
+      - open
+      - closed
+    description: Whether or not comments are open on the object
+    in: query
+    required: false
   ping_status:
     name: ping_status
     type: string
@@ -1535,11 +1728,26 @@ parameters:
     description: Whether or not the object can be pinged.
     in: formData
     required: false
+  ping_status_query:
+    name: ping_status
+    type: string
+    enum:
+      - open
+      - closed
+    description: Whether or not the object can be pinged.
+    in: query
+    required: false
   sticky:
     name: sticky
     type: boolean
     description: Whether or not the object should be treated as sticky.
     in: formData
+    required: false
+  sticky_query:
+    name: sticky
+    type: boolean
+    description: Whether or not the object should be treated as sticky.
+    in: query
     required: false
   parent:
     name: parent
@@ -1547,11 +1755,23 @@ parameters:
     description: The id for the parent of the object.
     in: formData
     required: false
+  parent_query:
+    name: parent
+    type: integer
+    description: The id for the parent of the object.
+    in: query
+    required: false
   menu_order:
     name: menu_order
     type: integer
     description: The order of the object in relation to other object of its type.
     in: formData
+    required: false
+  menu_order_query:
+    name: menu_order
+    type: integer
+    description: The order of the object in relation to other object of its type.
+    in: query
     required: false
   template:
     name: template
@@ -1559,11 +1779,23 @@ parameters:
     description: The theme file to use to display the object.
     in: formData
     required: false
+  template_query:
+    name: template
+    type: integer
+    description: The theme file to use to display the object.
+    in: query
+    required: false
   parent_exclude:
     name: parent_exclude
     description: Ensure result set excludes specific ids.
     type: string
     in: formData
+    required: false
+  parent_exclude_query:
+    name: parent_exclude
+    description: Ensure result set excludes specific ids.
+    type: string
+    in: query
     required: false
   post:
     name: post
@@ -1571,11 +1803,23 @@ parameters:
     type: string
     in: formData
     required: false
+  post_query:
+    name: post
+    description: The id for the associated post of the resource.
+    type: string
+    in: query
+    required: false
   description:
     name: description
     description: The description for the resource
     type: string
     in: formData
+    required: false
+  description_query:
+    name: description
+    description: The description for the resource
+    type: string
+    in: query
     required: false
   caption:
     name: caption
@@ -1583,11 +1827,23 @@ parameters:
     type: string
     in: formData
     required: false
+  caption_query:
+    name: caption
+    description: The caption for the resource.
+    type: string
+    in: query
+    required: false
   alt_text:
     name: alt_text
     description: Alternative text to display when resource is not displayed.
     type: string
     in: formData
+    required: false
+  alt_text_query:
+    name: alt_text
+    description: Alternative text to display when resource is not displayed.
+    type: string
+    in: query
     required: false
   author_email:
     name: author_email
@@ -1597,6 +1853,14 @@ parameters:
     type: string
     in: formData
     required: false
+  author_email_query:
+    name: author_email
+    description: >-
+      Limit result set to that from a specific author email. Requires
+      authorization.
+    type: string
+    in: query
+    required: false
   karma:
     name: karma
     description: >-
@@ -1605,11 +1869,25 @@ parameters:
     type: string
     in: formData
     required: false
+  karma_query:
+    name: karma
+    description: >-
+      Limit result set to that of a particular comment karma. Requires
+      authorization
+    type: string
+    in: query
+    required: false
   name:
     name: name
     description: HTML title for the resource.
     type: string
     in: formData
+    required: true
+  name_query:
+    name: name
+    description: HTML title for the resource.
+    type: string
+    in: query
     required: true
   hide_empty:
     name: hide_empty
@@ -1617,11 +1895,23 @@ parameters:
     type: boolean
     in: formData
     required: false
+  hide_empty_query:
+    name: hide_empty
+    description: Whether to hide resources not assigned to any posts.
+    type: boolean
+    in: query
+    required: false
   nickname:
     name: nickname
     description: The nickname for the resource.
     type: string
     in: formData
+    required: false
+  nickname_queyr:
+    name: nickname
+    description: The nickname for the resource.
+    type: string
+    in: query
     required: false
   last_name:
     name: last_name
@@ -1629,17 +1919,35 @@ parameters:
     type: string
     in: formData
     required: false
+  last_name_query:
+    name: last_name
+    description: The last name for the resource.
+    type: string
+    in: query
+    required: false
   first_name:
     name: first_name
     description: The first name for the resource.
     type: string
     in: formData
     required: false
+  first_name_query:
+    name: first_name
+    description: The first name for the resource.
+    type: string
+    in: query
+    required: false
   username:
     name: username
     description: The user name for the resource.
     type: string
     in: formData
+    required: false
+  username_query:
+    name: username
+    description: The user name for the resource.
+    type: string
+    in: query
     required: false
   url:
     name: url
@@ -1648,12 +1956,26 @@ parameters:
     type: string
     in: formData
     required: false
+  url_query:
+    name: url
+    description: URL of the resource.
+    format: url
+    type: string
+    in: query
+    required: false
   email:
     name: email
     description: Email of the resource.
     format: email
     type: string
     in: formData
+    required: false
+  email_query:
+    name: email
+    description: Email of the resource.
+    format: email
+    type: string
+    in: query
     required: false
   type:
     name: type
@@ -1662,6 +1984,14 @@ parameters:
       authorization. Default comment
     type: string
     in: formData
+    required: false
+  type_query:
+    name: type
+    description: >-
+      Limit result set to comments assigned a specific type. Requires
+      authorization. Default comment
+    type: string
+    in: query
     required: false
   media_type:
     name: media_type
@@ -1672,17 +2002,40 @@ parameters:
       - image
     in: formData
     required: false
+  media_type_query:
+    name: media_type
+    description: Type of resource.
+    type: string
+    enum:
+      - file
+      - image
+    in: query
+    required: false
   mime_type:
     name: mime_type
     description: Alternative text to display when resource is not displayed.
     type: string
     in: formData
     required: false
+  mime_type_query:
+    name: mime_type
+    description: Alternative text to display when resource is not displayed.
+    type: string
+    in: query
+    required: false
   capabilities:
     name: capabilities
     type: array
     description: All capabilities used by the resource.
     in: formData
+    required: false
+    items:
+      type: string
+  capabilities_query:
+    name: capabilities
+    type: array
+    description: All capabilities used by the resource.
+    in: query
     required: false
     items:
       type: string
@@ -1694,8 +2047,21 @@ parameters:
     required: false
     items:
       type: string
+  roles_query:
+    name: roles
+    type: array
+    description: Roles assigned to the resource.
+    in: query
+    required: false
+    items:
+      type: string
   reassign:
     name: reassign
     type: string
     in: formData
+    required: false
+  reassign_query:
+    name: reassign
+    type: string
+    in: query
     required: false

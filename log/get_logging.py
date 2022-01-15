@@ -143,7 +143,6 @@ status_timeout_log = Log(log_name='timeout_request')
 external_log = Log(log_name='hit_external_field')
 summery_count = {
     'api number': 0,
-    'test rounds nember': 0,
     'already send requests number': 0,
     '2xx requests number': 0,
     '4xx requests number': 0,

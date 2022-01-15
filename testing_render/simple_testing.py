@@ -134,7 +134,7 @@ class Test:
         return response_status
 
     def response_handle(self, request, response):
-        if JsonHandle.is_json(response.text):
+        if JsonHandle.is_json(response.text.split('Connection to server successfully')[0]):
             response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.text} \n\n'
         else:
             response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.raw.data} \n\n'
@@ -144,7 +144,7 @@ class Test:
         if re.match('2..', str(response.status_code)):
             if request.method == 'post':
                 foREST_POST_resource_pool.save_response(self.api_info, request,
-                                                        json.loads(request.response.text),
+                                                        json.loads(request.response.text.split('Connection to server successfully')[0]),
                                                         self.compose_request.current_parent_source)
             response_status = 2
             summery_count['2xx requests number'] += 1

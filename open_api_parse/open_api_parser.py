@@ -38,7 +38,7 @@ class OpenAPIParser:
             self.location = 1
         elif api_parameter.get("in") == 'header':
             self.location = 2
-        elif api_parameter.get("in") == 'body':
+        elif api_parameter.get("in") == 'body' or api_parameter.get("in") == 'formData':
             self.location = 3
         parameter_schema = api_parameter.get('schema')
         if parameter_schema:
