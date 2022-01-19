@@ -10,20 +10,7 @@ consumes:
   - application/x-www-form-urlencoded
 schemes:
   - http
-  - https
-host: 192.168.112.185
-securityDefinitions:
-  oauth:
-    type: oauth2
-    x-oauth1: true
-    flow: accessCode
-    authorizationUrl: http://localhost/oauth1/authorize
-    tokenUrl: http://localhost/oauth1/request
-    x-accessUrl: /oauth1/access
-    scopes:
-      basic: >-
-        OAuth authentication uses the OAuth 1.0a specification (published as
-        RFC5849) and requires installing the OAuth plugin on the site.
+host: 192.168.112.194
 paths:
   /posts:
     get:
@@ -62,9 +49,6 @@ paths:
               $ref: '#/definitions/post'
     post:
       summary: Create Post
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/date'
         - $ref: '#/parameters/date_gmt'
@@ -103,9 +87,6 @@ paths:
             $ref: '#/definitions/post'
     post:
       summary: Update Single Post
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/context'
@@ -133,9 +114,6 @@ paths:
             $ref: '#/definitions/post'
     delete:
       summary: Delete Single Post
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/force'
@@ -222,9 +200,6 @@ paths:
               $ref: '#/definitions/page'
     post:
       summary: Create Page
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/date'
         - $ref: '#/parameters/date_gmt'
@@ -259,9 +234,6 @@ paths:
             $ref: '#/definitions/page'
     post:
       summary: Update Single Page
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/date'
@@ -286,123 +258,12 @@ paths:
             $ref: '#/definitions/page'
     delete:
       summary: Delete Single Page
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/force'
       responses:
         '200':
           description: Post deleted.
-  /media:
-    get:
-      summary: List Media
-      description: >-
-        Scope under which the request is made; determines fields present in
-        response.
-      externalDocs:
-        description: More information here
-        url: 'http://v2.wp-api.org/reference/media/'
-      parameters:
-        - $ref: '#/parameters/context'
-        - $ref: '#/parameters/page_query'
-        - $ref: '#/parameters/per_page_query'
-        - $ref: '#/parameters/search_query'
-        - $ref: '#/parameters/after_query'
-        - $ref: '#/parameters/author_query'
-        - $ref: '#/parameters/author_exclude_query'
-        - $ref: '#/parameters/before_query'
-        - $ref: '#/parameters/exclude_query'
-        - $ref: '#/parameters/include_query'
-        - $ref: '#/parameters/offset_query'
-        - $ref: '#/parameters/order_query'
-        - $ref: '#/parameters/orderby_query'
-        - $ref: '#/parameters/parent_query'
-        - $ref: '#/parameters/parent_exclude_query'
-        - $ref: '#/parameters/slug_query'
-        - $ref: '#/parameters/status_query'
-        - $ref: '#/parameters/filter_query'
-        - $ref: '#/parameters/media_type_query'
-        - $ref: '#/parameters/mime_type_query'
-      responses:
-        '200':
-          description: Media Listed.
-          schema:
-            type: array
-            items:
-              $ref: '#/definitions/media'
-    post:
-      summary: Create Media
-      security:
-        - oauth:
-            - basic
-      parameters:
-        - $ref: '#/parameters/date'
-        - $ref: '#/parameters/date_gmt'
-        - $ref: '#/parameters/password'
-        - $ref: '#/parameters/slug'
-        - $ref: '#/parameters/status'
-        - $ref: '#/parameters/title'
-        - $ref: '#/parameters/author'
-        - $ref: '#/parameters/comment_status'
-        - $ref: '#/parameters/ping_status'
-        - $ref: '#/parameters/alt_text'
-        - $ref: '#/parameters/caption'
-        - $ref: '#/parameters/description'
-        - $ref: '#/parameters/post'
-      responses:
-        '200':
-          description: Media created.
-          schema:
-            $ref: '#/definitions/media'
-  '/media/{id}':
-    get:
-      summary: Get Single Media
-      parameters:
-        - $ref: '#/parameters/id'
-        - $ref: '#/parameters/context'
-      responses:
-        '200':
-          description: Page retrieved.
-          schema:
-            $ref: '#/definitions/media'
-    post:
-      summary: Update Single Media
-      security:
-        - oauth:
-            - basic
-      parameters:
-        - $ref: '#/parameters/id'
-        - $ref: '#/parameters/date'
-        - $ref: '#/parameters/date_gmt'
-        - $ref: '#/parameters/password'
-        - $ref: '#/parameters/slug'
-        - $ref: '#/parameters/status'
-        - $ref: '#/parameters/title'
-        - $ref: '#/parameters/author'
-        - $ref: '#/parameters/comment_status'
-        - $ref: '#/parameters/ping_status'
-        - $ref: '#/parameters/alt_text'
-        - $ref: '#/parameters/caption'
-        - $ref: '#/parameters/description'
-        - $ref: '#/parameters/post'
-      responses:
-        '200':
-          description: Page updated.
-          schema:
-            $ref: '#/definitions/media'
-    delete:
-      summary: Delete Single Media
-      security:
-        - oauth:
-            - basic
-      parameters:
-        - $ref: '#/parameters/id'
-        - $ref: '#/parameters/force'
-      responses:
-        '200':
-          description: Media deleted.
   /types:
     get:
       summary: List Type
@@ -421,11 +282,20 @@ paths:
             type: array
             items:
               $ref: '#/definitions/type'
-  '/types/{id}':
+  '/types/{type}':
     get:
       summary: Get Single Type
       parameters:
-        - $ref: '#/parameters/id'
+        - name: type
+          in: path
+          required: true
+          type: string
+          enum:
+          - post
+          - page
+          - attachment
+          - wp_block
+          - wp_template
         - $ref: '#/parameters/context'
       responses:
         '200':
@@ -450,11 +320,21 @@ paths:
             type: array
             items:
               $ref: '#/definitions/status'
-  '/statuses/{id}':
+  '/statuses/{statuse}':
     get:
       summary: Get Single Status
       parameters:
-        - $ref: '#/parameters/id'
+        - name: statuse
+          type: string
+          in: path
+          required: true
+          enum:
+          - publish
+          - future
+          - draft
+          - pending
+          - private
+          - trash
         - $ref: '#/parameters/context'
       responses:
         '200':
@@ -500,14 +380,11 @@ paths:
               $ref: '#/definitions/comment'
     post:
       summary: Create Comment
-      security:
-        - oauth:
-            - basic
       parameters:
         - name: content
           description: The id for the associated post of the resource.
           type: string
-          in: formDate
+          in: formData
           required: true
         - $ref: '#/parameters/date'
         - $ref: '#/parameters/date_gmt'
@@ -523,7 +400,7 @@ paths:
         - $ref: '#/parameters/description'
         - name: post
           description: The id for the associated post of the resource.
-          type: interger
+          type: integer
           in: formData
           required: true
       responses:
@@ -544,9 +421,6 @@ paths:
             $ref: '#/definitions/comment'
     post:
       summary: Update Single Comment
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/date'
@@ -569,9 +443,6 @@ paths:
             $ref: '#/definitions/comment'
     delete:
       summary: Delete Single Comment
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/force'
@@ -594,11 +465,17 @@ paths:
             type: array
             items:
               $ref: '#/definitions/taxonomy'
-  '/taxonomies/{id}':
+  '/taxonomies/{taxonomies}':
     get:
       summary: Get Single Taxonomy
       parameters:
-        - $ref: '#/parameters/id'
+        - name: taxonomies
+          type: string
+          in: path
+          required: true
+          enum:
+          - category
+          - post_tag
         - $ref: '#/parameters/context'
       responses:
         '200':
@@ -633,9 +510,6 @@ paths:
               $ref: '#/definitions/category'
     post:
       summary: Create Category
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/description'
         - $ref: '#/parameters/name'
@@ -659,9 +533,6 @@ paths:
             $ref: '#/definitions/category'
     post:
       summary: Update Single Category
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/description'
@@ -675,9 +546,6 @@ paths:
             $ref: '#/definitions/category'
     delete:
       summary: Delete Single Category
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/force'
@@ -710,9 +578,6 @@ paths:
               $ref: '#/definitions/tag'
     post:
       summary: Create Tag
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/description'
         - $ref: '#/parameters/name'
@@ -735,9 +600,6 @@ paths:
             $ref: '#/definitions/tag'
     post:
       summary: Update Single Tag
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/description'
@@ -750,9 +612,6 @@ paths:
             $ref: '#/definitions/tag'
     delete:
       summary: Delete Single Tag
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/force'
@@ -785,21 +644,27 @@ paths:
               $ref: '#/definitions/user'
     post:
       summary: Create User
-      security:
-        - oauth:
-            - basic
       parameters:
-        - $ref: '#/parameters/username'
+        - name: username
+          type: string
+          in: formData
+          required: true
         - $ref: '#/parameters/name'
         - $ref: '#/parameters/first_name'
         - $ref: '#/parameters/last_name'
-        - $ref: '#/parameters/email'
+        - name: email
+          type: string
+          in: formData
+          required: true
         - $ref: '#/parameters/url'
         - $ref: '#/parameters/description'
         - $ref: '#/parameters/nickname'
         - $ref: '#/parameters/slug'
         - $ref: '#/parameters/roles'
-        - $ref: '#/parameters/password'
+        - name: password
+          type: string
+          in: formData
+          required: true
         - $ref: '#/parameters/capabilities'
       responses:
         '200':
@@ -819,9 +684,6 @@ paths:
             $ref: '#/definitions/user'
     post:
       summary: Update Single User
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/username'
@@ -843,9 +705,6 @@ paths:
             $ref: '#/definitions/user'
     delete:
       summary: Delete Single User
-      security:
-        - oauth:
-            - basic
       parameters:
         - $ref: '#/parameters/id'
         - $ref: '#/parameters/force'
@@ -2059,7 +1918,7 @@ parameters:
     name: reassign
     type: string
     in: formData
-    required: false
+    required: true
   reassign_query:
     name: reassign
     type: string

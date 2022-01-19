@@ -96,7 +96,7 @@ class Test:
     def get_api_testing(self):
         request = self.compose_request.request
         response_status = self.testing_evaluate(request)
-        if response_status == 2:
+        if response_status == 2 or response_status == 5:
             self.compose_request.compose_optional_request()
             self.optional_request_testing()
 
@@ -109,7 +109,7 @@ class Test:
     def delete_api_testing(self):
         request = self.compose_request.request
         response_status = self.testing_evaluate(request)
-        if response_status == 2:
+        if response_status == 2 or response_status == 5:
             foREST_POST_resource_pool.delete_resource(self.compose_request.current_parent_source)
 
     def patch_api_testing(self):
