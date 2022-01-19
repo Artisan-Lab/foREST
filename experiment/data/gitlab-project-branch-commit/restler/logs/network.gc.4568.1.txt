@@ -1,7 +1,0 @@
-2022-01-06 03:25:21.751: Will refresh token: python C:/Users/42511/OneDrive/coding/get_token/main.py
-2022-01-06 03:25:21.807: New value: {u'app1':{}}
-_OMITTED_AUTH_TOKEN_
-2022-01-06 03:25:21.809: Sending: 'DELETE /api/v4/projects/1 HTTP/1.1\r\nAccept: application/json\r\nHost: 192.168.112.175\r\n_OMITTED_AUTH_TOKEN_\r\nContent-Length: 0\r\nUser-Agent: restler/8.3.0\r\n\r\n'
-
-2022-01-06 03:25:22.041: Received: 'HTTP/1.1 202 Accepted\r\nServer: nginx\r\nDate: Wed, 05 Jan 2022 19:25:22 GMT\r\nContent-Type: application/json\r\nContent-Length: 26\r\nConnection: keep-alive\r\nCache-Control: no-cache\r\nVary: Origin\r\nX-Content-Type-Options: nosniff\r\nX-Frame-Options: SAMEORIGIN\r\nX-Request-Id: 01FRNV7YH6QW8DE5ZMHRAPEQA2\r\nX-Runtime: 0.225770\r\n\r\n{"message":"202 Accepted"}'
-
