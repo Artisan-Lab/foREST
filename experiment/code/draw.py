@@ -8,17 +8,17 @@ from datetime import datetime
 
 
 y_major_locator=MultipleLocator(600)
-forest_file = open('../data/gitlab-project-branch-commit/foREST-6h.csv')  # 打开csv文件
+forest_file = open('../data/wordpress/forest.csv')  # 打开csv文件
 forestReader = csv.reader(forest_file)  # 读取csv文件
 forestData = list(forestReader)  # csv数据转换为列表
 forest_length = len(forestData)  # 得到数据行数
 
-evomaster_file = open('../data/gitlab-project-branch-commit/evomaster-6h.csv')
+evomaster_file = open('../data/wordpress/evomaster.csv')
 evomaster_reader = csv.reader(evomaster_file)
 evomaster_data = list(evomaster_reader)
 evomaster_length = len(evomaster_data)
 
-restler_file = open('../data/gitlab-project-branch-commit/restler-6h.csv')
+restler_file = open('../data/wordpress/restler.csv')
 restler_reader = csv.reader(restler_file)
 restler_data = list(restler_reader)
 restler_length = len(restler_data)
@@ -73,7 +73,7 @@ ax.xaxis.set_major_formatter(mdate.DateFormatter('%H'))
 ax.yaxis.set_major_locator(y_major_locator)
 # Sets the tick labels diagonal so they fit easier.
 # plt.ylim((10000, 30000))
-plt.title('GitLab-commits')
+plt.title('wordpress')
 plt.legend(bbox_to_anchor=(1, 0.15), loc='upper right', borderaxespad=0, fontsize=8)
 fig.savefig('picture.png', format='png', dpi=300)
 

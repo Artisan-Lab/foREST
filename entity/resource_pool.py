@@ -1,3 +1,5 @@
+import copy
+
 from entity.resource import Resource
 import random
 import nltk
@@ -104,5 +106,3 @@ class ResourcePool:
 
 
 foREST_POST_resource_pool = ResourcePool()
-
-
