@@ -1,6 +1,5 @@
 from tool.tools import Tool
 import copy
-from entity.resource_pool import foREST_POST_resource_pool
 from fuzzywuzzy import fuzz
 from module.string_march import StringMatch
 
@@ -33,8 +32,7 @@ class SetKeyValueDependency:
             for field_info in api_info.resp_param:
                 self.current_compare_field_info = field_info
                 self.depended_field_path = [api_info.api_id]
-                parent_resource_name = foREST_POST_resource_pool.find_parent_resource_name(api_info.path)
-                if self.find_depend_field(field_info, parent_resource_name) and \
+                if self.find_depend_field(field_info) and \
                         self.current_field_info.require and \
                         api_info.api_id not in self.key_depend_api_list:
                     self.key_depend_api_list.append(api_info.api_id)
@@ -96,7 +94,6 @@ class SetKeyValueDependency:
         """get every field dependency reference"""
         for api_info in self.api_info_list:
             self.current_api_info = api_info
-            self.current_parent_resource_name = foREST_POST_resource_pool.find_parent_resource_name(api_info.path)
             self.key_depend_api_list = []
             if api_info.req_param:
                 # traverse every parameter
@@ -133,8 +130,7 @@ class Compare:
     def smart_match(self):
         if self.compared_field_name is None:
             return 0
-        match_point = max(fuzz.partial_ratio(self.compare_parent_resource_name + self.compare_field_name,
-                                         self.compared_parent_resource_name + self.compared_field_name), fuzz.partial_ratio(self.compare_field_name, self.compared_field_name))
+        match_point = fuzz.partial_ratio(self.compare_field_name, self.compared_field_name)
         if self.compare_field_type != self.compared_field_type:
             match_point -= 30
         if match_point > 70:

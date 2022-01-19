@@ -7,9 +7,10 @@ from module.sendrequest import SendRequest
 
 class Request(SendRequest):
 
-    def __init__(self, base_url, method):
+    def __init__(self, base_url, method, api_id):
         super().__init__(base_url, method, header={}, data={})
         self.base_url = base_url
+        self.api_id = api_id
         self.method = method
         self.initialization()
         self.path_parameter_list = {}

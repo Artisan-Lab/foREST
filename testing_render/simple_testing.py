@@ -7,7 +7,6 @@ from log.get_logging import summery_log, requests_log, status_2xx_log, \
 from log.get_logging import summery_count
 import re
 import json
-from entity.resource_pool import foREST_POST_resource_pool
 from module.jsonhandle import JsonHandle
 
 

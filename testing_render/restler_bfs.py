@@ -7,14 +7,8 @@ from log.get_logging import summery_log, requests_log, status_2xx_log, \
 from log.get_logging import summery_count
 import re
 import json
-from entity.resource_pool import foREST_POST_resource_pool
 from module.jsonhandle import JsonHandle
 
-
-foREST_POST_resource_pool_copy = copy.deepcopy(foREST_POST_resource_pool)
-
-def reset_resource_pool():
-    foREST_POST_resource_pool = copy.deepcopy(foREST_POST_resource_pool_copy)
 
 class Test:
     def __init__(self, semantic_tree_root, api_list, start_time, time=10, max_length=10):
@@ -57,6 +51,7 @@ class Test:
             n = 1
             while n<=self.max_length:
                 self.extend()
+                self.render()
             if datetime.datetime.now() - self.start_time > datetime.timedelta(minutes=self.time):
                 break
 
@@ -76,11 +71,42 @@ class Test:
     def render(self):
         new_seq_set = []
         for seq in self.success_api_sequence:
+            api_info = seq.pop(-1)
+            compose_request = ComposeRequest(api_info,seq)
+            new_request = compose_request.compose_required_request()
+            new_seq_set.append(seq.append(new_request))
+            for new_seq in new_seq_set:
+                if not self.send_request(new_seq):
+                    new_seq_set.remove(new_seq)
+            self.success_api_sequence = new_seq_set
 
-
-
-    def dependencies(self, seq, api_info):
+    @staticmethod
+    def send_request(seqs):
+        for request in seqs:
+            request.send_request()
+            if re.match('4..', str(request.response.status_code)):
+                return False
         return True
+
+
+
+    def dependencies(self, seqs, api_info):
+        api_id_list = []
+        for seq in seqs:
+            api_id_list.append(seq.api_id)
+        for field_info in api_info.req_param:
+            if field_info.require:
+                depend_list=[]
+                for path in field_info.depend_list[0]:
+                    depend_list.append(path[0])
+                lst3 = list(set(api_id_list)&set(depend_list))
+                if not lst3:
+                    return False
+        return True
+
+
+
+
 
 
     def api_testing(self, api_id):

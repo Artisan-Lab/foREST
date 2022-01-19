@@ -3,7 +3,6 @@ import os
 from module.string_march import StringMatch
 from tool.tools import Tool
 from open_api_parse.parser import Parser
-from entity.resource_pool import foREST_POST_resource_pool
 import nltk
 
 sno = nltk.stem.SnowballStemmer('english')
@@ -64,8 +63,6 @@ class CreateSemanticTree:
     @staticmethod
     def find_node(api_path_nodes, api_method, api_id, parent_node):
         if not api_path_nodes:
-            if api_method == 'post' and not StringMatch.is_path_variable(parent_node.name):
-                foREST_POST_resource_pool.resource_name_dict[sno.stem(parent_node.name)] = []
             parent_node.method_dic[api_method] = api_id
             return
         flag = 0
