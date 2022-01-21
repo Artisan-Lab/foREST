@@ -46,7 +46,7 @@ class ComposeRequest:
     def find_value(self, path):
         for request in self.request_list:
             if request.api_id == path[0]:
-                response_dict = json.loads(request.response.text)
+                response_dict = json.loads(request.response.text.split('Connection to server successfully...')[0])
                 value = ComposeRequest.get_value_from_dict(response_dict, path[1:])
                 return value
 
@@ -67,7 +67,7 @@ class ComposeRequest:
                 value = self.get_value(field_info)
                 self.request.add_parameter(field_info.location, field_info.field_name, value)
         self.request.compose_request()
-        return
+        return self.request
 
 
     def recompose_optional_request(self):

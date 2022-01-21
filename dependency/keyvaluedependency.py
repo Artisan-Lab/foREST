@@ -27,7 +27,7 @@ class SetKeyValueDependency:
         for api_info in self.api_info_list:
             self.current_compare_api_info = api_info
             self.depended_field_list = []
-            if not api_info.resp_param or api_info.http_method != 'post':
+            if not api_info.resp_param:
                 continue
             for field_info in api_info.resp_param:
                 self.current_compare_field_info = field_info

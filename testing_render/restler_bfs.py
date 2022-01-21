@@ -65,7 +65,9 @@ class Test:
             for seq in self.success_api_sequence:
                 for api_info in self.api_list:
                     if self.dependencies(seq, api_info):
-                        new_seqset.append(seq.append(api_info))
+                        base_seq = copy.deepcopy(seq)
+                        base_seq.append(api_info)
+                        new_seqset.append(base_seq)
         self.success_api_sequence = new_seqset
 
     def render(self):
@@ -74,21 +76,21 @@ class Test:
             api_info = seq.pop(-1)
             compose_request = ComposeRequest(api_info,seq)
             new_request = compose_request.compose_required_request()
-            new_seq_set.append(seq.append(new_request))
+            seq.append(new_request)
+            new_seq_set.append(seq)
             for new_seq in new_seq_set:
                 if not self.send_request(new_seq):
                     new_seq_set.remove(new_seq)
-            self.success_api_sequence = new_seq_set
+        self.success_api_sequence = new_seq_set
 
-    @staticmethod
-    def send_request(seqs):
+    def send_request(self, seqs):
         for request in seqs:
+            self.api_info = self.api_list[request.api_id]
             request.send_request()
-            if re.match('4..', str(request.response.status_code)):
+            status_code = self.testing_evaluate(request)
+            if status_code == 4:
                 return False
         return True
-
-
 
     def dependencies(self, seqs, api_info):
         api_id_list = []
@@ -103,64 +105,6 @@ class Test:
                 if not lst3:
                     return False
         return True
-
-
-
-
-
-
-    def api_testing(self, api_id):
-        self.api_info = self.api_list[api_id]
-        self.compose_request = ComposeRequest(self.api_info, self.node)
-        self.compose_request.get_path_parameter()
-        self.compose_request.compose_required_request()
-        if self.api_info.http_method == 'post':
-            self.post_api_testing()
-        elif self.api_info.http_method == 'delete':
-            self.delete_api_testing()
-        elif self.api_info.http_method == 'get':
-            self.get_api_testing()
-        elif self.api_info.http_method == 'put':
-            self.put_api_testing()
-        elif self.api_info.http_method == 'patch':
-            self.patch_api_testing()
-
-    def optional_request_testing(self):
-        optional_request_list = self.compose_request.get_optional_request
-        for optional_request in optional_request_list:
-            self.testing_evaluate(optional_request)
-
-    def post_api_testing(self):
-        request = self.compose_request.request
-        response_status = self.testing_evaluate(request)
-        if self.api_info.api_id == 34:
-            print(1)
-        if response_status == 2:
-            self.compose_request.recompose_optional_request()
-            self.optional_request_testing()
-
-    def get_api_testing(self):
-        request = self.compose_request.request
-        response_status = self.testing_evaluate(request)
-        if response_status == 2 or response_status == 5:
-            self.compose_request.compose_optional_request()
-            self.optional_request_testing()
-
-    def put_api_testing(self):
-        request = self.compose_request.request
-        response_status = self.testing_evaluate(request)
-        self.compose_request.compose_optional_request()
-        self.optional_request_testing()
-
-    def delete_api_testing(self):
-        request = self.compose_request.request
-        response_status = self.testing_evaluate(request)
-        if response_status == 2 or response_status == 5:
-            foREST_POST_resource_pool.delete_resource(self.compose_request.current_parent_source)
-
-    def patch_api_testing(self):
-        request = self.compose_request.request
-        response_status = self.testing_evaluate(request)
 
     def testing_evaluate(self, request):
         summery_count['already send requests number'] += 1
@@ -188,10 +132,6 @@ class Test:
         requests_log.warning(self.success_pool)
         response_status = 0
         if re.match('2..', str(response.status_code)):
-            if request.method == 'post':
-                foREST_POST_resource_pool.save_response(self.api_info, request,
-                                                        json.loads(request.response.text.split('Connection to server successfully')[0]),
-                                                        self.compose_request.current_parent_source)
             response_status = 2
             summery_count['2xx requests number'] += 1
             status_2xx_log.info(self.request_message + response_message)
