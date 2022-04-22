@@ -1,8 +1,10 @@
 # coding:utf-8
 import logging
+import sys
 from logging.handlers import RotatingFileHandler # 按文件大小滚动备份
 import colorlog  # 控制台日志输入颜色
 import time
+import shutil
 import datetime
 import os
 
@@ -21,8 +23,10 @@ class Log:
     def __init__(self, log_name = None,log_path = None):
         cur_path = os.path.dirname(os.path.realpath(__file__))  # log_path是存放日志的路径
         if not log_path:
-            log_path = os.path.join(os.path.dirname(cur_path), 'log/logs')
-        if not os.path.exists(log_path):
+            log_path = os.path.join(os.path.dirname(cur_path), 'log\logs')
+        if os.path.isdir(log_path):
+            self.delete_logs(log_path)
+        else:
             os.mkdir(log_path)  # 如果不存在这个logs文件夹，就自动创建一个
         if not log_name:
             log_name = os.path.join(log_path, '%s' % time.strftime('%Y-%m-%d'))  # 文件的命名
@@ -41,27 +45,28 @@ class Log:
 
     def delete_logs(self, file_path):
         try:
-            os.remove(file_path)
+            file_list = os.listdir(file_path)
+            for f in file_list:
+                f_path = os.path.join(file_path, f)
+                os.remove(f_path)
         except PermissionError as e:
-            Log().warning('删除日志文件失败：{}'.format(e))
+            print('Failed to delete log directory: {}'.format(e))
+            sys.exit()
 
     def __console(self, level, message):
-        # 创建一个FileHandler，用于写到本地
         info_handle = RotatingFileHandler(filename=self.log_name, mode='a', encoding='utf-8')  # 使用RotatingFileHandler类，滚动备份日志
         info_handle.setLevel(logging.DEBUG)
         info_handle.setFormatter(self.formatter_file)
-        # 创建一个StreamHandler,用于输出到控制台
         creen_handle = colorlog.StreamHandler()
         creen_handle.setLevel(logging.DEBUG)
         creen_handle.setFormatter(self.formatter)
-        # 创建一个ErrorHandler ，用于输出Bug
-        bug_handle = RotatingFileHandler(filename=self.error_log_name, mode='a', encoding='utf-8')
-        bug_handle.setLevel(logging.DEBUG)
-        bug_handle.setFormatter(self.formatter_file)
-
-        warning_handle = RotatingFileHandler(filename=self.warning_log_name, mode='a', encoding='utf-8')
-        warning_handle.setLevel(logging.DEBUG)
-        bug_handle.setFormatter(self.formatter_file)
+        # bug_handle = RotatingFileHandler(filename=self.error_log_name, mode='a', encoding='utf-8')
+        # bug_handle.setLevel(logging.DEBUG)
+        # bug_handle.setFormatter(self.formatter_file)
+        #
+        # warning_handle = RotatingFileHandler(filename=self.warning_log_name, mode='a', encoding='utf-8')
+        # warning_handle.setLevel(logging.DEBUG)
+        # bug_handle.setFormatter(self.formatter_file)
 
         if level == 'info':
             self.logger.addHandler(info_handle)
@@ -72,18 +77,18 @@ class Log:
             self.logger.addHandler(creen_handle)
             self.logger.debug(message)
             self.logger.removeHandler(creen_handle)
-        elif level == 'warning':
-            self.logger.addHandler(creen_handle)
-            self.logger.addHandler(warning_handle)
-            self.logger.warning(message)
-            self.logger.removeHandler(creen_handle)
-            self.logger.removeHandler(warning_handle)
-        elif level == 'error':
-            self.logger.addHandler(creen_handle)
-            self.logger.addHandler(bug_handle)
-            self.logger.error(message)
-            self.logger.removeHandler(creen_handle)
-            self.logger.removeHandler(bug_handle)
+        # elif level == 'warning':
+        #     self.logger.addHandler(creen_handle)
+        #     self.logger.addHandler(warning_handle)
+        #     self.logger.warning(message)
+        #     self.logger.removeHandler(creen_handle)
+        #     self.logger.removeHandler(warning_handle)
+        # elif level == 'error':
+        #     self.logger.addHandler(creen_handle)
+        #     self.logger.addHandler(bug_handle)
+        #     self.logger.error(message)
+        #     self.logger.removeHandler(creen_handle)
+        #     self.logger.removeHandler(bug_handle)
 
         info_handle.close()  # 关闭打开的文件
 

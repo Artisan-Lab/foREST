@@ -1,4 +1,4 @@
-from tool.tools import sno
+from utils.utils import sno
 from module.string_march import StringMatch
 
 
@@ -62,6 +62,7 @@ class Resource:
         return None
 
     def find_field_from_path(self, resource_dict, field_path):
+        if not resource_dict: return None
         if field_path[0] in resource_dict:
             if len(field_path) == 1:
                 return resource_dict[field_path[0]]

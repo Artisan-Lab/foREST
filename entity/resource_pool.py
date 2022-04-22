@@ -5,7 +5,7 @@ import random
 import nltk
 from fuzzywuzzy import fuzz
 from module.string_march import StringMatch
-from tool.tools import Tool
+from utils.utils import Tool
 sno = nltk.stem.SnowballStemmer('english')
 # Stemming algorithm
 

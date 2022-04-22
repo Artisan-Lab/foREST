@@ -1,4 +1,4 @@
-from tool.tools import annotation_table, external_key_dict
+from utils.utils import ANNOTATION_TABLE, EXTERNAL_KEY_DICT
 
 
 class StringMatch:
@@ -31,18 +31,18 @@ class StringMatch:
 
     @staticmethod
     def get_value_from_external(api_path, api_method, field_name, location):
-        if api_path in external_key_dict:
-            if api_method in external_key_dict[api_path]:
-                for external_key in external_key_dict[api_path][api_method]:
+        if api_path in EXTERNAL_KEY_DICT:
+            if api_method in EXTERNAL_KEY_DICT[api_path]:
+                for external_key in EXTERNAL_KEY_DICT[api_path][api_method]:
                     if external_key[field_name] == field_name and external_key[location] == location:
                         return external_key['value']
         return None
 
     @staticmethod
     def get_real_name_from_external(api_path, api_method, field_name, location):
-        if api_path in annotation_table:
-            if api_method in annotation_table[api_path]:
-                for external_key in annotation_table[api_path][api_method]:
+        if api_path in ANNOTATION_TABLE:
+            if api_method in ANNOTATION_TABLE[api_path]:
+                for external_key in ANNOTATION_TABLE[api_path][api_method]:
                     if external_key['field_name'] == field_name and external_key['location'] == location:
                         return external_key['real_field_name']
         return None

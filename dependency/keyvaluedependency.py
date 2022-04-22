@@ -1,4 +1,4 @@
-from tool.tools import Tool
+from utils.utils import Tool
 import copy
 from entity.resource_pool import foREST_POST_resource_pool
 from fuzzywuzzy import fuzz
@@ -134,24 +134,11 @@ class Compare:
         if self.compared_field_name is None:
             return 0
         match_point = max(fuzz.partial_ratio(self.compare_parent_resource_name + self.compare_field_name,
-                                         self.compared_parent_resource_name + self.compared_field_name), fuzz.partial_ratio(self.compare_field_name, self.compared_field_name))
+                                             self.compared_parent_resource_name + self.compared_field_name),
+                          fuzz.partial_ratio(self.compare_field_name, self.compared_field_name))
         if self.compare_field_type != self.compared_field_type:
             match_point -= 30
         if match_point > 70:
             return (match_point-70)/3
         else:
             return 0
-
-        # if self.compared_field_name.lower() == self.compare_field_name.lower() and \
-        #         self.compared_field_type == self.compare_field_type:
-        #     return 7.5
-        # compared_field_name_list = self.compared_parent_resource_name.split('_') + self.compared_field_name.split('_')
-        # compare_field_name_list = self.compare_field_name.split('_')[-1]
-        # compared_field_name = ''.join(compared_field_name_list).lower()
-        # compare_field_name = ''.join(compare_field_name_list).lower()
-        # if compared_field_name == compare_field_name:
-        #     return 5
-        # if compared_field_name.endswith(compare_field_name):
-        #     return 2.5
-        # else:
-        #     return None
