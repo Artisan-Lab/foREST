@@ -1,7 +1,7 @@
 import copy
 import json
 import numpy as np
-from utils.utils import http_header, http_header_no_auth
+from utils.foREST_setting import http_header, http_header_no_auth
 from module.sendrequest import SendRequest
 
 

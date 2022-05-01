@@ -4,7 +4,7 @@ info:
   version: v4
   description: An OpenAPI definition for the GitLab REST API.
 servers:
-  - url: 'http://192.168.112.186/api/v4'
+  - url: 'http://10.176.40.198/api/v4'
 paths:
   '/projects/{id}/repository/branches':
     get:
