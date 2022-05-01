@@ -108,7 +108,7 @@ java -jar evomaster.jar --blackBox true --bbSwaggerUrl file:///C:/Users/42511/On
 ```
 
 ```
-./Restler.exe fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile//dict.json --token_refresh_interval 3600 --token_refresh_command 'python E:/code/get_token/main.py' --no_ssl --time_budget 10 --settings ..\setting.json
+./Restler.exe fuzz --grammar_file ./Compile/grammar.py --dictionary_file ./Compile//dict.json --token_refresh_interval 360000 --token_refresh_command 'python E:/code/get_token/main.py' --no_ssl --time_budget 10 --settings ..\setting.json
 ```
 
 

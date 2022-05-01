@@ -1,7 +1,7 @@
 import configparser
 import os
 import nltk
-
+import datetime
 
 
 def read_config(title, key):
@@ -10,7 +10,7 @@ def read_config(title, key):
     conf.read(root_path)
     return conf.get(title, key)
 
-
+START_TIME = datetime.datetime.now()
 TESTING_TIME = float(read_config('testing_setting', 'testing_time'))
 SEND_TIMEOUT = read_config('request', 'send_timeout')
 RECEIVED_TIMEOUT = read_config('request', 'received_timeout')

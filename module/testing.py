@@ -10,6 +10,7 @@ from log.get_logging import summery_count
 from entity.resource_pool import foREST_POST_resource_pool
 from module.jsonhandle import JsonHandle
 from module.foREST_monitor import foRESTMonitor
+from utils.foREST_setting import TESTING_TIME, START_TIME
 
 
 foREST_POST_resource_pool_copy = copy.deepcopy(foREST_POST_resource_pool)
@@ -41,7 +42,7 @@ class Test:
         summery_count['success api number'] = 0
 
     def foREST_tree_based_bfs(self):
-        while self.foREST_monitor.remaining_time_budget:
+        while True:
             self.node_queue = [self.semantic_tree_root]
             while self.node_queue:
                 self.node = self.node_queue.pop(0)
@@ -51,6 +52,8 @@ class Test:
                         self.node_queue.append(child)
             self.traverse_nums += 1
             summery_count['already send rounds'] = self.traverse_nums
+            if datetime.datetime.now() - START_TIME > datetime.timedelta(minutes=TESTING_TIME):
+                break
 
 
     def node_testing(self, node):
