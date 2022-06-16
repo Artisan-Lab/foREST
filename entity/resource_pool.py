@@ -1,11 +1,9 @@
-import copy
-
 from entity.resource import Resource
 import random
 import nltk
 from fuzzywuzzy import fuzz
-from module.string_march import StringMatch
-from utils.utils import Tool
+from module.utils.string_march import StringMatch
+from module.utils.utils import Tool
 sno = nltk.stem.SnowballStemmer('english')
 # Stemming algorithm
 

@@ -1,4 +1,4 @@
-from module.string_march import StringMatch
+from module.utils.string_march import StringMatch
 
 
 class Resource:
