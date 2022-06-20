@@ -15,45 +15,32 @@ class SendRequest:
         self.timeout = (10, 10)
         self.response = None
 
-    @staticmethod
-    def send_post_request(url, header, data, timeout):
-        response = requests.post(url=url, headers=header, data=data, timeout=timeout)
-        return response
-
-    @staticmethod
-    def send_get_request(url, header, data, timeout):
-        response = requests.get(url=url, headers=header, data=data, timeout=timeout)
-        return response
-
-    @staticmethod
-    def send_delete_request(url, header, data, timeout):
-        response = requests.delete(url=url, headers=header, data=data, timeout=timeout)
-        return response
-
-    @staticmethod
-    def send_put_request(url, header, data, timeout):
-        response = requests.put(url=url, headers=header, data=data, timeout=timeout)
-        return response
-
-    @staticmethod
-    def send_patch_request(url, header, data, timeout):
-        response = requests.patch(url=url, headers=header, data=data, timeout=timeout)
-        return response
-
     def get_response(self):
         return self.response
 
     def send_request(self):
-        if self.method == 'post':
-            self.response = SendRequest.send_post_request(self.url, self.base_header, self.data, self.timeout)
-        if self.method == 'get':
-            self.response = SendRequest.send_get_request(self.url, self.base_header, self.data, self.timeout)
-        if self.method == 'delete':
-            self.response = SendRequest.send_delete_request(self.url, self.base_header, self.data, self.timeout)
-        if self.method == 'put':
-            self.response = SendRequest.send_put_request(self.url, self.base_header, self.data, self.timeout)
-        if self.method == 'patch':
-            self.response = SendRequest.send_patch_request(self.url, self.base_header, self.data, self.timeout)
+        # for k, v in kwargs.items():
+        #     logger.debug("{}: {}", k, v)
+
+        try:
+            response = getattr(requests, self.method.lower())(self.url, self.base_header, self.data, self.timeout)
+        except TypeError:
+            raise Exception("request type error: {}".format(self.method))
+        except requests.exceptions.Timeout:
+            response = None
+        except requests.exceptions.TooManyRedirects:
+            raise Exception("bad url, try a different one\n url: {}".format(self.url))
+        except requests.exceptions.RequestException:
+            response = None
+        if response is None:
+            # logger.debug("status code: {}", 600)
+            return 600, None
+        try:
+            # logger.debug("status code: {}", response.status_code)
+            # logger.debug(response.json())
+            return response.status_code, response.json()
+        except json.JSONDecodeError:
+            return response.status_code, response.text
 
 
 class Request(SendRequest):

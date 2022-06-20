@@ -1,6 +1,6 @@
 """ Global monitor for the fuzzing run """
 import time
-from module.foREST_monitor.clock_monitor import TimeThread
+from module.foREST_monitor.clock_monitor import TimeMonitor
 
 
 def Monitor():
@@ -41,7 +41,7 @@ class foRESTMonitor(object):
         """
         if self._time_monitor:
             raise Exception("Attempting to create a new time monitor")
-        self._time_monitor = TimeThread(time_in_minutes)
+        self._time_monitor = TimeMonitor(time_in_minutes)
 
     def start_time_monitor(self):
         """ start time monitor

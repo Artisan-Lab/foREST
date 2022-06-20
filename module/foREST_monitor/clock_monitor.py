@@ -23,11 +23,28 @@ def progressbar(curr, total, duration=10, extra=''):
     print('\r', '🌲' * filled + '--' * (duration - filled), '[{:.0%}]'.format(frac), extra, end='')
 
 
-class TimeThread(threading.Thread):
+def Time_Monitor():
+    """ Accessor for the FuzzingMonitor singleton """
+    return TimeMonitor.Instance()
+
+class TimeMonitor(threading.Thread):
+    __instance = None
     """
         timer thread class
         Used to control testing runtime
     """
+
+    @staticmethod
+    def Instance():
+        """ Singleton's instance accessor
+
+        @return FuzzingMonitor instance
+        @rtype  FuzzingMonitor
+
+        """
+        if TimeMonitor.__instance is None:
+            raise Exception("time Monitor not yet initialized.")
+        return TimeMonitor.__instance
 
     def __init__(self, total_time: int):
         """
@@ -36,11 +53,15 @@ class TimeThread(threading.Thread):
         """
         threading.Thread.__init__(self)
 
+        if self.__instance:
+            raise Exception("Attempting to create a new singleton instance.")
+
         self._total_time = total_time
         self._is_running = True
         self._start_time = time.perf_counter()
         self._remain_time = total_time
         self._testing_time = 0
+        self.__instance = self
 
     def terminate(self):
         """
@@ -50,7 +71,7 @@ class TimeThread(threading.Thread):
         self._is_running = False
 
     @property
-    def get_start_time(self):
+    def start_time(self):
         """
 
         @return: start time
@@ -59,7 +80,7 @@ class TimeThread(threading.Thread):
         return self._start_time
 
     @property
-    def get_remain_time(self):
+    def remain_time(self):
         """
             get remain time
         @return: remain time
@@ -68,7 +89,7 @@ class TimeThread(threading.Thread):
         return self._remain_time
 
     @property
-    def get_testing_time(self):
+    def testing_time(self):
         """
             get testing time
         @return: testing time
@@ -111,7 +132,7 @@ class TimeThread(threading.Thread):
 
 
 if __name__ == "__main__":
-    time_thread = TimeThread(1)
+    time_thread = TimeMonitor(1)
     time_thread.start()
     try:
         while time_thread.is_alive():
