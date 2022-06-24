@@ -24,8 +24,9 @@ def progressbar(curr, total, duration=10, extra=''):
 
 
 def Time_Monitor():
-    """ Accessor for the FuzzingMonitor singleton """
+    """ Accessor for the TimeMonitor singleton """
     return TimeMonitor.Instance()
+
 
 class TimeMonitor(threading.Thread):
     __instance = None
@@ -49,7 +50,7 @@ class TimeMonitor(threading.Thread):
     def __init__(self, total_time: int):
         """
 
-        @param total_time: testing time in minutes
+        @param total_time: testing time in hour
         """
         threading.Thread.__init__(self)
 
@@ -103,8 +104,8 @@ class TimeMonitor(threading.Thread):
         @return: None
         @rtype: None
         """
-        print(f'🌲 testing {self._total_time} minutes. Ctrl+C to exit')
-        self.clock_monitor(self._total_time)
+        print(f'🌲 testing {self._total_time} hour. Ctrl+C to exit')
+        self.clock_monitor(int(self._total_time*60))
 
     def clock_monitor(self, minutes: int):
         """
@@ -119,14 +120,14 @@ class TimeMonitor(threading.Thread):
             self._remain_time = minutes * 60 - self._testing_time
             if self._remain_time <= 0:
                 print('')
+                self._is_running = False
                 break
-
-            countdown = '{}:{}:{} ⏰'.format(int(self._remain_time / 3600),
-                                            int(self._remain_time / 60) if self._remain_time / 60 >= 10 else
-                                            "0" + str(int(self._remain_time / 60)),
-                                            int(self._remain_time % 60) if self._remain_time % 60 >= 10 else
-                                            "0" + str(int(self._remain_time % 60)))
-            duration = 25 if minutes < 25 else minutes
+            hour = int(self._remain_time / 3600)
+            minute = int(self._remain_time % 3600/60) \
+                if self._remain_time / 60 >= 10 else "0" + str(int(self._remain_time / 60))
+            second = int(self._remain_time % 60) if self._remain_time % 60 >= 10 else "0" + str(int(self._remain_time % 60))
+            countdown = '{}:{}:{} ⏰'.format(hour, minute, second)
+            duration = 25
             progressbar(self._testing_time, minutes * 60, duration, countdown)
             time.sleep(1)
 
@@ -139,4 +140,3 @@ if __name__ == "__main__":
             continue
     except KeyboardInterrupt:
         time_thread.terminate()
-    print(1)

@@ -1,9 +1,11 @@
 import copy
+from foREST_setting import foRESTSettings
 from log.get_logging import external_log
+from module.foREST_monitor.foREST_monitor import Monitor
 from module.testing.basic_fuzz import BasicFuzz
 from module.testing.genetic_algorithm import GeneticAlgorithm
-from module.utils.string_march import StringMatch
-from entity.resource_pool import foREST_POST_resource_pool
+from module.utils.utils import *
+from entity.resource_pool import resource_pool
 from entity.request import Request
 
 
@@ -26,9 +28,10 @@ class ComposeRequest:
         base_url_list = self.api_info.path.split('/')
         base_url_list.remove('')
         for path in base_url_list[::-1]:
-            if not StringMatch.is_path_variable(path):
+            if not is_path_variable(path):
                 # 从后往前找到路径中的定值
-                self.current_parent_source = foREST_POST_resource_pool.find_resource_from_resource_name(path) # 在资源池中检索是否有该资源
+                self.current_parent_source = resource_pool().find_resource_from_resource_name(
+                    path)  # 在资源池中检索是否有该资源
                 if self.current_parent_source:
                     if self.current_parent_source.resource_api_id == self.api_info.api_id:
                         # 排除掉自己做自己父资源的情况
@@ -46,21 +49,15 @@ class ComposeRequest:
         if field_info.field_type == 'bool':
             value = BasicFuzz.fuzz_value_from_field(field_info)
             return value
-        value = StringMatch.get_value_from_external(self.api_info.path,
-                                                    self.api_info.http_method,
-                                                    field_info.field_name,
-                                                    field_info.location
-                                                    )
-        if value:
-            external_log.info('Key: ' + str(field_info.field_name) + 'Value: ' + str(value))
-            return value
-        # if self.current_parent_source:
-        #     value = self.current_parent_source.find_field_from_name(field_info.field_name, field_info.field_type)
-        #     if value:
-        #         return
+        if foRESTSettings().annotation_table:
+            value = get_value_from_external(Monitor().annotation_table,
+                                            self.api_info.path,
+                                            self.api_info.http_method,
+                                            field_info.field_name,
+                                            field_info.location
+                                            )
         if field_info.depend_list[0]:
-            # 判断该参数可否从其他请求的响应中获取
-            genetic_algorithm = GeneticAlgorithm(field_info.depend_list[1])
+            genetic_algorithm = GeneticAlgorithm(field_info.depend_list)
             for i in range(len(field_info.depend_list[1])):
                 winner_depend_field_index = genetic_algorithm.get_winner_index()
                 field_path = field_info.depend_list[0][int(winner_depend_field_index / 2)]
@@ -70,7 +67,7 @@ class ComposeRequest:
                     value = self.current_parent_source.find_field_from_path(self.current_parent_source.resource_data,
                                                                             field_path[1:])
                 else:
-                    value = foREST_POST_resource_pool.get_special_value_from_resource(field_path[0], field_path[1:])
+                    value = resource_pool().get_special_value_from_resource(field_path[0], field_path[1:])
                 if value:
                     self.current_request.add_genetic_algorithm(genetic_algorithm)
                     if winner_depend_field_index % 2 == 0 and (isinstance(value, str)):
@@ -80,7 +77,6 @@ class ComposeRequest:
                 genetic_algorithm.winner_failed()
             field_info.depend_list[1] = genetic_algorithm.get_survival_points_list
         if field_info.field_type == 'dict':
-            # 如果没有得到并且该参数是dict类型的话，将递归生成该参数
             value = {}
             if field_info.object:
                 for sub_field_info in field_info.object:
@@ -90,7 +86,6 @@ class ComposeRequest:
                             value[sub_field_info.field_name] = sub_field_value
                 return value
         elif field_info.field_type == 'list':
-            # 同上
             if field_info.array.field_type == 'dict':
                 value = []
                 sub_value = {}
@@ -103,15 +98,13 @@ class ComposeRequest:
             else:
                 value = []
                 for i in range(0, 5):
-                    value.append(BasicFuzz.fuzz_value_from_type(field_info.array.field_type))
+                    value.append(BasicFuzz.fuzz_value_from_field(field_info.array))
                 return value
         if value is None:
-            # 如果不能获得该参数的话，用fuzz
             value = BasicFuzz.fuzz_value_from_field(field_info)
         return value
 
     def compose_required_request(self):
-        # 组装必选参数
         if not self.api_info.req_param:
             return
         for field_info in self.api_info.req_param:
@@ -158,7 +151,6 @@ class ComposeRequest:
         return self.optional_request_pool
 
     def get_required_request(self):
-        # 返回生成的request
         self.compose_required_request()
         return self.request
 

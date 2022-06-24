@@ -5,6 +5,7 @@
         "annotation_table": false,
         "annotation_table_file_path": "E:\\code\\restful_test\\foREST\\foREST_setting\\annotation_table.json"
     },
+    "similarity_cardinality": 60,
     "fuzz": {
         "int": {
             "max_integer": 50,

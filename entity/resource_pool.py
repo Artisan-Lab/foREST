@@ -1,14 +1,86 @@
-from entity.resource import Resource
-import random
 import nltk
 from fuzzywuzzy import fuzz
-from module.utils.string_march import StringMatch
-from module.utils.utils import Tool
+from module.utils.utils import *
 sno = nltk.stem.SnowballStemmer('english')
 # Stemming algorithm
 
 
+class Resource:
+
+    def __init__(self, resource_id, api_id, resource_name, resource_data, resource_request, resource_path):
+        self.__resource_id = resource_id
+        self.__resource_api_id = api_id
+        self.__resource_name = resource_name
+        self.__resource_path = resource_path
+        self.resource_data = resource_data
+        self.__resource_request = resource_request
+        self.__parent_resource = []
+        self.__children_resource = []
+
+    @property
+    def get_resource_request(self):
+        return self.__resource_request
+
+    @property
+    def resource_id(self):
+        return self.__resource_id
+
+    @property
+    def resource_name(self):
+        return self.__resource_name
+
+    @property
+    def resource_api_id(self):
+        return self.__resource_api_id
+
+    @property
+    def parent_resource(self):
+        return self.__parent_resource
+
+    @parent_resource.setter
+    def parent_resource(self, parent_resource):
+        self.__parent_resource.append(parent_resource)
+
+    @property
+    def children_resource(self):
+        return self.__children_resource
+
+    @children_resource.setter
+    def children_resource(self, children_resource):
+        self.__children_resource.append(children_resource)
+
+    def find_field_from_name(self, field_name, field_type):
+        value = find_field_in_dic(self.resource_data, field_name, field_type)
+        if value:
+            return value
+        if '_' in field_name and '_' in self.resource_name:
+            field_name_list = field_name.split('_')
+            resource_name_list = self.resource_name.split('_')
+            while resource_name_list:
+                if field_name_list.pop(0) != resource_name_list.pop(0):
+                    break
+            value = find_field_in_dic(self.resource_data, field_name, field_type)
+            if value:
+                return value
+        return None
+
+    def find_field_from_path(self, resource_dict, field_path):
+        if not resource_dict: return None
+        if field_path[0] in resource_dict:
+            if len(field_path) == 1:
+                return resource_dict[field_path[0]]
+            else:
+                return self.find_field_from_path(resource_dict[field_path[0]], field_path[1:])
+
+
 class ResourcePool:
+    __instance = None
+
+    @staticmethod
+    def instance():
+        if ResourcePool.__instance is None:
+            raise Exception("Resource Pool not yet initialized.")
+        return ResourcePool.__instance
     """
         this class define the Resource pool
     """
@@ -17,6 +89,7 @@ class ResourcePool:
         self.resource_list = []
         self.resource_api_id_dict = {}
         self.resource_id = 0
+        ResourcePool.__instance = self
 
     def get_special_value_from_resource(self, api_id, field_path):
         resource = self.find_resource_from_api_id(api_id)
@@ -27,7 +100,7 @@ class ResourcePool:
 
     def save_response(self, api_info, request, response, parent_resource):
         base_url_list = api_info.path.split('/')
-        if not StringMatch.is_path_variable(base_url_list[-1]):
+        if not is_path_variable(base_url_list[-1]):
             resource_name = base_url_list[-1]
             return self.create_resource(resource_name, api_info.api_id, response, request, api_info.path, parent_resource)
 
@@ -35,8 +108,6 @@ class ResourcePool:
         resource_name = sno.stem(resource_name)
         resource = Resource(self.resource_id, api_id, resource_name, resource_data, resource_request, resource_path)
         self.resource_list.append(resource)
-        if api_id == 34:
-            print(1)
         if resource_name in self.resource_name_dict:
             if len(self.resource_name_dict[resource_name]) > 100:
                 self.delete_resource(self.resource_name_dict[resource_name][0])
@@ -66,7 +137,7 @@ class ResourcePool:
 
     def find_resource_from_resource_name(self, name):
         name = sno.stem(name)
-        self.resource_name_dict = Tool.random_dic(self.resource_name_dict)
+        self.resource_name_dict = random_dic(self.resource_name_dict)
         for resource_name in self.resource_name_dict:
             if fuzz.partial_ratio(name, resource_name) >= 90:
                 if self.resource_name_dict[resource_name]:
@@ -74,8 +145,6 @@ class ResourcePool:
         return None
 
     def __delete_resource(self, resource):
-        if resource.resource_api_id == 34:
-            print(1)
         if resource.children_resource:
             for child_resource in resource.children_resource:
                 self.delete_resource(resource=child_resource)
@@ -95,7 +164,7 @@ class ResourcePool:
 
     def find_parent_resource_name(self, path_list):
         for path in path_list[::-1]:
-            if StringMatch.is_path_variable(path):
+            if is_path_variable(path):
                 continue
             else:
                 if path in self.resource_name_dict:
@@ -103,4 +172,6 @@ class ResourcePool:
         return ''
 
 
-foREST_POST_resource_pool = ResourcePool()
+def resource_pool() -> ResourcePool:
+    """ Accessor for the Resource Pool singleton """
+    return ResourcePool.instance()

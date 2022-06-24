@@ -1,7 +1,4 @@
-import configparser
-import os
-import nltk
-import datetime
+import requests
 
 
 class Argument(object):
@@ -54,15 +51,13 @@ class Argument(object):
         self._value = new_value
 
 
-def foRESTSettings():
-    return foRESTSetting.Instance()
-
-
 class foRESTSetting:
     __instance = None
 
     @staticmethod
     def Instance():
+        if not foRESTSetting.__instance:
+            raise Exception("foREST setting not yet initialized.")
         return foRESTSetting.__instance
 
     def __init__(self, args_dicts: dict):
@@ -70,6 +65,10 @@ class foRESTSetting:
         self._target_ip = Argument('target_ip', args_dicts, ['target_ip'])
         # foREST work mode: pure testing or data based testing
         self._foREST_mode = Argument('foREST_mode', args_dicts, ['foREST_mode'])
+        # data-based testing argument, specific log type
+        self._log_type = Argument('log_type', args_dicts, ['log_type'])
+        # data-based testing argument, log absolute path
+        self._log_path = Argument('log_path', args_dicts, ['log_path'])
         # testing time budget: minutes
         self._time_budget = Argument('time_budget', args_dicts, ['time_budget'])
         # user token
@@ -83,13 +82,55 @@ class foRESTSetting:
         # is use annotation_table : bool
         self._annotation_table = Argument('annotation_table', args_dicts, ['function', 'annotation_table'])
         # annotation table definition file absolute path
-        self._annotation_table_file_path = Argument('annotation_table_file_path', args_dicts, ['function', 'annotation_table_file_path'])
+        self._annotation_table_file_path = Argument('annotation_table_file_path', args_dicts,
+                                                    ['function', 'annotation_table_file_path'])
         # fuzz setting: dict
         self._fuzz_setting = Argument('fuzz_setting', args_dicts, ['fuzz'])
         # request setting: dict
         self._request_setting = Argument('request_setting', args_dicts, ['request'])
+        # Similarity cardinality in dependency analysis
+        self._similarity_cardinality = Argument('similarity_cardinality', args_dicts, ['similarity_cardinality'])
+        self._dict_type = Argument('dict_type', args_dicts, ['dict_type'])
+
+        # Verify the validity of parameters
+        # self.__check_argument()
 
         foRESTSetting.__instance = self
+
+    def __check_argument(self):
+        try:
+            requests.get(self.target_ip)
+        except:
+            raise Exception("ERROR target ip")
+        if self.foREST_mode != "pure testing" and self.foREST_mode != "data-based testing":
+            raise Exception("ERROR working mode")
+        if self.log_type != "json" and self.log_type != "foREST":
+            raise Exception("ERROR log type")
+        if isinstance(self.time_budget, str):
+            try:
+                self._time_budget = int(self.time_budget)
+            except:
+                raise Exception("ERROR time budget type")
+        if self.external_key and not self.external_key_file_path:
+            raise Exception("use annotation key table need annotation_key_table path")
+        if self.annotation_table and not self.annotation_table_file_path:
+            raise Exception("use annotation table need annotation_table path")
+
+    @property
+    def dict_type(self):
+        return self._dict_type.value
+
+    @property
+    def similarity_cardinality(self):
+        return self._similarity_cardinality.value
+
+    @property
+    def log_type(self):
+        return self._log_type.value
+
+    @property
+    def log_path(self):
+        return self._log_path.value
 
     @property
     def target_ip(self):
@@ -110,7 +151,7 @@ class foRESTSetting:
     @property
     def token(self):
         return self._token.value
-    
+
     @property
     def api_file_path(self):
         return self._api_file_path.value
@@ -138,3 +179,7 @@ class foRESTSetting:
     @property
     def request_setting(self):
         return self._request_setting
+
+
+def foRESTSettings() -> foRESTSetting:
+    return foRESTSetting.Instance()

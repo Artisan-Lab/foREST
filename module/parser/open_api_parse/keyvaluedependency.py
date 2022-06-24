@@ -1,16 +1,15 @@
 import nltk
 import copy
-from entity.resource_pool import foREST_POST_resource_pool
+from typing import Union
+from log.get_logging import Log
 from fuzzywuzzy import fuzz
-from module.utils.string_march import StringMatch
+from anytree import NodeMixin, RenderTree
+from foREST_setting import foRESTSettings
+from entity.resource_pool import resource_pool
+from entity.api_info import *
+from module.utils.utils import *
+from module.foREST_monitor.foREST_monitor import Monitor
 
-
-def Dependency(open_api_list):
-    semantic_tree = CreateSemanticTree(open_api_list)
-    tree_root = semantic_tree.create_tree
-    key_value_parser = SetKeyValueDependency(open_api_list)
-    key_value_parser.get_dependency()
-    return tree_root
 
 class SetKeyValueDependency:
     """
@@ -18,10 +17,10 @@ class SetKeyValueDependency:
     """
 
     def __init__(self, api_info_list):
-        self.api_info_list = api_info_list
+        self.api_info_list = api_info_list  # type: Monitor().api_list
         self.api_numbers = len(api_info_list)
-        self.current_field_info = None
-        self.current_api_info = None
+        self.current_field_info = None  # type: Union[FieldInfo, None]
+        self.current_api_info = None  # type: Union[APIInfo, None]
         self.current_parent_resource_name = None
         self.current_compare_field_info = None
         self.current_compare_api_info = None
@@ -31,16 +30,15 @@ class SetKeyValueDependency:
         self.depended_field_path = []
 
     def find_depend_API(self):
-        depend_field_dict = {}
         for api_info in self.api_info_list:
             self.current_compare_api_info = api_info
             self.depended_field_list = []
-            if not api_info.resp_param or api_info.http_method != 'post':
+            if not api_info.resp_param or api_info.http_method != 'post' or api_info == self.current_api_info:
                 continue
             for field_info in api_info.resp_param:
                 self.current_compare_field_info = field_info
                 self.depended_field_path = [api_info.api_id]
-                parent_resource_name = foREST_POST_resource_pool.find_parent_resource_name(api_info.path)
+                parent_resource_name = resource_pool().find_parent_resource_name(api_info.path)
                 if self.find_depend_field(field_info, parent_resource_name) and \
                         self.current_field_info.require and \
                         api_info.api_id not in self.key_depend_api_list:
@@ -50,25 +48,30 @@ class SetKeyValueDependency:
         if parent_name is None:
             parent_name = ''
         self.depended_field_path.append(compare_field.field_name)
-        real_field_name = StringMatch.get_real_name_from_external(self.current_api_info.path,
-                                                                  self.current_api_info.http_method,
-                                                                  self.current_field_info.field_name,
-                                                                  self.current_field_info.location)
-        real_compare_field_name = StringMatch.get_real_name_from_external(self.current_compare_api_info.path,
-                                                                          self.current_compare_api_info.http_method,
-                                                                          self.current_compare_field_info.field_name,
-                                                                          self.current_compare_field_info.location)
+        real_field_name, real_compare_field_name = None, None
+        if Monitor().annotation_table:
+            real_field_name = get_key_from_annotation_key_table(Monitor().annotation_table,
+                                                                self.current_api_info.path,
+                                                                self.current_api_info.http_method,
+                                                                self.current_field_info.field_name,
+                                                                self.current_field_info.location)
+        if Monitor().annotation_key_table:
+            real_compare_field_name = get_key_from_annotation_key_table(Monitor().annotation_key_table,
+                                                                        self.current_compare_api_info.path,
+                                                                        self.current_compare_api_info.http_method,
+                                                                        self.current_compare_field_info.field_name,
+                                                                        self.current_compare_field_info.location)
         if not real_field_name:
             real_field_name = self.current_field_info.field_name
         if not real_compare_field_name:
-            real_compare_field_name = self.current_compare_field_info.field_name
+            real_compare_field_name = compare_field.field_name
         compare_method = Compare(real_field_name, self.current_parent_resource_name,
                                  self.current_field_info.field_type, real_compare_field_name,
                                  parent_name, compare_field.field_type)
-        point = compare_method.smart_match()
+        point = compare_method.smart_match(foRESTSettings().similarity_cardinality)
         if point:
-            self.current_field_info.depend_list[0].append(copy.deepcopy(self.depended_field_path))
-            self.current_field_info.depend_list[1].extend([point, point])
+            depend_point = DependPoint(self.depended_field_path[0], self.depended_field_path[1:], point)
+            self.current_field_info.depend_list.append(depend_point)
             self.depended_field_path.pop(-1)
             return True
         elif compare_field.field_type == 'dict':
@@ -85,11 +88,11 @@ class SetKeyValueDependency:
         self.depended_field_path.pop(-1)
         return False
 
-    def get_field_dependency(self, field_info):
+    def get_field_dependency(self, field_info: FieldInfo):
         self.current_field_info = field_info
         if field_info.field_name:
             self.find_depend_API()
-        if not field_info.depend_list[0]:
+        if not field_info.depend_list:
             if field_info.field_name not in self.not_reference_field:
                 self.not_reference_field.append(field_info.field_name)
         if field_info.field_type == 'list':
@@ -103,7 +106,7 @@ class SetKeyValueDependency:
         """get every field dependency reference"""
         for api_info in self.api_info_list:
             self.current_api_info = api_info
-            self.current_parent_resource_name = foREST_POST_resource_pool.find_parent_resource_name(api_info.path)
+            self.current_parent_resource_name = resource_pool().find_parent_resource_name(api_info.path)
             self.key_depend_api_list = []
             if api_info.req_param:
                 # traverse every parameter
@@ -112,7 +115,8 @@ class SetKeyValueDependency:
                         continue
                     self.get_field_dependency(req_field_info)
             api_info.key_depend_api_list = self.key_depend_api_list
-        Tool.save_no_reference(self.not_reference_field)
+        log = Log("no_reference_key.json")
+        log.save_json(self.not_reference_field)
         return self.api_info_list
 
 
@@ -137,16 +141,16 @@ class Compare:
         else:
             return None
 
-    def smart_match(self):
+    def smart_match(self, base_match_point=60):
         if self.compared_field_name is None:
             return 0
         match_point = max(fuzz.partial_ratio(self.compare_parent_resource_name + self.compare_field_name,
                                              self.compared_parent_resource_name + self.compared_field_name),
                           fuzz.partial_ratio(self.compare_field_name, self.compared_field_name))
         if self.compare_field_type != self.compared_field_type:
-            match_point -= 30
-        if match_point > 70:
-            return (match_point-70)/3
+            match_point -= 100 - base_match_point
+        if match_point > base_match_point:
+            return (match_point - base_match_point) / (100 - base_match_point)
         else:
             return 0
 
@@ -166,21 +170,24 @@ class SemanticNode(NodeMixin):
             self.children = children
 
 
-class CreateSemanticTree:
+class SemanticTree:
 
     def __init__(self, api_list):
         self.api_list = api_list
-        self.root = SemanticNode('root')
+        self._root = SemanticNode('root')
+        self.create_tree()
 
-    @property
     def create_tree(self):
         for api_info in self.api_list:
-            self.find_node(api_info.path.split('/'), api_info.http_method, api_info.api_id, self.root)
-        for pre, fill, node in RenderTree(self.root):
-            treestr = u"%s%s" % (pre, node.name)
-            print(treestr.ljust(8), node.method_dic)
-        self.add_close_api(self.root)
-        return self.root
+            self.find_node(api_info.path.split('/')[1:], api_info.http_method, api_info.api_id, self._root)
+        # for pre, fill, node in RenderTree(self._root):
+        #     treestr = u"%s%s" % (pre, node.name)
+        #     print(treestr.ljust(8), node.method_dic)
+        self.add_close_api(self._root)
+
+    @property
+    def root(self):
+        return self._root
 
     def add_close_api(self, node):
         close_api_list = []
@@ -209,8 +216,8 @@ class CreateSemanticTree:
     @staticmethod
     def find_node(api_path_nodes, api_method, api_id, parent_node):
         if not api_path_nodes:
-            if api_method == 'post' and not StringMatch.is_path_variable(parent_node.name):
-                foREST_POST_resource_pool.resource_name_dict[sno.stem(parent_node.name)] = []
+            if api_method == 'post' and not is_path_variable(parent_node.name):
+                resource_pool().resource_name_dict[sno.stem(parent_node.name)] = []
             parent_node.method_dic[api_method] = api_id
             return
         flag = 0
@@ -222,4 +229,4 @@ class CreateSemanticTree:
                     break
         if flag == 0:
             child_node = SemanticNode(api_path_nodes[0], parent=parent_node)
-        CreateSemanticTree.find_node(api_path_nodes[1:], api_method, api_id, child_node)
+        SemanticTree.find_node(api_path_nodes[1:], api_method, api_id, child_node)

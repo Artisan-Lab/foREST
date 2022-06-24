@@ -1,8 +1,8 @@
 import copy
 import json
 import numpy as np
-from foREST_setting import http_header, http_header_no_auth
 import requests
+from foREST_setting import foRESTSettings
 
 
 class SendRequest:
@@ -33,11 +33,8 @@ class SendRequest:
         except requests.exceptions.RequestException:
             response = None
         if response is None:
-            # logger.debug("status code: {}", 600)
             return 600, None
         try:
-            # logger.debug("status code: {}", response.status_code)
-            # logger.debug(response.json())
             return response.status_code, response.json()
         except json.JSONDecodeError:
             return response.status_code, response.text
@@ -60,10 +57,12 @@ class Request(SendRequest):
     def reset_base_request(self):
         self.url = self.base_url
         self.data = ''
+        base_header = {"Content-Type": "application/json"}
         if np.random.choice([1, 0], replace=True, p=[0.95, 0.05]):
-            self.base_header = copy.deepcopy(http_header)
+            self.base_header = base_header
+            self.base_header["Authorization"] = foRESTSettings().token
         else:
-            self.base_header = copy.deepcopy(http_header_no_auth)
+            self.base_header = base_header
 
     def initialization(self):
         self.reset_base_request()

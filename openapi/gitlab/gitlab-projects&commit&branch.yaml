@@ -1552,6 +1552,10 @@ paths:
       responses:
         '200':
           description: success
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/fork_info'
   '/projects/{id}/forks':
     get:
       tags:
@@ -1663,128 +1667,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    id:
-                      type: integer
-                    description:
-                      type: string
-                    default_branch:
-                      type: string
-                    visibility:
-                      type: string
-                      enum:
-                      - private
-                      - internal
-                      - public
-                    ssh_url_to_repo:
-                      type: string
-                    http_url_to_repo:
-                      type: string
-                    web_url:
-                      type: string
-                    readme_url:
-                      type: string
-                    tag_list:
-                      type: array
-                      items:
-                        type: string
-                    name:
-                      type: string
-                    name_with_namespace:
-                      type: string
-                    path:
-                      type: string
-                    path_with_namespace:
-                      type: string
-                    issues_enabled:
-                      type: boolean
-                    open_issues_count:
-                      type: integer
-                    merge_requests_enabled:
-                      type: boolean
-                    jobs_enabled:
-                      type: boolean
-                    wiki_enabled:
-                      type: boolean
-                    snippets_enabled:
-                      type: boolean
-                    can_create_merge_request_in:
-                      type: boolean
-                    resolve_outdated_diff_discussions:
-                      type: boolean
-                    container_registry_enabled:
-                      type: boolean
-                    created_at:
-                      type: string
-                    last_activity_at:
-                      type: string
-                    creator_id:
-                      type: integer
-                    namespace:
-                      type: object
-                      properties:
-                        id:
-                          type: integer
-                        name:
-                          type: string
-                        path:
-                          type: string
-                        kind:
-                          type: string
-                        full_path:
-                          type: string
-                    import_status:
-                      type: string
-                    archived:
-                      type: boolean
-                    avatar_url:
-                      type: string
-                    shared_runners_enabled:
-                      type: boolean
-                    forks_count:
-                      type: integer
-                    star_count:
-                      type: integer
-                    public_jobs:
-                      type: boolean
-                    shared_with_groups:
-                      type: array
-                      items:
-                        type: object
-                    only_allow_merge_if_pipeline_succeeds:
-                      type: boolean
-                    allow_merge_on_skipped_pipeline:
-                      type: boolean
-                    only_allow_merge_if_all_discussions_are_resolved:
-                      type: boolean
-                    remove_source_branch_after_merge:
-                      type: boolean
-                    request_access_enabled:
-                      type: boolean
-                    merge_method:
-                      type: string
-                    autoclose_referenced_issues:
-                      type: boolean
-                    suggestion_commit_message:
-                      type: string
-                    _links:
-                      type: object
-                      properties:
-                        self:
-                          type: string
-                        issues:
-                          type: string
-                        merge_requests:
-                          type: string
-                        repo_branches:
-                          type: string
-                        labels:
-                          type: string
-                        events:
-                          type: string
-                        members:
-                          type: string
+                  $ref: '#/components/schemas/fork_info'
   '/projects/{id}/star':
     post:
       tags:
@@ -4079,3 +3962,126 @@ components:
           type: string
         security_and_compliance_enabled:
           type: string
+    fork_info:
+      type: object
+      properties:
+        id:
+          type: integer
+        description:
+          type: string
+        default_branch:
+          type: string
+        visibility:
+          type: string
+          enum:
+            - private
+            - internal
+            - public
+        ssh_url_to_repo:
+          type: string
+        http_url_to_repo:
+          type: string
+        web_url:
+          type: string
+        readme_url:
+          type: string
+        tag_list:
+          type: array
+          items:
+            type: string
+        name:
+          type: string
+        name_with_namespace:
+          type: string
+        path:
+          type: string
+        path_with_namespace:
+          type: string
+        issues_enabled:
+          type: boolean
+        open_issues_count:
+          type: integer
+        merge_requests_enabled:
+          type: boolean
+        jobs_enabled:
+          type: boolean
+        wiki_enabled:
+          type: boolean
+        snippets_enabled:
+          type: boolean
+        can_create_merge_request_in:
+          type: boolean
+        resolve_outdated_diff_discussions:
+          type: boolean
+        container_registry_enabled:
+          type: boolean
+        created_at:
+          type: string
+        last_activity_at:
+          type: string
+        creator_id:
+          type: integer
+        namespace:
+          type: object
+          properties:
+            id:
+              type: integer
+            name:
+              type: string
+            path:
+              type: string
+            kind:
+              type: string
+            full_path:
+              type: string
+        import_status:
+          type: string
+        archived:
+          type: boolean
+        avatar_url:
+          type: string
+        shared_runners_enabled:
+          type: boolean
+        forks_count:
+          type: integer
+        star_count:
+          type: integer
+        public_jobs:
+          type: boolean
+        shared_with_groups:
+          type: array
+          items:
+            type: object
+        only_allow_merge_if_pipeline_succeeds:
+          type: boolean
+        allow_merge_on_skipped_pipeline:
+          type: boolean
+        only_allow_merge_if_all_discussions_are_resolved:
+          type: boolean
+        remove_source_branch_after_merge:
+          type: boolean
+        request_access_enabled:
+          type: boolean
+        merge_method:
+          type: string
+        autoclose_referenced_issues:
+          type: boolean
+        suggestion_commit_message:
+          type: string
+        _links:
+          type: object
+          properties:
+            self:
+              type: string
+            issues:
+              type: string
+            merge_requests:
+              type: string
+            repo_branches:
+              type: string
+            labels:
+              type: string
+            events:
+              type: string
+            members:
+              type: string

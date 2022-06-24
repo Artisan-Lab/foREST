@@ -13,9 +13,8 @@ class GeneticAlgorithm:
 
     def Roulette_Wheel_Selection_method(self):
         self.survival_points_list_sum = 0
-        for i in self.survival_points_list:
-            self.survival_points_list_sum += i
-        random_number = random.uniform(0, self.survival_points_list_sum)
+        depend_point = random.choices(self.survival_points_list,
+                                      weights=[point.mutate_score+point.score for point in self.survival_points_list])
         current_sum = 0
         for i in range(len(self.survival_points_list)):
             current_sum += self.survival_points_list[i]

@@ -1,36 +1,26 @@
 import json
 import yaml
 import jsonref
-from entity.api_info import api_info
+from entity.api_info import APIInfo
+from module.parser.open_api_parse.keyvaluedependency import SemanticTree, SetKeyValueDependency
 from module.parser.open_api_parse.swagger_parser import SwaggerParser
 from module.parser.open_api_parse.open_api_parser import OpenAPIParser
 
 
-class APIList:
+class APIListParser(object):
     __instance = None
 
+    @staticmethod
+    def Instance():
+        return APIListParser.__instance
+
     def __init__(self):
-        if self.__instance:
+        if APIListParser.__instance:
             return
         self._api_list = None
-
-    def __new__(cls, *args, **kwargs):
-        if not cls.__instance:
-            cls.__instance = object.__new__(cls)
-        return cls.__instance
-
-    def __getitem__(self, item):
-        """
-
-        @param item: api id
-        @type item: int
-        @return: api info
-        @rtype: api_info
-        """
-        if isinstance(item, int) and 0 <= item < len(self._api_list):
-            return self._api_list[item]
-        else:
-            raise Exception("API id index error")
+        self._root = None
+        self._len = 0
+        APIListParser.__instance = self
 
     def parsing_api_file(self, path):
         """
@@ -51,6 +41,26 @@ class APIList:
         else:
             open_api_parser = OpenAPIParser(json_data)
             self._api_list = open_api_parser.openAPI_parser()
+        self._len = len(self._api_list)
+
+    @property
+    def len(self) -> int:
+        return self._len
+
+    def foREST_dependency_analysis(self):
+        semantic_tree = SemanticTree(self._api_list)
+        self._root = semantic_tree.root
+        key_value_parser = SetKeyValueDependency(self._api_list)
+        key_value_parser.get_dependency()
+    
+    @property
+    def api_list(self) -> [APIInfo]:
+        return self._api_list
+
+    @property
+    def root(self):
+        return self._root
 
 
-
+def api_list_parser() -> APIListParser:
+    return APIListParser.Instance()

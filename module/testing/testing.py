@@ -1,27 +1,20 @@
 import re
-import json
-import datetime
 import random
-import copy
 from module.testing.composerequest import ComposeRequest
-from log.get_logging import summery_log, requests_log, status_2xx_log, \
-                            status_3xx_log, status_4xx_log, status_5xx_log, status_timeout_log
-from log.get_logging import summery_count
-from entity.resource_pool import foREST_POST_resource_pool
+from log.get_logging import *
+from entity.resource_pool import resource_pool
+from entity.request import Request
 from module.utils.jsonhandle import JsonHandle
-from module.foREST_monitor.foREST_monitor import foRESTMonitor
-from foREST_setting import TESTING_TIME, START_TIME
+from module.foREST_monitor.foREST_monitor import Monitor
 
 
-foREST_POST_resource_pool_copy = copy.deepcopy(foREST_POST_resource_pool)
+class TestingMonitor:
 
-
-class Test:
-    def __init__(self, semantic_tree_root, api_list, foREST_monitor: foRESTMonitor):
+    def __init__(self, semantic_tree_root):
         self.semantic_tree_root = semantic_tree_root
-        self.api_list = api_list
+        self.api_list = Monitor().api_list
         self.api_info = None
-        self.api_number = len(api_list)
+        self.api_number = len(self.api_list)
         self.node = None
         self.dependency_graph = [[0 for _ in range(self.api_number)] for i in range(self.api_number)]
         self.success_pool = [0 for _ in range(self.api_number)]
@@ -35,14 +28,13 @@ class Test:
         self.node_queue = []
         self.request_message = None
         self.compose_request = None
-        self.foREST_monitor = foREST_monitor
         self.success_api_sequence = []
         summery_count['api number'] = self.api_number
         summery_count['already send rounds'] = 0
         summery_count['success api number'] = 0
 
     def foREST_tree_based_bfs(self):
-        while True:
+        while Monitor().time_monitor.remain_time:
             self.node_queue = [self.semantic_tree_root]
             while self.node_queue:
                 self.node = self.node_queue.pop(0)
@@ -52,17 +44,14 @@ class Test:
                         self.node_queue.append(child)
             self.traverse_nums += 1
             summery_count['already send rounds'] = self.traverse_nums
-            if datetime.datetime.now() - START_TIME > datetime.timedelta(minutes=TESTING_TIME):
-                break
-
 
     def node_testing(self, node):
         exec_method_list = ['get', 'post', 'put', 'patch', 'delete']
         for exec_method in exec_method_list:
             if exec_method in node.method_dic:
                 api_id = node.method_dic[exec_method]
-                if exec_method == 'post' and (api_id not in foREST_POST_resource_pool.resource_api_id_dict
-                                              or len(foREST_POST_resource_pool.resource_api_id_dict[api_id])) < 100:
+                if exec_method == 'post' and (api_id not in resource_pool().resource_api_id_dict
+                                              or len(resource_pool().resource_api_id_dict[api_id])) < 100:
                     k = random.randint(1, 5)
                     for _ in range(k):
                         self.api_testing(api_id)
@@ -180,22 +169,21 @@ class Test:
         request = self.compose_request.request
         response_status = self.testing_evaluate(request)
         if response_status == 2 or response_status == 5:
-            foREST_POST_resource_pool.delete_resource(self.compose_request.current_parent_source)
+            resource_pool().delete_resource(self.compose_request.current_parent_source)
 
     def patch_api_testing(self):
         request = self.compose_request.request
         response_status = self.testing_evaluate(request)
 
-    def testing_evaluate(self, request):
+    def testing_evaluate(self, request: Request):
         summery_count['already send requests number'] += 1
         self.request_message = f'Sending: {self.api_info.http_method.upper()} {self.api_info.path} {request.url} \n' \
                            f'API_id: {self.api_info.api_id} header:{request.base_header}\n' \
                            f''f'data: {request.data}\n'
         try:
-            request.send_request()
-            response = request.get_response()
+            response, response_code = request.send_request()
         except:
-            status_timeout_log.info(self.request_message)
+            status_timeout_log.save(self.request_message)
             self.timeout_pool[self.api_info.api_id] += 1
             summery_count['timeout requests number'] += 1
             response_status = 0
@@ -208,37 +196,37 @@ class Test:
             response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.text} \n\n'
         else:
             response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.raw.data} \n\n'
-        requests_log.info(self.request_message + response_message)
-        requests_log.info(self.success_pool)
+        requests_log.save(self.request_message + response_message)
+        requests_log.save(self.success_pool)
         response_status = 0
         if re.match('2..', str(response.status_code)):
             if request.method == 'post':
                 if response.text:
-                    foREST_POST_resource_pool.save_response(self.api_info, request,
+                    resource_pool().save_response(self.api_info, request,
                                                         json.loads(request.response.text),
                                                         self.compose_request.current_parent_source)
             response_status = 2
             summery_count['2xx requests number'] += 1
-            status_2xx_log.info(self.request_message + response_message)
+            status_2xx_log.save(self.request_message + response_message)
             if self.success_pool[self.api_info.api_id] == 0:
                 self.success_pool[self.api_info.api_id] = 1
                 summery_count['success api number'] += 1
             request.genetic_algorithm_success()
         elif re.match('3..', str(response.status_code)):
             summery_count['3xx requests number'] += 1
-            status_3xx_log.info(self.request_message + response_message)
+            status_3xx_log.save(self.request_message + response_message)
             response_status = 3
             request.genetic_algorithm_fail()
         elif re.match('4..', str(response.status_code)):
             summery_count['4xx requests number'] += 1
             response_status = 4
-            status_4xx_log.info(self.request_message + response_message)
+            status_4xx_log.save(self.request_message + response_message)
             request.genetic_algorithm_fail()
         elif re.match('5..', str(response.status_code)):
             summery_count['5xx requests number'] += 1
             response_status = 5
-            status_5xx_log.info(self.request_message + response_message)
-        summery_log.info(str(summery_count))
+            status_5xx_log.save(self.request_message + response_message)
+        summery_log.save(str(summery_count))
         return response_status
 
 

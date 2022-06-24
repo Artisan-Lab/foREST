@@ -1,5 +1,5 @@
-from entity.api_info import api_info
-from entity.field_info import field_info
+from entity.api_info import *
+from foREST_setting import foRESTSettings
 import random
 
 
@@ -7,7 +7,13 @@ class OpenAPIParser:
 
     def __init__(self, data):
         self.paths = data.get('paths')
-        self.base_url = data.get('servers')[0].get('url')
+        base_url = data.get('servers')[0].get('url')
+        if not foRESTSettings().target_ip:
+            self.base_url = base_url
+        else:
+            base_url_list = base_url.split("/")
+            base_url_list[2] = foRESTSettings().target_ip
+            self.base_url = "/".join(base_url_list[2:])
         self.api_id = 0
         self.api_list = []
         self.current_field = []
@@ -22,9 +28,9 @@ class OpenAPIParser:
                 api_parameters = api.get('parameters')
                 api_request_body = api.get('requestBody')
                 api_responses = api.get('responses')
-                api = api_info(self.api_id, self.base_url, path,
-                               self.parameters_handle(api_parameters) + self.request_body_handle(api_request_body),
-                               self.responses_handle(api_responses), method)
+                api = APIInfo(self.api_id, self.base_url, path,
+                              self.parameters_handle(api_parameters) + self.request_body_handle(api_request_body),
+                              self.responses_handle(api_responses), method)
                 self.api_list.append(api)
                 self.api_id += 1
         return self.api_list
@@ -44,39 +50,39 @@ class OpenAPIParser:
         if parameter_schema:
             if parameter_schema.get('oneOf'):
                 parameter_schema = random.choice(parameter_schema.get('oneOf'))
-            return field_info(field_name=api_parameter.get('name'),
-                              type_=self.yaml_type_switch(parameter_schema.get('type')),
-                              require=api_parameter.get('required'),
-                              location=self.location,
-                              max_lenth=parameter_schema.get('maxLength'),
-                              min_lenth=parameter_schema.get('minLength'),
-                              default=parameter_schema.get('default'),
-                              description=api_parameter.get('description'),
-                              enum=parameter_schema.get('enum'),
-                              object=self.object_handle(parameter_schema.get('properties'),
+            return FieldInfo(field_name=api_parameter.get('name'),
+                             type_=self.yaml_type_switch(parameter_schema.get('type')),
+                             require=api_parameter.get('required'),
+                             location=self.location,
+                             max_lenth=parameter_schema.get('maxLength'),
+                             min_lenth=parameter_schema.get('minLength'),
+                             default=parameter_schema.get('default'),
+                             description=api_parameter.get('description'),
+                             enum=parameter_schema.get('enum'),
+                             object=self.object_handle(parameter_schema.get('properties'),
                                                         parameter_schema.get('required')
                                                         if parameter_schema.get('required') else []),
-                              array=self.create_filed_info(parameter_schema.get('items')),
-                              max=parameter_schema.get('maximum'),
-                              min=parameter_schema.get('minimum'),
-                              format=parameter_schema.get('format'))
+                             array=self.create_filed_info(parameter_schema.get('items')),
+                             max=parameter_schema.get('maximum'),
+                             min=parameter_schema.get('minimum'),
+                             format=parameter_schema.get('format'))
         else:
-            return field_info(field_name=api_parameter.get('name'),
-                              type_=self.yaml_type_switch(api_parameter.get('type')),
-                              require=api_parameter.get('required'),
-                              location=self.location,
-                              max_lenth=api_parameter.get('maxLength'),
-                              min_lenth=api_parameter.get('minLength'),
-                              default=api_parameter.get('default'),
-                              description=api_parameter.get('description'),
-                              enum=api_parameter.get('enum'),
-                              object=self.object_handle(api_parameter.get('properties'),
+            return FieldInfo(field_name=api_parameter.get('name'),
+                             type_=self.yaml_type_switch(api_parameter.get('type')),
+                             require=api_parameter.get('required'),
+                             location=self.location,
+                             max_lenth=api_parameter.get('maxLength'),
+                             min_lenth=api_parameter.get('minLength'),
+                             default=api_parameter.get('default'),
+                             description=api_parameter.get('description'),
+                             enum=api_parameter.get('enum'),
+                             object=self.object_handle(api_parameter.get('properties'),
                                                         api_parameter.get('required')
                                                         if api_parameter.get('required') else []),
-                              array=self.create_filed_info(api_parameter.get('items')),
-                              max=api_parameter.get('maximum'),
-                              min=api_parameter.get('minimum'),
-                              format=api_parameter.get('format'))
+                             array=self.create_filed_info(api_parameter.get('items')),
+                             max=api_parameter.get('maximum'),
+                             min=api_parameter.get('minimum'),
+                             format=api_parameter.get('format'))
 
     def object_handle(self, objects, required_list):
         objects_list = []
@@ -85,7 +91,7 @@ class OpenAPIParser:
         for object_name in objects:
             required = True if object_name in required_list else None
             single_object = objects[object_name]
-            objects_list.append(field_info(
+            objects_list.append(FieldInfo(
                 field_name=object_name,
                 type_=self.yaml_type_switch(single_object.get('type')),
                 require=required,

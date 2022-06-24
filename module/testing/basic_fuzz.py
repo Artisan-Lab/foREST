@@ -66,6 +66,3 @@ class BasicFuzz:
         elif field_info.field_type == 'int':
             return BasicFuzz.fuzz_integer()
 
-    @staticmethod
-    def fuzz_value_from_type(field_type):
-        pass
