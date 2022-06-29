@@ -23,11 +23,12 @@
         }
     },
     "request": {
-        "send_timeout": 10,
-        "received_timeout": 10
+        "timeout": 10
     },
-    "token": "931sf-Bs2TsWfg_HzYmt"
-
+    "header": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer bWQ1xkbtmtSwCeL1JYac"
+    }
 }
 
 

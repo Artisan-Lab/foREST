@@ -65,14 +65,12 @@ class foRESTSetting:
         self._target_ip = Argument('target_ip', args_dicts, ['target_ip'])
         # foREST work mode: pure testing or data based testing
         self._foREST_mode = Argument('foREST_mode', args_dicts, ['foREST_mode'])
-        # data-based testing argument, specific log type
-        self._log_type = Argument('log_type', args_dicts, ['log_type'])
         # data-based testing argument, log absolute path
         self._log_path = Argument('log_path', args_dicts, ['log_path'])
         # testing time budget: minutes
         self._time_budget = Argument('time_budget', args_dicts, ['time_budget'])
         # user token
-        self._token = Argument('token', args_dicts, ['token'])
+        self._header = Argument('header', args_dicts, ['header'])
         # api file absolute path
         self._api_file_path = Argument('api_file_path', args_dicts, ['api_file_path'])
         # is use external key: bool
@@ -87,10 +85,9 @@ class foRESTSetting:
         # fuzz setting: dict
         self._fuzz_setting = Argument('fuzz_setting', args_dicts, ['fuzz'])
         # request setting: dict
-        self._request_setting = Argument('request_setting', args_dicts, ['request'])
+        self._request_timeout = Argument('request_setting', args_dicts, ['request', 'timeout'])
         # Similarity cardinality in dependency analysis
         self._similarity_cardinality = Argument('similarity_cardinality', args_dicts, ['similarity_cardinality'])
-        self._dict_type = Argument('dict_type', args_dicts, ['dict_type'])
 
         # Verify the validity of parameters
         # self.__check_argument()
@@ -104,8 +101,6 @@ class foRESTSetting:
             raise Exception("ERROR target ip")
         if self.foREST_mode != "pure testing" and self.foREST_mode != "data-based testing":
             raise Exception("ERROR working mode")
-        if self.log_type != "json" and self.log_type != "foREST":
-            raise Exception("ERROR log type")
         if isinstance(self.time_budget, str):
             try:
                 self._time_budget = int(self.time_budget)
@@ -117,16 +112,8 @@ class foRESTSetting:
             raise Exception("use annotation table need annotation_table path")
 
     @property
-    def dict_type(self):
-        return self._dict_type.value
-
-    @property
     def similarity_cardinality(self):
         return self._similarity_cardinality.value
-
-    @property
-    def log_type(self):
-        return self._log_type.value
 
     @property
     def log_path(self):
@@ -149,8 +136,8 @@ class foRESTSetting:
         return self._time_budget.value
 
     @property
-    def token(self):
-        return self._token.value
+    def header(self):
+        return self._header.value
 
     @property
     def api_file_path(self):
@@ -177,8 +164,8 @@ class foRESTSetting:
         return self._fuzz_setting.value
 
     @property
-    def request_setting(self):
-        return self._request_setting
+    def request_timeout(self):
+        return self._request_timeout.value
 
 
 def foRESTSettings() -> foRESTSetting:

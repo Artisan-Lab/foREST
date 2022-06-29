@@ -1,5 +1,5 @@
 import json
-from entity.logpool import log_pool
+from module.data_analysis.logpool import log_pool
 from module.utils.jsonhandle import JsonHandle
 
 

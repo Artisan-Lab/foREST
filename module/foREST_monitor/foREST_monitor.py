@@ -1,6 +1,6 @@
 """ Global monitor for the fuzzing run """
 import json
-from log.get_logging import program_log
+from log.get_logging import foREST_log
 from module.foREST_monitor.time_monitor import TimeMonitor
 from foREST_setting import foRESTSettings
 
@@ -61,6 +61,7 @@ class foRESTMonitor(object):
         """
         if not self._time_monitor:
             raise Exception("time monitor uninitialized")
+        self._time_monitor.setDaemon(True)
         self._time_monitor.start()
 
     def terminate_fuzzing(self):
@@ -97,17 +98,17 @@ class foRESTMonitor(object):
 
     def parsing_external_table(self):
         if foRESTSettings().annotation_table:
-            program_log.print("testing with annotation table")
+            foREST_log.print("testing with annotation table")
             with open(foRESTSettings().annotation_table_file_path, 'r') as json_file:
                 self._annotation_table = json.load(json_file)
         else:
-            program_log.print("testing without annotation table")
+            foREST_log.print("testing without annotation table")
         if foRESTSettings().annotation_table:
-            program_log.print("testing with annotation key table")
+            foREST_log.print("testing with annotation key table")
             with open(foRESTSettings().external_key_file_path, 'r') as json_file:
                 self._annotation_key_table = json.load(json_file)
         else:
-            program_log.print("testing without annotation key table")
+            foREST_log.print("testing without annotation key table")
 
 
 def Monitor() -> foRESTMonitor:

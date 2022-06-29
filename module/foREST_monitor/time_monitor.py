@@ -4,7 +4,7 @@ import time
 TESTING_MINUTES = 360
 
 
-def progressbar(curr, total, duration=10, extra=''):
+def progressbar(curr, total, duration=10, extra='', message=''):
     """
 
     @param curr: spend time
@@ -20,7 +20,7 @@ def progressbar(curr, total, duration=10, extra=''):
     """
     frac = curr / total
     filled = round(frac * duration)
-    print('\r', '🌲' * filled + '--' * (duration - filled), '[{:.0%}]'.format(frac), extra, end='')
+    print('\r', '🌲' * filled + '--' * (duration - filled), '[{:.0%}]'.format(frac), extra, message, end='')
 
 
 def Time_Monitor():
@@ -62,6 +62,7 @@ class TimeMonitor(threading.Thread):
         self._start_time = time.perf_counter()
         self._remain_time = total_time
         self._testing_time = 0
+        self._message = ""
         self.__instance = self
 
     def terminate(self):
@@ -70,6 +71,14 @@ class TimeMonitor(threading.Thread):
         @return: None
         """
         self._is_running = False
+
+    @property
+    def message(self):
+        return self._message
+
+    @message.setter
+    def message(self, value):
+        self._message = value
 
     @property
     def start_time(self):
@@ -123,20 +132,16 @@ class TimeMonitor(threading.Thread):
                 self._is_running = False
                 break
             hour = int(self._remain_time / 3600)
-            minute = int(self._remain_time % 3600/60) \
+            minute = int(self._remain_time % 3600//60) \
                 if self._remain_time / 60 >= 10 else "0" + str(int(self._remain_time / 60))
-            second = int(self._remain_time % 60) if self._remain_time % 60 >= 10 else "0" + str(int(self._remain_time % 60))
+            second = int(self._remain_time % 60) \
+                if self._remain_time % 60 >= 10 else "0" + str(int(self._remain_time % 60))
             countdown = '{}:{}:{} ⏰'.format(hour, minute, second)
             duration = 25
-            progressbar(self._testing_time, minutes * 60, duration, countdown)
+            progressbar(self._testing_time, minutes * 60, duration, countdown, self.message)
             time.sleep(1)
 
 
 if __name__ == "__main__":
     time_thread = TimeMonitor(1)
     time_thread.start()
-    try:
-        while time_thread.is_alive():
-            continue
-    except KeyboardInterrupt:
-        time_thread.terminate()

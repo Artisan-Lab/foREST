@@ -43,6 +43,11 @@ class APIListParser(object):
             self._api_list = open_api_parser.openAPI_parser()
         self._len = len(self._api_list)
 
+    def load_depend_info(self, depend_info):
+        pass
+
+
+
     @property
     def len(self) -> int:
         return self._len
@@ -52,6 +57,7 @@ class APIListParser(object):
         self._root = semantic_tree.root
         key_value_parser = SetKeyValueDependency(self._api_list)
         key_value_parser.get_dependency()
+        return key_value_parser.not_reference_field
     
     @property
     def api_list(self) -> [APIInfo]:
