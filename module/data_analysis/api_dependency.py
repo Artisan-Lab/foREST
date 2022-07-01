@@ -18,7 +18,7 @@ def dfs(nums, index, res, path, max_sequence_length):
             if i == len(path):
                 if i not in result:
                     result[i] = {}
-                save_path = " ".join(path)
+                save_path = " --> ".join(path)
                 if save_path in res[i]:
                     res[i][save_path] += 1
                 else:

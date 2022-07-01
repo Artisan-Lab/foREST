@@ -5,6 +5,28 @@ from entity.api_info import APIInfo
 from module.parser.open_api_parse.keyvaluedependency import SemanticTree, SetKeyValueDependency
 from module.parser.open_api_parse.swagger_parser import SwaggerParser
 from module.parser.open_api_parse.open_api_parser import OpenAPIParser
+import re
+
+pattern = re.compile(r'{.*}')
+
+
+def match_identifier(identifier_1, identifier_2):
+    method_1, path_1 = identifier_1.split()
+    method_2, path_2 = identifier_2.split()
+    if method_1.lower() != method_2.lower():
+        return False
+    path_1_list = path_1.split("/")[::-1]
+    path_2_list = path_2.split("/")[::-1]
+    if len(path_1_list) != len(path_2_list):
+        return False
+    for i in range(len(path_2_list)):
+        if path_1_list[i] == path_2_list[i] or \
+                (re.search(pattern, path_1_list[i]) and re.search(pattern, path_2_list[i])):
+            continue
+        else:
+            return False
+    else:
+        return True
 
 
 class APIListParser(object):
@@ -46,7 +68,12 @@ class APIListParser(object):
     def load_depend_info(self, depend_info):
         pass
 
-
+    def find_api_by_identifier(self, api_identifier):
+        for api_info in self._api_list:  # type: APIInfo
+            if match_identifier(api_info.identifier, api_identifier):
+                return api_info
+        else:
+            return None
 
     @property
     def len(self) -> int:

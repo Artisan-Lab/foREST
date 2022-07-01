@@ -7,7 +7,9 @@ from entity.resource_pool import ResourcePool
 from module.foREST_monitor.foREST_monitor import foRESTMonitor
 from module.parser.open_api_parse.api_parser import *
 from module.data_analysis.data_analysis import data_analysis
+from module.data_analysis.log_parser.dependency_parser import LogDependencyParser
 from module.testing.testing import TestingMonitor
+
 
 
 if __name__ == "__main__":
@@ -17,8 +19,12 @@ if __name__ == "__main__":
                             help='pure testing or data-based testing'
                                  f'(default pure testing)',
                             type=str, default="pure testing", required=False)
-    arg_parser.add_argument('--log_path',
-                            help='data-based testing argument: log absolute path, '
+    arg_parser.add_argument('--api_dependency_file',
+                            help='data-based testing argument: api_dependency_file absolute path, '
+                                 'required if data-based testing',
+                            type=str, required=False)
+    arg_parser.add_argument('--parameter_dependency_file',
+                            help='data-based testing argument: api_dependency_file absolute path, '
                                  'required if data-based testing',
                             type=str, required=False)
     arg_parser.add_argument('--time_budget',
@@ -67,6 +73,17 @@ if __name__ == "__main__":
     api_list = foREST_monitor.api_list
     foREST_log.save_and_print(f"Finish parsing API file, {api_list_parser().len} API identified")
 
+    # data analysis
+    if foREST_settings.foREST_mode == "data-based testing":
+        foREST_log.save_and_print("start log analysis")
+        with open(foREST_settings.api_dependency_file, "r") as file:
+            api_dependency = json.load(file)
+        with open(foREST_settings.parameter_dependency_file, "r") as file:
+            parameter_dependency = json.load(file)
+        dependency_parser = LogDependencyParser(api_dependency, parameter_dependency, foREST_monitor.api_list)
+
+        foREST_log.save_and_print("finish log analysis")
+
     # Initialize the resource pool
     resource_pool = ResourcePool()
     foREST_monitor.resource_pool = resource_pool
@@ -75,15 +92,9 @@ if __name__ == "__main__":
     foREST_log.save_and_print("Start dependency analysis")
     no_reference_field = api_list_parser().foREST_dependency_analysis()
     foREST_log.save_and_print(f"Dependency analysis done, "
-                               f"{len(no_reference_field)} parameter dependencies could not be found")
+                              f"{len(no_reference_field)} parameter dependencies could not be found")
 
-    # data analysis
-    if foREST_settings.foREST_mode == "data-based testing":
-        foREST_log.save_and_print("start log analysis")
-        with open(foREST_settings.log_path, "a") as file:
-            depend_info = json.load(file)
 
-        foREST_log.save_and_print("finish log analysis")
 
     foREST_log.save_and_print("start testing")
     testing_monitor = TestingMonitor(api_list_parser().root)

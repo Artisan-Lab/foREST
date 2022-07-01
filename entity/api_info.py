@@ -20,7 +20,7 @@ class DependPoint:
         return self._path
 
     @property
-    def score(self):
+    def base_score(self):
         return self._base_score
 
     @property
@@ -33,13 +33,13 @@ class DependPoint:
 
     def add_score(self):
         if self.flag == "base":
-            self._base_score += pow((1 - self.score), 2)
+            self._base_score += pow((1 - self.base_score), 2)
         elif self.flag == "mutate":
             self._mutate_score += pow((1 - self.mutate_score), 2)
 
     def minus_score(self):
         if self.flag == "base":
-            self._base_score -= pow(self.score, 2)
+            self._base_score -= pow(self.base_score, 2)
         elif self.flag == "mutate":
             self._mutate_score -= pow(self._mutate_score, 2)
 
@@ -77,9 +77,9 @@ class FieldInfo:
 
     def genetic_algorithm(self) -> DependPoint:
         depend_point = random.choices(self.depend_list,
-                                      weights=[point.mutate_score + point.score for point in self.depend_list])[0]
+                                      weights=[point.mutate_score + point.base_score for point in self.depend_list])[0]
         depend_point.flag = random.choices(["base", "mutate"],
-                                           weights=[depend_point.score, depend_point.mutate_score])[0]
+                                           weights=[depend_point.base_score, depend_point.mutate_score])[0]
         return depend_point
 
 

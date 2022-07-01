@@ -65,8 +65,10 @@ class foRESTSetting:
         self._target_ip = Argument('target_ip', args_dicts, ['target_ip'])
         # foREST work mode: pure testing or data based testing
         self._foREST_mode = Argument('foREST_mode', args_dicts, ['foREST_mode'])
-        # data-based testing argument, log absolute path
-        self._log_path = Argument('log_path', args_dicts, ['log_path'])
+        # data-based testing argument, api dependency file absolute path
+        self._api_dependency_file = Argument('api_dependency_file', args_dicts, ['api_dependency_file'])
+        # data-based testing argument, parameter dependency file absolute path
+        self._parameter_dependency_file = Argument('parameter_dependency_file', args_dicts, ['parameter_dependency_file'])
         # testing time budget: minutes
         self._time_budget = Argument('time_budget', args_dicts, ['time_budget'])
         # user token
@@ -116,8 +118,12 @@ class foRESTSetting:
         return self._similarity_cardinality.value
 
     @property
-    def log_path(self):
-        return self._log_path.value
+    def api_dependency_file(self) :
+        return self._api_dependency_file.value
+
+    @property
+    def parameter_dependency_file(self) -> str:
+        return self._parameter_dependency_file.value
 
     @property
     def target_ip(self):

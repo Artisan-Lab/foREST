@@ -39,7 +39,7 @@ class LogEntity:
     def find_path_parameter(self):
         path_list = self.path.split('?')[0]
         path_list = path_list.split('/')[1:]
-        path_parameter_list = self.url.split("?")[0].split('/')[5:]
+        path_parameter_list = self.url.split("?")[0].split('/')[1:]
         for i in range(len(path_list)):
             if re.search(pattern, path_list[i]):
                 key = path_list[i][1:-1]
