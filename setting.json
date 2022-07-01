@@ -1,0 +1,35 @@
+{
+    "function":{
+        "external_key": false,
+        "external_key_file_path": "E:\\code\\restful_test\\foREST\\foREST_setting\\external_key.json",
+        "annotation_table": false,
+        "annotation_table_file_path": "E:\\code\\restful_test\\foREST\\foREST_setting\\annotation_table.json"
+    },
+    "similarity_cardinality": 60,
+    "fuzz": {
+        "int": {
+            "max_integer": 50,
+            "min_integer": 0
+        },
+        "str": {
+            "max_len": 20,
+            "UTF-8": false
+        },
+        "list": {
+            "max_len": 10
+        },
+        "dict": {
+            "max_key_number": 10
+        }
+    },
+    "request": {
+        "timeout": 10
+    },
+    "header": {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer bWQ1xkbtmtSwCeL1JYac"
+    }
+}
+
+
+

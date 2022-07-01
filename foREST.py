@@ -1,43 +1,105 @@
-from open_api_parse.parser import Parser
-import os
+import json
 import sys
-from utils.utils import Tool
-from module.testing import Test
-import datetime
-from dependency.dependency import Dependency
-from module.foREST_monitor import foRESTMonitor
-from utils import foREST_setting
+from foREST_setting import foRESTSetting
 import argparse
+from log.get_logging import *
+from entity.resource_pool import ResourcePool
+from module.foREST_monitor.foREST_monitor import foRESTMonitor
+from module.parser.open_api_parse.api_parser import *
+from module.data_analysis.data_analysis import data_analysis
+from module.data_analysis.log_parser.dependency_parser import LogDependencyParser
+from module.testing.testing import TestingMonitor
 
 
 
 if __name__ == "__main__":
+    # command-line arguments
     arg_parser = argparse.ArgumentParser()
+    arg_parser.add_argument('--foREST_mode',
+                            help='pure testing or data-based testing'
+                                 f'(default pure testing)',
+                            type=str, default="pure testing", required=False)
+    arg_parser.add_argument('--api_dependency_file',
+                            help='data-based testing argument: api_dependency_file absolute path, '
+                                 'required if data-based testing',
+                            type=str, required=False)
+    arg_parser.add_argument('--parameter_dependency_file',
+                            help='data-based testing argument: api_dependency_file absolute path, '
+                                 'required if data-based testing',
+                            type=str, required=False)
     arg_parser.add_argument('--time_budget',
                             help='Testing run time in hours '
-                                 f'(default {foREST_setting.TESTING_TIME} hours)',
-                            type=float, default=foREST_setting.TESTING_TIME, required=False
-                            )
+                                 f'(default 1 hours)',
+                            type=float, default=1, required=False)
     arg_parser.add_argument('--token',
                             help='User identification code'
                                  f'(default',
-                            type=str, required=True
-                            )
-    arg_parser.add_argument('--api_document_path', help='The read path of the API documentation'
-                            f'(default'
-                            )
+                            type=str, required=False)
+    arg_parser.add_argument('--api_file_path',
+                            help='The read path of the API documentation',
+                            type=str, required=True)
+    arg_parser.add_argument('--settings_file',
+                            help='Custom user settings file path',
+                            type=str, default='', required=False)
+    arg_parser.add_argument('--target_ip',
+                            help='service under testing ip',
+                            type=str)
+    args = arg_parser.parse_args()
 
+    # convert the command-line arguments to a dict
+    args_dict = vars(args)
+
+    # combine settings from settings file to the command-line arguments
+    if args.settings_file:
+        try:
+            setting_file = json.load(open(args.settings_file))
+            args_dict.update(setting_file)
+        except Exception as error:
+            print(f"\n Argument Error::\n\t{error!s}")
+            sys.exit(-1)
+
+    # configure foREST setting and start monitor
+    foREST_settings = foRESTSetting(args_dict)
     foREST_monitor = foRESTMonitor()
-    foREST_monitor.reset_start_time()
-    foREST_monitor.set_time_budget(foREST_setting.TESTING_TIME)
 
-    open_api_file_path = os.path.join(os.path.abspath(os.path.dirname(__file__)), '.\\openapi\\' +
-                                      foREST_setting.API_FILE_PATH)
-    open_api_parser = Parser(path=open_api_file_path)
-    open_api_list = open_api_parser.get_api_list
-    semantic_tree_root = Dependency(open_api_list)
-    test_process = Test(semantic_tree_root, open_api_list, foREST_monitor)
-    test_process.foREST_tree_based_bfs()
-    end_time = datetime.datetime.now()
+    # start time monitor
+    foREST_monitor.create_time_monitor(foREST_settings.time_budget)
+    foREST_monitor.start_time_monitor()
+
+    # parsing API file
+    foREST_log.save_and_print("Start parsing API file")
+    APIListParser().parsing_api_file(foREST_settings.api_file_path)
+    foREST_monitor.api_list = api_list_parser().api_list
+    api_list = foREST_monitor.api_list
+    foREST_log.save_and_print(f"Finish parsing API file, {api_list_parser().len} API identified")
+
+    # data analysis
+    if foREST_settings.foREST_mode == "data-based testing":
+        foREST_log.save_and_print("start log analysis")
+        with open(foREST_settings.api_dependency_file, "r") as file:
+            api_dependency = json.load(file)
+        with open(foREST_settings.parameter_dependency_file, "r") as file:
+            parameter_dependency = json.load(file)
+        dependency_parser = LogDependencyParser(api_dependency, parameter_dependency, foREST_monitor.api_list)
+
+        foREST_log.save_and_print("finish log analysis")
+
+    # Initialize the resource pool
+    resource_pool = ResourcePool()
+    foREST_monitor.resource_pool = resource_pool
+
+    # api dependency analysis
+    foREST_log.save_and_print("Start dependency analysis")
+    no_reference_field = api_list_parser().foREST_dependency_analysis()
+    foREST_log.save_and_print(f"Dependency analysis done, "
+                              f"{len(no_reference_field)} parameter dependencies could not be found")
 
 
+
+    foREST_log.save_and_print("start testing")
+    testing_monitor = TestingMonitor(api_list_parser().root)
+    testing_monitor.foREST_tree_based_bfs()
+    api_log = Log("api_log.json")
+    api_log.save_object(api_list)
+    foREST_monitor.time_monitor.terminate()
+    print(foREST_monitor.time_monitor.testing_time)
