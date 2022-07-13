@@ -1,3 +1,5 @@
+import copy
+
 from entity.api_info import *
 from module.parser.open_api_parse.api_parser import api_list_parser
 
@@ -70,6 +72,10 @@ class LogDependencyParser:
         self.api_dependency()
         self.parameter_dependency()
 
+    @property
+    def sequence(self):
+        return self.__sequence
+
     def api_dependency(self):
         for sequence_len in self.__api_dependency_info:
             self.__sequence[sequence_len] = []
@@ -80,15 +86,17 @@ class LogDependencyParser:
                 for api_identifier in sequence_list:
                     api_info = api_list_parser().find_api_by_identifier(api_identifier)
                     if api_info:
-                        api_info_sequence.append(api_info)
+                        api_info_sequence.append(api_info.identifier)
                     else:
                         break
                 else:
+                    # find parent sequence
                     if int(sequence_len) > 2:
-                        for parent_sequence in self.__sequence[str(int(sequence_len)-1)]: # type: Sequence
+                        for parent_sequence in self.__sequence[str(int(sequence_len)-1)]:  # type: Sequence
                             if parent_sequence.identifier_list == sequence_list[:-1]:
                                 parent_sequence.child_sequence = api_info_sequence
                                 api_info_sequence.parent_sequence = parent_sequence
+
                     api_info_sequence.score = score
                     api_info_sequence.identifier_list = sequence_list
                     self.__sequence[sequence_len].append(api_info_sequence)
@@ -98,6 +106,16 @@ class LogDependencyParser:
         for api_identifier in self.__parameter_dependency_info:
             api_info = api_list_parser().find_api_by_identifier(api_identifier)
             if api_info:
-                pass
+                parameter_list = self.__parameter_dependency_info[api_identifier]
+                for parameter in parameter_list:
+                    depend_info_list = parameter_list[parameter]
+                    parameter_path = parameter.split('/')
+                    field_info = api_info.get_req_param(parameter_path, api_info.req_param)  # type: FieldInfo
+                    if field_info:
+                        for depend_info in depend_info_list:
+                            depend_info_identifier_list = depend_info.split()
+                            depend_info_api_identifier = " ".join(depend_info_identifier_list[:2])
+                            depend_info_param_identifier = depend_info_identifier_list[-1].split("/")
+                            field_info.add_log_depend(depend_info_api_identifier, depend_info_param_identifier, self.__api_list, depend_info_list[depend_info])
             else:
                 continue

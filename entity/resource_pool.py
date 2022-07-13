@@ -49,21 +49,6 @@ class Resource:
     def children_resource(self, children_resource):
         self.__children_resource.append(children_resource)
 
-    def find_field_from_name(self, field_name, field_type):
-        value = find_field_in_dic(self.resource_data, field_name, field_type)
-        if value:
-            return value
-        if '_' in field_name and '_' in self.resource_name:
-            field_name_list = field_name.split('_')
-            resource_name_list = self.resource_name.split('_')
-            while resource_name_list:
-                if field_name_list.pop(0) != resource_name_list.pop(0):
-                    break
-            value = find_field_in_dic(self.resource_data, field_name, field_type)
-            if value:
-                return value
-        return None
-
     def find_field_from_path(self, resource_dict, field_path):
         if not resource_dict: return None
         if field_path[0] in resource_dict:

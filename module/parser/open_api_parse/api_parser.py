@@ -1,8 +1,9 @@
 import json
 import yaml
+from typing import Union
 import jsonref
 from entity.api_info import APIInfo
-from module.parser.open_api_parse.keyvaluedependency import SemanticTree, SetKeyValueDependency
+from module.parser.open_api_parse.dependency import SemanticTree, SetKeyValueDependency
 from module.parser.open_api_parse.swagger_parser import SwaggerParser
 from module.parser.open_api_parse.open_api_parser import OpenAPIParser
 import re
@@ -68,7 +69,7 @@ class APIListParser(object):
     def load_depend_info(self, depend_info):
         pass
 
-    def find_api_by_identifier(self, api_identifier):
+    def find_api_by_identifier(self, api_identifier) -> Union[APIInfo, None]:
         for api_info in self._api_list:  # type: APIInfo
             if match_identifier(api_info.identifier, api_identifier):
                 return api_info

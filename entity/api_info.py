@@ -3,8 +3,8 @@ import random
 
 class DependPoint:
 
-    def __init__(self, api_id: int, path: list, score):
-        self._api_id = api_id
+    def __init__(self, api_info, path: list, score):
+        self._api_info = api_info
         self._path = path
         self._base_score = score
         self._mutate_score = score
@@ -12,8 +12,8 @@ class DependPoint:
         self.flag = None
 
     @property
-    def api_id(self):
-        return self._api_id
+    def api_info(self):
+        return self._api_info
 
     @property
     def path(self):
@@ -23,6 +23,11 @@ class DependPoint:
     def base_score(self):
         return self._base_score
 
+    @base_score.setter
+    def base_score(self, value):
+        self._base_score = value
+        self._mutate_score = value
+
     @property
     def mutate_score(self):
         return self._mutate_score
@@ -30,6 +35,10 @@ class DependPoint:
     @property
     def time(self):
         return self._time
+
+    @time.setter
+    def time(self, value):
+        self._time = value
 
     def add_score(self):
         if self.flag == "base":
@@ -52,7 +61,7 @@ class FieldInfo:
     def __init__(self, field_name, type_, require, location, max_lenth=None, min_lenth=None, default=None,
                  description=None, enum=None, object=None, array=None, max=None, min=None, format=None):
         self.field_name = field_name
-        self.field_type = type_
+        self.field_type = type_  # int\str\list\object
         self.require = require
         self.default = default
         self.location = location
@@ -60,20 +69,32 @@ class FieldInfo:
         self.min_lenth = min_lenth
         self.enum = enum
         self.description = description
-        self.object = object
+        self.object = object  # type: [FieldInfo]
         self.array = array
         self.maximum = max
         self.minimum = min
         self.format = format
         self.depend_list = []  # type: list[DependPoint]
         if self.field_type == 'int' or self.field_type == 'str':
-            self.depend_list.append(DependPoint(-1, [], 0.5))
+            self.depend_list.append(DependPoint(None, [], 0.5))
 
     def get_depend(self, api_id, path):
         for depend in self.depend_list:
-            if depend.api_id == api_id and depend.path == path:
+            if depend.api_info and depend.api_info.api_id == api_id and depend.path == path:
                 return depend
         return None
+
+    def add_log_depend(self, api_identifier, param_path, api_list, time):
+        for api_info in api_list:
+            if api_info.identifier == api_identifier:
+                for depend_info in self.depend_list:
+                    if depend_info.api_info == api_info and depend_info.path == param_path:
+                        depend_info.time = time
+                        break
+                else:
+                    depend_point = DependPoint(api_info, param_path, 0)
+                    depend_point.time = time
+                    self.depend_list.append(depend_point)
 
     def genetic_algorithm(self) -> DependPoint:
         depend_point = random.choices(self.depend_list,
@@ -82,6 +103,19 @@ class FieldInfo:
                                            weights=[depend_point.base_score, depend_point.mutate_score])[0]
         return depend_point
 
+
+
+def get_param(param_path: list, field_info_list):
+    for field_info in field_info_list:  # type: FieldInfo
+        if field_info.field_name == param_path[0] or (param_path[0] == 'list' and field_info.field_type == 'list'):
+            if len(param_path) == 1:
+                return field_info
+            elif field_info.object:
+                return get_param(param_path[1:], field_info.object)
+            else:
+                return None
+    else:
+        return None
 
 class APIInfo:
 
@@ -95,3 +129,16 @@ class APIInfo:
         self.req_param = req_param  # type: list[FieldInfo]
         self.resp_param = resp_param  # type: list[FieldInfo]
         self.http_method = http_method
+
+    def get_req_param(self, path):
+        return get_param(path, self.req_param)
+
+    def get_resp_param(self, path):
+        return get_param(path, self.resp_param)
+
+
+
+
+
+
+

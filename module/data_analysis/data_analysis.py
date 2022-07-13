@@ -4,9 +4,11 @@ from module.data_analysis.log_parser.log_parser import JsonParser
 from module.data_analysis.log_parser.foREST_log_parser import foREST_log_parser
 from module.data_analysis.parameter_dependency import FindParameterDependency
 from module.data_analysis.api_dependency import api_dependency
+from module.foREST_monitor.sequence_monitor import SequenceMonitor
 
 
 def data_analysis(log_type, log_path, save_path, max_sequence_length):
+    sequence_monitor = SequenceMonitor()
     if log_type == "json":
         with open(log_path, 'r') as log_file:
             log_data = json.load(log_file)
@@ -21,7 +23,7 @@ def data_analysis(log_type, log_path, save_path, max_sequence_length):
     log_dependency_analysis = FindParameterDependency(max_sequence_length)
 
     result = log_dependency_analysis.result
-    api_sequence_list = api_dependency(max_sequence_length)
+    api_dependency(max_sequence_length)
 
     for api in result:
         for parameter in result[api]:

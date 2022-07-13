@@ -11,7 +11,6 @@ from module.data_analysis.log_parser.dependency_parser import LogDependencyParse
 from module.testing.testing import TestingMonitor
 
 
-
 if __name__ == "__main__":
     # command-line arguments
     arg_parser = argparse.ArgumentParser()
@@ -66,6 +65,9 @@ if __name__ == "__main__":
     foREST_monitor.create_time_monitor(foREST_settings.time_budget)
     foREST_monitor.start_time_monitor()
 
+    # init sequence monitor
+    foREST_monitor.init_sequence_monitor()
+
     # parsing API file
     foREST_log.save_and_print("Start parsing API file")
     APIListParser().parsing_api_file(foREST_settings.api_file_path)
@@ -80,8 +82,8 @@ if __name__ == "__main__":
             api_dependency = json.load(file)
         with open(foREST_settings.parameter_dependency_file, "r") as file:
             parameter_dependency = json.load(file)
-        dependency_parser = LogDependencyParser(api_dependency, parameter_dependency, foREST_monitor.api_list)
 
+        dependency_parser = LogDependencyParser(api_dependency, parameter_dependency, foREST_monitor.api_list)
         foREST_log.save_and_print("finish log analysis")
 
     # Initialize the resource pool
@@ -93,8 +95,6 @@ if __name__ == "__main__":
     no_reference_field = api_list_parser().foREST_dependency_analysis()
     foREST_log.save_and_print(f"Dependency analysis done, "
                               f"{len(no_reference_field)} parameter dependencies could not be found")
-
-
 
     foREST_log.save_and_print("start testing")
     testing_monitor = TestingMonitor(api_list_parser().root)

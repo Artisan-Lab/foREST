@@ -1,4 +1,4 @@
-from module.utils.jsonhandle import JsonHandle
+from module.utils.utils import JsonHandle
 
 
 def JsonParser(json_data):

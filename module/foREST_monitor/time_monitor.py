@@ -39,8 +39,8 @@ class TimeMonitor(threading.Thread):
     def Instance():
         """ Singleton's instance accessor
 
-        @return FuzzingMonitor instance
-        @rtype  FuzzingMonitor
+        @return Sequence instance
+        @rtype  SequenceMonitor
 
         """
         if TimeMonitor.__instance is None:

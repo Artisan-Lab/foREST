@@ -2,7 +2,7 @@
   "api_path": {
     "api_method": [
       {
-        "field_name": "",
+        "field_name": [],
         "real_field_name": "",
         "location": "path=0, query=1, body=2, header=3 or response=4"
       }

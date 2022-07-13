@@ -1,6 +1,6 @@
 import json
 from module.data_analysis.logpool import log_pool
-from module.utils.jsonhandle import JsonHandle
+from module.utils.utils import JsonHandle
 
 
 def foREST_log_parser(path):
