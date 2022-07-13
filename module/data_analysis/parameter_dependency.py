@@ -1,5 +1,4 @@
 from module.data_analysis.logpool import *
-from module.data_analysis.RB_tree import *
 
 
 class FindParameterDependency:
@@ -8,7 +7,6 @@ class FindParameterDependency:
         self.current_parameter_path = []
         self.parameter_log_index = None
         self.value = ""
-        self.data_RBtree = Rbtree()
         self.data_dict = {}
         self._result = {}
         self._max_sequence_length = max_sequence_length
@@ -43,7 +41,7 @@ class FindParameterDependency:
                 self.current_parameter_path.pop()
         elif parameter_list and not isinstance(parameter_list, bool):
             if save:
-                identifier = self.current_parameter_path[0] + "  " + "/".join(self.current_parameter_path[1:])
+                identifier = self.current_parameter_path[0].lower() + "  " + "/".join(self.current_parameter_path[1:])
                 if str(parameter_list) in self.data_dict:
                     if identifier not in self.data_dict[str(parameter_list)]:
                         self.data_dict[str(parameter_list)].append(identifier)
@@ -51,8 +49,8 @@ class FindParameterDependency:
                     self.data_dict[str(parameter_list)] = [identifier]
             else:
                 if str(parameter_list) in self.data_dict:
-                    current_api_identifier = self.current_parameter_path[0]
-                    current_parameter_identifier = "-".join(self.current_parameter_path[1:])
+                    current_api_identifier = self.current_parameter_path[0].lower()
+                    current_parameter_identifier = "/".join(self.current_parameter_path[1:])
                     if current_api_identifier not in self.result:
                         self.result[current_api_identifier] = {}
                     if current_parameter_identifier not in self.result[current_api_identifier]:

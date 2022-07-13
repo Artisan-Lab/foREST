@@ -48,19 +48,19 @@ class ComposeRequest:
             value = BasicFuzz.fuzz_value_from_field(field_info)
             return value
         if foRESTSettings().annotation_table:
-            value = get_value_from_external(Monitor().annotation_table,
-                                            self.api_info.path,
-                                            self.api_info.http_method,
-                                            field_info.field_name,
-                                            field_info.location
-                                            )
+            value = annotation_table_parse(Monitor().annotation_table,
+                                           self.api_info.path,
+                                           self.api_info.http_method,
+                                           field_info.field_name,
+                                           field_info.location
+                                           )
             return value
         if field_info.depend_list:
             depend_point = field_info.genetic_algorithm()
-            if depend_point.api_id == -1 and (field_info.field_type == 'int' or field_info.field_type == 'str'):
+            if depend_point.api_info is None and (field_info.field_type == 'int' or field_info.field_type == 'str'):
                 return BasicFuzz.fuzz_value_from_field(field_info)
             else:
-                value = resource_pool().get_special_value_from_resource(depend_point.api_id, depend_point.path)
+                value = resource_pool().get_special_value_from_resource(depend_point.api_info.api_id, depend_point.path)
             if value:
                 if depend_point.flag == "base":
                     return value

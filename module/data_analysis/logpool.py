@@ -7,7 +7,7 @@ class LogEntity:
 
     def __init__(self, log_id, method:str, url, headers, body, path, response_code, response_data, user_id):
         self.log_id = log_id
-        self.method = method.upper()
+        self.method = method.lower()
         self.url = url
         self.headers = headers
         self.body = body

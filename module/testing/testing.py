@@ -4,14 +4,15 @@ from module.testing.composerequest import ComposeRequest
 from log.get_logging import *
 from entity.resource_pool import resource_pool
 from entity.request import Request
-from module.utils.jsonhandle import JsonHandle
+from module.utils.utils import JsonHandle
 from module.foREST_monitor.foREST_monitor import Monitor
 
 
 class TestingMonitor:
 
-    def __init__(self, semantic_tree_root):
+    def __init__(self, semantic_tree_root, alternative_sequence=None):
         self.semantic_tree_root = semantic_tree_root
+        self.alternative_sequence = alternative_sequence
         self.api_list = Monitor().api_list
         self.api_info = None
         self.api_number = len(self.api_list)

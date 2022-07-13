@@ -11,6 +11,21 @@ from module.utils.utils import *
 from module.foREST_monitor.foREST_monitor import Monitor
 
 
+def smart_match(name_1, parent_name_1, type_1, name_2, parent_name_2, type_2, base_match_point=60) -> int:
+    """ Compare two fields similarity"""
+    if name_1 is None or name_2 is None:
+        return 0
+    match_point = max(fuzz.partial_ratio(parent_name_1 + name_1,
+                                         parent_name_2 + name_2),
+                      fuzz.partial_ratio(name_2, name_1))
+    if type_1 != type_2:
+        match_point -= 100 - base_match_point
+    if match_point > base_match_point:
+        return (match_point - base_match_point) / (100 - base_match_point)
+    else:
+        return 0
+
+
 class SetKeyValueDependency:
     """
         find the parameter dependency and save it in field_info.depend_list
@@ -21,7 +36,7 @@ class SetKeyValueDependency:
         self.api_numbers = len(api_info_list)
         self.current_field_info = None  # type: Union[FieldInfo, None]
         self.current_api_info = None  # type: Union[APIInfo, None]
-        self.current_parent_resource_name = None
+        self.current_parent_resource_name = ''
         self.current_compare_field_info = None
         self.current_compare_api_info = None
         self.not_reference_field = []
@@ -33,7 +48,7 @@ class SetKeyValueDependency:
         for api_info in self.api_info_list:
             self.current_compare_api_info = api_info
             self.depended_field_list = []
-            if not api_info.resp_param or api_info.http_method != 'post' or api_info == self.current_api_info:
+            if not api_info.resp_param or api_info == self.current_api_info:
                 continue
             for field_info in api_info.resp_param:
                 self.current_compare_field_info = field_info
@@ -50,28 +65,32 @@ class SetKeyValueDependency:
         self.depended_field_path.append(compare_field.field_name)
         real_field_name, real_compare_field_name = None, None
         if Monitor().annotation_table:
-            real_field_name = get_key_from_annotation_key_table(Monitor().annotation_table,
-                                                                self.current_api_info.path,
-                                                                self.current_api_info.http_method,
-                                                                self.current_field_info.field_name,
-                                                                self.current_field_info.location)
+            real_field_name = annotation_key_table_parse(Monitor().annotation_table,
+                                                         self.current_api_info.path,
+                                                         self.current_api_info.http_method,
+                                                         self.current_field_info.field_name,
+                                                         self.current_field_info.location)
         if Monitor().annotation_key_table:
-            real_compare_field_name = get_key_from_annotation_key_table(Monitor().annotation_key_table,
-                                                                        self.current_compare_api_info.path,
-                                                                        self.current_compare_api_info.http_method,
-                                                                        self.current_compare_field_info.field_name,
-                                                                        self.current_compare_field_info.location)
+            real_compare_field_name = annotation_key_table_parse(Monitor().annotation_key_table,
+                                                                 self.current_compare_api_info.path,
+                                                                 self.current_compare_api_info.http_method,
+                                                                 self.current_compare_field_info.field_name,
+                                                                 self.current_compare_field_info.location)
         if not real_field_name:
             real_field_name = self.current_field_info.field_name
         if not real_compare_field_name:
             real_compare_field_name = compare_field.field_name
-        compare_method = Compare(real_field_name, self.current_parent_resource_name,
-                                 self.current_field_info.field_type, real_compare_field_name,
-                                 parent_name, compare_field.field_type)
-        point = compare_method.smart_match(foRESTSettings().similarity_cardinality)
+        point = smart_match(real_field_name, self.current_parent_resource_name,
+                            self.current_field_info.field_type, real_compare_field_name,
+                            parent_name, compare_field.field_type, foRESTSettings().similarity_cardinality)
         if point:
-            depend_point = DependPoint(self.depended_field_path[0], self.depended_field_path[1:], point)
-            self.current_field_info.depend_list.append(depend_point)
+            depend_point = self.current_field_info.get_depend(self.depended_field_path[0], self.depended_field_path[1:])
+            if depend_point:
+                depend_point.base_score = point
+            else:
+                depend_point = DependPoint(self.api_info_list[self.depended_field_path[0]], self.depended_field_path[1:],
+                                       point)
+                self.current_field_info.depend_list.append(depend_point)
             self.depended_field_path.pop(-1)
             return True
         elif compare_field.field_type == 'dict':
@@ -120,41 +139,6 @@ class SetKeyValueDependency:
         return self.api_info_list
 
 
-class Compare:
-
-    def __init__(self, compare_field_name, compare_parent_resource_name, compare_field_type, compared_field_name,
-                 compared_parent_resource_name, compared_field_type):
-        self.compare_field_name = compare_field_name
-        self.compare_parent_resource_name = compare_parent_resource_name
-        self.compare_field_type = compare_field_type
-        self.compared_field_name = compared_field_name
-        self.compared_field_type = compared_field_type
-        self.compared_parent_resource_name = compared_parent_resource_name
-
-    def simple_match(self):
-        if self.compared_field_name is None:
-            return None
-        self.compared_field_name.lower()
-        self.compare_field_name.lower()
-        if self.compared_field_name == self.compare_field_name and self.compared_field_type == self.compare_field_name:
-            return self.compared_field_name
-        else:
-            return None
-
-    def smart_match(self, base_match_point=60):
-        if self.compared_field_name is None:
-            return 0
-        match_point = max(fuzz.partial_ratio(self.compare_parent_resource_name + self.compare_field_name,
-                                             self.compared_parent_resource_name + self.compared_field_name),
-                          fuzz.partial_ratio(self.compare_field_name, self.compared_field_name))
-        if self.compare_field_type != self.compared_field_type:
-            match_point -= 100 - base_match_point
-        if match_point > base_match_point:
-            return (match_point - base_match_point) / (100 - base_match_point)
-        else:
-            return 0
-
-
 sno = nltk.stem.SnowballStemmer('english')
 
 
@@ -180,7 +164,7 @@ class SemanticTree:
     def create_tree(self):
         for api_info in self.api_list:
             self.find_node(api_info.path.split('/')[1:], api_info.http_method, api_info.api_id, self._root)
-        # for pre, fill, node in RenderTree(self._root):
+        # for pre, fill, node in RenderTree(self._root):   print tree
         #     treestr = u"%s%s" % (pre, node.name)
         #     print(treestr.ljust(8), node.method_dic)
         self.add_close_api(self._root)
