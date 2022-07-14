@@ -17,8 +17,7 @@ class JsonHandle:
     @staticmethod
     def is_json(dic):
         try:
-            json.loads(dic)
-            return True
+            return json.loads(dic)
         except:
             return False
 

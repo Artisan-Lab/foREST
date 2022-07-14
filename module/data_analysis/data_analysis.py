@@ -36,7 +36,7 @@ def data_analysis(log_type, log_path, save_path, max_sequence_length):
     with open(os.path.join(save_path, "parameter_dependency.json"), "w") as file:
         json.dump(result, file, indent=4)
     with open(os.path.join(save_path, "api_dependency.json"), "w") as file:
-        json.dump(api_sequence_list, file, indent=4)
+        json.dump(sequence_monitor.sequence_len_dict.__dict__, file, indent=4)
 
 if __name__ == '__main__':
     data_analysis("foREST", "E:\\code\\restful_test\\experiment\\foREST\\project_1\\logs\\2xx_request", "E:\\code\\restful_test\\foREST\\log", 20)

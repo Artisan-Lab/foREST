@@ -77,18 +77,15 @@ def parameter_dependency_analysis(log_list: [LogEntity]):
 def sequence_generate(log_list, parm_depend_info):
     sequence_list = []
     if parm_depend_info:
-        identifier_list, target_identifier_list = list(parm_depend_info.keys()), list(parm_depend_info.values())
-        all_depend_info = list(itertools.product(*target_identifier_list))
-        for depend_info in all_depend_info:
-            dictionary = dict(zip(identifier_list, depend_info))
-            sequence = Sequence()
-            for log in log_list:
-                api_depend_info = APIDependency(log.identifier)
-                for key in dictionary.keys():
-                    if log.identifier == "  ".join(key.split()[:2]):
-                        api_depend_info.append(key.split()[-1], dictionary[key])
-                sequence.append(api_depend_info)
-            sequence_list.append(sequence)
+        sequence = Sequence()
+        for log in log_list:
+            api_depend_info = APIDependency(log.identifier)
+            for key in parm_depend_info.keys():
+                if log.identifier == "  ".join(key.split()[:2]):
+                    for parm_depend in parm_depend_info[key]:
+                        api_depend_info.append(key.split()[-1], parm_depend)
+            sequence.append(api_depend_info)
+        sequence_list.append(sequence)
     sequence = Sequence()
     for log in log_list:
         sequence.append(APIDependency(log.identifier))
