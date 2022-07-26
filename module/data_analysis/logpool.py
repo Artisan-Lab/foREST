@@ -62,7 +62,7 @@ def find_value(log_dic, data_path):
         except:
             return None
     else:
-        if data_path[0] == '/':
+        if data_path[0] == 'list':
             return find_value(log_dic[0], data_path[1:])
         else:
             return find_value(log_dic.get(data_path[0]), data_path[1:])

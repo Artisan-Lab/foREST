@@ -1,6 +1,5 @@
-from module.data_analysis.logpool import *
-from module.foREST_monitor.sequence_monitor import *
-import itertools
+from module.data_analysis.logpool import LogEntity, log_pool
+from module.foREST_monitor.sequence_monitor import Sequence_Monitor, Sequence, APIDependency
 
 
 def api_dependency(max_sequence_length: int):

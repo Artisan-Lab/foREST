@@ -10,7 +10,7 @@ from module.foREST_monitor.sequence_monitor import SequenceMonitor
 def data_analysis(log_type, log_path, save_path, max_sequence_length):
     sequence_monitor = SequenceMonitor()
     if log_type == "json":
-        with open(log_path, 'r') as log_file:
+        with open(log_path, 'r', encoding="UTF-8") as log_file:
             log_data = json.load(log_file)
         JsonParser(log_data)
         with open('structure.json', 'r') as structure_file:
@@ -20,6 +20,7 @@ def data_analysis(log_type, log_path, save_path, max_sequence_length):
         foREST_log_parser(log_path)
     else:
         raise Exception(f"unsupported log file type {log_type}")
+    log_pool.user_classification()
     log_dependency_analysis = FindParameterDependency(max_sequence_length)
 
     result = log_dependency_analysis.result
@@ -39,4 +40,4 @@ def data_analysis(log_type, log_path, save_path, max_sequence_length):
         json.dump(sequence_monitor.sequence_len_dict.__dict__, file, indent=4)
 
 if __name__ == '__main__':
-    data_analysis("foREST", "E:\\code\\restful_test\\experiment\\foREST\\project_1\\logs\\2xx_request", "E:\\code\\restful_test\\foREST\\log", 20)
+    data_analysis("json", r"E:\code\restful_test\foREST\module\data_analysis\response.json", "E:\\code\\restful_test\\foREST\\log", 20)

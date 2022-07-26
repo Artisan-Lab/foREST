@@ -1,11 +1,12 @@
 {
   "base_URL": "localhost",
-  "path": [],
-  "time": [],
-  "http_method": [],
-  "headers": [],
-  "body": [],
-  "response_code": [],
-  "response_data": [],
-  "user_id": []
+  "path": ["route"],
+  "time": ["time"],
+  "time_format": "%Y-%m-%d %H:%M:%S",
+  "http_method": ["method"],
+  "headers": ["request", "headers"],
+  "body": ["request", "body"],
+  "response_code": ["status"],
+  "response_data": ["response", "body"],
+  "user_id": ["user"]
 }
