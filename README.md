@@ -10,7 +10,7 @@ foREST will automatically infer the producer-consumer relationship between cloud
 
 ## foREST Structure
 
-foREST code is generally divided into two parts:[dependency analysis](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/dependency/dependency.md) and  [testing execution](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/testing_render/testing.md) 。
+foREST code is generally divided into two parts:dependency analysis and  testing execution.
 
 
 
@@ -33,7 +33,7 @@ python3 main.py
 
  ## experiment
 
-The specific experimental procedure can be found in [experiment](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/experiment.md)
+The specific experimental procedure can be found in experiment
 
 
  
