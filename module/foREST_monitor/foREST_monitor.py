@@ -2,7 +2,6 @@
 import json
 from log.get_logging import foREST_log
 from module.foREST_monitor.time_monitor import TimeMonitor
-from module.foREST_monitor.sequence_monitor import SequenceMonitor
 from foREST_setting import foRESTSettings
 
 
@@ -18,7 +17,7 @@ class foRESTMonitor(object):
 
         """
         if foRESTMonitor.__instance is None:
-            raise Exception("foREST Monitor not yet initialized.")
+            raise Exception("restler Monitor not yet initialized.")
         return foRESTMonitor.__instance
 
     def __init__(self):
@@ -26,7 +25,6 @@ class foRESTMonitor(object):
             raise Exception("Attempting to create a new singleton instance.")
 
         self._time_monitor = None
-        self._sequence_monitor = None
         self._resource_pool = None
         self._api_list = None
         self._annotation_table = None
@@ -65,11 +63,6 @@ class foRESTMonitor(object):
             raise Exception("time monitor uninitialized")
         self._time_monitor.setDaemon(True)
         self._time_monitor.start()
-
-    def init_sequence_monitor(self):
-        if self._sequence_monitor:
-            raise Exception("sequence monitor uninitialized")
-        self._sequence_monitor = SequenceMonitor()
 
     def terminate_fuzzing(self):
         """ Terminates the fuzzing thread by stop time monitor

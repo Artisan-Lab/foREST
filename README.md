@@ -30,7 +30,7 @@ pip3 install -r requirements.txt
 
 启动命令
 ```bash
-python3 foREST.py
+python3 restler.py
 ```
 
  ## 实验设置

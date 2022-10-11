@@ -3,9 +3,9 @@ import yaml
 from typing import Union
 import jsonref
 from entity.api_info import APIInfo
-from module.parser.open_api_parse.dependency import SemanticTree, SetKeyValueDependency
-from module.parser.open_api_parse.swagger_parser import SwaggerParser
-from module.parser.open_api_parse.open_api_parser import OpenAPIParser
+from module.parser.dependency import SemanticTree, SetKeyValueDependency
+from .swagger_parser import SwaggerParser
+from .open_api_parser import OpenAPIParser
 import re
 
 pattern = re.compile(r'{.*}')
@@ -51,11 +51,18 @@ class APIListParser(object):
         @param path: api file absolute path
         @type path: str
         """
-        with open(path, encoding='utf-8') as stream:
-            yaml_data = yaml.safe_load(stream)
-
         # Parsing the reference in the document
-        json_data = jsonref.loads(json.dumps(yaml_data))
+
+        with open(path, encoding='utf-8') as stream:
+            if path.endswith(".yaml"):
+                yaml_data = yaml.safe_load(stream)
+                json_data = jsonref.loads(json.dumps(yaml_data))
+            elif path.endswith(".json"):
+                stream = json.load(stream)
+                SwaggerParser.resolve_circular_references(stream)
+                json_data = jsonref.loads(json.dumps(stream))
+            else:
+                raise Exception("Error API file format")
 
         # Use different parsing schemes for different document versions
         if json_data.get('swagger'):
@@ -66,8 +73,6 @@ class APIListParser(object):
             self._api_list = open_api_parser.openAPI_parser()
         self._len = len(self._api_list)
 
-    def load_depend_info(self, depend_info):
-        pass
 
     def find_api_by_identifier(self, api_identifier) -> Union[APIInfo, None]:
         for api_info in self._api_list:  # type: APIInfo

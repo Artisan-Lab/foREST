@@ -7,6 +7,7 @@ from logging.handlers import RotatingFileHandler
 import colorlog
 import time
 import os
+from foREST_setting import foRESTSettings
 
 lock = threading.Lock()
 
@@ -23,9 +24,10 @@ class Log:
     def __init__(self, log_name=None, log_path=None):
         cur_path = os.path.dirname(os.path.realpath(__file__))
         if not log_path:
-            log_path = os.path.join(os.path.dirname(cur_path), 'log\\logs')
+            log_path = os.path.join(os.path.dirname(cur_path), 'log/logs')
         if not os.path.isdir(log_path):
             os.mkdir(log_path)
+        self.base_name = log_name
         if not log_name:
             log_name = os.path.join(log_path, '%s' % time.strftime('%Y-%m-%d'))
         else:
@@ -42,6 +44,15 @@ class Log:
             log_colors=log_colors_config)
         self.formatter_file = logging.Formatter(
             '%(asctime)s : %(message)s')
+
+    def out_put(self, path):
+        cur_path = os.path.dirname(os.path.realpath(__file__))
+        path = os.path.join(cur_path, path)
+        self.log_name = os.path.join(path, self.base_name)
+        if not os.path.isdir(path):
+            os.mkdir(path)
+        if os.path.exists(self.log_name):
+            self.delete_logs(self.log_name)
 
     def delete_logs(self, file_path):
         try:
@@ -82,18 +93,16 @@ class Log:
 
     def print(self, message):
         lock.acquire()
-        time.sleep(0.5)
         print("\r", "\n", end="")
         self.__console('print', message)
         lock.release()
 
     def save(self, message):
-        self.__console('save', message)
+        pass
+        # self.__console('save', message)
 
     def save_and_print(self, message):
         lock.acquire()
-        time.sleep(0.5)
-        print("\r", "\n", end="")
         self.__console('save_and_print', message)
         lock.release()
 
@@ -102,18 +111,6 @@ class Log:
 
     def save_json(self, message):
         self.__console('json', message)
-
-
-try:
-    cur_path = os.path.dirname(os.path.realpath(__file__))
-    file_path = os.path.join(os.path.dirname(cur_path), 'log\\logs')
-    file_list = os.listdir(file_path)
-    for f in file_list:
-        f_path = os.path.join(file_path, f)
-        os.remove(f_path)
-except PermissionError as e:
-    print('Failed to delete log directory: {}'.format(e))
-    sys.exit()
 
 foREST_log = Log(log_name="program_running_status.txt")
 summery_log = Log(log_name='summery.txt')
@@ -125,3 +122,19 @@ status_5xx_log = Log(log_name='5xx_request.txt')
 status_timeout_log = Log(log_name='timeout_request.txt')
 external_log = Log(log_name='hit_external_field.txt')
 inconsistent_parameter = Log(log_name='inconsistent_parameter.txt')
+no_reference_log = Log("no_reference_key.json")
+result_log = Log(log_name="result.txt")
+
+def set_out_put(path):
+    foREST_log.out_put(path)
+    summery_log.out_put(path)
+    requests_log.out_put(path)
+    status_timeout_log.out_put(path)
+    status_5xx_log.out_put(path)
+    status_4xx_log.out_put(path)
+    status_3xx_log.out_put(path)
+    status_2xx_log.out_put(path)
+    external_log.out_put(path)
+    no_reference_log.out_put(path)
+    inconsistent_parameter.out_put(path)
+    result_log.out_put(path)

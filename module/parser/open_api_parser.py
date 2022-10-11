@@ -1,6 +1,7 @@
 from entity.api_info import *
 from foREST_setting import foRESTSettings
 import random
+import os
 
 
 class OpenAPIParser:
@@ -28,9 +29,17 @@ class OpenAPIParser:
                 api_parameters = api.get('parameters')
                 api_request_body = api.get('requestBody')
                 api_responses = api.get('responses')
+                try:
+                    consume = list(api_request_body.get("content").keys())
+                except:
+                    consume = None
+                try:
+                    produces = api.get("responses")[0].content
+                except:
+                    produces = None
                 api = APIInfo(self.api_id, self.base_url, path,
                               self.parameters_handle(api_parameters) + self.request_body_handle(api_request_body),
-                              self.responses_handle(api_responses), method)
+                              self.responses_handle(api_responses), method, produces, consume)
                 self.api_list.append(api)
                 self.api_id += 1
         return self.api_list
@@ -65,7 +74,9 @@ class OpenAPIParser:
                              array=self.create_filed_info(parameter_schema.get('items')),
                              max=parameter_schema.get('maximum'),
                              min=parameter_schema.get('minimum'),
-                             format=parameter_schema.get('format'))
+                             format=parameter_schema.get('format'),
+                             pattern=parameter_schema.get('pattern')
+                             )
         else:
             return FieldInfo(field_name=api_parameter.get('name'),
                              type_=self.yaml_type_switch(api_parameter.get('type')),
@@ -82,7 +93,9 @@ class OpenAPIParser:
                              array=self.create_filed_info(api_parameter.get('items')),
                              max=api_parameter.get('maximum'),
                              min=api_parameter.get('minimum'),
-                             format=api_parameter.get('format'))
+                             format=api_parameter.get('format'),
+                             pattern=api_parameter.get('pattern')
+                             )
 
     def object_handle(self, objects, required_list):
         objects_list = []
@@ -105,7 +118,9 @@ class OpenAPIParser:
                 array=self.create_filed_info(single_object.get('items')),
                 max=single_object.get('maximum'),
                 min=single_object.get('minimum'),
-                format=single_object.get('format'))
+                format=single_object.get('format'),
+                pattern=single_object.get('pattern')
+                )
             )
         return objects_list
 
@@ -124,11 +139,11 @@ class OpenAPIParser:
                 self.location = 3
                 schema = request_content[request_body_format].get('schema')
                 if schema.get('type') == 'object':
-                    request_body_parameter += self.object_handle(schema.get('properties'), schema.get('required'))
+                    request_body_parameter.extend(self.object_handle(schema.get('properties'), schema.get('required')))
                 elif schema.get('type') == 'array':
-                    request_body_parameter += self.create_filed_info(schema.get('items'))
+                    request_body_parameter.append(self.create_filed_info(schema.get('items')))
                 else:
-                    request_body_parameter += self.create_filed_info(schema)
+                    request_body_parameter.append(self.create_filed_info(schema))
         return request_body_parameter
 
     def responses_handle(self, api_responses):
@@ -160,3 +175,39 @@ class OpenAPIParser:
             return 'bool'
         if type_ == 'array':
             return 'list'
+
+    @staticmethod
+    def resolve_circular_references(spec):
+        if "components" in spec and "schemas" in spec["components"]:
+            references = spec["components"]["schemas"]
+            visited_references = {}
+            for key in references:
+                visited_references[key] = 0
+            for key in references:
+                if visited_references[key] == 0:
+                    OpenAPIParser.traverse(references, key, visited_references)
+            spec["components"]["schemas"] = references
+
+    @staticmethod
+    def traverse(referencs, key, visited_references):
+        visited_references[key] = 1
+        if "properties" not in referencs[key]:
+            return
+        proerties_to_delete = []
+        for property in referencs[key]["properties"]:
+            if "$ref" in referencs[key]["properties"][property]:
+                key_ = os.path.basename(referencs[key]["properties"][property]["$ref"])
+            elif "items" in referencs[key]["properties"][property] and "$ref" in referencs[key]["properties"][property][
+                "items"]:
+                key_ = os.path.basename(referencs[key]["properties"][property]["items"]["$ref"])
+            else:
+                continue
+            if key_ not in visited_references:
+                continue
+            if visited_references[key_] == 0:
+                OpenAPIParser.traverse(referencs, key_, visited_references)
+            elif visited_references[key_] == 1:
+                proerties_to_delete.append(property)
+        for property in proerties_to_delete:
+            referencs[key]["properties"].pop(property)
+        visited_references[key] = 2

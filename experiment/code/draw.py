@@ -9,7 +9,7 @@ import numpy as np
 
 plt.figure(figsize=(150,150))
 
-forest_file = open('../data/gitlab-project-branch-commit/foREST-6h.csv')  # 打开csv文件
+forest_file = open('../data/gitlab-project-branch-commit/restler-6h.csv')  # 打开csv文件
 forestReader = csv.reader(forest_file)  # 读取csv文件
 forestData = list(forestReader)  # csv数据转换为列表
 forest_length = len(forestData)  # 得到数据行数
@@ -83,7 +83,7 @@ for _ in range(0, restler_rw_length):
 fig, ax = plt.subplots()
 # ax2 = ax.twinx()
 # Plot the date using plot_date rather than plot
-ax.plot(x1, y1, 'r-', label='foREST', linewidth=3)
+ax.plot(x1, y1, 'r-', label='restler', linewidth=3)
 
 
 ax.plot(x2, y2, 'b--', label='EvoMaster', linewidth=3)

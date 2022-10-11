@@ -1,7 +1,7 @@
 import nltk
 import copy
 from typing import Union
-from log.get_logging import Log
+from log.get_logging import no_reference_log
 from fuzzywuzzy import fuzz
 from anytree import NodeMixin, RenderTree
 from foREST_setting import foRESTSettings
@@ -34,108 +34,115 @@ class SetKeyValueDependency:
     def __init__(self, api_info_list):
         self.api_info_list = api_info_list  # type: Monitor().api_list
         self.api_numbers = len(api_info_list)
-        self.current_field_info = None  # type: Union[FieldInfo, None]
-        self.current_api_info = None  # type: Union[APIInfo, None]
-        self.current_parent_resource_name = ''
-        self.current_compare_field_info = None
-        self.current_compare_api_info = None
+        self.base_field_info = None  # type: Union[FieldInfo, None]
+        self.base_api_info = None  # type: Union[APIInfo, None]
+        self.base_parent_relation = []
+
+        self.compare_field_info = None
+        self.compare_api_info = None
+        self.compare_parent_relation = []
+
         self.not_reference_field = []
-        self.key_depend_api_list = []
         self.depended_field_list = []
         self.depended_field_path = []
 
     def find_depend_API(self):
         for api_info in self.api_info_list:
-            self.current_compare_api_info = api_info
+            self.compare_api_info = api_info
             self.depended_field_list = []
-            if not api_info.resp_param or api_info == self.current_api_info:
+            if not api_info.resp_param or api_info == self.base_api_info:
                 continue
+            self.compare_parent_relation.append(last_not_variable(api_info.path))
             for field_info in api_info.resp_param:
-                self.current_compare_field_info = field_info
+                self.compare_field_info = field_info
                 self.depended_field_path = [api_info.api_id]
-                parent_resource_name = resource_pool().find_parent_resource_name(api_info.path)
-                if self.find_depend_field(field_info, parent_resource_name) and \
-                        self.current_field_info.require and \
-                        api_info.api_id not in self.key_depend_api_list:
-                    self.key_depend_api_list.append(api_info.api_id)
+                self.find_depend_field(field_info)
+            self.compare_parent_relation.pop()
 
-    def find_depend_field(self, compare_field, parent_name=''):
-        if parent_name is None:
-            parent_name = ''
-        self.depended_field_path.append(compare_field.field_name)
+    def find_depend_field(self, compare_field):
+        if compare_field.field_name:
+            self.depended_field_path.append(compare_field.field_name)
+        else:
+            self.depended_field_path.append(compare_field.field_type)
         real_field_name, real_compare_field_name = None, None
         if Monitor().annotation_table:
             real_field_name = annotation_key_table_parse(Monitor().annotation_table,
-                                                         self.current_api_info.path,
-                                                         self.current_api_info.http_method,
-                                                         self.current_field_info.field_name,
-                                                         self.current_field_info.location)
+                                                         self.base_api_info.path,
+                                                         self.base_api_info.http_method,
+                                                         self.base_field_info.field_name,
+                                                         self.base_field_info.location)
         if Monitor().annotation_key_table:
             real_compare_field_name = annotation_key_table_parse(Monitor().annotation_key_table,
-                                                                 self.current_compare_api_info.path,
-                                                                 self.current_compare_api_info.http_method,
-                                                                 self.current_compare_field_info.field_name,
-                                                                 self.current_compare_field_info.location)
+                                                                 self.compare_api_info.path,
+                                                                 self.compare_api_info.http_method,
+                                                                 self.compare_field_info.field_name,
+                                                                 self.compare_field_info.location)
         if not real_field_name:
-            real_field_name = self.current_field_info.field_name
+            real_field_name = self.base_field_info.field_name
         if not real_compare_field_name:
             real_compare_field_name = compare_field.field_name
-        point = smart_match(real_field_name, self.current_parent_resource_name,
-                            self.current_field_info.field_type, real_compare_field_name,
-                            parent_name, compare_field.field_type, foRESTSettings().similarity_cardinality)
+        point = smart_match(real_field_name, self.base_parent_relation[-1], self.base_field_info.field_type,
+                            real_compare_field_name, self.compare_parent_relation[-1], compare_field.field_type,
+                            foRESTSettings().similarity_cardinality)
         if point:
-            depend_point = self.current_field_info.get_depend(self.depended_field_path[0], self.depended_field_path[1:])
+            depend_point = self.base_field_info.get_depend(self.depended_field_path[0], self.depended_field_path[1:])
             if depend_point:
                 depend_point.base_score = point
             else:
                 depend_point = DependPoint(self.api_info_list[self.depended_field_path[0]], self.depended_field_path[1:],
                                        point)
-                self.current_field_info.depend_list.append(depend_point)
-            self.depended_field_path.pop(-1)
+                self.base_field_info.depend_list.append(depend_point)
+            self.base_api_info.add_depend_api(self.compare_api_info.api_id)
+            self.depended_field_path.pop()
             return True
         elif compare_field.field_type == 'dict':
             if compare_field.object:
+                if compare_field.field_name:
+                    self.compare_parent_relation.append(compare_field.field_name)
                 for object_info in compare_field.object:
                     if object_info.field_name:
-                        if self.find_depend_field(object_info, compare_field.field_name):
-                            self.depended_field_path.pop(-1)
-                            return True
+                        self.find_depend_field(object_info)
+                if compare_field.field_name:
+                    self.compare_parent_relation.pop()
         elif compare_field.field_type == 'list':
-            if self.find_depend_field(compare_field.array, compare_field.field_name):
+            if self.find_depend_field(compare_field.array):
                 self.depended_field_path.pop(-1)
                 return True
         self.depended_field_path.pop(-1)
         return False
 
     def get_field_dependency(self, field_info: FieldInfo):
-        self.current_field_info = field_info
+        if field_info.field_type == 'bool':
+            return
+        self.base_field_info = field_info
         if field_info.field_name:
             self.find_depend_API()
         if not field_info.depend_list:
             if field_info.field_name not in self.not_reference_field:
                 self.not_reference_field.append(field_info.field_name)
         if field_info.field_type == 'list':
-            self.get_field_dependency(field_info.array)
+            if field_info.array:
+                self.get_field_dependency(field_info.array)
         if field_info.field_type == 'dict':
             if field_info.object:
+                if field_info.field_name:
+                    self.base_parent_relation.append(field_info.field_name)
                 for object_info in field_info.object:
                     self.get_field_dependency(object_info)
+                if field_info.field_name:
+                    self.base_parent_relation.pop()
 
     def get_dependency(self):
         """get every field dependency reference"""
         for api_info in self.api_info_list:
-            self.current_api_info = api_info
-            self.current_parent_resource_name = resource_pool().find_parent_resource_name(api_info.path)
-            self.key_depend_api_list = []
+            self.base_api_info = api_info
             if api_info.req_param:
                 # traverse every parameter
                 for req_field_info in api_info.req_param:
-                    if req_field_info.field_type == 'bool':
-                        continue
+                    self.base_parent_relation.append(last_not_variable(api_info.path))
                     self.get_field_dependency(req_field_info)
-            api_info.key_depend_api_list = self.key_depend_api_list
-        log = Log("no_reference_key.json")
-        log.save_json(self.not_reference_field)
+                    self.base_parent_relation.pop()
+        no_reference_log.save_json(self.not_reference_field)
         return self.api_info_list
 
 
@@ -160,14 +167,18 @@ class SemanticTree:
         self.api_list = api_list
         self._root = SemanticNode('root')
         self.create_tree()
+        self.current_path = []
+        self.api_info = api_list[0] # type: APIInfo
 
     def create_tree(self):
         for api_info in self.api_list:
-            self.find_node(api_info.path.split('/')[1:], api_info.http_method, api_info.api_id, self._root)
-        # for pre, fill, node in RenderTree(self._root):   print tree
-        #     treestr = u"%s%s" % (pre, node.name)
-        #     print(treestr.ljust(8), node.method_dic)
-        self.add_close_api(self._root)
+            self.api_info = api_info
+            self.current_path = api_info.path.split("/")[1:]
+            self.find_node(self.root)
+        for pre, fill, node in RenderTree(self._root):
+            treestr = u"%s%s" % (pre, node.name)
+            print(treestr.ljust(8), node.method_dic)
+        self.add_close_api(self.root)
 
     @property
     def root(self):
@@ -197,20 +208,18 @@ class SemanticTree:
                 close_api.append(node.method_dic[method])
         return close_api
 
-    @staticmethod
-    def find_node(api_path_nodes, api_method, api_id, parent_node):
-        if not api_path_nodes:
-            if api_method == 'post' and not is_path_variable(parent_node.name):
-                resource_pool().resource_name_dict[sno.stem(parent_node.name)] = []
-            parent_node.method_dic[api_method] = api_id
+    def find_node(self, parent_node):
+        if not self.current_path:
+            parent_node.method_dic[self.api_info.http_method] = self.api_info.api_id
             return
         flag = 0
         if parent_node.children:
             for child in parent_node.children:
-                if child.name == api_path_nodes[0]:
+                if child.name == self.current_path[0]:
                     flag = 1
                     child_node = child
                     break
         if flag == 0:
-            child_node = SemanticNode(api_path_nodes[0], parent=parent_node)
-        SemanticTree.find_node(api_path_nodes[1:], api_method, api_id, child_node)
+            child_node = SemanticNode(self.current_path[0], parent=parent_node)
+        self.current_path = self.current_path[1:]
+        self.find_node(child_node)

@@ -113,6 +113,7 @@ class TimeMonitor(threading.Thread):
         @return: None
         @rtype: None
         """
+
         print(f'🌲 testing {self._total_time} hour. Ctrl+C to exit')
         self.clock_monitor(int(self._total_time*60))
 
@@ -140,6 +141,7 @@ class TimeMonitor(threading.Thread):
             duration = 25
             progressbar(self._testing_time, minutes * 60, duration, countdown, self.message)
             time.sleep(1)
+
 
 
 if __name__ == "__main__":

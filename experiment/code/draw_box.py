@@ -6,7 +6,7 @@ data = pd.read_csv("./data.csv")
 
 data_30min = data[data["time"] == "30min"]
 data_6h = data[data["time"] == "6h"]
-ax = sns.catplot(x="tool_name", y="coverage (#LoC)", order=["RESTler", "EvoMaster","foREST"],data=data, hue="time",  col="server_name",kind="box", aspect=.5,linewidth=0.3, ci=None,width=0.4,legend=False)
+ax = sns.catplot(x="tool_name", y="coverage (#LoC)", order=["RESTler", "EvoMaster","restler"],data=data, hue="time",  col="server_name",kind="box", aspect=.5,linewidth=0.3, ci=None,width=0.4,legend=False)
 ax.despine(left=True)
 
 ax.figure.subplots_adjust(wspace=0.1, hspace=0)

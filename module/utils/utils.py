@@ -98,13 +98,14 @@ class DictHandle:
         def find_by_path(data, path):
             if not path:
                 return data
+            if isinstance(data, dict) and path[0] == "dict":
+                return find_by_path(data, path[1:])
             if isinstance(data, dict) and path[0] in data:
                 return find_by_path(data[path[0]], path[1:])
             if isinstance(data, list) and path[0] == 'list':
-                for item in data:
-                    result = find_by_path(item, path[1:])
-                    if result:
-                        return result
+                result = find_by_path(random.choice(data), path[1:])
+                if result:
+                    return result
             return None
 
         return find_by_path(data, path)
@@ -184,20 +185,31 @@ def annotation_table_parse(annotation_table, api_path, api_method, field_name, l
     return None
 
 
-def annotation_key_table_parse(annotation_key_table, api_path, api_method, field_name):
+def annotation_key_table_parse(annotation_key_table, api_path, api_method, field_name, location):
     data = DictHandle.find_by_path(annotation_key_table, [api_path, api_method])
     if data:
         for info in data:
-            if info[field_name] == field_name:
+            if info["field_name"] == field_name and info["location"] == location:
                 return info['value']
     return None
 
 
 def is_path_variable(_str):
+    if not _str:
+        return False
     if _str[0] == '{' and _str[-1] == '}' and len(_str)>2:
         return _str[1:-2]
     else:
         return False
+
+def last_not_variable(_str: str):
+    try:
+        path = _str.split("/")
+        for i in path[::-1]:
+            if not is_path_variable(i) and i:
+                return i
+    except:
+        return None
 
 
 def random_dic(dicts):

@@ -1,4 +1,5 @@
-import copy
+import copy, collections
+from allpairspy import AllPairs
 from entity.api_info import *
 from foREST_setting import foRESTSettings
 from module.foREST_monitor.foREST_monitor import Monitor
@@ -6,6 +7,35 @@ from module.testing.basic_fuzz import BasicFuzz
 from module.utils.utils import *
 from entity.resource_pool import resource_pool
 from entity.request import Request
+
+
+def get_all_field(parameter_list):
+    ans, current_path = [], []
+
+    def dfs(parameter):
+        if parameter.require:
+            return
+        if parameter.field_name:
+            current_path.append(parameter.field_name)
+            ans.append(current_path[:])
+        elif parameter.array:
+            current_path.append("list")
+            ans.append(current_path[:])
+        else:
+            current_path.append(parameter.field_type)
+            ans.append(current_path[:])
+        if parameter.object:
+            for sub_parameter in parameter.object:
+                dfs(sub_parameter)
+        elif parameter.array:
+            dfs(parameter.array)
+        current_path.pop()
+
+    for parameter in parameter_list:
+        dfs(parameter)
+        if current_path:
+            print(1)
+    return ans
 
 
 class ComposeRequest:
@@ -16,31 +46,46 @@ class ComposeRequest:
     def __init__(self, api_info, node):
         self.api_info = api_info  # type: APIInfo
         self.node = node
-        self.request = Request(api_info.base_url + api_info.path, api_info.http_method)  # type: Request
+        self.request = Request(api_info)  # type: Request
         self.optional_request_pool = []
         self.parent_source_list = []
-        self.current_parent_source = None
-        self.current_request = self.request
+        self.parent_resource = None
+        self.request = self.request
+        self.path = []
+        self.current_para_list = []
+        self.parameter_list = []
 
     def get_path_parameter(self):
-        self.current_parent_source = None
-        base_url_list = self.api_info.path.split('/')
-        base_url_list.remove('')
-        for path in base_url_list[::-1]:
-            if not is_path_variable(path):
-                self.current_parent_source = resource_pool().find_resource_from_resource_name(
-                    path)
-                if self.current_parent_source:
-                    if self.current_parent_source.resource_api_id == self.api_info.api_id:
-                        self.current_parent_source = None
-                        continue
-                    self.get_path_parameter_from_parent_resource(self.request)
-                    break
+        self.parent_resource = None
+        self.parent_resource = resource_pool().find_parent_resource(self.api_info.path)
+        if self.parent_resource:
+            if self.parent_resource.api_info == self.api_info.api_id:
+                self.parent_resource = None
+            self.get_path_parameter_from_parent_resource(self.request)
 
     def get_path_parameter_from_parent_resource(self, request):
-        path_parameter_list = self.current_parent_source.get_resource_request.path_parameter_list
+        path_parameter_list = self.parent_resource.request.path_parameter_list
         for path_parameter in path_parameter_list:
             request.add_parameter(0, path_parameter, path_parameter_list[path_parameter])
+
+    @staticmethod
+    def get_value_from_depend(field_info):
+        depend_point = field_info.genetic_algorithm()
+        if depend_point.api_info is None and (field_info.field_type == 'int' or field_info.field_type == 'str'):
+            return BasicFuzz.fuzz_value_from_field(field_info)
+        else:
+            value = resource_pool().get_special_value_from_resource(depend_point.api_info.identifier, depend_point.path)
+        if value:
+            if depend_point.flag == "base":
+                return value
+            elif depend_point.flag == "mutate":
+                if field_info.field_type == "string":
+                    return BasicFuzz.fuzz_mutation_parameter(value)
+                else:
+                    return value
+            else:
+                raise Exception("unknown dependency type")
+        depend_point.minus_score()
 
     def get_value(self, field_info: FieldInfo):
         value = None
@@ -56,29 +101,17 @@ class ComposeRequest:
                                            )
             return value
         if field_info.depend_list:
-            depend_point = field_info.genetic_algorithm()
-            if depend_point.api_info is None and (field_info.field_type == 'int' or field_info.field_type == 'str'):
-                return BasicFuzz.fuzz_value_from_field(field_info)
-            else:
-                value = resource_pool().get_special_value_from_resource(depend_point.api_info.api_id, depend_point.path)
+            value = ComposeRequest.get_value_from_depend(field_info)
             if value:
-                if depend_point.flag == "base":
-                    return value
-                elif depend_point.flag == "mutate":
-                    if field_info.field_type == "string":
-                        return BasicFuzz.fuzz_mutation_parameter(value)
-                    else:
-                        return value
-                else:
-                    raise Exception("unknown dependency type")
-            depend_point.minus_score()
-        if field_info.field_type == 'dict' and field_info.object:
+                return value
+        if field_info.field_type == 'dict':
             value = {}
+            if not field_info.object:
+                return BasicFuzz.fuzz_dict()
             for sub_field_info in field_info.object:
-                if sub_field_info.require:
-                    sub_field_value = self.get_value(sub_field_info)
-                    if sub_field_value:
-                        value[sub_field_info.field_name] = sub_field_value
+                sub_field_value = self.get_value(sub_field_info)
+                if sub_field_value:
+                    value[sub_field_info.field_name] = sub_field_value
             return value
         elif field_info.field_type == 'list':
             value = []
@@ -86,13 +119,11 @@ class ComposeRequest:
                 sub_value = {}
                 if field_info.array.object:
                     for array_field in field_info.array.object:
-                        if array_field.require:
-                            sub_value[array_field.field_name] = self.get_value(array_field)
+                        sub_value[array_field.field_name] = self.get_value(array_field)
                     value.append(sub_value)
                 return value
             else:
-                for i in range(0, 5):
-                    value.append(BasicFuzz.fuzz_value_from_field(field_info.array))
+                value = BasicFuzz.fuzz_list()
                 return value
         if value is None:
             value = BasicFuzz.fuzz_value_from_field(field_info)
@@ -100,43 +131,102 @@ class ComposeRequest:
 
     def compose_required_request(self):
         if not self.api_info.req_param:
+            self.request.compose_request()
             return
         for field_info in self.api_info.req_param:
-            if field_info.require and field_info.field_name not in self.current_request.path_parameter_list:
+            if field_info.require and field_info.field_name not in self.request.path_parameter_list:
                 value = self.get_value(field_info)
                 self.request.add_parameter(field_info.location, field_info.field_name, value)
         self.request.compose_request()
         return
 
-    def recompose_optional_request(self):
-        request = copy.deepcopy(self.request)
-        request.initialization()
-        if self.current_parent_source:
-            self.get_path_parameter_from_parent_resource(request)
-        for field_info in self.api_info.req_param:
-            if not field_info.require:
-                self.current_request = copy.deepcopy(request)
-                for req_field_info in self.api_info.req_param:
-                    if req_field_info.require and req_field_info.field_name not in self.request.path_parameter_list:
-                        value = self.get_value(req_field_info)
-                        self.current_request.add_parameter(req_field_info.location, req_field_info.field_name, value)
-                value = self.get_value(field_info)
-                self.current_request.add_parameter(field_info.location, field_info.field_name, value)
-                self.current_request.compose_request()
-                self.optional_request_pool.append(self.current_request)
+    def get_option_value(self, field_info: FieldInfo):
+        if field_info.field_name:
+            self.path.append(field_info.field_name)
+        elif field_info.array:
+            self.path.append("list")
+        elif field_info.field_type == "dict":
+            self.path.append("dict")
+        if self.path not in self.current_para_list:
+            self.path.pop()
+            return
+        value = None
+        if field_info.field_type == 'bool':
+            value = BasicFuzz.fuzz_value_from_field(field_info)
+            self.path.pop()
+            return value
+        if foRESTSettings().annotation_table:
+            value = annotation_table_parse(Monitor().annotation_table,
+                                           self.api_info.path,
+                                           self.api_info.http_method,
+                                           field_info.field_name,
+                                           field_info.location
+                                           )
+            self.path.pop()
+            return value
+        if field_info.depend_list:
+            value = ComposeRequest.get_value_from_depend(field_info)
+            if value:
+                self.path.pop()
+                return value
+        if field_info.field_type == 'dict':
+            value = {}
+            if not field_info.object:
+                self.path.pop()
+                return BasicFuzz.fuzz_dict()
+            for sub_field_info in field_info.object:
+                sub_field_value = self.get_value(sub_field_info)
+                if sub_field_value:
+                    value[sub_field_info.field_name] = sub_field_value
+            self.path.pop()
+            return value
+        elif field_info.field_type == 'list':
+            value = []
+            if field_info.array.field_type == 'dict':
+                sub_value = {}
+                if field_info.array.object:
+                    for array_field in field_info.array.object:
+                        sub_value[array_field.field_name] = self.get_value(array_field)
+                    value.append(sub_value)
+                self.path.pop()
+                return value
+            else:
+                value = BasicFuzz.fuzz_list()
+                self.path.pop()
+                return value
+        if value is None:
+            value = BasicFuzz.fuzz_value_from_field(field_info)
+        self.path.pop()
+        return value
 
     def compose_optional_request(self):
         if not self.api_info.req_param:
             return
-        for field_info in self.api_info.req_param:
-            if not field_info.require:
-                request = copy.deepcopy(self.request)
-                request.depend_point_list = copy.deepcopy(self.request.depend_point_list)
-                self.current_request = request
-                value = self.get_value(field_info)
-                self.current_request.add_parameter(field_info.location, field_info.field_name, value)
-                self.current_request.compose_request()
-                self.optional_request_pool.append(self.current_request)
+        parameter_list = get_all_field(self.api_info.req_param)
+        if len(parameter_list) == 0:
+            optional_parameter_pairs = []
+        elif len(parameter_list) == 1:
+            optional_parameter_pairs = [[1]]
+        else:
+            random.shuffle(parameter_list)
+            optional_parameter_pairs = AllPairs([[1, 0] for i in range(len(parameter_list))])
+        for choice_number in optional_parameter_pairs:
+            choice_parameters = []
+            for i, id in enumerate(choice_number):
+                if id == 1:
+                    choice_parameters.append(parameter_list[i])
+            choice_parameters.sort(key=lambda x: len(x))
+            self.parameter_list.append(choice_parameters)
+
+        for self.current_para_list in self.parameter_list:
+            self.request = Request(self.api_info)
+            self.compose_required_request()
+            for field_info in self.api_info.req_param:
+                value = self.get_option_value(field_info)
+                if value is not None:
+                    self.request.add_parameter(field_info.location, field_info.field_name, value)
+            self.request.compose_request()
+            self.optional_request_pool.append(copy.deepcopy(self.request))
 
     @property
     def optional_request(self):

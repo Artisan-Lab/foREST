@@ -56,19 +56,12 @@ class foRESTSetting:
 
     @staticmethod
     def Instance():
-        if not foRESTSetting.__instance:
-            raise Exception("foREST setting not yet initialized.")
         return foRESTSetting.__instance
 
     def __init__(self, args_dicts: dict):
         # ip of service under testing
+        self._out_put = Argument('out_put', args_dicts, ['out_put'])
         self._target_ip = Argument('target_ip', args_dicts, ['target_ip'])
-        # foREST work mode: pure testing or data based testing
-        self._foREST_mode = Argument('foREST_mode', args_dicts, ['foREST_mode'])
-        # data-based testing argument, api dependency file absolute path
-        self._api_dependency_file = Argument('api_dependency_file', args_dicts, ['api_dependency_file'])
-        # data-based testing argument, parameter dependency file absolute path
-        self._parameter_dependency_file = Argument('parameter_dependency_file', args_dicts, ['parameter_dependency_file'])
         # testing time budget: minutes
         self._time_budget = Argument('time_budget', args_dicts, ['time_budget'])
         # user token
@@ -101,8 +94,6 @@ class foRESTSetting:
             requests.get(self.target_ip)
         except:
             raise Exception("ERROR target ip")
-        if self.foREST_mode != "pure testing" and self.foREST_mode != "data-based testing":
-            raise Exception("ERROR working mode")
         if isinstance(self.time_budget, str):
             try:
                 self._time_budget = int(self.time_budget)
@@ -114,16 +105,12 @@ class foRESTSetting:
             raise Exception("use annotation table need annotation_table path")
 
     @property
+    def out_put(self):
+        return self._out_put.value
+
+    @property
     def similarity_cardinality(self):
         return self._similarity_cardinality.value
-
-    @property
-    def api_dependency_file(self) :
-        return self._api_dependency_file.value
-
-    @property
-    def parameter_dependency_file(self) -> str:
-        return self._parameter_dependency_file.value
 
     @property
     def target_ip(self):
@@ -132,10 +119,6 @@ class foRESTSetting:
     @target_ip.setter
     def target_ip(self, target_ip):
         self._target_ip.value = target_ip
-
-    @property
-    def foREST_mode(self):
-        return self._foREST_mode.value
 
     @property
     def time_budget(self):

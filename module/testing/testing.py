@@ -1,5 +1,6 @@
 import re
 import random
+from foREST_setting import foRESTSettings
 from module.testing.composerequest import ComposeRequest
 from log.get_logging import *
 from entity.resource_pool import resource_pool
@@ -46,136 +47,99 @@ class TestingMonitor:
                         self.node_queue.append(child)
             self.traverse_nums += 1
             self.summery_count['already send rounds'] = self.traverse_nums
+            result_log.save_and_print(self.summery_count)
 
     def node_testing(self, node):
         exec_method_list = ['get', 'post', 'put', 'patch', 'delete']
         for exec_method in exec_method_list:
             if exec_method in node.method_dic:
                 api_id = node.method_dic[exec_method]
-                if exec_method == 'post' and (api_id not in resource_pool().resource_api_id_dict
-                                              or len(resource_pool().resource_api_id_dict[api_id])) < 100:
+                if exec_method == 'post':
                     k = random.randint(1, 5)
                     for _ in range(k):
                         self.api_testing(api_id)
                 else:
                     self.api_testing(api_id)
+        for method in node.method_dic:
+            if method not in exec_method_list:
+                api_id = node.method_dic[method]
+                self.api_testing(api_id)
 
-    # def create_topology_graph(self):
-    #     topology_graph = [[0 for i in range(self.api_number + 1)] for i in range(self.api_number)]
-    #     for api_info in self.api_list:
-    #         if api_info.key_depend_api_list:
-    #             for depend_api in api_info.key_depend_api_list:
-    #                 topology_graph[api_info.api_id][depend_api] = 1
-    #         topology_graph[api_info.api_id][-1] = len(api_info.key_depend_api_list)
-    #     return topology_graph
+    def create_topology_graph(self):
+        topology_graph = [[0 for i in range(self.api_number + 1)] for i in range(self.api_number)]
+        for api_info in self.api_list:
+            if api_info.key_depend_api_list:
+                for depend_api in api_info.key_depend_api_list:
+                    topology_graph[api_info.api_id][depend_api] = 1
+            topology_graph[api_info.api_id][-1] = len(api_info.key_depend_api_list)
+        return topology_graph
 
-    # def topology(self):
-    #     while True:
-    #         topology_graph = self.create_topology_graph()
-    #         while True:
-    #             next_api_list = []
-    #             min_depend_number = self.api_number
-    #             for i in range(self.api_number):
-    #                 if min_depend_number > topology_graph[i][-1] > -1:
-    #                     min_depend_number = topology_graph[i][-1]
-    #                     next_api_list = [i]
-    #                 elif topology_graph[i][-1] == min_depend_number:
-    #                     next_api_list.append(i)
-    #             if next_api_list:
-    #                 while next_api_list:
-    #                     random.shuffle(next_api_list)
-    #                     next_api = next_api_list.pop(0)
-    #                     self.api_testing(next_api)
-    #                     topology_graph[next_api][-1] = -1
-    #                     for j in range(self.api_number):
-    #                         if topology_graph[j][next_api]:
-    #                             topology_graph[j][next_api] = 0
-    #                             topology_graph[j][-1] -= 1
-    #             else:
-    #                 break
-    #         self.traverse_nums += 1
-    #         summery_count['already send rounds'] = self.traverse_nums
-    #         if datetime.datetime.now() - self.start_time > datetime.timedelta(minutes=self.time):
-    #             break
+    def topology(self):
+        while Monitor().time_monitor.is_alive():
+            topology_graph = self.create_topology_graph()
+            while True:
+                next_api_list = []
+                min_depend_number = self.api_number
+                for i in range(self.api_number):
+                    if min_depend_number > topology_graph[i][-1] > -1:
+                        min_depend_number = topology_graph[i][-1]
+                        next_api_list = [i]
+                    elif topology_graph[i][-1] == min_depend_number:
+                        next_api_list.append(i)
+                if next_api_list:
+                    while next_api_list:
+                        random.shuffle(next_api_list)
+                        next_api = next_api_list.pop(0)
+                        self.api_testing(next_api)
+                        topology_graph[next_api][-1] = -1
+                        for j in range(self.api_number):
+                            if topology_graph[j][next_api]:
+                                topology_graph[j][next_api] = 0
+                                topology_graph[j][-1] -= 1
+                else:
+                    break
+            self.traverse_nums += 1
+            self.summery_count['already send rounds'] = self.traverse_nums
 
-    # def graph_bfs(self):
-    #     while True:
-    #         topology_graph = self.create_topology_graph()
-    #         reset_resource_pool()
-    #         while True:
-    #             next_api_list = []
-    #             min_depend_number = self.api_number
-    #             for i in range(self.api_number):
-    #                 if min_depend_number > topology_graph[i][-1] > -1:
-    #                     min_depend_number = topology_graph[i][-1]
-    #                     next_api_list = [i]
-    #                 elif topology_graph[i][-1] == min_depend_number:
-    #                     next_api_list.append(i)
-    #             if next_api_list:
-    #                 while next_api_list:
-    #                     random.shuffle(next_api_list)
-    #                     next_api = next_api_list.pop(0)
-    #                     self.api_testing(next_api)
-    #                     topology_graph[next_api][-1] = -1
-    #                     for j in range(self.api_number):
-    #                         if topology_graph[j][next_api]:
-    #                             topology_graph[j][next_api] = 0
-    #                             topology_graph[j][-1] -= 1
-    #             else:
-    #                 break
-    #         if datetime.datetime.now() - self.start_time > datetime.timedelta(minutes=self.time):
-    #             break
+    def graph_bfs(self):
+        while Monitor().time_monitor.is_alive():
+            topology_graph = self.create_topology_graph()
+            while True:
+                next_api_list = []
+                min_depend_number = self.api_number
+                for i in range(self.api_number):
+                    if min_depend_number > topology_graph[i][-1] > -1:
+                        min_depend_number = topology_graph[i][-1]
+                        next_api_list = [i]
+                    elif topology_graph[i][-1] == min_depend_number:
+                        next_api_list.append(i)
+                if next_api_list:
+                    while next_api_list:
+                        random.shuffle(next_api_list)
+                        next_api = next_api_list.pop(0)
+                        self.api_testing(next_api)
+                        topology_graph[next_api][-1] = -1
+                        for j in range(self.api_number):
+                            if topology_graph[j][next_api]:
+                                topology_graph[j][next_api] = 0
+                                topology_graph[j][-1] -= 1
+                else:
+                    break
 
     def api_testing(self, api_id):
         self.api_info = self.api_list[api_id]
         self.compose_request = ComposeRequest(self.api_info, self.node)
         self.compose_request.get_path_parameter()
         self.compose_request.compose_required_request()
-        if self.api_info.http_method == 'post':
-            self.post_api_testing()
-        elif self.api_info.http_method == 'delete':
-            self.delete_api_testing()
-        elif self.api_info.http_method == 'get':
-            self.get_api_testing()
-        elif self.api_info.http_method == 'put':
-            self.put_api_testing()
-        elif self.api_info.http_method == 'patch':
-            self.patch_api_testing()
+        requests = self.compose_request.request
+        requests_status = self.testing_evaluate(requests)
+        self.compose_request.compose_optional_request()
+        self.optional_request_testing()
 
     def optional_request_testing(self):
         optional_request_list = self.compose_request.optional_request
         for optional_request in optional_request_list:
             self.testing_evaluate(optional_request)
-
-    def post_api_testing(self):
-        request = self.compose_request.request
-        response_status = self.testing_evaluate(request)
-        if response_status == 2:
-            self.compose_request.recompose_optional_request()
-            self.optional_request_testing()
-
-    def get_api_testing(self):
-        request = self.compose_request.request
-        response_status = self.testing_evaluate(request)
-        if response_status == 2 or response_status == 5:
-            self.compose_request.compose_optional_request()
-            self.optional_request_testing()
-
-    def put_api_testing(self):
-        request = self.compose_request.request
-        response_status = self.testing_evaluate(request)
-        self.compose_request.compose_optional_request()
-        self.optional_request_testing()
-
-    def delete_api_testing(self):
-        request = self.compose_request.request
-        response_status = self.testing_evaluate(request)
-        if response_status == 2 or response_status == 5:
-            resource_pool().delete_resource(self.compose_request.current_parent_source)
-
-    def patch_api_testing(self):
-        request = self.compose_request.request
-        response_status = self.testing_evaluate(request)
 
     def testing_evaluate(self, request: Request):
         self.summery_count['already send requests number'] += 1
@@ -188,7 +152,10 @@ class TestingMonitor:
             status_timeout_log.save(self.request_message)
             self.timeout_pool[self.api_info.api_id] += 1
             self.summery_count['timeout requests number'] += 1
-        response_status = self.response_handle(request)
+        if request.response is not None:
+            response_status = self.response_handle(request)
+        else:
+            response_status = 0
         return response_status
 
     def response_handle(self, request: Request):
@@ -196,16 +163,15 @@ class TestingMonitor:
         if JsonHandle.is_json(request.response.text):
             response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.text} \n\n'
         else:
-            response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.raw.data} \n\n'
+            response_message = f'Received: \'HTTP/1.1 {response.status_code} response : {response.text} \n\n'
         requests_log.save(self.request_message + response_message)
         summery_log.save(self.success_pool)
         response_status = 0
         if re.match('2..', str(response.status_code)):
-            if request.method == 'post':
-                if response.text:
-                    resource_pool().save_response(self.api_info, request,
-                                                        json.loads(request.response.text),
-                                                        self.compose_request.current_parent_source)
+            if response.text and JsonHandle.is_json(response.text):
+                resource_pool().create_resource(self.api_info,
+                                                json.loads(request.response.text), request,
+                                                self.compose_request.parent_resource)
             response_status = 2
             self.summery_count['2xx requests number'] += 1
             status_2xx_log.save(self.request_message + response_message)

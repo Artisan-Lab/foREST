@@ -25,10 +25,7 @@
     "request": {
         "timeout": 10
     },
-    "header": {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer QpAtseqAcPwdiybWrovp"
-    }
+    "header": null
 }
 
 

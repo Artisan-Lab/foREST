@@ -1,37 +1,31 @@
-import nltk
-from fuzzywuzzy import fuzz
+from entity.api_info import *
+import copy
 from module.utils.utils import *
-sno = nltk.stem.SnowballStemmer('english')
 # Stemming algorithm
 
 
 class Resource:
 
-    def __init__(self, resource_id, api_id, resource_name, resource_data, resource_request, resource_path):
+    def __init__(self, resource_id, api_info: APIInfo, resource_data, resource_request):
         self.__resource_id = resource_id
-        self.__resource_api_id = api_id
-        self.__resource_name = resource_name
-        self.__resource_path = resource_path
+        self.__resource_identifier = api_info.identifier
+        self.__api_info = api_info
         self.resource_data = resource_data
-        self.__resource_request = resource_request
+        self.__request = resource_request
         self.__parent_resource = []
         self.__children_resource = []
 
     @property
-    def get_resource_request(self):
-        return self.__resource_request
+    def request(self):
+        return self.__request
 
     @property
-    def resource_id(self):
+    def id(self):
         return self.__resource_id
 
     @property
-    def resource_name(self):
-        return self.__resource_name
-
-    @property
-    def resource_api_id(self):
-        return self.__resource_api_id
+    def api_info(self):
+        return self.__api_info
 
     @property
     def parent_resource(self):
@@ -40,6 +34,7 @@ class Resource:
     @parent_resource.setter
     def parent_resource(self, parent_resource):
         self.__parent_resource.append(parent_resource)
+        parent_resource.children_resource.append(self)
 
     @property
     def children_resource(self):
@@ -48,14 +43,10 @@ class Resource:
     @children_resource.setter
     def children_resource(self, children_resource):
         self.__children_resource.append(children_resource)
+        children_resource.parent_resource.append(self)
 
-    def find_field_from_path(self, resource_dict, field_path):
-        if not resource_dict: return None
-        if field_path[0] in resource_dict:
-            if len(field_path) == 1:
-                return resource_dict[field_path[0]]
-            else:
-                return self.find_field_from_path(resource_dict[field_path[0]], field_path[1:])
+    def get_value_by_path(self, field_path):
+        return DictHandle.find_by_path(self.resource_data, field_path)
 
 
 class ResourcePool:
@@ -69,92 +60,62 @@ class ResourcePool:
     """
         this class define the Resource pool
     """
-    def __init__(self):
-        self.resource_name_dict = {}
-        self.resource_list = []
-        self.resource_api_id_dict = {}
+    def __init__(self, api_list):
+        self.resource_identifier_dict = {}
+        self.resource_tree_dict = {}
         self.resource_id = 0
+        self.build_resource_pool(api_list)
+        self.origin_resource_pool = None
         ResourcePool.__instance = self
 
-    def get_special_value_from_resource(self, api_id, field_path):
-        resource = self.find_resource_from_api_id(api_id)
+    def build_resource_pool(self, api_list: List[APIInfo]):
+        for api_info in api_list:
+            self.resource_identifier_dict[api_info.identifier] = []
+            method, path = api_info.http_method, api_info.path
+            if path not in self.resource_tree_dict:
+                self.resource_tree_dict[path] = {}
+            self.resource_tree_dict[path][method] = self.resource_identifier_dict[api_info.identifier]
+        self.origin_resource_pool = copy.deepcopy(self.resource_identifier_dict)
+
+    def reset_resource_pool(self):
+        self.resource_identifier_dict = copy.deepcopy(self.resource_identifier_dict)
+
+    def get_special_value_from_resource(self, api_identifier, field_path):
+        resource = self.get_resource(api_identifier)
         if resource:
-            return resource.find_field_from_path(resource.resource_data, field_path)
-        else:
-            return None
+            return resource.get_value_by_path(field_path)
 
-    def save_response(self, api_info, request, response, parent_resource):
-        base_url_list = api_info.path.split('/')
-        if not is_path_variable(base_url_list[-1]):
-            resource_name = base_url_list[-1]
-            return self.create_resource(resource_name, api_info.api_id, response, request, api_info.path, parent_resource)
+    def add_resource_to_identifier_dict(self, resource, identifier):
+        if len(self.resource_identifier_dict[identifier]) > 100:
+            self.resource_identifier_dict[identifier].pop(0)
+        self.resource_identifier_dict[identifier].append(resource)
 
-    def create_resource(self, resource_name, api_id, resource_data, resource_request, resource_path, parent_resource=None):
-        resource_name = sno.stem(resource_name)
-        resource = Resource(self.resource_id, api_id, resource_name, resource_data, resource_request, resource_path)
-        self.resource_list.append(resource)
-        if resource_name in self.resource_name_dict:
-            if len(self.resource_name_dict[resource_name]) > 100:
-                self.delete_resource(self.resource_name_dict[resource_name][0])
-            self.resource_name_dict[resource_name].append(resource)
-        else:
-            self.resource_name_dict[resource_name] = [resource]
-        if api_id in self.resource_api_id_dict:
-            self.resource_api_id_dict[api_id].append(resource)
-        else:
-            self.resource_api_id_dict[api_id] = [resource]
+    def create_resource(self, api_info: APIInfo, resource_data, resource_request, parent_resource=None):
+        resource = Resource(self.resource_id, api_info, resource_data, resource_request)
+        identifier = api_info.identifier
+        self.add_resource_to_identifier_dict(resource, identifier)
         self.resource_id += 1
         if parent_resource:
             resource.parent_resource = parent_resource
-            parent_resource.children_resource = resource
-        return resource
 
-    def find_resource_from_id(self, resource_id):
-        for resource in self.resource_list:
-            if resource.resource_id == resource_id:
-                return resource
+    def get_resource(self, resource_identifier):
+        if resource_identifier in self.resource_identifier_dict and self.resource_identifier_dict[resource_identifier]:
+            return random.choice(self.resource_identifier_dict[resource_identifier])
         return None
 
-    def find_resource_from_api_id(self, resource_api_id):
-        if resource_api_id in self.resource_api_id_dict and self.resource_api_id_dict[resource_api_id]:
-            return random.choice(self.resource_api_id_dict[resource_api_id])
-        return None
-
-    def find_resource_from_resource_name(self, name):
-        name = sno.stem(name)
-        self.resource_name_dict = random_dic(self.resource_name_dict)
-        for resource_name in self.resource_name_dict:
-            if fuzz.partial_ratio(name, resource_name) >= 90:
-                if self.resource_name_dict[resource_name]:
-                    return random.choice(self.resource_name_dict[resource_name])
-        return None
-
-    def __delete_resource(self, resource):
-        if resource.children_resource:
-            for child_resource in resource.children_resource:
-                self.delete_resource(resource=child_resource)
-        if resource.parent_resource:
-            for single_parent_resource in resource.parent_resource:
-                single_parent_resource.children_resource.remove(resource)
-        self.resource_list.remove(resource)
-        self.resource_name_dict[sno.stem(resource.resource_name)].remove(resource)
-        self.resource_api_id_dict[resource.resource_api_id].remove(resource)
-
-    def delete_resource(self, resource=None, resource_id=None):
-        if not (resource or resource_id):
-            return None
-        if resource_id:
-            resource = self.find_resource_from_id(resource_id)
-        self.__delete_resource(resource)
-
-    def find_parent_resource_name(self, path_list):
-        for path in path_list[::-1]:
-            if is_path_variable(path):
-                continue
-            else:
-                if path in self.resource_name_dict:
-                    return path
-        return ''
+    def find_parent_resource(self, path):
+        path_list = path.split("/")[1:]
+        length = len(path_list)
+        for i in range(1, length):
+            new_path = "/"+"/".join(path_list[:length-i])
+            if new_path in self.resource_tree_dict and self.resource_tree_dict[new_path]:
+                method_list = list(self.resource_tree_dict[new_path].keys())
+                random.shuffle(method_list)
+                for method in method_list:
+                    if method == "delete":
+                        continue
+                    if self.resource_tree_dict[new_path][method]:
+                        return random.choice(self.resource_tree_dict[new_path][method])
 
 
 def resource_pool() -> ResourcePool:
