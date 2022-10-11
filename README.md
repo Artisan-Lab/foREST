@@ -3,39 +3,37 @@
 # foREST
 
 
+foREST is a stateful REST API fuzzy testing tool based on OpenAPI documentation for automatically testing cloud services via REST API and finding security and reliability errors in those services. foREST analyzes OpenAPI documentation and then generates and executes test cases to test that cloud service.
 
-foREST 是一款基于OpenAPI文档的有状态的REST API模糊测试工具，用于通过REST API自动测试云服务并查找这些服务中的安全性和可靠性错误。foREST会分析OpenAPI文档，然后生成并执行测试用例，从而对该云服务进行测试。
-
-foREST会依据OpenAPI文档，自动地推断出云服务API之间的生产者-消费者关系，构建依赖树，并依据依赖树生成满足依赖关系的测试用例，这种方式使得foREST能够智能地生成测试用例，提高测试用例的生成效率，并发现更多的错误。
-
-
-## foREST代码结构
-
-foREST代码总体分为两部分：[依赖分析](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/dependency/dependency.md) 与 [测试执行](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/testing_render/testing.md) 。
+foREST will automatically infer the producer-consumer relationship between cloud service APIs based on OpenAPI documentation, build a dependency tree, and generate test cases that satisfy the dependency relationship based on the dependency tree. This approach enables foREST to generate test cases intelligently, improve the efficiency of test case generation, and find more errors.
 
 
+## foREST Structure
 
-## 使用说明
+foREST code is generally divided into two parts:[dependency analysis](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/dependency/dependency.md) and  [testing execution](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/testing_render/testing.md) 。
 
 
 
-1.将待测服务的yaml文档存放在openapi文件夹下
+## how to run 
 
-2.根据实际需要在配置文件[FoREST_config](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/FoREST_config.conf)中配置
 
-3.安装运行foREST所需的依赖
+
+1. Store the yaml document of the service to be tested in the openapi folder
+
+2. Configure in the FoREST_config according to actual needs
+
+3. Install the dependencies required to run foREST
 ```bash
 pip3 install -r requirements.txt
 ```
-
-启动命令
+4. run
 ```bash
-python3 restler.py
+python3 main.py
 ```
 
- ## 实验设置
+ ## experiment
 
-具体实验过程见[实验文件](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/experiment.md)
+The specific experimental procedure can be found in [experiment](https://github.com/Artisan-Lab/Restful-api-testing/blob/FoREST_copy/experiment.md)
 
 
  
