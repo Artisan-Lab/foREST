@@ -1,22 +1,30 @@
 
 
-# foREST
+# 🌲 foREST 🌲
 
 
-foREST is a stateful REST API fuzzy testing tool based on OpenAPI documentation for automatically testing cloud services via REST API and finding security and reliability errors in those services. foREST analyzes OpenAPI documentation and then generates and executes test cases to test that cloud service.
+**foREST** is a stateful REST API fuzzy testing tool based on [OpenAPI](https://www.openapis.org/) documentation for automatically testing cloud services via REST API and finding security and reliability errors in those services. 
 
-foREST will automatically infer the producer-consumer relationship between cloud service APIs based on OpenAPI documentation, build a dependency tree, and generate test cases that satisfy the dependency relationship based on the dependency tree. This approach enables foREST to generate test cases intelligently, improve the efficiency of test case generation, and find more errors.
+**foREST** analyzes OpenAPI documentation and then generates and executes test cases to test that cloud service.
+
 
 
 ## foREST Structure
 
-foREST code is generally divided into two parts:dependency analysis and  testing execution.
+**foREST** will automatically infer the producer-consumer relationship between cloud service APIs based on OpenAPI documentation, build a dependency tree, and generate test cases that satisfy the dependency relationship based on the dependency tree. This approach enables **foREST** to generate test cases intelligently, improve the efficiency of test case generation, and find more errors.
+
+foREST code is generally divided into three parts:
+
+* [document parsing](https://github.com/Artisan-Lab/foREST/tree/master/module/parser)
+
+* [dependency analysis](https://github.com/Artisan-Lab/foREST/tree/master/module/parser)
+
+* [testing execution](https://github.com/Artisan-Lab/foREST/tree/master/module/testing)
+
+![framework—eng](https://user-images.githubusercontent.com/71680354/195775847-b46a11cd-2188-41b7-87ce-1c28b3819964.png)
 
 
-
-## how to run 
-
-
+## Getting started
 
 1. Store the yaml document of the service to be tested in the openapi folder
 
@@ -33,11 +41,11 @@ python3 main.py
 
  ## experiment
 
-The specific experimental procedure can be found in experiment
+The specific experimental procedure can be found in [experiment](https://github.com/Artisan-Lab/foREST/tree/master/experiment)
 
 
  
-## BUG
+## BUG found
 
 | Date | Project | Link | Finder | Status | Description |
 |---------|---------|---------|---------|---------|---------|
