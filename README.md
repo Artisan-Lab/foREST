@@ -62,7 +62,7 @@ The specific experimental procedure can be found in [experiment](https://github.
 | 2021-7-4 | GitLab | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/334610) |   submitted | POST  /groups/{id}/clusters/user |
 | 2021-7-4 | GitLab | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/335276) |   submitted | GET /groups/{id}/custom_attributes |
 | 2021-7-4 | GitLab | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/335276) |   submitted | DELETE/PUT/GET  /groups/{id}/custom_attributes/{key} |
-| 2021-7-4 | WordPress |  |  | unsubmitted | POST  /categories |
+| 2021-7-4 | WordPress |    | unsubmitted | POST  /categories |
 | 2021-11-4| Gitlab | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/346563) |   submitted | POST projects/{id}/fork/forked_from_id |
 
 
