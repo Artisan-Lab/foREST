@@ -9,10 +9,10 @@ import numpy as np
 
 plt.figure(figsize=(150,150))
 
-forest_file = open('../data/gitlab-project-branch-commit/restler-6h.csv')  # 打开csv文件
-forestReader = csv.reader(forest_file)  # 读取csv文件
-forestData = list(forestReader)  # csv数据转换为列表
-forest_length = len(forestData)  # 得到数据行数
+forest_file = open('../data/gitlab-project-branch-commit/restler-6h.csv')  
+forestReader = csv.reader(forest_file)  
+forestData = list(forestReader)  
+forest_length = len(forestData)  
 
 evomaster_file = open('../data/gitlab-project-branch-commit/evomaster-6h.csv')
 evomaster_reader = csv.reader(evomaster_file)
@@ -51,7 +51,7 @@ for i in range(0, forest_length):  # 从第二行开始读取
     if i > 0 and forestData[i][0] == forestData[i-1][0]:
         continue
     date1 = datetime.strptime(forestData[i][0], '%H:%M:%S.%f')
-    x1.append(date1)  # 将第一列数据从第二行读取到最后一行赋给列表x
+    x1.append(date1)  
     y1.append(int(forestData[i][2]))
     y12.append(float(forestData[i][1].strip('%'))/100)
 
