@@ -24,7 +24,7 @@ pip3 install -r requirements.txt
 python3 main.py
 ```
 
-The main configuration file is available: [settings.json](../../tree/master/settings.json).
+The main configuration file is available: [setting.json](./setting.json).
  
 ### Bugs found in our experiments
 
