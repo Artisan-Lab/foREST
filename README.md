@@ -3,23 +3,9 @@
 # 🌲 foREST 🌲
 
 
-**foREST** is a stateful REST API fuzzy testing tool based on OpenAPI documentation for automatically testing cloud services via REST API and finding security and reliability errors in those services. 
+**foREST** is a stateful RESTful API fuzzy testing tool based on OpenAPI/Swagger specifications.
 
-**foREST** analyzes OpenAPI documentation and then generates and executes test cases to test that cloud service.
-
-
-
-## foREST Structure
-
-**foREST** will automatically infer the producer-consumer relationship between cloud service APIs based on OpenAPI documentation, build a dependency tree, and generate test cases that satisfy the dependency relationship based on the dependency tree. This approach enables **foREST** to generate test cases intelligently, improve the efficiency of test case generation, and find more errors.
-
-foREST code is generally divided into three parts:
-
-* [document parsing](../../tree/master/module/parser)
-
-* [dependency analysis](../../tree/master/module/parser)
-
-* [testing execution](../../tree/master/module/testing)
+## Framework
 
 ![framework—eng](https://user-images.githubusercontent.com/71680354/195775847-b46a11cd-2188-41b7-87ce-1c28b3819964.png)
 
@@ -38,16 +24,8 @@ pip3 install -r requirements.txt
 ```bash
 python3 main.py
 ```
-
- ## experiment
-
-The detailed experimental data can be found in [experiment](../../tree/master/experiment)
-
  
-### BUG found
-
-#### simple introduction of bugs
-We roughly divide the bugs we find into three categories
+### Bugs found in our experiments
 
 | id | classification                    | Server    | Endpoint                                                                | Method             | issue                                                         |
 |----|-----------------------------------|-----------|-------------------------------------------------------------------------|--------------------|---|
@@ -74,7 +52,7 @@ We roughly divide the bugs we find into three categories
 
 
 #### Steps to reproduce bugs
-We show the reproduction of some of the bugs, more detailed description and reproduction of the bugs can be viewed in the issue
+We show the reproduction steps of each bug. More detailed descriptions can be found in the reported issue.
 
 <span id="1">**1. GET /users/{id}/custom_attributes** </span>
 
@@ -359,5 +337,3 @@ API_id: 35 header:{'Content-Type': 'application/json', 'Authorization': 'Bearer 
 data: {"username": "A", "name": "jqn6eec4uz", "email": "5@BS.yoM", "password": "string", "description": "string"}
 Received: 'HTTP/1.1 500 response : {"code":"existing_user_login"}
 ```
- 
-
