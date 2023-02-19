@@ -12,18 +12,19 @@
 
 ## Getting started
 
-1. Store the yaml document of the service to be tested in the openapi folder
-
-2. Configure in the FoREST_config according to actual needs
-
-3. Install the dependencies required to run foREST
+1. Download the foREST repo and install the dependencies required to run foREST
 ```bash
 pip3 install -r requirements.txt
 ```
-4. run
+
+2. Save the API spec (yaml doc) of the target service in the [openapi](../../openapi) folder
+
+3. run
 ```bash
 python3 main.py
 ```
+
+The main configuration file is available: [settings.json](../../openapi).
  
 ### Bugs found in our experiments
 
