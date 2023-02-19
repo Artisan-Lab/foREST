@@ -3,7 +3,7 @@
 # 🌲 foREST 🌲
 
 
-**foREST** is a stateful REST API fuzzy testing tool based on [OpenAPI](https://www.openapis.org/) documentation for automatically testing cloud services via REST API and finding security and reliability errors in those services. 
+**foREST** is a stateful REST API fuzzy testing tool based on OpenAPI documentation for automatically testing cloud services via REST API and finding security and reliability errors in those services. 
 
 **foREST** analyzes OpenAPI documentation and then generates and executes test cases to test that cloud service.
 
