@@ -15,11 +15,11 @@
 
 foREST code is generally divided into three parts:
 
-* [document parsing](https://github.com/Artisan-Lab/foREST/tree/master/module/parser)
+* [document parsing](./tree/master/module/parser)
 
-* [dependency analysis](https://github.com/Artisan-Lab/foREST/tree/master/module/parser)
+* [dependency analysis](./tree/master/module/parser)
 
-* [testing execution](https://github.com/Artisan-Lab/foREST/tree/master/module/testing)
+* [testing execution](./tree/master/module/testing)
 
 ![framework—eng](https://user-images.githubusercontent.com/71680354/195775847-b46a11cd-2188-41b7-87ce-1c28b3819964.png)
 
