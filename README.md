@@ -41,8 +41,7 @@ python3 main.py
 
  ## experiment
 
-The specific experimental procedure can be found in [experiment](https://github.com/Artisan-Lab/foREST/tree/master/experiment)
-
+The detailed experimental data can be found in [experiment](../../tree/master/experiment)
 
  
 ### BUG found
