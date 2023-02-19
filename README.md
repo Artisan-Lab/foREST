@@ -69,9 +69,9 @@ We roughly divide the bugs we find into three categories
 | [15](#15) | logical: false logic                        | GitLab    | /projects/{id}/repository/branches.                                     | POST               | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/360313) |
 | [16](#16) | logical: reference loop                        | GitLab    | /projects/{id}/fork/{forked_from_id}                                    | POST               | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/346563) |
 | [17](#17) | unsuported function                   | GitLab    | /projects                                                               | POST               | [issue](https://gitlab.com/gitlab-org/gitlab/-/issues/356921) |
-| [18](#18) | unsuported function                  | WordPress | /categories/{id}                                                        | DELETE             | email reported                                                   |
-| [19](#19) | unsuported function                  | WordPress | /tags/{id}                                                              | DELETE             | email reported                                                  |
-| [20](#20) | logical: duplicated id                        | WordPress | /users                                                                  | DELETE             | email   reported                                                |
+| [18](#18) | unsuported function                  | WordPress | /categories/{id}                                                        | DELETE             | reported via email |
+| [19](#19) | unsuported function                  | WordPress | /tags/{id}                                                              | DELETE             | reported via email |
+| [20](#20) | logical: duplicated id                        | WordPress | /users                                                                  | DELETE             | reported via email |
 
 
 #### Steps to reproduce bugs
