@@ -17,14 +17,14 @@
 pip3 install -r requirements.txt
 ```
 
-2. Save the API spec (yaml doc) of the target service in the [openapi](../../openapi) folder
+2. Save the API spec (yaml doc) of the target service in the [openapi](../../tree/master/openapi) folder
 
 3. run
 ```bash
 python3 main.py
 ```
 
-The main configuration file is available: [settings.json](../../settings.json).
+The main configuration file is available: [settings.json](./settings.json).
  
 ### Bugs found in our experiments
 
